@@ -159,21 +159,25 @@
             });
 
 
-//            $('td').dblclick(function () {
-//                var val = $(this).html();
-//                //формируем код текстового поля
-//                //onkeyup="this.value=this.value.replace(/\D/,''); if (this.value<1 || this.value>10) this.value = '';"
-//                var code = '<input type="text" class="cell" id="edit" value="' + val + '" style="width: 30px;" />';
-//                //удаляем содержимое ячейки, вставляем в нее сформированное поле
-//                $(this).empty().append(code);
-//                //устанавливаем фокус на свеженарисованное поле
-//                $('#edit').focus();
-//                $('#edit').blur(function () {	//устанавливаем обработчик
-//                    var val = $(this).val();	//получаем то, что в поле находится
-//                    //находим ячейку, опустошаем, вставляем значение из поля
-//                    $(this).parent().empty().html(val);
-//                });
-//            });
+            $("div.grade").dblclick(function () {
+                var val = $(this).html();
+                //формируем код текстового поля
+                //onkeyup="this.value=this.value.replace(/\D/,''); if (this.value<1 || this.value>10) this.value = '';"
+                var code = '<input type="text" class="cell" id="edit" value="' + val + '" style="width: 30px;" onkeyup="this.value=this.value.replace(/[^0-9]/,\'\'); if (this.value<1 || this.value>10) this.value = \'\';" />';
+                $("div#help").show();
+                //удаляем содержимое ячейки, вставляем в нее сформированное поле
+                $(this).empty().append(code);
+                //устанавливаем фокус на свеженарисованное поле
+                $('#edit').focus();
+                $('#edit').blur(function () {	//устанавливаем обработчик
+                    var val = $(this).val();	//получаем то, что в поле находится
+                    //находим ячейку, опустошаем, вставляем значение из поля
+                    $(this).parent().empty().html(val);
+                    $("div#help").hide();
+                });
+
+            });
+
 
         });
 
@@ -583,8 +587,8 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
 <div class="container-list">
     <div class="box" style="width: 95%; display: inline-block" align="center">
         <div class="fio" style="float: left; width: 20%;">
-            <div class="title" style="border: solid black 1px; height: 20px;">
-                <b>Фамилия, имя, отчество</b>
+            <div class="title" style="border: solid black 1px; ">
+                Фамилия, имя, отчество
             </div>
             <?php
             $i = 0;
@@ -594,10 +598,10 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
             ?>
         </div>
 
-        <div class="result_box" style="float: right; width: 80%;">
+        <div class="result_box" style="width: 80%;">
             <?php
             foreach ($dates as $date) {
-                echo "<div class='date' style=\"border: solid black 1px; width: 80px; float: left; \">$date";
+                echo "<div class='date' style=\"border: solid black 1px; float: left;\">$date";
                 for ($i = 0; $i < count($array); $i++) {
                     echo "<div class='grade' style=\"border: solid black 1px; width: 80px; height: 30px; \">6";
 
@@ -609,6 +613,15 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
             }
             ?>
 
+        </div>
+
+        <div id="help" style="display: none; border: solid green 2px;">
+            <button id="1" class="grade" style="width: 80px;"><b>Н<sub>у</sub></b></button>
+            <button id="2" class="grade" style="width: 80px;"><b>Н<sub>б/у</sub></b></button>
+            <button id="3" class="grade" style="width: 80px;"><b>Н<sub>б/отр.</sub></b></button>
+            <button id="4" class="grade" style="width: 80px;"><b>Зач.</b></button>
+            <button id="5" class="grade" style="width: 80px;"><b>Незач.</b></button>
+            <button id="6" class="grade" style="width: 80px;"><b style="color: #8c0000">Недоп.</b></button>
         </div>
     </div>
 
