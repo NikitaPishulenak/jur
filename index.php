@@ -15,10 +15,10 @@
 
     <script>
         $(function () {
-            var dialog, form;
+            var dialog, form, edit_dialog, edit_form;
 
             function addLesson() {
-                $("div.box").find('input#lesson-date').blur();
+                //$("div.box").find('input#lesson-date').blur();
                 if ($("#lesson-date").val() == "")
                     alert("Для сохранения необходимо заполнить поле 'Дата'");
                 else {
@@ -26,28 +26,61 @@
                     var cnt = $("div.container-list").find("div.fio_student").length;
 
                     if ($("#colloquium_rb").is(':checked')){
-                        $("div.result_box").find('div.date:last').after("<div class='date colloquium_theme'>" + date + "<div class='grade'></div></div>");
-                        for (var i = 1; i < cnt; i++) {
-                            $("div.date:last").find('div.grade:last').after("<div class='grade'></div>");
+                        $("div.result_box").find('div.date:last').after("<div class='date colloquium_theme'>" + date +"</div>");
+                        for (var i = 0; i < cnt; i++) {
+                            $("div.date:last").append("<div class='grade'>9</div>");
                         }
                     }
                     else if ($("#exam_rb").is(':checked')){
-                        $("div.result_box").find('div.date:last').after("<div class='date exam_theme'>" + date + "<div class='grade'></div></div>");
-                        for (var i = 1; i < cnt; i++) {
-                            $("div.date:last").find('div.grade:last').after("<div class='grade'></div>");
+                        $("div.result_box").find('div.date:last').after("<div class='date exam_theme'>" + date + "</div>");
+                        for (var i = 0; i < cnt; i++) {
+                            $("div.date:last").append("<div class='grade'>7</div>");
                         }
                     }
                     else{
-                        $("div.result_box").find('div.date:last').after("<div class='date'>" + date + "<div class='grade'></div></div>");
+                        $("div.result_box").find('div.date:last').after("<div class='date'>" + date + "</div>");
 
-                        for (var i = 1; i < cnt; i++) {
-                            $("div.date:last").find('div.grade:last').after("<div class='grade'></div>");
+                        for (var i = 0; i < cnt; i++) {
+                            $("div.date:last").append("<div class='grade'>5</div>");
                         }
                     }
 
 
                     dialog.dialog("close");
                 }
+            }
+
+            function edit() {
+//                //$("div.box").find('input#lesson-date').blur();
+//                if ($("#lesson-date").val() == "")
+//                    alert("Для сохранения необходимо заполнить поле 'Дата'");
+//                else {
+//                    var date = $("#lesson-date").val();
+//                    var cnt = $("div.container-list").find("div.fio_student").length;
+//
+//                    if ($("#colloquium_rb").is(':checked')){
+//                        $("div.result_box").find('div.date:last').after("<div class='date colloquium_theme'>" + date +"</div>");
+//                        for (var i = 0; i < cnt; i++) {
+//                            $("div.date:last").append("<div class='grade'>9</div>");
+//                        }
+//                    }
+//                    else if ($("#exam_rb").is(':checked')){
+//                        $("div.result_box").find('div.date:last').after("<div class='date exam_theme'>" + date + "</div>");
+//                        for (var i = 0; i < cnt; i++) {
+//                            $("div.date:last").append("<div class='grade'>7</div>");
+//                        }
+//                    }
+//                    else{
+//                        $("div.result_box").find('div.date:last').after("<div class='date'>" + date + "</div>");
+//
+//                        for (var i = 0; i < cnt; i++) {
+//                            $("div.date:last").append("<div class='grade'>5</div>");
+//                        }
+//                    }
+//
+//
+//                    dialog.dialog("close");
+//                }
             }
 
 
@@ -70,29 +103,96 @@
                 event.preventDefault();
             });
 
+            edit_dialog = $("#form-edit").dialog({
+                autoOpen: false,
+                height: 250,
+                width: 400,
+                modal: true,
+                buttons: {
+                    "Сохранить": edit,
+                    Отмена: function () {
+                        edit_dialog.dialog("close");
+                    }
+                },
+                close: function () {
+                    edit_form[0].reset();
+                }
+            });
+            edit_form = edit_dialog.find("form").on("submit", function (event) {
+                event.preventDefault();
+            });
+
+            $("div.grade").dblclick(function () {
+                edit_dialog.dialog("open");
+                var cur_grade=$(this).text();
+                var grades = cur_grade.split("/");
+                 for(var i=0; i<grades.length; i++){
+                     $("div.panel").find('input#inp_'+i).slideDown();
+                     $("div.panel").find('input#inp_'+i).val(grades[i]);
+                 }
+                var str_result=grades.join('/');
+                alert(str_result);
+
+            });
+
+
             $("#create_lesson").button().on("click", function () {
                 dialog.dialog("open");
             });
 
-
-            $("div.grade").dblclick(function () {
-                var val = $(this).html();
-                //формируем код текстового поля
-                //onkeyup="this.value=this.value.replace(/\D/,''); if (this.value<1 || this.value>10) this.value = '';"
-                var code = '<input type="text" class="cell" id="edit" value="' + val + '" style="width: 30px;" onkeyup="this.value=this.value.replace(/[^0-9]/,\'\'); if (this.value<1 || this.value>10) this.value = \'\';" />';
-                $("div#help").show();
-                //удаляем содержимое ячейки, вставляем в нее сформированное поле
-                $(this).empty().append(code);
-                //устанавливаем фокус на свеженарисованное поле
-                $('#edit').focus();
-                $('#edit').blur(function () {	//устанавливаем обработчик
-                    var val = $(this).val();	//получаем то, что в поле находится
-                    //находим ячейку, опустошаем, вставляем значение из поля
-                    $(this).parent().empty().html(val);
-                    $("div#help").hide();
-                });
-
+            var countCell = 1;
+            $("#add_grade_input").click(function () {
+                if (countCell < 3) {
+                    $("#inp_" + countCell).slideDown();
+                    ++countCell;
+                }
+                else {
+                    alert("Допускается не более 3 полей ввода!");
+                }
             });
+
+
+
+
+//            $("div.grade").dblclick(function () {
+//                $( "#div-test" ).show();
+//                var value=$(this).text();
+//                //var val = $(this).html();
+//                //формируем код текстового поля
+//                var code = '<input type="text" class="cell" id="edit" style="width: 60px" value="' + value + '" onkeyup="this.value=this.value.replace(/[^0-9]/,\'\'); if (this.value<1 || this.value>10) this.value = \'\';" />';
+////                $("div#help").show();
+//               //удаляем содержимое ячейки, вставляем в нее сформированное поле
+//                $(this).empty().append(code);
+//               //устанавливаем фокус на свеженарисованное поле
+//                $('#edit').focus();
+//                $('#edit').blur(function () {	//устанавливаем обработчик
+//                    var val = $(this).val();	//получаем то, что в поле находится
+//                    //находим ячейку, опустошаем, вставляем значение из поля
+//                    $(this).parent().empty().html(val);
+////                    $("div#help").hide();
+//                });
+//
+//            });
+
+//            $(function(){
+//                $('div.grade').mouseenter(function(){ // Навели на ссылку?
+//                    $( "#div-test" ).show(); // Показываем блок
+//                });
+//
+//                $('div.grade,#div-test').mouseleave(function(e){
+//                    if (e.relatedTarget.id == 'new-ref' || e.relatedTarget.id == 'div-test') return;
+//                    if ($('#login').val() || $('#password').val()) return;
+//                    $('#div-test').hide();
+//                });
+//
+//
+//                $(document).click(function(e){ // Функция скрывает элемент если произошёл клик в не поля #div-test
+//                    if ($(e.target).closest('#div-test').length) return;  // Не знаю что тут происходит
+//                    $('#div-test').hide(); // Скрываем блок
+//                    e.stopPropagation(); // Не знаю что тут происходит
+//                });
+//
+//            });
 
 
         });
@@ -111,13 +211,10 @@
         });
 
         $(document).ready(function () {
-            $("div.box").find('input#lesson-date').blur();
-            $(".cell1").slideUp();
-            $(".cell2").slideUp();
-            $(".col_cell1").slideUp();
-            $(".col_cell2").slideUp();
-            $(".exam_cell1").slideUp();
-            $(".exam_cell2").slideUp();
+            //$("div.box").find('input#lesson-date').blur();
+            $("#inp_1").slideUp();
+            $("#inp_2").slideUp();
+
             $(".cell:text, .cell1:text, .cell2:text, .col_cell:text, .col_cell1:text, .col_cell2:text, .exam_cell:text, .exam_cell1:text, .exam_cell2:text").focus(function () {
                 inp_id = $(this).attr('id');
                 //alert(inp_id);
@@ -235,8 +332,34 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
     </form>
 </div>
 
+<div id="form-edit" title="Редактирование отметки">
+    <form>
+        <fieldset>
+            <div class="panel">
+                <button id="add_grade_input" class="add_grade" title="Для добавления дополнительной оценки нажмите на кнопку!">+</button>
+                <b id="1" class="tool"><b>Н<sub>у</sub></b></b>
+                <b id="2" class="tool"><b>Н<sub>б/у</sub></b></b>
+                <b id="3" class="tool"><b>Н<sub>б/отр.</sub></b></b>
+                <b id="4" class="tool"><b>Зач.</b></b>
+                <b id="5" class="tool"><b>Незач.</b></b>
+                <b id="6" class="tool"><b style="color: #8c0000">Недоп.</b></b>
+
+                <br><br>
+
+                <input class='inp_cell' id="inp_0" type=text maxlength='2' onkeyup="this.value=this.value.replace(/[^0-9]/,''); if (this.value<1 || this.value>10) this.value='';">
+                <input class='inp_cell' id="inp_1" type='text' maxlength='2' onkeyup="this.value=this.value.replace(/[^0-9]/,''); if (this.value<1 || this.value>10) this.value='';">
+                <input class='inp_cell' id="inp_2" type='text' maxlength='2' onkeyup="this.value=this.value.replace(/[^0-9]/,''); if (this.value<1 || this.value>10) this.value='';">
+
+            </div>
+        </fieldset>
+    </form>
+</div>
+
 
 <div class="container-list">
+    <div class="tools" align="center">
+        <button id="create_lesson">Создать занятие</button>
+    </div><br><hr><br>
     <div class="box">
         <div class="fio">
             <div class="title">
@@ -255,7 +378,7 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
             foreach ($dates as $date) {
                 echo "<div class='date'>$date";
                 for ($i = 0; $i < count($array); $i++) {
-                    echo "<div class='grade'>6";
+                    echo "<div class='grade'>6/3";
                     echo "</div>";
                 }
 
@@ -263,6 +386,10 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
             }
             ?>
 
+        </div>
+        <div id="div-test">
+            <input id="login" type="text">
+            <input id="password" type="text">
         </div>
 
         <!--        <div id="help" style="display: none; border: solid green 2px;">-->
@@ -275,9 +402,7 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
         <!--        </div>-->
     </div>
 
-    <div class="tools" align="center">
-        <button id="create_lesson">Создать занятие</button>
-    </div>
+
 </div>
 
 </body>
