@@ -163,5 +163,51 @@ tr:hover
     border-radius: 50px;
 
 }
+/*18-08-17*/
+.date{
+    border: solid black 1px;
+    width: 80px;
+    float: left;
+    text-align: center;
+}
 
+.grade{
+    border: solid black 1px;
+    width: 80px;
+    height: 30px;
+    text-align: center;
+}
+
+.box{
+    width: 95%;
+    display: inline-block;
+    align-items:center;
+}
+
+.fio{
+    float: left;
+    width: 20%;
+}
+
+.title{
+    text-align: center;
+    border: solid black 1px;
+}
+
+.fio_student{
+    border: solid black 1px;
+    height: 30px;
+}
+
+.result_box{
+   width: 80%;
+}
+
+.colloquium_theme{
+    background-color: cornflowerblue;
+}
+
+.exam_theme{
+    background-color: burlywood;
+}
 

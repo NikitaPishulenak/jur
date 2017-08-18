@@ -15,147 +15,63 @@
 
     <script>
         $(function () {
-            var dialog_simple_les, form1, form2, form3, dialog_colloquium, dialog_exam;
+            var dialog, form;
 
-            function addSimpleLesson() {
-                if ($("#simple_les-date").val() == "")
+            function addLesson() {
+                $("div.box").find('input#lesson-date').blur();
+                if ($("#lesson-date").val() == "")
                     alert("Для сохранения необходимо заполнить поле 'Дата'");
                 else {
-                    var date = $("#simple_les-date").val();
+                    var date = $("#lesson-date").val();
                     var cnt = $("div.container-list").find("div.fio_student").length;
-                    $("div.result_box").find('div.date:last').after("<div class='date' style='border: solid black 1px; width: 80px; float: left;'>" + date + "<div class='grade'></div></div>");
 
-                    for (var i = 0; i < cnt; i++) {
-                        var bit1 = $("#0sl_inp" + i).val();
-                        var bit2 = $("#1sl_inp" + i).val();
-                        var bit3 = $("#2sl_inp" + i).val();
-                        bit1 = (bit1 == "") ? "" : bit1;
-                        bit2 = (bit2 == "") ? "" : "/" + bit2;
-                        bit3 = (bit3 == "") ? "" : "/" + bit3;
-                        var cur_res = bit1 + bit2 + bit3;
-                        //alert(cur_res);
-                        $("div.date:last").find('div.grade:last').after("<div  class='grade' style=\"border: solid black 1px; width: 80px; height: 30px;\">" + cur_res + "</div>");
+                    if ($("#colloquium_rb").is(':checked')){
+                        $("div.result_box").find('div.date:last').after("<div class='date colloquium_theme'>" + date + "<div class='grade'></div></div>");
+                        for (var i = 1; i < cnt; i++) {
+                            $("div.date:last").find('div.grade:last').after("<div class='grade'></div>");
+                        }
+                    }
+                    else if ($("#exam_rb").is(':checked')){
+                        $("div.result_box").find('div.date:last').after("<div class='date exam_theme'>" + date + "<div class='grade'></div></div>");
+                        for (var i = 1; i < cnt; i++) {
+                            $("div.date:last").find('div.grade:last').after("<div class='grade'></div>");
+                        }
+                    }
+                    else{
+                        $("div.result_box").find('div.date:last').after("<div class='date'>" + date + "<div class='grade'></div></div>");
+
+                        for (var i = 1; i < cnt; i++) {
+                            $("div.date:last").find('div.grade:last').after("<div class='grade'></div>");
+                        }
                     }
 
-                    dialog_simple_les.dialog("close");
+
+                    dialog.dialog("close");
                 }
             }
 
 
-            function addColloquium() {
-                if ($("#colloquium-date").val() == "")
-                    alert("Для сохранения необходимо заполнить поле 'Дата'");
-                else {
-                    var date = $("#colloquium-date").val();
-                    var cnt = $("div.container-list").find("div.fio_student").length;
-                    $("div.result_box").find('div.date:last').after("<div class='date' style='border: solid black 1px; width: 80px; float: left; background-color: #B0E0E6'>" + date + "<div class='grade'></div></div>");
-
-                    for (var i = 0; i < cnt; i++) {
-                        var bit1 = $("#0col_inp" + i).val();
-                        var bit2 = $("#1col_inp" + i).val();
-                        var bit3 = $("#2col_inp" + i).val();
-                        bit1 = (bit1 == "") ? "" : bit1;
-                        bit2 = (bit2 == "") ? "" : "/" + bit2;
-                        bit3 = (bit3 == "") ? "" : "/" + bit3;
-                        var cur_res = bit1 + bit2 + bit3;
-                        $("div.date:last").find('div.grade:last').after("<div  class='grade' style=\"border: solid black 1px; width: 80px; height: 30px; background-color: #B0E0E6 \">" + cur_res + "</div>");
-                    }
-                    dialog_colloquium.dialog("close");
-                }
-            }
-
-            function addExam() {
-                if ($("#exam-date").val() == "")
-                    alert("Для сохранения необходимо заполнить поле 'Дата'");
-                else {
-                    var date = $("#exam-date").val();
-                    var cnt = $("div.container-list").find("div.fio_student").length;
-                    $("div.result_box").find('div.date:last').after("<div class='date' style='border: solid black 1px; width: 80px; float: left; background-color: #F5DEB3'>" + date + "<div class='grade'></div></div>");
-
-                    for (var i = 0; i < cnt; i++) {
-                        var bit1 = $("#0exam_inp" + i).val();
-                        var bit2 = $("#1exam_inp" + i).val();
-                        var bit3 = $("#2exam_inp" + i).val();
-                        bit1 = (bit1 == "") ? "" : bit1;
-                        bit2 = (bit2 == "") ? "" : "/" + bit2;
-                        bit3 = (bit3 == "") ? "" : "/" + bit3;
-                        var cur_res = bit1 + bit2 + bit3;
-                        $("div.date:last").find('div.grade:last').after("<div  class='grade' style=\"border: solid black 1px; width: 80px; height: 30px; background-color: #F5DEB3 \">" + cur_res + "</div>");
-                    }
-                    dialog_exam.dialog("close");
-                }
-            }
-
-
-            dialog_simple_les = $("#form-simple-les").dialog({
+            dialog = $("#form-lesson").dialog({
                 autoOpen: false,
-                height: 850,
-                width: 800,
+                height: 350,
+                width: 400,
                 modal: true,
                 buttons: {
-                    "Сохранить": addSimpleLesson,
+                    "Создать": addLesson,
                     Отмена: function () {
-                        dialog_simple_les.dialog("close");
+                        dialog.dialog("close");
                     }
                 },
                 close: function () {
-                    form1[0].reset();
+                    form[0].reset();
                 }
             });
-            form1 = dialog_simple_les.find("form").on("submit", function (event) {
+            form = dialog.find("form").on("submit", function (event) {
                 event.preventDefault();
             });
 
-            dialog_colloquium = $("#form-colloquim").dialog({
-                autoOpen: false,
-                height: 850,
-                width: 800,
-                modal: true,
-                buttons: {
-                    "Сохранить": addColloquium,
-                    Отмена: function () {
-                        dialog_colloquium.dialog("close");
-                    }
-                },
-                close: function () {
-                    form2[0].reset();
-                }
-            });
-
-
-            form2 = dialog_colloquium.find("form").on("submit", function (event) {
-                event.preventDefault();
-            });
-
-            dialog_exam = $("#form-exam").dialog({
-                autoOpen: false,
-                height: 850,
-                width: 800,
-                modal: true,
-                buttons: {
-                    "Сохранить": addExam,
-                    Отмена: function () {
-                        dialog_exam.dialog("close");
-                    }
-                },
-                close: function () {
-                    form3[0].reset();
-                }
-            });
-            form3 = dialog_exam.find("form").on("submit", function (event) {
-                event.preventDefault();
-            });
-
-
-            $("#create_simple_lesson").button().on("click", function () {
-                dialog_simple_les.dialog("open");
-            });
-
-            $("#create_colloquium").button().on("click", function () {
-                dialog_colloquium.dialog("open");
-            });
-            $("#create_exam").button().on("click", function () {
-                dialog_exam.dialog("open");
+            $("#create_lesson").button().on("click", function () {
+                dialog.dialog("open");
             });
 
 
@@ -195,6 +111,7 @@
         });
 
         $(document).ready(function () {
+            $("div.box").find('input#lesson-date').blur();
             $(".cell1").slideUp();
             $(".cell2").slideUp();
             $(".col_cell1").slideUp();
@@ -228,10 +145,10 @@
             });
 
 
-            $("#simple_les-date").change(function () {
+            $("#lesson-date").change(function () {
 
-                if ($("#simple_les-date").val().length == 10) {
-                    var arrD = $("#simple_les-date").val().split(".");
+                if ($("#lesson-date").val().length == 10) {
+                    var arrD = $("#lesson-date").val().split(".");
                     arrD[1] -= 1;
                     var d = new Date(arrD[2], arrD[1], arrD[0]);
                     if ((d.getFullYear() == arrD[2]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[0])) {
@@ -240,12 +157,12 @@
                         }
                         else {
                             alert("Проверьте правильность введенного значения года!");
-                            $("#simple_les-date").val('');
+                            $("#lesson-date").val('');
                             return false;
                         }
                     } else {
-                        alert("Введена некорректная дата! " + $("#simple_les-date").val());
-                        $("#simple_les-date").val('');
+                        alert("Введена некорректная дата! " + $("#lesson-date").val());
+                        $("#lesson-date").val('');
                         return false;
                     }
                 }
@@ -256,59 +173,6 @@
 
             });
 
-            $("#colloquium-date").change(function () {
-                if ($("#colloquium-date").val().length == 10) {
-                    var arrD = $("#colloquium-date").val().split(".");
-                    arrD[1] -= 1;
-                    var d = new Date(arrD[2], arrD[1], arrD[0]);
-                    if ((d.getFullYear() == arrD[2]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[0])) {
-                        if ((arrD[2] > 2016) && (arrD[2]) < 2030) {
-                            return true;
-                        }
-                        else {
-                            alert("Проверьте правильность введенного значения года!");
-                            $("#colloquium-date").val('');
-                            return false;
-                        }
-                    } else {
-                        alert("Введена некорректная дата! " + $("#colloquium-date").val());
-                        $("#colloquium-date").val('');
-                        return false;
-                    }
-                }
-                else {
-                    alert("Дата должна быть введена в формате: дд.мм.гггг");
-                    return false;
-                }
-
-            });
-
-            $("#exam-date").change(function () {
-                if ($("#exam-date").val().length == 10) {
-                    var arrD = $("#exam-date").val().split(".");
-                    arrD[1] -= 1;
-                    var d = new Date(arrD[2], arrD[1], arrD[0]);
-                    if ((d.getFullYear() == arrD[2]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[0])) {
-                        if ((arrD[2] > 2016) && (arrD[2]) < 2030) {
-                            return true;
-                        }
-                        else {
-                            alert("Проверьте правильность введенного значения года!");
-                            $("#exam-date").val('');
-                            return false;
-                        }
-                    } else {
-                        alert("Введена некорректная дата! " + $("#exam-date").val());
-                        $("#exam-date").val('');
-                        return false;
-                    }
-                }
-                else {
-                    alert("Дата должна быть введена в формате: дд.мм.гггг");
-                    return false;
-                }
-
-            });
 
             $(".cell:text, .cell1:text, .cell2:text, .col_cell:text, .col_cell1:text, .col_cell2:text, .exam_cell:text, .exam_cell1:text, .exam_cell2:text").change(function () {
                 var len = this.value.length;
@@ -337,38 +201,6 @@
                 }
             });
 
-
-            var countAddCellSL = 1, countAddCellCol = 1, countAddCellExam = 1;
-            $("#add_grade_sl").click(function () {
-                if (countAddCellSL < 3) {
-                    $(".cell" + countAddCellSL).slideDown();
-                    ++countAddCellSL;
-                }
-                else {
-                    alert("Допускается не более 3 полей ввода!");
-                }
-            });
-
-            $("#add_grade_col").click(function () {
-                if (countAddCellCol < 3) {
-                    $(".col_cell" + countAddCellCol).slideDown();
-                    ++countAddCellCol;
-                }
-                else {
-                    alert("Допускается не более 3 полей ввода!");
-                }
-            });
-
-            $("#add_grade_exam").click(function () {
-                if (countAddCellExam < 3) {
-                    $(".exam_cell" + countAddCellExam).slideDown();
-                    ++countAddCellExam;
-                }
-                else {
-                    alert("Допускается не более 3 полей ввода!");
-                }
-            });
-
         });
     </script>
 
@@ -381,232 +213,50 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
 //$dates=array(null);
 ?>
 
-<div id="form-simple-les" title="Тип занятия: Обычное занятие">
+<div id="form-lesson" title="Создание занятия">
     <form>
         <fieldset>
-            <div class="left_header">
-                <b>Дата занятия</b>
-                <input type="text" id="simple_les-date" required class="datepicker" value="<?php echo date('d.m.Y') ?>">
-
-            </div>
-            <div class="info">
-                <button id="add_grade_sl" class="add_grade" style="color: blue; top: 20px;"
-                        title="Для добавления дополнительной оценки нажмите на кнопку!">+
-                </button>
+            <div class="box">
+                <b align="center">Дата занятия</b>
+                <div id="date">
+                    <input type="text" id="lesson-date" required class="datepicker" value="<?php echo date('d.m.Y') ?>"></div>
+                <br>
+                <div class="type_lesson">
+                    <input type="radio" class="type_lesson" id="simple_lesson_rb" name="type_lesson" value="sl" checked><b>Обычное занятие</b></div>
+                <br>
+                <div class="type_lesson">
+                    <input type="radio" class="type_lesson" id="colloquium_rb" name="type_lesson" value="col"><b>Коллоквиум</b></div>
+                <br>
+                <div class="type_lesson">
+                    <input type="radio" class="type_lesson" id="exam_rb" name="type_lesson" value="exam"><b>Аттестация</b></div>
                 <br>
             </div>
-            <br>
-            <hr>
-
-            <div class="container" style="width='80%';">
-                <div class="box" style="width: 480px">
-                    <div class="fio" style="float: left; width: 280px; ">
-                        <h4>Фамилия, имя, отчество</h4>
-                        <?php
-                        $i = 0;
-                        foreach ($array as $v) {
-                            echo "<div class='fio_student' style=\"width: 280px; border: solid black 1px; height: 30px;\">$v</div>";
-                        }
-                        ?>
-                    </div>
-
-                    <div class="cell" style="float: right; width: 200px">
-                        <h4>Отметка</h4>
-                        <?php
-                        $i = 0;
-                        foreach ($array as $v) {
-                            echo "<div class='cell_student' style='border: solid black 1px;height: 30px;'>
-                            <input class='cell' type=\"text\" id=\"0sl_inp$i\" maxlength=\"2\"onkeyup=\"this.value=this.value.replace(/[^0-9]/,''); if(this.value<1 || this.value>10) this.value='';\" style='width: 50px'>
-                            <input class='cell1' type='text' id='1sl_inp$i' maxlength='2' onkeyup=\"this.value=this.value.replace(/[^0-9]/,''); if(this.value<1 || this.value>10) this.value='';\" style='width: 50px;'>
-                            <input class='cell2' type='text' id='2sl_inp$i' maxlength='2' onkeyup=\"this.value=this.value.replace(/[^0-9]/,''); if(this.value<1 || this.value>10) this.value='';\" style='width: 50px;'>
-                            </div>";
-
-                            $i++;
-                        }
-                        ?>
-                    </div>
-
-                </div>
-
-                <div id="simple_les-toll-result" style="position: fixed; top: 40%; left: 60%;" class="tools">
-                    <button id="1" class="grade" style="width: 80px;"><b>Н<sub>у</sub></b></button>
-                    <br>
-                    <button id="2" class="grade" style="width: 80px;"><b>Н<sub>б/у</sub></b></button>
-                    <br>
-                    <button id="3" class="grade" style="width: 80px;"><b>Н<sub>б/отр.</sub></b></button>
-                    <br>
-                    <button id="4" class="grade" style="width: 80px;"><b>Зач.</b></button>
-                    <br>
-                    <button id="5" class="grade" style="width: 80px;"><b>Незач.</b></button>
-                    <br>
-                </div>
-
-            </div>
+        </fieldset>
+    </form>
 </div>
 
-</fieldset>
-</form>
-</div>
-
-<div id="form-colloquim" title="Тип занятия: Коллоквиум">
-    <form>
-        <fieldset>
-
-            <div class="left_header">
-                <b>Дата занятия</b>
-                <input type="text" id="colloquium-date" required class="datepicker" value="<?php echo date('d.m.Y') ?>"><br>
-            </div>
-
-            <div class="info">
-                <button id="add_grade_col" class="add_grade" style="color: blue; top: 20px;"
-                        title="Для добавления дополнительной оценки нажмите на кнопку!">+
-                </button>
-                <br>
-            </div>
-            <br>
-            <hr>
-
-            <div class="container" style="width='80%';">
-                <div class="box" style="width: 480px">
-                    <div class="fio" style="float: left; width: 280px; ">
-                        <h4>Фамилия, имя, отчество</h4>
-                        <?php
-                        $i = 0;
-                        foreach ($array as $v) {
-                            echo "<div class='fio_student' style=\"width: 280px; border: solid black 1px; height: 30px;\">$v</div>";
-                        }
-                        ?>
-                    </div>
-
-                    <div class="cell" style="float: right; width: 200px">
-                        <h4>Отметка</h4>
-                        <?php
-                        $i = 0;
-                        foreach ($array as $v) {
-                            echo "<div class='cell_student' style='border: solid black 1px;height: 30px;'>
-                            <input class='col_cell' type=\"text\" id=\"0col_inp$i\" maxlength=\"2\"onkeyup=\"this.value=this.value.replace(/[^0-9]/,''); if(this.value<1 || this.value>10) this.value='';\" style='width: 50px'>
-                            <input class='col_cell1' type='text' id='1col_inp$i' maxlength='2' onkeyup=\"this.value=this.value.replace(/[^0-9]/,''); if(this.value<1 || this.value>10) this.value='';\" style='width: 50px;'>
-                            <input class='col_cell2' type='text' id='2col_inp$i' maxlength='2' onkeyup=\"this.value=this.value.replace(/[^0-9]/,''); if(this.value<1 || this.value>10) this.value='';\" style='width: 50px;'>
-                            </div>";
-
-                            $i++;
-                        }
-                        ?>
-                    </div>
-
-
-                </div>
-
-                <div id="simple_les-toll-result" style="position: fixed; top: 40%; left: 60%;" class="tools">
-                    <button id="1" class="grade" style="width: 80px;"><b>Н<sub>у</sub></b></button>
-                    <br>
-                    <button id="2" class="grade" style="width: 80px;"><b>Н<sub>б/у</sub></b></button>
-                    <br>
-                    <button id="3" class="grade" style="width: 80px;"><b>Н<sub>б/отр.</sub></b></button>
-                    <br>
-                </div>
-
-            </div>
-</div>
-
-</fieldset>
-</form>
-</div>
-
-<div id="form-exam" title="Тип занятия: Аттестация">
-    <form>
-        <fieldset>
-
-            <div class="left_header">
-                <b>Дата занятия</b>
-                <input type="text" id="exam-date" required class="datepicker" value="<?php echo date('d.m.Y') ?>"><br>
-            </div>
-            <div class="info">
-                <button id="add_grade_exam" class="add_grade"
-                        title="Для добавления дополнительной оценки нажмите на кнопку!">+
-                </button>
-                <br>
-            </div>
-            <br>
-            <hr>
-
-            <div class="container" style="width='80%';">
-                <div class="box" style="width: 480px">
-                    <div class="fio" style="float: left; width: 280px; ">
-                        <h4>Фамилия, имя, отчество</h4>
-                        <?php
-                        $i = 0;
-                        foreach ($array as $v) {
-                            echo "<div class='fio_student' style=\"width: 280px; border: solid black 1px; height: 30px;\">$v</div>";
-                        }
-                        ?>
-                    </div>
-
-                    <div class="cell" style="float: right; width: 200px">
-                        <h4>Отметка</h4>
-                        <?php
-                        $i = 0;
-                        foreach ($array as $v) {
-                            echo "<div class='cell_student' style='border: solid black 1px;height: 30px;'>
-                            <input class='exam_cell' type=\"text\" id=\"0exam_inp$i\" maxlength=\"2\"onkeyup=\"this.value=this.value.replace(/[^0-9]/,''); if(this.value<1 || this.value>10) this.value='';\" style='width: 50px'>
-                            <input class='exam_cell1' type='text' id='1exam_inp$i' maxlength='2' onkeyup=\"this.value=this.value.replace(/[^0-9]/,''); if(this.value<1 || this.value>10) this.value='';\" style='width: 50px;'>
-                            <input class='exam_cell2' type='text' id='2exam_inp$i' maxlength='2' onkeyup=\"this.value=this.value.replace(/[^0-9]/,''); if(this.value<1 || this.value>10) this.value='';\" style='width: 50px;'>
-                            </div>";
-
-                            $i++;
-                        }
-                        ?>
-                    </div>
-
-
-                </div>
-
-                <div id="simple_les-toll-result" style="position: fixed; top: 40%; left: 60%;" class="tools">
-                    <button id="1" class="grade" style="width: 80px;"><b>Н<sub>у</sub></b></button>
-                    <br>
-                    <button id="2" class="grade" style="width: 80px;"><b>Н<sub>б/у</sub></b></button>
-                    <br>
-                    <button id="3" class="grade" style="width: 80px;"><b>Н<sub>б/отр.</sub></b></button>
-                    <br>
-                    <button id="4" class="grade" style="width: 80px;"><b>Зач.</b></button>
-                    <br>
-                    <button id="5" class="grade" style="width: 80px;"><b>Незач.</b></button>
-                    <br>
-                    <button id="6" class="grade" style="width: 80px;"><b style="color: #8c0000">Недоп.</b></button>
-                    <br>
-                </div>
-
-            </div>
-</div>
-
-
-</fieldset>
-</form>
-</div>
 
 <div class="container-list">
-    <div class="box" style="width: 95%; display: inline-block" align="center">
-        <div class="fio" style="float: left; width: 20%;">
-            <div class="title" style="border: solid black 1px; ">
-                Фамилия, имя, отчество
+    <div class="box">
+        <div class="fio">
+            <div class="title">
+                ФИО
             </div>
             <?php
             $i = 0;
             foreach ($array as $v) {
-                echo "<div class='fio_student' style=\"border: solid black 1px; height: 30px;\">$v</div>";
+                echo "<div class='fio_student'>$v</div>";
             }
             ?>
         </div>
 
-        <div class="result_box" style="width: 80%;">
+        <div class="result_box">
             <?php
             foreach ($dates as $date) {
-                echo "<div class='date' style=\"border: solid black 1px; float: left;\">$date";
+                echo "<div class='date'>$date";
                 for ($i = 0; $i < count($array); $i++) {
-                    echo "<div class='grade' style=\"border: solid black 1px; width: 80px; height: 30px; \">6";
-
+                    echo "<div class='grade'>6";
                     echo "</div>";
-
                 }
 
                 echo "</div>";
@@ -615,20 +265,18 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
 
         </div>
 
-        <div id="help" style="display: none; border: solid green 2px;">
-            <button id="1" class="grade" style="width: 80px;"><b>Н<sub>у</sub></b></button>
-            <button id="2" class="grade" style="width: 80px;"><b>Н<sub>б/у</sub></b></button>
-            <button id="3" class="grade" style="width: 80px;"><b>Н<sub>б/отр.</sub></b></button>
-            <button id="4" class="grade" style="width: 80px;"><b>Зач.</b></button>
-            <button id="5" class="grade" style="width: 80px;"><b>Незач.</b></button>
-            <button id="6" class="grade" style="width: 80px;"><b style="color: #8c0000">Недоп.</b></button>
-        </div>
+        <!--        <div id="help" style="display: none; border: solid green 2px;">-->
+        <!--            <button id="1" class="grade" style="width: 80px;"><b>Н<sub>у</sub></b></button>-->
+        <!--            <button id="2" class="grade" style="width: 80px;"><b>Н<sub>б/у</sub></b></button>-->
+        <!--            <button id="3" class="grade" style="width: 80px;"><b>Н<sub>б/отр.</sub></b></button>-->
+        <!--            <button id="4" class="grade" style="width: 80px;"><b>Зач.</b></button>-->
+        <!--            <button id="5" class="grade" style="width: 80px;"><b>Незач.</b></button>-->
+        <!--            <button id="6" class="grade" style="width: 80px;"><b style="color: #8c0000">Недоп.</b></button>-->
+        <!--        </div>-->
     </div>
 
     <div class="tools" align="center">
-        <button id="create_simple_lesson">Обычное занятие</button>
-        <button id="create_colloquium">Коллоквиум</button>
-        <button id="create_exam">Аттестация</button>
+        <button id="create_lesson">Создать занятие</button>
     </div>
 </div>
 
