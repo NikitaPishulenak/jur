@@ -81,7 +81,7 @@
             });
 
 
-            $('div .grade').dblclick(function () {
+            $('div.grade').dblclick(function () {
                 edit_dialog.dialog("open");
                 edit_form[0].reset();
                 $('#inp_2').slideUp();
@@ -147,8 +147,15 @@
                 if (countCell < 3) {
                     if(countCell<=0)
                         countCell=1;
-                    $("#inp_" + countCell).slideDown();
-                    ++countCell;
+                    if($("#inp_"+(countCell-1)).val() !=""){
+                        $("#inp_" + countCell).slideDown();
+                        ++countCell;
+                    }
+                    else{
+
+                        alert("Заполните, пожалуйста, доступное поле ввода оценки!");
+                    }
+
                 }
                 else {
                     alert("Допускается не более 3 полей ввода!");
