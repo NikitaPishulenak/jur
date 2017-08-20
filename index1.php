@@ -223,9 +223,6 @@
 
             });
 
-            $(".cell:text").focus(function () {    // получение фокуса текстовым полем
-                $(this).select();
-            });
 
 
             $("#simple_les-date").change(function () {
