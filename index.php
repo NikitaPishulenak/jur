@@ -8,17 +8,18 @@
     <link rel="stylesheet" href="mystyle.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <title>Оценочная ведомость</title>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="scripts/script.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
+<!--    <script src="scripts/coding.js"></script>-->
 
     <script>
         $(function () {
-            var dialog, form;
+            var dialog, form, edit_dialog, edit_form;
 
             function addLesson() {
-                $("div.box").find('input#lesson-date').blur();
+                //$("div.box").find('input#lesson-date').blur();
                 if ($("#lesson-date").val() == "")
                     alert("Для сохранения необходимо заполнить поле 'Дата'");
                 else {
@@ -26,29 +27,32 @@
                     var cnt = $("div.container-list").find("div.fio_student").length;
 
                     if ($("#colloquium_rb").is(':checked')){
-                        $("div.result_box").find('div.date:last').after("<div class='date colloquium_theme'>" + date + "<div class='grade'></div></div>");
-                        for (var i = 1; i < cnt; i++) {
-                            $("div.date:last").find('div.grade:last').after("<div class='grade'></div>");
+                        $("div.result_box").find('div.date_col:last').after("<div class='date_col colloquium_theme'><div class='date_title'>" + date +"</div></div>");
+                        for (var i = 0; i < cnt; i++) {
+                            $("div.date_col:last").append("<div class='grade' >9</div>");
                         }
                     }
+
                     else if ($("#exam_rb").is(':checked')){
-                        $("div.result_box").find('div.date:last').after("<div class='date exam_theme'>" + date + "<div class='grade'></div></div>");
-                        for (var i = 1; i < cnt; i++) {
-                            $("div.date:last").find('div.grade:last').after("<div class='grade'></div>");
+                        $("div.result_box").find('div.date_col:last').after($("<div class='date_col exam_theme'><div class='date_title'>" + date + "</div></div>"));
+                        for (var i = 0; i < cnt; i++) {
+                            $("div.date_col:last").append($("<div class='grade'>7</div>"));
                         }
                     }
                     else{
-                        $("div.result_box").find('div.date:last').after("<div class='date'>" + date + "<div class='grade'></div></div>");
+                        $("<div class='date_col'><div class='date_title'>" + date + "</div></div>").insertAfter($('div.date_col:last'));
+                        //$('div.date:last').after("<div class='date'>" + date + "</div>");
 
-                        for (var i = 1; i < cnt; i++) {
-                            $("div.date:last").find('div.grade:last').after("<div class='grade'></div>");
+                        for (var i = 0; i < cnt; i++) {
+                            $("div.date_col:last").append($("<div class='grade' >5</div>"));
                         }
                     }
-
-
                     dialog.dialog("close");
                 }
             }
+
+
+
 
 
             dialog = $("#form-lesson").dialog({
@@ -70,32 +74,184 @@
                 event.preventDefault();
             });
 
+            edit_dialog = $("#form-edit").dialog({
+                autoOpen: false,
+                height: 'auto',
+                width: 'auto',
+                modal: true
+            });
+            edit_form = edit_dialog.find("form").on("submit", function (event) {
+                event.preventDefault();
+            });
+
+
+            $('div.grade').dblclick(function () {
+                edit_dialog.dialog("open");
+                edit_form[0].reset();
+                $("button#add_grade_input").removeAttr('disabled');
+
+                $("#inp_0").focus();
+                $('#inp_2').slideUp();
+                --countCell;
+                $('#inp_1').slideUp();
+                --countCell;
+
+                var cur_grade=$(this).text();
+                elem=$(this);
+
+                grades = cur_grade.split("/");
+                 for(var i=0; i<grades.length; i++){
+                     $("div.panel").find('input#inp_'+i).slideDown();
+                     $("div.panel").find('input#inp_'+i).val(grades[i]);
+                 }
+                $('input#inp_0').focus();
+                $('input#inp_0').select();
+
+                $(".inp_cell:text").focus(function () {
+                    inp_id=$(this).attr('id');
+                    //alert(inp_id);
+                    $("b.tool").click(function () {
+                        var text=$(this).text();
+                        $("#" + inp_id).val(text);
+                        $("#" + inp_id).focus();
+                    });
+                });
+
+                var countOpenCell=0;
+                for(j=0;j<3;j++){
+                    if ($("#inp_"+j).val() != ""){
+                        countOpenCell++;
+                    }
+                }
+                if(countOpenCell==3){
+                    $("button#add_grade_input").attr('disabled', true);
+                }
+
+                var absenteeisms = /\w/;
+                $(".inp_cell:text").keydown(function (event) {
+                    if (event.keyCode == 8 || event.keyCode == 46) {	//если это удаление
+                        if (!absenteeisms.test(this.value)) {
+                            $(this).val("")
+                        }
+                    }
+                });
+
+                $("#edit").click(function () {
+                    var coding="";
+                    var bit1 = $("#inp_0").val();
+                    var bit2 = $("#inp_1").val();
+                    var bit3 = $("#inp_2").val();
+                    bit1 = (bit1 == "") ? "" : bit1;
+                    bit2 = (bit2 == "") ? "" : "/" + bit2;
+                    bit3 = (bit3 == "") ? "" : "/" + bit3;
+                    var cur_res = bit1 + bit2 + bit3;
+                    //alert(cur_res);
+                    coding=Encrypt(cur_res);
+                    elem.text(cur_res);
+                    //alert(coding);
+                    edit_dialog.dialog("close");
+                });
+
+            });
+
+            $(".inp_cell:text").click(function () {
+               $(this).select();
+            });
+
+
             $("#create_lesson").button().on("click", function () {
                 dialog.dialog("open");
             });
 
 
-            $("div.grade").dblclick(function () {
-                var val = $(this).html();
-                //формируем код текстового поля
-                //onkeyup="this.value=this.value.replace(/\D/,''); if (this.value<1 || this.value>10) this.value = '';"
-                var code = '<input type="text" class="cell" id="edit" value="' + val + '" style="width: 30px;" onkeyup="this.value=this.value.replace(/[^0-9]/,\'\'); if (this.value<1 || this.value>10) this.value = \'\';" />';
-                $("div#help").show();
-                //удаляем содержимое ячейки, вставляем в нее сформированное поле
-                $(this).empty().append(code);
-                //устанавливаем фокус на свеженарисованное поле
-                $('#edit').focus();
-                $('#edit').blur(function () {	//устанавливаем обработчик
-                    var val = $(this).val();	//получаем то, что в поле находится
-                    //находим ячейку, опустошаем, вставляем значение из поля
-                    $(this).parent().empty().html(val);
-                    $("div#help").hide();
-                });
+            $("#add_grade_input").click(function () {
 
+                if (countCell < 3) {
+                    if(countCell<=0)
+                        countCell=1;
+
+
+                    if($("#inp_"+(countCell-1)).val() !=""){
+                        $("#inp_" + countCell).slideDown();
+                        $("#inp_" + countCell).focus();
+                        ++countCell;
+                    }
+                    else{
+                        alert("Заполните, пожалуйста, доступное поле ввода оценки!");
+                    }
+
+                }
+                else {
+                    alert("Допускается не более 3 полей ввода!");
+                    $("button#add_grade_input").attr('disabled', true);
+
+                }
             });
 
-
         });
+
+//        function F1(){
+//            var edit_dialog, edit_form;
+//            edit_dialog = $("#form-edit").dialog({
+//                autoOpen: false,
+//                height: 'auto',
+//                width: 'auto',
+//                modal: true
+//            });
+//            edit_form = edit_dialog.find("form").on("submit", function (event) {
+//                event.preventDefault();
+//            });
+//
+//            edit_dialog.dialog("open");
+//            edit_form[0].reset();
+//            $("button#add_grade_input").removeAttr('disabled');
+//
+//            $("#inp_0").focus();
+//            $('#inp_2').slideUp();
+//            --countCell;
+//            $('#inp_1').slideUp();
+//            --countCell;
+//
+//            var cur_grade=$(this).text();
+//            elem=$(this);
+//
+//            grades = cur_grade.split("/");
+//            for(var i=0; i<grades.length; i++){
+//                $("div.panel").find('input#inp_'+i).slideDown();
+//                $("div.panel").find('input#inp_'+i).val(grades[i]);
+//            }
+//            $('input#inp_0').focus();
+//            $('input#inp_0').select();
+//
+//            $(".inp_cell:text").focus(function () {
+//                inp_id=$(this).attr('id');
+//                //alert(inp_id);
+//                $("b.tool").click(function () {
+//                    var text=$(this).text();
+//                    $("#" + inp_id).val(text);
+//                    $("#" + inp_id).focus();
+//                });
+//            });
+//
+//            $("#edit").click(function () {
+//                var coding="";
+//                var bit1 = $("#inp_0").val();
+//                var bit2 = $("#inp_1").val();
+//                var bit3 = $("#inp_2").val();
+//                bit1 = (bit1 == "") ? "" : bit1;
+//                bit2 = (bit2 == "") ? "" : "/" + bit2;
+//                bit3 = (bit3 == "") ? "" : "/" + bit3;
+//                var cur_res = bit1 + bit2 + bit3;
+//                //alert(cur_res);
+//                coding=Encrypt(cur_res);
+//                elem.text(cur_res);
+//                //alert(coding);
+//                edit_dialog.dialog("close");
+//            });
+//
+//
+//
+//        }
 
 
         $(function () {
@@ -111,38 +267,7 @@
         });
 
         $(document).ready(function () {
-            $("div.box").find('input#lesson-date').blur();
-            $(".cell1").slideUp();
-            $(".cell2").slideUp();
-            $(".col_cell1").slideUp();
-            $(".col_cell2").slideUp();
-            $(".exam_cell1").slideUp();
-            $(".exam_cell2").slideUp();
-            $(".cell:text, .cell1:text, .cell2:text, .col_cell:text, .col_cell1:text, .col_cell2:text, .exam_cell:text, .exam_cell1:text, .exam_cell2:text").focus(function () {
-                inp_id = $(this).attr('id');
-                //alert(inp_id);
-
-                $("button.grade").click(function () {
-                    var text = $(this).text();
-                    $("#" + inp_id).val(text);
-                    $("#" + inp_id).focus();
-                });
-
-                var absenteeisms = /\w/;
-                $(".cell:text, .cell1:text, .cell2:text, .col_cell:text, .col_cell1:text, .col_cell2:text, .exam_cell:text, .exam_cell1:text, .exam_cell2:text").keydown(function (event) {
-                    if (event.keyCode == 8 || event.keyCode == 46) {	//если это удаление
-                        if (!absenteeisms.test(this.value)) {
-                            $(this).val("")
-                        }
-                    }
-                });
-
-
-            });
-
-            $(".cell:text").focus(function () {    // получение фокуса текстовым полем
-                $(this).select();
-            });
+            countCell = 1;
 
 
             $("#lesson-date").change(function () {
@@ -174,34 +299,139 @@
             });
 
 
-            $(".cell:text, .cell1:text, .cell2:text, .col_cell:text, .col_cell1:text, .col_cell2:text, .exam_cell:text, .exam_cell1:text, .exam_cell2:text").change(function () {
-                var len = this.value.length;
-                var grade = this.value.split("/");
-                var i = 0;
-                for (i; i < grade.length; i++) {
-                    grade[i].toString();
-                    if (grade[i].charAt(0) == "0") {
-                        while (grade[i].charAt(0) == "0") {
-                            grade[i] = grade[i].substr(1, grade[i].length);
-                        }
-                        $(this).val(grade[i]);
-                    }
-                    else if (isNaN(grade[i])) {
-                        alert("Вы ввели ошибочное значение: " + grade[i] + " Исправьте, пожалуйста, ошибку!");
-                        $(this).val("");
-                        $(this).select();
-                    }
-                    else if (grade[i] < 1 || grade[i] > 10) {
-                        alert("Значение оценки должно входить в диапазон: [1-10]. Вы ввели ошибочное значение: " + grade[i] + " Исправьте, пожалуйста, ошибку!");
-                        $(this).val("");
-                        $(this).select();
-                    }
-                    //alert(grade[i]); //вывод каждой оценки
-                    //resultStr[i]=grade[i];
-                }
-            });
-
         });
+
+        function Encrypt(value) {
+            var res="";
+            var grade = value.split("/");
+            for (i = 0; i < grade.length; i++) {
+                res+=MatchEncrypt(grade[i]);
+
+            }
+            return res;
+        }
+
+        function Decrypt(value) {
+            var res="";
+            var mas=value.match(/.{2}/g);
+            for (i=0;i<mas.length; i++){
+                mas[i]=MatchDecrypt(mas[i]);
+            }
+            res=mas.join('/');
+            //alert(res);
+            return res;
+        }
+
+        function MatchEncrypt(val) {
+            switch (val){
+                case '1':
+                    return '11';
+                    break;
+                case '2':
+                    return '12';
+                    break;
+                case '3':
+                    return '13';
+                    break;
+                case '4':
+                    return '14';
+                    break;
+                case '5':
+                    return '15';
+                    break;
+                case '6':
+                    return '16';
+                    break;
+                case '7':
+                    return '17';
+                    break;
+                case '8':
+                    return '18';
+                    break;
+                case '9':
+                    return '19';
+                    break;
+                case '10':
+                    return '20';
+                    break;
+                case 'Ну':
+                    return '21';
+                    break;
+                case 'Нб_у':
+                    return '22';
+                    break;
+                case 'Нб_отр.':
+                    return '23';
+                    break;
+                case 'Зач.':
+                    return '24';
+                    break;
+                case 'Незач.':
+                    return '25';
+                    break;
+                case 'Недопуск':
+                    return '26';
+                    break;
+            }
+
+        }
+
+        function MatchDecrypt(val) {
+            switch (val){
+                case '11':
+                    return '1';
+                    break;
+                case '12':
+                    return '2';
+                    break;
+                case '13':
+                    return '3';
+                    break;
+                case '14':
+                    return '4';
+                    break;
+                case '15':
+                    return '5';
+                    break;
+                case '16':
+                    return '6';
+                    break;
+                case '17':
+                    return '7';
+                    break;
+                case '18':
+                    return '8';
+                    break;
+                case '19':
+                    return '9';
+                    break;
+                case '20':
+                    return '10';
+                    break;
+                case '21':
+                    return 'Ну';
+                    break;
+                case '22':
+                    return 'Нб_у';
+                    break;
+                case '23':
+                    return 'Нб_отр.';
+                    break;
+                case '24':
+                    return 'Зач.';
+                    break;
+                case '25':
+                    return 'Незач.';
+                    break;
+                case '26':
+                    return 'Недопуск';
+                    break;
+            }
+
+        }
+
+//        var s="262524232221201113182527"; //пробую расшифровать
+//        alert(Decrypt(s));
     </script>
 
 </head>
@@ -209,7 +439,7 @@
 
 <?php
 $array = array("Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Рудяк Марк Николаевич", "Шеко Артем Викторович", "Шершень Степан Яковлевич", "Шут Павел Владимирович", "Якубович Александр Дмитриевич", "Ясько Елена Максимовна", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич");
-$dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
+$dates = array("01.09.2017", "06.09.2017", "10.09.2019", "15.09.2017", "20.09.2017");
 //$dates=array(null);
 ?>
 
@@ -218,7 +448,7 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
         <fieldset>
             <div class="box">
                 <b align="center">Дата занятия</b>
-                <div id="date">
+                <div id="date_col">
                     <input type="text" id="lesson-date" required class="datepicker" value="<?php echo date('d.m.Y') ?>"></div>
                 <br>
                 <div class="type_lesson">
@@ -235,8 +465,42 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
     </form>
 </div>
 
+<div id="form-edit" title="Редактирование отметки">
+    <form>
+        <fieldset>
+            <div class="panel">
+                <button id="add_grade_input" class="add_grade" title="Для добавления дополнительной оценки нажмите на кнопку!">+</button>
+                <span class="space"></span>
+                <b id="1" class="tool"><b>Н<sub>у</sub></b></b>
+                <span class="space"></span>
+                <b id="2" class="tool"><b>Н<sub>б_у</sub></b></b>
+                <span class="space"></span>
+                <b id="3" class="tool"><b>Н<sub>б_отр.</sub></b></b>
+                <span class="space"></span>
+                <b id="4" class="tool"><b>Зач.</b></b>
+                <span class="space"></span>
+                <b id="5" class="tool"><b>Незач.</b></b>
+                <span class="space"></span>
+                <b id="6" class="tool"><b style="color: #8c0000">Недопуск</b></b>
+
+                <br><br>
+
+                <input class='inp_cell' id="inp_0" type=text maxlength='2' onkeyup="this.value=this.value.replace(/[^0-9]/,''); if (this.value<1 || this.value>10) this.value='';">
+                <input class='inp_cell' id="inp_1" type='text' maxlength='2' onkeyup="this.value=this.value.replace(/[^0-9]/,''); if (this.value<1 || this.value>10) this.value='';">
+                <input class='inp_cell' id="inp_2" type='text' maxlength='2' onkeyup="this.value=this.value.replace(/[^0-9]/,''); if (this.value<1 || this.value>10) this.value='';">
+
+                <br><hr><br>
+                <button id="edit" class="button"><b>Сохранить</b></button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
 
 <div class="container-list">
+    <div class="tools" align="center">
+        <button id="create_lesson">Создать занятие</button>
+    </div><br><hr><br>
     <div class="box">
         <div class="fio">
             <div class="title">
@@ -253,9 +517,9 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
         <div class="result_box">
             <?php
             foreach ($dates as $date) {
-                echo "<div class='date'>$date";
+                echo "<div class='date_col'><div class='date_title'>$date</div>";
                 for ($i = 0; $i < count($array); $i++) {
-                    echo "<div class='grade'>6";
+                    echo "<div class='grade'>3";
                     echo "</div>";
                 }
 
@@ -265,19 +529,9 @@ $dates = array("01-09", "06-09", "10-09", "15-09", "20-09");
 
         </div>
 
-        <!--        <div id="help" style="display: none; border: solid green 2px;">-->
-        <!--            <button id="1" class="grade" style="width: 80px;"><b>Н<sub>у</sub></b></button>-->
-        <!--            <button id="2" class="grade" style="width: 80px;"><b>Н<sub>б/у</sub></b></button>-->
-        <!--            <button id="3" class="grade" style="width: 80px;"><b>Н<sub>б/отр.</sub></b></button>-->
-        <!--            <button id="4" class="grade" style="width: 80px;"><b>Зач.</b></button>-->
-        <!--            <button id="5" class="grade" style="width: 80px;"><b>Незач.</b></button>-->
-        <!--            <button id="6" class="grade" style="width: 80px;"><b style="color: #8c0000">Недоп.</b></button>-->
-        <!--        </div>-->
     </div>
 
-    <div class="tools" align="center">
-        <button id="create_lesson">Создать занятие</button>
-    </div>
+
 </div>
 
 </body>
