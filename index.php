@@ -104,7 +104,7 @@
 
                 $(".inp_cell:text").focus(function () {
                     inp_id = $(this).attr('id');
-                    console.log(inp_id);
+                    //console.log(inp_id);
                     //alert(inp_id);
 
 //                    $("b.tool").click(function () {
@@ -400,7 +400,7 @@
 <?php
 $array = array("Ананич Злата Сергеевна", "Гунева Кристина Дмитриевна", "Дмитрущенкова Анастасия Олеговна", "Жерко Любовь Вячеславовна", "Ибадова Марйам Этибар кызы", "Ильюшкова Мария Сергеевна", "Казакова Анастасия Сергеевна", "Клакоцкая Анна Анатольевна", "Лицкевич Елизавета Александровна", "Шафран Роман Валентинович", "Якунович	Екатерина Викторовна");
 //$dates = array("01.09.2017", "06.09.2017", "10.09.2019", "15.09.2017", "20.09.2017");
-$dates = array("01.09.2017");
+//$dates = array("01.09.2017");
 ?>
 
 <div id="form-lesson" title="Создание занятия">
@@ -488,6 +488,7 @@ $dates = array("01.09.2017");
 
         <div class="result_box">
             <?php
+            echo "<div class='date_col' style='display: none'></div>";
             foreach ($dates as $date) {
                 echo "<div class='date_col'><div class='date_title'>$date</div>";
                 for ($i = 0; $i < count($array); $i++) {
