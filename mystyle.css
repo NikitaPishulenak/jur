@@ -163,6 +163,8 @@ tr:hover {
 }
 
 /*18-08-17*/
+
+
 .date_col {
     border: solid black 1px;
     width: 80px;
@@ -173,10 +175,12 @@ tr:hover {
 .grade {
     border-bottom: solid black 1px;
     border-top: solid black 1px;
+    border: solid black 1px;
     width: 80px;
     height: 30px;
     text-align: center;
     cursor: pointer;
+    vertical-align: middle;
 }
 
 .box {
@@ -186,6 +190,7 @@ tr:hover {
 }
 
 .fio {
+
     border-bottom: solid black 1px;
     float: left;
     width: 20%;
@@ -197,9 +202,11 @@ tr:hover {
     /*border-bottom: none;*/
 }
 
+
 .date_title{
     border-bottom: solid black 1px;
 }
+
 
 .fio_student {
     border: solid black 1px;
@@ -222,15 +229,6 @@ input .edit_grade {
     background-color: #8c0000;
 }
 
-#div-test {
-    position: fixed;
-    background-color: #cccccc;
-    display: none;
-    width: 400px;
-    border: 1px solid #000;
-    padding: 20px;
-}
-
 /*.add_grade {*/
     /*color: blue;*/
     /*text-align: center;*/
@@ -250,4 +248,12 @@ input .edit_grade {
 .space{
     border-left: solid blue 1px;
     margin: 0 8px 0 8px;
+}
+
+.tool:hover{
+    color: blue;
+}
+
+.fail{
+    color: #8c0000;
 }
