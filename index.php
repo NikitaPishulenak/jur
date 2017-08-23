@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="windows-1251">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -16,34 +16,87 @@
     <script>
         $(function () {
             var dialog, form, edit_dialog, edit_form;
+            id_students=new Array();
+
+
+            for(y=0;y<100;y++){
+                id_students[y]=Math.floor(Math.random() * 1000) + 1;
+                console.log(id_students[y]);
+            }
 
             function addLesson() {
                 if ($("#lesson-date").val() == "")
                     alert("Для сохранения необходимо заполнить поле 'Дата'");
                 else {
-                    var date = $("#lesson-date").val();
+                    var dateLesson = $("#lesson-date").val();
                     var cnt = $("div.container-list").find("div.fio_student").length;
 
                     if ($("#colloquium_rb").is(':checked')) {
-                        $("div.result_box").find('div.date_col:last').after("<div class='date_col colloquium_theme'><div class='date_title'>" + date + "</div></div>");
-                        for (var i = 0; i < cnt; i++) {
-                            $("div.date_col:last").append("<div class='grade' ></div>");
-                        }
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '',
+                            data: {dateLesson: dateLesson, typePractice:"1", groupNumber: groupNumber, subjectName: subject, typeLesson: "0", idLesson: idLesson},
+                            success: function(status){
+                                if(status=="false"){
+                                    alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
+                                }
+                                else{
+                                    $("div.result_box").find('div.date_col:last').after("<div class='date_col colloquium_theme'><div class='date_title'>" + dateLesson + "</div></div>");
+                                    for (var i = 0; i < cnt; i++) {
+                                        $("div.date_col:last").append("<div class='grade' data-id="+id_students[i]+"></div>");
+                                    }
+                                }
+
+                            }
+                        });
                     }
 
                     else if ($("#exam_rb").is(':checked')) {
-                        $("div.result_box").find('div.date_col:last').after("<div class='date_col exam_theme'><div class='date_title'>" + date + "</div></div>");
-                        for (var i = 0; i < cnt; i++) {
-                            $("div.date_col:last").append("<div class='grade'></div>");
-                        }
-                    }
-                    else {
-                        $("<div class='date_col'><div class='date_title'>" + date + "</div></div>").insertAfter('div.date_col:last');
 
-                        for (var i = 0; i < cnt; i++) {
-                            $("div.date_col:last").append("<div class='grade' ></div>");
-                        }
+                        $.ajax({
+                            type: 'POST',
+                            url: '',
+                            data: {dateLesson: dateLesson, typePractice:"2", groupNumber: groupNumber, subjectName: subject, typeLesson: "0", idLesson: idLesson},
+                            success: function(status){
+                                if(status=="false"){
+                                    alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
+                                }
+                                else{
+                                    $("div.result_box").find('div.date_col:last').after("<div class='date_col exam_theme'><div class='date_title'>" + dateLesson + "</div></div>");
+                                    for (var i = 0; i < cnt; i++) {
+                                        $("div.date_col:last").append("<div class='grade' data-id="+id_students[i]+"></div>");
+                                    }
+                                }
+
+                            }
+                        });
                     }
+
+                    else {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '',
+                            data: {dateLesson: dateLesson, typePractice:"0",groupNumber: groupNumber, subjectName: subject, typeLesson:"0", idLesson: idLesson},
+                            success: function(status){
+                                if(status=="false"){
+                                    alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
+                                }
+                                else{
+                                    $("<div class='date_col'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+
+                                    for (var i = 0; i < cnt; i++) {
+                                        $("div.date_col:last").append("<div class='grade' data-id="+id_students[i]+"></div>");
+                                    }
+                                }
+
+                            }
+
+                        });
+                    }
+                   // console.log(dateLesson);
+                    $("b#dateLesson").html(dateLesson);
                     dialog.dialog("close");
                 }
             }
@@ -80,18 +133,22 @@
 
 
             $('div').delegate(".grade", "dblclick", function () {
-
+                dat=$(this).parent().find('div.date_title').html();//Дата столбца
+                //console.log(dat);
+                student_id=$(this).attr('data-id');
+//                $("#ddd").html(dat);
                 edit_dialog.dialog("open");
                 edit_form[0].reset();
                 $("button#add_grade_input").removeAttr('disabled');
+                //dateLes=$("b#dateLesson").val();
 
-                //$("#inp_0").focus();
+                $("#inp_0").focus();
                 $('#inp_2').slideUp();
                 --countCell;
                 $('#inp_1').slideUp();
                 --countCell;
 
-                var cur_grade = $(this).text();
+                cur_grade = $(this).text();
                 elem = $(this);
 
                 grades = cur_grade.split("/");
@@ -112,31 +169,24 @@
 //                        $("#" + inp_id).val(text);
 //                        $("#" + inp_id).focus();
 //                    });
-
-                });
-                $("b#1").click(function(){
-                    $("#" + inp_id).val("Ну");
-                    //$("#" + inp_id).focus();
-                });
-                $("b#2").click(function(){
-                    $("#" + inp_id).val("Нб_у");
-                    //$("#" + inp_id).focus();
-                });
-                $("b#3").click(function(){
-                    $("#" + inp_id).val("Нб_отр.");
-                    //$("#" + inp_id).focus();
-                });
-                $("b#4").click(function(){
-                    $("#" + inp_id).val("Зач.");
-                    // $("#" + inp_id).focus();
-                });
-                $("b#5").click(function(){
-                    $("#" + inp_id).val("Незач.");
-                    //$("#" + inp_id).focus();
-                });
-                $("b#6").click(function(){
-                    $("#" + inp_id).val("Недопуск");
-                    //$("#" + inp_id).focus();
+                    $("b#1").click(function(){
+                        $("#" + inp_id).val("Ну");
+                    });
+                    $("b#2").click(function(){
+                        $("#" + inp_id).val("Нб_у");
+                    });
+                    $("b#3").click(function(){
+                        $("#" + inp_id).val("Нб_отр.");
+                    });
+                    $("b#4").click(function(){
+                        $("#" + inp_id).val("Зач.");
+                    });
+                    $("b#5").click(function(){
+                        $("#" + inp_id).val("Незач.");
+                    });
+                    $("b#6").click(function(){
+                        $("#" + inp_id).val("Недопуск");
+                    });
                 });
 
                 var countOpenCell = 0;
@@ -158,23 +208,42 @@
                     }
                 });
 
-                $("#edit").click(function () {
-                    //console.log($('#form-edit').serializeArray());
-                    var coding = "";
-                    var bit1 = $("#inp_0").val();
-                    var bit2 = $("#inp_1").val();
-                    var bit3 = $("#inp_2").val();
-                    bit1 = (bit1 == "") ? "" : bit1;
-                    bit2 = (bit2 == "") ? "" : "/" + bit2;
-                    bit3 = (bit3 == "") ? "" : "/" + bit3;
-                    var cur_res = bit1 + bit2 + bit3;
-                    //alert(cur_res);
-                    coding = Encrypt(cur_res);
-                    elem.text(cur_res);
-                    //alert(coding);
-                    edit_dialog.dialog("close");
-                });
+            });
 
+            $("#edit").click(function () {
+                var coding = "";
+                //alert(student_id);
+                var bit1 = $("#inp_0").val();
+                var bit2 = $("#inp_1").val();
+                var bit3 = $("#inp_2").val();
+                bit1 = (bit1 == "") ? "" : bit1;
+                bit2 = (bit2 == "") ? "" : "/" + bit2;
+                bit3 = (bit3 == "") ? "" : "/" + bit3;
+                var cur_res = bit1 + bit2 + bit3;
+                //alert(cur_res);
+                coding = Encrypt(cur_res);
+                elem.text(cur_res);
+                //alert(coding);
+                //alert("cur_grade "+cur_grade+" cur_res "+cur_res);
+                if(cur_grade!=cur_res){
+                    $.ajax({
+                        type: 'POST',
+                        url: '',
+                        data: {grades: coding, typeProcedure: "UPDATE", dateLesson: dat, studentId: student_id}
+                    });
+                }
+                else{
+                    $.ajax({
+                        type: 'POST',
+                        url: '',
+                        data: {grades: coding, typeProcedure: "ADD", dateLesson: dat, studentId: student_id}
+                    });
+
+                }
+                console.log(coding);
+                console.log(dat);
+                console.log(student_id);
+                edit_dialog.dialog("close");
             });
 
             $(".inp_cell:text").click(function () {
@@ -228,7 +297,17 @@
 
         $(document).ready(function () {
             countCell = 1;
-
+            groupNumber="7777";
+            subject="Хирургия";
+            teacher="Ибрагимов Леон Измайлович";
+            dateLesson=$("div.date_title:last").val();
+            idLesson="4";
+            //alert(groupNumber+"+"+subject+"+"+teacher+"+"+dateLast+"+"+idLesson);
+            $("b#group").html(groupNumber);
+            $("b#subject").html(subject);
+            $("h3#teacher").html(teacher);
+            $("#idLesson").html(idLesson);
+            $("b#dateLesson").html(dateLesson);
 
             $("#lesson-date").change(function () {
 
@@ -285,52 +364,52 @@
         function MatchEncrypt(val) {
             switch (val) {
                 case '1':
-                    return '11';
+                    return '10';
                     break;
                 case '2':
-                    return '12';
+                    return '11';
                     break;
                 case '3':
-                    return '13';
+                    return '12';
                     break;
                 case '4':
-                    return '14';
+                    return '13';
                     break;
                 case '5':
-                    return '15';
+                    return '14';
                     break;
                 case '6':
-                    return '16';
+                    return '15';
                     break;
                 case '7':
-                    return '17';
+                    return '16';
                     break;
                 case '8':
-                    return '18';
+                    return '17';
                     break;
                 case '9':
-                    return '19';
+                    return '18';
                     break;
                 case '10':
-                    return '20';
+                    return '19';
                     break;
                 case 'Ну':
-                    return '21';
+                    return '20';
                     break;
                 case 'Нб_у':
-                    return '22';
+                    return '21';
                     break;
                 case 'Нб_отр.':
-                    return '23';
+                    return '22';
                     break;
                 case 'Зач.':
-                    return '24';
+                    return '23';
                     break;
                 case 'Незач.':
-                    return '25';
+                    return '24';
                     break;
                 case 'Недопуск':
-                    return '26';
+                    return '25';
                     break;
             }
 
@@ -338,52 +417,52 @@
 
         function MatchDecrypt(val) {
             switch (val) {
-                case '11':
+                case '10':
                     return '1';
                     break;
-                case '12':
+                case '11':
                     return '2';
                     break;
-                case '13':
+                case '12':
                     return '3';
                     break;
-                case '14':
+                case '13':
                     return '4';
                     break;
-                case '15':
+                case '14':
                     return '5';
                     break;
-                case '16':
+                case '15':
                     return '6';
                     break;
-                case '17':
+                case '16':
                     return '7';
                     break;
-                case '18':
+                case '17':
                     return '8';
                     break;
-                case '19':
+                case '18':
                     return '9';
                     break;
-                case '20':
+                case '19':
                     return '10';
                     break;
-                case '21':
+                case '20':
                     return 'Ну';
                     break;
-                case '22':
+                case '21':
                     return 'Нб_у';
                     break;
-                case '23':
+                case '22':
                     return 'Нб_отр.';
                     break;
-                case '24':
+                case '23':
                     return 'Зач.';
                     break;
-                case '25':
+                case '24':
                     return 'Незач.';
                     break;
-                case '26':
+                case '25':
                     return 'Недопуск';
                     break;
             }
@@ -392,15 +471,17 @@
 
         //        var s="262524232221201113182527"; //пробую расшифровать
         //        alert(Decrypt(s));
+
+
+
     </script>
 
 </head>
 <body>
 
 <?php
-$array = array("Ананич Злата Сергеевна", "Гунева Кристина Дмитриевна", "Дмитрущенкова Анастасия Олеговна", "Жерко Любовь Вячеславовна", "Ибадова Марйам Этибар кызы", "Ильюшкова Мария Сергеевна", "Казакова Анастасия Сергеевна", "Клакоцкая Анна Анатольевна", "Лицкевич Елизавета Александровна", "Шафран Роман Валентинович", "Якунович	Екатерина Викторовна");
-//$dates = array("01.09.2017", "06.09.2017", "10.09.2019", "15.09.2017", "20.09.2017");
-//$dates = array("01.09.2017");
+$array = array("Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Рудяк Марк Николаевич", "Шеко Артем Викторович", "Шершень Степан Яковлевич", "Шут Павел Владимирович", "Якубович Александр Дмитриевич", "Ясько Елена Максимовна", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич");
+$dates = array("01.09.2017");
 ?>
 
 <div id="form-lesson" title="Создание занятия">
@@ -419,7 +500,7 @@ $array = array("Ананич Злата Сергеевна", "Гунева Кр�
                 <label><input type="radio" class="type_lesson" id="exam_rb" name="type_lesson" value="exam"><b>Аттестация</b></label>
                 <br><br>
             </div>
-        </fieldset>
+          </fieldset>
     </form>
 </div>
 
@@ -427,6 +508,7 @@ $array = array("Ананич Злата Сергеевна", "Гунева Кр�
     <form id="form-edit">
         <fieldset>
             <div class="panel">
+<!--                <b id="ddd">ddd</b>-->
                 <button id="add_grade_input" class="add_grade"
                         title="Для добавления дополнительной оценки нажмите на кнопку!">+
                 </button>
@@ -463,9 +545,14 @@ $array = array("Ананич Злата Сергеевна", "Гунева Кр�
 
 
 <div class="container-list">
-    <h3>Сикорский Анатолий Викторович (2-я кафедра детских болезней)</h3>
-    <p>Дисциплина: <b> Педиатрия</b></p>
-    <p>Группа№: <b>2404</b></p>
+    <div class="userData">
+        <h3 id="teacher"></h3>
+        <p>Дисциплина: <b id="subject"></b></p>
+        <p>Группа№: <b id="group"></b></p>
+        <p><b id="idLesson"></b></p>
+        <p>D: <b id="dateLesson"></b></p>
+    </div>
+
 
     <div class="tools" align="center">
         <button id="create_lesson">Создать занятие</button>
@@ -478,27 +565,42 @@ $array = array("Ананич Злата Сергеевна", "Гунева Кр�
             <div class="title">
                 ФИО
             </div>
-            <?php
-            $i = 0;
-            foreach ($array as $v) {
-                echo "<div class='fio_student'>$v</div>";
-            }
-            ?>
+
+            <script>
+                dates = new Array("01.09.2017","05.09.2017","15.09.2017");
+                arrayFIO = ["Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Рудяк Марк Николаевич", "Шеко Артем Викторович", "Шершень Степан Яковлевич", "Шут Павел Владимирович", "Якубович Александр Дмитриевич", "Ясько Елена Максимовна", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич"];
+
+                for(i=0;i<arrayFIO.length;i++){
+                    $(".fio").append("<div class=\"fio_student\">"+arrayFIO[i]+"</div>");
+                }
+
+            </script>
         </div>
 
         <div class="result_box">
-            <?php
-            echo "<div class='date_col' style='display: none'></div>";
-            foreach ($dates as $date) {
-                echo "<div class='date_col'><div class='date_title'>$date</div>";
-                for ($i = 0; $i < count($array); $i++) {
-                    echo "<div class='grade'>";
-                    echo "</div>";
+
+            <script>
+                $(".fio").after("<div class='date_col hidden'></div>");
+                for(i=0;i<dates.length;i++){
+                    $(".date_col:last").after("<div class='date_col'>");
+                    $("div.date_col:last").append("<div class='date_title'>"+dates[i]+"</div>");
                 }
 
-                echo "</div>";
-            }
-            ?>
+            </script>
+<!--            --><?php
+//            //echo "<div class='date_col hidden'></div>";
+//            foreach ($dates as $date) {
+//                //echo "<div class='date_col'><div class='date_title'>$date</div>";
+//                for ($i = 0; $i < count($array); $i++) {
+//                    echo "<div class='grade'>";
+//                    echo "</div>";
+//                }
+//
+//                echo "</div>";
+//            }
+//            ?>
+
+
 
         </div>
 

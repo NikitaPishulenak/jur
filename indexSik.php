@@ -85,7 +85,7 @@
                 edit_form[0].reset();
                 $("button#add_grade_input").removeAttr('disabled');
 
-                $("#inp_0").focus();
+                //$("#inp_0").focus();
                 $('#inp_2').slideUp();
                 --countCell;
                 $('#inp_1').slideUp();
@@ -104,7 +104,7 @@
 
                 $(".inp_cell:text").focus(function () {
                     inp_id = $(this).attr('id');
-                    console.log(inp_id);
+                    //console.log(inp_id);
                     //alert(inp_id);
 
 //                    $("b.tool").click(function () {
@@ -112,24 +112,31 @@
 //                        $("#" + inp_id).val(text);
 //                        $("#" + inp_id).focus();
 //                    });
-                    $("b#1").click(function(){
-                        $("#" + inp_id).val("Ну");
-                    });
-                    $("b#2").click(function(){
-                        $("#" + inp_id).val("Нб_у");
-                    });
-                    $("b#3").click(function(){
-                        $("#" + inp_id).val("Нб_отр.");
-                    });
-                    $("b#4").click(function(){
-                        $("#" + inp_id).val("Зач.");
-                    });
-                    $("b#5").click(function(){
-                        $("#" + inp_id).val("Незач.");
-                    });
-                    $("b#6").click(function(){
-                        $("#" + inp_id).val("Недопуск");
-                    });
+
+                });
+                $("b#1").click(function(){
+                    $("#" + inp_id).val("Ну");
+                    //$("#" + inp_id).focus();
+                });
+                $("b#2").click(function(){
+                    $("#" + inp_id).val("Нб_у");
+                    //$("#" + inp_id).focus();
+                });
+                $("b#3").click(function(){
+                    $("#" + inp_id).val("Нб_отр.");
+                    //$("#" + inp_id).focus();
+                });
+                $("b#4").click(function(){
+                    $("#" + inp_id).val("Зач.");
+                    // $("#" + inp_id).focus();
+                });
+                $("b#5").click(function(){
+                    $("#" + inp_id).val("Незач.");
+                    //$("#" + inp_id).focus();
+                });
+                $("b#6").click(function(){
+                    $("#" + inp_id).val("Недопуск");
+                    //$("#" + inp_id).focus();
                 });
 
                 var countOpenCell = 0;
@@ -152,7 +159,7 @@
                 });
 
                 $("#edit").click(function () {
-                    console.log($('#form-edit').serializeArray());
+                    //console.log($('#form-edit').serializeArray());
                     var coding = "";
                     var bit1 = $("#inp_0").val();
                     var bit2 = $("#inp_1").val();
@@ -391,8 +398,9 @@
 <body>
 
 <?php
-$array = array("Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Рудяк Марк Николаевич", "Шеко Артем Викторович", "Шершень Степан Яковлевич", "Шут Павел Владимирович", "Якубович Александр Дмитриевич", "Ясько Елена Максимовна", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич");
+$array = array("Ананич Злата Сергеевна", "Гунева Кристина Дмитриевна", "Дмитрущенкова Анастасия Олеговна", "Жерко Любовь Вячеславовна", "Ибадова Марйам Этибар кызы", "Ильюшкова Мария Сергеевна", "Казакова Анастасия Сергеевна", "Клакоцкая Анна Анатольевна", "Лицкевич Елизавета Александровна", "Шафран Роман Валентинович", "Якунович	Екатерина Викторовна");
 //$dates = array("01.09.2017", "06.09.2017", "10.09.2019", "15.09.2017", "20.09.2017");
+//$dates = array("01.09.2017");
 ?>
 
 <div id="form-lesson" title="Создание занятия">
@@ -411,7 +419,7 @@ $array = array("Абрамов Александр Иванович", "Бабуш
                 <label><input type="radio" class="type_lesson" id="exam_rb" name="type_lesson" value="exam"><b>Аттестация</b></label>
                 <br><br>
             </div>
-          </fieldset>
+        </fieldset>
     </form>
 </div>
 
@@ -455,6 +463,10 @@ $array = array("Абрамов Александр Иванович", "Бабуш
 
 
 <div class="container-list">
+    <h3>Сикорский Анатолий Викторович (2-я кафедра детских болезней)</h3>
+    <p>Дисциплина: <b> Педиатрия</b></p>
+    <p>Группа№: <b>2404</b></p>
+
     <div class="tools" align="center">
         <button id="create_lesson">Создать занятие</button>
     </div>
@@ -480,7 +492,7 @@ $array = array("Абрамов Александр Иванович", "Бабуш
             foreach ($dates as $date) {
                 echo "<div class='date_col'><div class='date_title'>$date</div>";
                 for ($i = 0; $i < count($array); $i++) {
-                    echo "<div class='grade'>3";
+                    echo "<div class='grade'>";
                     echo "</div>";
                 }
 

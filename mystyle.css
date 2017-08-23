@@ -256,3 +256,15 @@ input .edit_grade {
 .fail{
     color: #8c0000;
 }
+
+.grade:hover{
+    background-color: blanchedalmond;
+}
+
+#dateLast{
+    display: none;
+}
+
+.hidden{
+    display: none;
+}
