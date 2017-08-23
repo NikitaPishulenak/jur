@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="windows-1251">
+<!--    <meta charset="windows-1251">-->
+    <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -14,15 +15,18 @@
 
 
     <script>
+
+        id_students=new Array();
+
+
+        for(y=0;y<100;y++){
+            id_students[y]=Math.floor(Math.random() * 1000) + 1;
+            //console.log(id_students[y]);
+        }
+
         $(function () {
             var dialog, form, edit_dialog, edit_form;
-            id_students=new Array();
 
-
-            for(y=0;y<100;y++){
-                id_students[y]=Math.floor(Math.random() * 1000) + 1;
-                console.log(id_students[y]);
-            }
 
             function addLesson() {
                 if ($("#lesson-date").val() == "")
@@ -42,7 +46,8 @@
                                     alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
                                 }
                                 else{
-                                    $("div.result_box").find('div.date_col:last').after("<div class='date_col colloquium_theme'><div class='date_title'>" + dateLesson + "</div></div>");
+                                    $("<div class='date_col colloquium_theme'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+
                                     for (var i = 0; i < cnt; i++) {
                                         $("div.date_col:last").append("<div class='grade' data-id="+id_students[i]+"></div>");
                                     }
@@ -63,7 +68,8 @@
                                     alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
                                 }
                                 else{
-                                    $("div.result_box").find('div.date_col:last').after("<div class='date_col exam_theme'><div class='date_title'>" + dateLesson + "</div></div>");
+                                    $("<div class='date_col exam_theme'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+
                                     for (var i = 0; i < cnt; i++) {
                                         $("div.date_col:last").append("<div class='grade' data-id="+id_students[i]+"></div>");
                                     }
@@ -96,7 +102,6 @@
                         });
                     }
                    // console.log(dateLesson);
-                    $("b#dateLesson").html(dateLesson);
                     dialog.dialog("close");
                 }
             }
@@ -550,7 +555,7 @@ $dates = array("01.09.2017");
         <p>Дисциплина: <b id="subject"></b></p>
         <p>Группа№: <b id="group"></b></p>
         <p><b id="idLesson"></b></p>
-        <p>D: <b id="dateLesson"></b></p>
+
     </div>
 
 
@@ -567,12 +572,14 @@ $dates = array("01.09.2017");
             </div>
 
             <script>
-                dates = new Array("01.09.2017","05.09.2017","15.09.2017");
+                //dates = ["01.09.2017","05.09.2017","15.09.2017"];
+                dates = new Array();
                 arrayFIO = ["Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Рудяк Марк Николаевич", "Шеко Артем Викторович", "Шершень Степан Яковлевич", "Шут Павел Владимирович", "Якубович Александр Дмитриевич", "Ясько Елена Максимовна", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич"];
 
-                for(i=0;i<arrayFIO.length;i++){
+                for(var i=0;i<arrayFIO.length;i++){
                     $(".fio").append("<div class=\"fio_student\">"+arrayFIO[i]+"</div>");
                 }
+                $("div .fio").after("<div class='date_col hidden'>Первый столбец</div>");
 
             </script>
         </div>
@@ -580,27 +587,16 @@ $dates = array("01.09.2017");
         <div class="result_box">
 
             <script>
-                $(".fio").after("<div class='date_col hidden'></div>");
-                for(i=0;i<dates.length;i++){
-                    $(".date_col:last").after("<div class='date_col'>");
-                    $("div.date_col:last").append("<div class='date_title'>"+dates[i]+"</div>");
+
+                for(var i=0;i<dates.length;i++){
+                    $("div .date_col:last").after("<div class='date_col'><div class='date_title'>"+dates[i]+"</div>");
+                    for(var j=0;j<arrayFIO.length;j++){
+                        $("div .date_col:last").append("<div class='grade' data-id="+id_students[j]+" ></div>");
+                    }
+                    $("div.date_col:last").append("</div>");
                 }
 
             </script>
-<!--            --><?php
-//            //echo "<div class='date_col hidden'></div>";
-//            foreach ($dates as $date) {
-//                //echo "<div class='date_col'><div class='date_title'>$date</div>";
-//                for ($i = 0; $i < count($array); $i++) {
-//                    echo "<div class='grade'>";
-//                    echo "</div>";
-//                }
-//
-//                echo "</div>";
-//            }
-//            ?>
-
-
 
         </div>
 
