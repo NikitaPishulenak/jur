@@ -173,6 +173,7 @@ tr:hover {
 }
 
 .grade {
+    font-size: 0.82em;
     border-bottom: solid black 1px;
     border-top: solid black 1px;
     width: 80px;
@@ -180,11 +181,12 @@ tr:hover {
     text-align: center;
     cursor: pointer;
     vertical-align: middle;
+    white-space: normal;
 }
 
 .box {
     width: 95%;
-    display: inline-block;
+    /*display: inline-block;*/
     align-items: center;
 }
 
@@ -268,3 +270,12 @@ input .edit_grade {
 .hidden{
     display: none;
 }
+
+.type_lesson{
+    cursor: pointer;
+}
+
+.add_grade{
+    cursor: pointer;
+}
+

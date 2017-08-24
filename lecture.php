@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="windows-1251">
-<!--    <meta charset="utf-8">-->
+    <!--    <meta charset="utf-8">-->
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -28,63 +28,17 @@
             var dialog, form, edit_dialog, edit_form;
 
 
-            function addLesson() {
+            function addLecture() {
                 if ($("#lesson-date").val() == "")
                     alert("Для сохранения необходимо заполнить поле 'Дата'");
                 else {
                     var dateLesson = $("#lesson-date").val();
                     var cnt = $("div.container-list").find("div.fio_student").length;
 
-                    if ($("#colloquium_rb").is(':checked')) {
-
                         $.ajax({
                             type: 'POST',
                             url: '',
-                            data: {dateLesson: dateLesson, typePractice:"1", groupNumber: groupNumber, subjectName: subject, typeLesson: "0", idLesson: idLesson},
-                            success: function(status){
-                                if(status=="false"){
-                                    alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
-                                }
-                                else{
-                                    $("<div class='date_col colloquium_theme'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
-
-                                    for (var i = 0; i < cnt; i++) {
-                                        $("div.date_col:last").append("<div class='grade' data-id="+id_students[i]+"></div>");
-                                    }
-                                }
-
-                            }
-                        });
-                    }
-
-                    else if ($("#exam_rb").is(':checked')) {
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '',
-                            data: {dateLesson: dateLesson, typePractice:"2", groupNumber: groupNumber, subjectName: subject, typeLesson: "0", idLesson: idLesson},
-                            success: function(status){
-                                if(status=="false"){
-                                    alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
-                                }
-                                else{
-                                    $("<div class='date_col exam_theme'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
-
-                                    for (var i = 0; i < cnt; i++) {
-                                        $("div.date_col:last").append("<div class='grade' data-id="+id_students[i]+"></div>");
-                                    }
-                                }
-
-                            }
-                        });
-                    }
-
-                    else {
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '',
-                            data: {dateLesson: dateLesson, typePractice:"0",groupNumber: groupNumber, subjectName: subject, typeLesson:"0", idLesson: idLesson},
+                            data: {dateLesson: dateLesson, groupNumber: groupNumber, subjectName: subject, typeLesson: "1 n", idLesson: idLesson},
                             success: function(status){
                                 if(status=="false"){
                                     alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
@@ -96,11 +50,10 @@
                                         $("div.date_col:last").append("<div class='grade' data-id="+id_students[i]+"></div>");
                                     }
                                 }
-                            }
 
+                            }
                         });
-                    }
-                   // console.log(dateLesson);
+
                     dialog.dialog("close");
                 }
             }
@@ -109,11 +62,11 @@
             dialog = $("#form-lesson").dialog({
                 resizable:false,
                 autoOpen: false,
-                height: 350,
-                width: 400,
+                height: 'auto',
+                width: 'auto',
                 modal: true,
                 buttons: {
-                    "Создать": addLesson,
+                    "Создать": addLecture,
                     Отмена: function () {
                         dialog.dialog("close");
                     }
@@ -149,17 +102,17 @@
                 //dateLes=$("b#dateLesson").val();
 
                 $("#inp_0").focus();
-                $('#inp_2').slideUp(1);
-                --countCell;
-                $('#inp_1').slideUp(1);
-                --countCell;
+//                $('#inp_2').slideUp();
+//                --countCell;
+//                $('#inp_1').slideUp();
+//                --countCell;
 
                 cur_grade = $(this).text();
                 elem = $(this);
 
                 grades = cur_grade.split("/");
                 for (var i = 0; i < grades.length; i++) {
-                    $("div.panel").find('input#inp_' + i).slideDown(1);
+                    $("div.panel").find('input#inp_' + i).slideDown();
                     $("div.panel").find('input#inp_' + i).val(grades[i]);
                 }
                 $('input#inp_0').focus();
@@ -179,31 +132,23 @@
                         $("#" + inp_id).val("Ну");
                     });
                     $("b#2").click(function(){
-                        $("#" + inp_id).val("Нб.у");
+                        $("#" + inp_id).val("Нб_у");
                     });
                     $("b#3").click(function(){
-                        $("#" + inp_id).val("Нб.отр.");
+                        $("#" + inp_id).val("Нб_отр.");
                     });
-                    $("b#4").click(function(){
-                        $("#" + inp_id).val("Зач.");
-                    });
-                    $("b#5").click(function(){
-                        $("#" + inp_id).val("Незач.");
-                    });
-                    $("b#6").click(function(){
-                        $("#" + inp_id).val("Недоп");
-                    });
+
                 });
 
-                var countOpenCell = 0;
-                for (j = 0; j < 3; j++) {
-                    if ($("#inp_" + j).val() != "") {
-                        countOpenCell++;
-                    }
-                }
-                if (countOpenCell == 3) {
-                    $("button#add_grade_input").attr('disabled', true);
-                }
+                //var countOpenCell = 0;
+//                for (j = 0; j < 3; j++) {
+//                    if ($("#inp_" + j).val() != "") {
+//                        countOpenCell++;
+//                    }
+//                }
+//                if (countOpenCell == 3) {
+//                    $("button#add_grade_input").attr('disabled', true);
+//                }
 
                 var absenteeisms = /\w/;
                 $(".inp_cell:text").keydown(function (event) {
@@ -219,13 +164,13 @@
             $("#edit").click(function () {
                 var coding = "";
                 //alert(student_id);
-                var bit1 = $("#inp_0").val();
-                var bit2 = $("#inp_1").val();
-                var bit3 = $("#inp_2").val();
-                bit1 = (bit1 == "") ? "" : bit1;
-                bit2 = (bit2 == "") ? "" : "/" + bit2;
-                bit3 = (bit3 == "") ? "" : "/" + bit3;
-                var cur_res = bit1 + bit2 + bit3;
+//                var bit1 = $("#inp_0").val();
+//                var bit2 = $("#inp_1").val();
+//                var bit3 = $("#inp_2").val();
+//                bit1 = (bit1 == "") ? "" : bit1;
+//                bit2 = (bit2 == "") ? "" : "/" + bit2;
+//                bit3 = (bit3 == "") ? "" : "/" + bit3;
+                var cur_res = $("#inp_0").val();
                 //alert(cur_res);
                 coding = Encrypt(cur_res);
                 elem.text(cur_res);
@@ -262,29 +207,29 @@
             });
 
 
-            $("#add_grade_input").click(function () {
-
-                if (countCell < 3) {
-                    if (countCell <= 0)
-                        countCell = 1;
-
-
-                    if ($("#inp_" + (countCell - 1)).val() != "") {
-                        $("#inp_" + countCell).slideDown(1);
-                        $("#inp_" + countCell).focus();
-                        ++countCell;
-                    }
-                    else {
-                        alert("Заполните, пожалуйста, доступное поле ввода оценки!");
-                    }
-
-                }
-                else {
-                    alert("Допускается не более 3 полей ввода!");
-                    $("button#add_grade_input").attr('disabled', true);
-
-                }
-            });
+//            $("#add_grade_input").click(function () {
+//
+//                if (countCell < 3) {
+//                    if (countCell <= 0)
+//                        countCell = 1;
+//
+//
+//                    if ($("#inp_" + (countCell - 1)).val() != "") {
+//                        $("#inp_" + countCell).slideDown();
+//                        $("#inp_" + countCell).focus();
+//                        ++countCell;
+//                    }
+//                    else {
+//                        alert("Заполните, пожалуйста, доступное поле ввода оценки!");
+//                    }
+//
+//                }
+//                else {
+//                    alert("Допускается не более 3 полей ввода!");
+//                    $("button#add_grade_input").attr('disabled', true);
+//
+//                }
+//            });
 
         });
 
@@ -402,10 +347,10 @@
                 case 'Ну':
                     return '20';
                     break;
-                case 'Нб.у':
+                case 'Нб_у':
                     return '21';
                     break;
-                case 'Нб.отр.':
+                case 'Нб_отр.':
                     return '22';
                     break;
                 case 'Зач.':
@@ -414,7 +359,7 @@
                 case 'Незач.':
                     return '24';
                     break;
-                case 'Недоп':
+                case 'Недопуск':
                     return '25';
                     break;
             }
@@ -457,10 +402,10 @@
                     return 'Ну';
                     break;
                 case '21':
-                    return 'Нб.у';
+                    return 'Нб_у';
                     break;
                 case '22':
-                    return 'Нб.отр.';
+                    return 'Нб_отр.';
                     break;
                 case '23':
                     return 'Зач.';
@@ -469,7 +414,7 @@
                     return 'Незач.';
                     break;
                 case '25':
-                    return 'Недоп';
+                    return 'Недопуск';
                     break;
             }
 
@@ -498,52 +443,38 @@ $dates = array("01.09.2017");
                 <div id="date_col">
                     <input type="text" id="lesson-date" required class="datepicker" value="<?php echo date('d.m.Y') ?>">
                 </div>
-                <br>
-                <label><input type="radio" class="type_lesson" id="simple_lesson_rb" name="type_lesson" value="sl" checked><b class="type_lesson">Обычное занятие</b></label>
-                <br><br>
-                <label><input type="radio" class="type_lesson" id="colloquium_rb" name="type_lesson" value="col"><b class="type_lesson">Коллоквиум</b></label>
-                <br><br>
-                <label><input type="radio" class="type_lesson" id="exam_rb" name="type_lesson" value="exam"><b class="type_lesson">Аттестация</b></label>
-                <br><br>
+
             </div>
-          </fieldset>
+        </fieldset>
     </form>
 </div>
 
-<div id="form-edit" title="Редактирование отметки">
+<div id="form-edit" title="Выставление пропусков">
     <form id="form-edit">
         <fieldset>
             <div class="panel">
-<!--                <b id="ddd">ddd</b>-->
-                <button id="add_grade_input" class="add_grade"
-                        title="Для добавления дополнительной оценки нажмите на кнопку!">+
-                </button>
-                <span class="space"></span>
+                <!--                <b id="ddd">ddd</b>-->
+<!--                <button id="add_grade_input" class="add_grade"-->
+<!--                        title="Для добавления дополнительной оценки нажмите на кнопку!">+-->
+<!--                </button>-->
+
                 <b id="1" class="tool"><b>Н<sub>у</sub></b></b>
                 <span class="space"></span>
-                <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>
+                <b id="2" class="tool"><b>Н<sub>б_у</sub></b></b>
                 <span class="space"></span>
-                <b id="3" class="tool"><b>Н<sub>б.отр.</sub></b></b>
-                <span class="space"></span>
-                <b id="4" class="tool"><b>Зач.</b></b>
-                <span class="space"></span>
-                <b id="5" class="tool"><b>Незач.</b></b>
-                <span class="space"></span>
-                <b id="6" class="tool fail"><b>Недоп</b></b>
+                <b id="3" class="tool"><b>Н<sub>б_отр.</sub></b></b>
 
                 <br><br>
 
-                <input class='inp_cell' id="inp_0" type=text maxlength='2'
-                       onkeyup="this.value=this.value.replace(/[^0-9]/,''); if (this.value<1 || this.value>10) this.value='';">
-                <input class='inp_cell' id="inp_1" type='text' maxlength='2'
-                       onkeyup="this.value=this.value.replace(/[^0-9]/,''); if (this.value<1 || this.value>10) this.value='';">
-                <input class='inp_cell' id="inp_2" type='text' maxlength='2'
-                       onkeyup="this.value=this.value.replace(/[^0-9]/,''); if (this.value<1 || this.value>10) this.value='';">
+                <input class='inp_cell' id="inp_0" type=text maxlength='0'
+                       onkeyup="this.value=this.value.replace(/[^*]/,'');">
+<!--                <input class='inp_cell' id="inp_1" type='text' maxlength='2'-->
+<!--                       onkeyup="this.value=this.value.replace(/[^0-9]/,''); if (this.value<1 || this.value>10) this.value='';">-->
+<!--                <input class='inp_cell' id="inp_2" type='text' maxlength='2'-->
+<!--                       onkeyup="this.value=this.value.replace(/[^0-9]/,''); if (this.value<1 || this.value>10) this.value='';">-->
 
-                <br>
                 <hr>
-                <br>
-                <button id="edit" class="button"><b>Сохранить</b></button>
+                <button id="edit" class="button"><b>Ок</b></button>
             </div>
         </fieldset>
     </form>
@@ -561,7 +492,7 @@ $dates = array("01.09.2017");
 
 
     <div class="tools" align="center">
-        <button id="create_lesson">Создать занятие</button>
+        <button id="create_lesson">Создать лекцию</button>
     </div>
     <br>
     <hr>
@@ -600,10 +531,6 @@ $dates = array("01.09.2017");
             </script>
 
         </div>
-
-    </div>
-
-    <div id="data">
 
     </div>
 
