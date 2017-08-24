@@ -1,8 +1,9 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="windows-1251">
-<!--    <meta charset="utf-8">-->
+<!--    <meta charset="windows-1251">-->
+        <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -15,10 +16,7 @@
 
 
     <script>
-
         id_students=new Array();
-
-
         for(y=0;y<100;y++){
             id_students[y]=Math.floor(Math.random() * 1000) + 1;
             //console.log(id_students[y]);
@@ -26,17 +24,13 @@
 
         $(function () {
             var dialog, form, edit_dialog, edit_form;
-
-
             function addLesson() {
                 if ($("#lesson-date").val() == "")
                     alert("Для сохранения необходимо заполнить поле 'Дата'");
                 else {
                     var dateLesson = $("#lesson-date").val();
                     var cnt = $("div.container-list").find("div.fio_student").length;
-
                     if ($("#colloquium_rb").is(':checked')) {
-
                         $.ajax({
                             type: 'POST',
                             url: '',
@@ -47,18 +41,14 @@
                                 }
                                 else{
                                     $("<div class='date_col colloquium_theme'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
-
                                     for (var i = 0; i < cnt; i++) {
                                         $("div.date_col:last").append("<div class='grade' data-id="+id_students[i]+"></div>");
                                     }
                                 }
-
                             }
                         });
                     }
-
                     else if ($("#exam_rb").is(':checked')) {
-
                         $.ajax({
                             type: 'POST',
                             url: '',
@@ -69,18 +59,14 @@
                                 }
                                 else{
                                     $("<div class='date_col exam_theme'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
-
                                     for (var i = 0; i < cnt; i++) {
                                         $("div.date_col:last").append("<div class='grade' data-id="+id_students[i]+"></div>");
                                     }
                                 }
-
                             }
                         });
                     }
-
                     else {
-
                         $.ajax({
                             type: 'POST',
                             url: '',
@@ -91,21 +77,17 @@
                                 }
                                 else{
                                     $("<div class='date_col'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
-
                                     for (var i = 0; i < cnt; i++) {
                                         $("div.date_col:last").append("<div class='grade' data-id="+id_students[i]+"></div>");
                                     }
                                 }
                             }
-
                         });
                     }
-                   // console.log(dateLesson);
+                    // console.log(dateLesson);
                     dialog.dialog("close");
                 }
             }
-
-
             dialog = $("#form-lesson").dialog({
                 resizable:false,
                 autoOpen: false,
@@ -125,7 +107,6 @@
             form = dialog.find("form").on("submit", function (event) {
                 event.preventDefault();
             });
-
             edit_dialog = $("#form-edit").dialog({
                 resizable:false,
                 autoOpen: false,
@@ -137,6 +118,16 @@
                 event.preventDefault();
             });
 
+            $('div').delegate(".grade", "mouseover", function () {
+                data_id=$(this).attr('data-id');
+                //$(this).css('background', 'greenyellow');
+                $('div.fio [data-id="'+data_id+'"]').css('background', 'greenyellow');
+            });
+            $('div').delegate(".grade", "mouseout", function () {
+                data_id=$(this).attr('data-id');
+                //$(this).css('background', 'white');
+                $('div.fio [data-id="'+data_id+'"]').css('background', 'white');
+            });
 
             $('div').delegate(".grade", "dblclick", function () {
                 dat=$(this).parent().find('div.date_title').html();//Дата столбца
@@ -147,16 +138,13 @@
                 edit_form[0].reset();
                 $("button#add_grade_input").removeAttr('disabled');
                 //dateLes=$("b#dateLesson").val();
-
                 $("#inp_0").focus();
                 $('#inp_2').slideUp(1);
                 --countCell;
                 $('#inp_1').slideUp(1);
                 --countCell;
-
                 cur_grade = $(this).text();
                 elem = $(this);
-
                 grades = cur_grade.split("/");
                 for (var i = 0; i < grades.length; i++) {
                     $("div.panel").find('input#inp_' + i).slideDown(1);
@@ -164,12 +152,10 @@
                 }
                 $('input#inp_0').focus();
                 $('input#inp_0').select();
-
                 $(".inp_cell:text").focus(function () {
                     inp_id = $(this).attr('id');
                     //console.log(inp_id);
                     //alert(inp_id);
-
 //                    $("b.tool").click(function () {
 //                        var text = $(this).text();
 //                        $("#" + inp_id).val(text);
@@ -194,7 +180,6 @@
                         $("#" + inp_id).val("Недоп");
                     });
                 });
-
                 var countOpenCell = 0;
                 for (j = 0; j < 3; j++) {
                     if ($("#inp_" + j).val() != "") {
@@ -204,7 +189,6 @@
                 if (countOpenCell == 3) {
                     $("button#add_grade_input").attr('disabled', true);
                 }
-
                 var absenteeisms = /\w/;
                 $(".inp_cell:text").keydown(function (event) {
                     if (event.keyCode == 8 || event.keyCode == 46) {	//если это удаление
@@ -213,9 +197,7 @@
                         }
                     }
                 });
-
             });
-
             $("#edit").click(function () {
                 var coding = "";
                 //alert(student_id);
@@ -244,31 +226,22 @@
                         url: '',
                         data: {grades: coding, typeProcedure: "UPDATE", dateLesson: dat, studentId: student_id}
                     });
-
                 }
                 console.log(coding);
                 console.log(dat);
                 console.log(student_id);
                 edit_dialog.dialog("close");
             });
-
             $(".inp_cell:text").click(function () {
                 $(this).select();
             });
-
-
             $("#create_lesson").button().on("click", function () {
                 dialog.dialog("open");
             });
-
-
             $("#add_grade_input").click(function () {
-
                 if (countCell < 3) {
                     if (countCell <= 0)
                         countCell = 1;
-
-
                     if ($("#inp_" + (countCell - 1)).val() != "") {
                         $("#inp_" + countCell).slideDown(1);
                         $("#inp_" + countCell).focus();
@@ -277,18 +250,13 @@
                     else {
                         alert("Заполните, пожалуйста, доступное поле ввода оценки!");
                     }
-
                 }
                 else {
                     alert("Допускается не более 3 полей ввода!");
                     $("button#add_grade_input").attr('disabled', true);
-
                 }
             });
-
         });
-
-
         $(function () {
             $.datepicker.regional['ru'] = {
                 monthNames: ['Яварь', 'Февраль', 'Март', 'Апрель',
@@ -314,9 +282,7 @@
             $("h3#teacher").html(teacher);
             $("#idLesson").html(idLesson);
             $("b#dateLesson").html(dateLesson);
-
             $("#lesson-date").change(function () {
-
                 if ($("#lesson-date").val().length == 10) {
                     var arrD = $("#lesson-date").val().split(".");
                     arrD[1] -= 1;
@@ -340,22 +306,16 @@
                     alert("Дата должна быть введена в формате: дд.мм.гггг");
                     return false;
                 }
-
             });
         });
-
-
-
         function Encrypt(value) {
             var res = "";
             var grade = value.split("/");
             for (i = 0; i < grade.length; i++) {
                 res += MatchEncrypt(grade[i]);
-
             }
             return res;
         }
-
         function Decrypt(value) {
             var res = "";
             var mas = value.match(/.{2}/g);
@@ -366,7 +326,6 @@
             //alert(res);
             return res;
         }
-
         function MatchEncrypt(val) {
             switch (val) {
                 case '1':
@@ -418,9 +377,7 @@
                     return '25';
                     break;
             }
-
         }
-
         function MatchDecrypt(val) {
             switch (val) {
                 case '10':
@@ -472,14 +429,10 @@
                     return 'Недоп';
                     break;
             }
-
         }
 
         //        var s="262524232221201113182527"; //пробую расшифровать
         //        alert(Decrypt(s));
-
-
-
     </script>
 
 </head>
@@ -506,7 +459,7 @@ $dates = array("01.09.2017");
                 <label><input type="radio" class="type_lesson" id="exam_rb" name="type_lesson" value="exam"><b class="type_lesson">Аттестация</b></label>
                 <br><br>
             </div>
-          </fieldset>
+        </fieldset>
     </form>
 </div>
 
@@ -514,7 +467,7 @@ $dates = array("01.09.2017");
     <form id="form-edit">
         <fieldset>
             <div class="panel">
-<!--                <b id="ddd">ddd</b>-->
+                <!--                <b id="ddd">ddd</b>-->
                 <button id="add_grade_input" class="add_grade"
                         title="Для добавления дополнительной оценки нажмите на кнопку!">+
                 </button>
@@ -566,7 +519,7 @@ $dates = array("01.09.2017");
     <br>
     <hr>
     <br>
-    <div class="box">
+    <div class="container">
         <div class="fio">
             <div class="title">
                 ФИО
@@ -576,32 +529,25 @@ $dates = array("01.09.2017");
                 dates = ["01.09.2017","05.09.2017","15.09.2017"];
                 //dates = new Array();
                 arrayFIO = ["Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Рудяк Марк Николаевич", "Шеко Артем Викторович", "Шершень Степан Яковлевич", "Шут Павел Владимирович", "Якубович Александр Дмитриевич", "Ясько Елена Максимовна", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич", "Абрамов Александр Иванович", "Бабушкин Степан Леонидович", "Волкова Алевтина Никитишна", "Гриб Салтан Лаикович", "Евдакимова Янна Викторовна", "Климанович Ян Янович", "Лис Павел Владимирович", "Попов Алексей Георгиевич"];
-
                 for(var i=0;i<arrayFIO.length;i++){
                     $(".fio").append("<div class=\"fio_student\" data-id="+id_students[i]+">"+arrayFIO[i]+"</div>");
                 }
                 $("div .fio").after("<div class='date_col hidden'>Первый столбец</div>");
-
             </script>
         </div>
 
         <div class="result_box">
-            <div class="parent">
-                <script>
+            <div class='date_col hidden'></div>
 
+                <script>
                     for(var i=0;i<dates.length;i++){
-                        $("div .date_col:last").after("<div class='date_col'><div class='date_title'>"+dates[i]+"</div>");
+                        $("div .date_col:last").after("<div class='date_col '><div class='date_title'>"+dates[i]+"</div>");
                         for(var j=0;j<arrayFIO.length;j++){
                             $("div .date_col:last").append("<div class='grade' data-id="+id_students[j]+" ></div>");
                         }
                         $("div.date_col:last").append("</div>");
                     }
-
                 </script>
-            </div>
-
-
-
         </div>
 
     </div>

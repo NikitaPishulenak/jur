@@ -10,9 +10,8 @@
 
     .parent {
         float: left;
-        width: 80%;
-        height:80px;
-        overflow: hidden;
+        width: 60%;
+        /*overflow: hidden;*/
         overflow-x: scroll;
         background: yellow;
         white-space:nowrap;
@@ -21,10 +20,10 @@
     }
 
     .child {
-        display: inline-block;
+        display: inline-table;
         vertical-align: top;
         width: 60px;
-        height:60px;
+        height:auto;
         background: red;
     }
 
@@ -41,14 +40,20 @@
 </div>
 
 <div class="parent">
-    <div class="child">1</div>
+    <div class="child"><div class="tools" align="center">
+        <button id="create_lesson">Создать занятие</button><br>erf
+    </div></div>
     <div class="child">2</div>
-    <div class="child">3</div>
+    <div class="child"><div class="tools" align="center">
+        <button id="create_lesson">Создать занятие</button>
+    </div></div>
     <div class="child"></div>
     <div class="child"></div>
     <div class="child"></div>
     <div class="child"></div>
-    <div class="child"></div>
+    <div class="child"><div class="tools" align="center">
+        <button id="create_lesson">Создать занятие</button>
+    </div></div>
     <div class="child"></div>
     <div class="child"></div>
     <div class="child"></div>
