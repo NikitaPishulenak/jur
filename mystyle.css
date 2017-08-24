@@ -167,9 +167,12 @@ tr:hover {
 
 .date_col {
     border: solid black 1px;
-    width: auto;
-    float: left;
-    text-align: center;
+    width: 80px;
+    /*float: left;*/
+    /*text-align: center;*/
+    display: inline-block;
+    vertical-align: top;
+
 }
 
 .grade {
@@ -195,6 +198,7 @@ tr:hover {
     border-bottom: solid black 1px;
     float: left;
     width: auto;
+    overflow: visible;
 }
 
 .title {
@@ -277,5 +281,15 @@ input .edit_grade {
 
 .add_grade{
     cursor: pointer;
+}
+.parent {
+    float: left;
+    width: 80%;
+    overflow: hidden;
+    overflow-x: scroll;
+    white-space:nowrap;
+    position: inherit;
+    bottom: 0;
+    margin-left: 200px;
 }
 

@@ -586,18 +586,21 @@ $dates = array("01.09.2017");
         </div>
 
         <div class="result_box">
+            <div class="parent">
+                <script>
 
-            <script>
-
-                for(var i=0;i<dates.length;i++){
-                    $("div .date_col:last").after("<div class='date_col'><div class='date_title'>"+dates[i]+"</div>");
-                    for(var j=0;j<arrayFIO.length;j++){
-                        $("div .date_col:last").append("<div class='grade' data-id="+id_students[j]+" ></div>");
+                    for(var i=0;i<dates.length;i++){
+                        $("div .date_col:last").after("<div class='date_col'><div class='date_title'>"+dates[i]+"</div>");
+                        for(var j=0;j<arrayFIO.length;j++){
+                            $("div .date_col:last").append("<div class='grade' data-id="+id_students[j]+" ></div>");
+                        }
+                        $("div.date_col:last").append("</div>");
                     }
-                    $("div.date_col:last").append("</div>");
-                }
 
-            </script>
+                </script>
+            </div>
+
+
 
         </div>
 
