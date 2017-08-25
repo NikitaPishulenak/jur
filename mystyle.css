@@ -57,35 +57,11 @@ input[type=text] {
     margin-left: 10%;
 }
 
-.content {
-    margin-left: 20%;
-}
 
 .left_header {
     top: 0;
     left: 0%;
 }
-
-.info {
-    color: blue;
-    position: absolute;
-    top: 0;
-    left: 70%;
-    padding: 0 10px 0 10px;
-    float: left;
-
-}
-
-.line {
-    border-left: 2px solid #ccc; /* Параметры линии */
-    margin-left: 15px; /* Отступ слева */
-    padding-left: 15px; /* Расстояние от линии до текста */
-}
-
-/*18-08-17*/
-
-
-
 
 .grade {
     font-size: 0.82em;
@@ -96,7 +72,10 @@ input[type=text] {
     text-align: center;
     cursor: pointer;
     vertical-align: middle;
-    white-space: normal;
+    /*white-space: pre-wrap;*/
+    word-wrap: break-word;      /* IE 5.5-7 */
+    white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+    white-space: pre-wrap;
 }
 
 
@@ -109,6 +88,7 @@ input[type=text] {
 
 .date_title{
     border-bottom: solid black 1px;
+    text-align: center;
 }
 
 
@@ -177,7 +157,7 @@ div .hidden{
     white-space: nowrap;  /* чтобы картинки стояли в одну линию, не переходя на другую строку */
     word-wrap: normal;
     overflow-x: scroll;
-    width: 800px;
+    width: 550px;
     /*overflow: hidden;*/
     left:250px;
     position: absolute;
