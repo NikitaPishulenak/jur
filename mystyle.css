@@ -157,9 +157,9 @@ div .hidden{
     white-space: nowrap;  /* чтобы картинки стояли в одну линию, не переходя на другую строку */
     word-wrap: normal;
     overflow-x: scroll;
-    width: 550px;
+    width: 540px;
     /*overflow: hidden;*/
-    left:250px;
+    left:260px;
     position: absolute;
 }
 
@@ -167,6 +167,7 @@ div .hidden{
     display: inline-table;
     border: solid black 1px;
     width: 80px;
+    /*margin: 0 10px 0 10px;*/
 }
 
 .fio {
