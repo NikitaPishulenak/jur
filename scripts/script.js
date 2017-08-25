@@ -19,11 +19,13 @@ $(function () {
             var dateLesson = $("#lesson-date").val();
             var cnt = $("div.container-list").find("div.fio_student").length;
             if ($("#colloquium_rb").is(':checked')) {
-                $.ajax({
-                    type: 'POST',
-                    url: '',
-                    data: {dateLesson: dateLesson, typePractice:"1", groupNumber: groupNumber, subjectName: subject, typeLesson: "0", idLesson: idLesson},
-                    success: function(status){
+                $$a({
+                    type:'post',//тип запроса: get,post либо head
+                    url:'ajax.php',//url адрес файла обработчика
+                    data:{'dateLesson':dateLesson, 'typePractice':"1",'idGroup': $("input#idGroup").val(),'idSubject': $("input#idSubject").val(),'typeLesson':"0",'idLesson': $("input#idLesson").val()},//параметры запроса
+                    response:'text',//тип возвращаемого ответа text либо xml
+                    success:function (data,status) {//возвращаемый результат от сервера
+                        $$('result',$$('result').innerHTML+'<br />'+data);
                         if(status=="false"){
                             alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
                         }
@@ -33,15 +35,18 @@ $(function () {
                                 $("div.date_col:last").append("<div class='grade' data-hover="+(i+1)+"></div>");
                             }
                         }
+
                     }
                 });
             }
             else if ($("#exam_rb").is(':checked')) {
-                $.ajax({
-                    type: 'POST',
-                    url: '',
-                    data: {dateLesson: dateLesson, typePractice:"2", groupNumber: groupNumber, subjectName: subject, typeLesson: "0", idLesson: idLesson},
-                    success: function(status){
+                $$a({
+                    type:'post',//тип запроса: get,post либо head
+                    url:'ajax.php',//url адрес файла обработчика
+                    data:{'dateLesson':dateLesson, 'typePractice':"2",'idGroup': $("input#idGroup").val(),'idSubject': $("input#idSubject").val(),'typeLesson':"0",'idLesson': $("input#idLesson").val()},//параметры запроса
+                    response:'text',//тип возвращаемого ответа text либо xml
+                    success:function (data,status) {//возвращаемый результат от сервера
+                        $$('result',$$('result').innerHTML+'<br />'+data);
                         if(status=="false"){
                             alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
                         }
@@ -51,15 +56,20 @@ $(function () {
                                 $("div.date_col:last").append("<div class='grade' data-hover="+(i+1)+"></div>");
                             }
                         }
+
                     }
                 });
+
             }
             else {
-                $.ajax({
-                    type: 'POST',
-                    url: '',
-                    data: {dateLesson: dateLesson, typePractice:"0",groupNumber: groupNumber, subjectName: subject, typeLesson:"0", idLesson: idLesson},
-                    success: function(status){
+
+                $$a({
+                    type:'post',//тип запроса: get,post либо head
+                    url:'ajax.php',//url адрес файла обработчика
+                    data:{'dateLesson':dateLesson, 'typePractice':"0",'idGroup': $("input#idGroup").val(),'idSubject': $("input#idSubject").val(),'typeLesson':"0",'idLesson': $("input#idLesson").val()},//параметры запроса
+                    response:'text',//тип возвращаемого ответа text либо xml
+                    success:function (data,status) {//возвращаемый результат от сервера
+                        $$('result',$$('result').innerHTML+'<br />'+data);
                         if(status=="false"){
                             alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
                         }
@@ -69,6 +79,7 @@ $(function () {
                                 $("div.date_col:last").append("<div class='grade' data-hover="+(i+1)+"></div>");
                             }
                         }
+
                     }
                 });
             }
@@ -120,7 +131,7 @@ $(function () {
     $('div').delegate(".grade", "dblclick", function () {
         dat=$(this).parent().find('div.date_title').html();//Дата столбца
         //console.log(dat);
-        student_id=$(this).attr('data-id');
+        student_id=$(this).attr('data-idStudent');
 //                $("#ddd").html(dat);
         edit_dialog.dialog("open");
         edit_form[0].reset();
@@ -150,7 +161,7 @@ $(function () {
                 $("#" + inp_id).val("Нб.у");
             });
             $("b#3").click(function(){
-                $("#" + inp_id).val("Нб.отр.");
+                $("#" + inp_id).val("Нб.о.");
             });
             $("b#4").click(function(){
                 $("#" + inp_id).val("Зач.");
@@ -196,17 +207,25 @@ $(function () {
         //alert(coding);
         //alert("cur_grade "+cur_grade+" cur_res "+cur_res);
         if((cur_grade=="") && (cur_res!="")){
-            $.ajax({
-                type: 'POST',
-                url: '',
-                data: {grades: coding, typeProcedure: "ADD", dateLesson: dat, studentId: student_id}
+            $$a({
+                type:'post',//тип запроса: get,post либо head
+                url:'ajax.php',//url адрес файла обработчика
+                data:{'dateLes': dat,'typeProcedure': "ADD",'idStudent': student_id, 'grades': coding},//параметры запроса'grades': coding,
+                response:'text',//тип возвращаемого ответа text либо xml
+                success:function (data) {//возвращаемый результат от сервера
+                    $$('result',$$('result').innerHTML+'<br />'+data);
+                }
             });
         }
         else{
-            $.ajax({
-                type: 'POST',
-                url: '',
-                data: {grades: coding, typeProcedure: "UPDATE", dateLesson: dat, studentId: student_id}
+            $$a({
+                type:'post',//тип запроса: get,post либо head
+                url:'ajax.php',//url адрес файла обработчика
+                data:{'dateLes': dat,'typeProcedure': "UPDATE",'idStudent': student_id, 'grades': coding},//параметры запроса'grades': coding,
+                response:'text',//тип возвращаемого ответа text либо xml
+                success:function (data) {//возвращаемый результат от сервера
+                    $$('result',$$('result').innerHTML+'<br />'+data);
+                }
             });
         }
         console.log(coding);
@@ -247,12 +266,7 @@ $(document).ready(function () {
     teacher="";
     dateLesson=$("div.date_title:last").val();
     idLesson="";
-    //alert(groupNumber+"+"+subject+"+"+teacher+"+"+dateLast+"+"+idLesson);
-//            $("b#group").html(groupNumber);
-//            $("b#subject").html(subject);
-//            $("h3#teacher").html(teacher);
-//            $("#idLesson").html(idLesson);
-//            $("b#dateLesson").html(dateLesson);
+
     $("#lesson-date").change(function () {
         if ($("#lesson-date").val().length == 10) {
             var arrD = $("#lesson-date").val().split(".");
@@ -300,7 +314,7 @@ function Decrypt(value) {
 function MatchEncrypt(val) {
 
     if (val>=1 && val<=10){
-        return val+9;
+        return Number(val)+9;
     }
     else{
         switch (val) {
@@ -328,7 +342,7 @@ function MatchEncrypt(val) {
 }
 function MatchDecrypt(val) {
     if(val>=10 && val<20){
-        return val-9;
+        return Number(val)-9;
     }
     else{
         switch (val) {

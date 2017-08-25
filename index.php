@@ -12,6 +12,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/script.js"></script>
+    <script type="text/javascript" src="http://scriptjava.net/source/scriptjava/scriptjava.js"></script>
 
 </head>
 <body>
@@ -85,6 +86,10 @@
         <p><b id="idLesson"></b></p>
 
     </div>
+    <div id="result">
+        Здесь итоги:
+
+    </div>
 
 
     <div class="tools" align="center">
@@ -94,9 +99,10 @@
     <hr>
     <br>
 
-    <input type="hidden" name="idPrepod" value="43">
-    <input type="hidden" name="idGroup" value="342">
-    <input type="hidden" name="idLesson" value="5">
+    <input type="hidden" id="idSubject" value="25">
+    <input type="hidden" id="idPrepod" value="43">
+    <input type="hidden" id="idGroup" value="342">
+    <input type="hidden" id="idLesson" value="5">
     <input type="hidden" name="idPL" value="1">
     <div class="container">
         <div class="fio">
@@ -279,12 +285,12 @@
 
     </div>
 
-    <div id="data">
 
-    </div>
 
 
 </div>
+
+
 
 </body>
 </html>

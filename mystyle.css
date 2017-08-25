@@ -186,3 +186,8 @@ div .hidden{
     width: auto;
     overflow: visible;
 }
+
+.result{
+    position: absolute;
+    left: 80%;
+}
