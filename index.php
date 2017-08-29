@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <head>
     <meta charset="windows-1251">
-<!--        <meta charset="utf-8">-->
+    <!--        <meta charset="utf-8">-->
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -12,7 +12,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/script.js"></script>
-    <script type="text/javascript" src="http://scriptjava.net/source/scriptjava/scriptjava.js"></script>
 
 </head>
 <body>
@@ -86,10 +85,10 @@
         <p><b id="idLesson"></b></p>
 
     </div>
-    <div id="result">
-        Здесь итоги:
-
-    </div>
+<!--    <div id="result">-->
+<!--        Здесь итоги:-->
+<!---->
+<!--    </div>-->
 
 
     <div class="tools" align="center">
@@ -109,10 +108,10 @@
             <div class="title">
                 ФИО
             </div>
-<!--            data-idStudent- ид студента по БД. Для каждого студента уникален.
-                data-hover- порядковый номер студента (необходим для подсветки строки)
-                data-idLesson- ид занятия. Для каждого занятия уникален
-                data-idRating-ид оценки. Для каждой клетки уникален-->
+            <!--            data-idStudent- ид студента по БД. Для каждого студента уникален.
+                            data-hover- порядковый номер студента (необходим для подсветки строки)
+                            data-idLesson- ид занятия. Для каждого занятия уникален
+                            data-idRating-ид оценки. Для каждой клетки уникален-->
             <div class="fio_student" data-hover="1" data-idStudent="23">Абрамов Александр Иванович</div>
             <div class="fio_student" data-hover="2" data-idStudent="423">Бабушкин Степан Леонидович</div>
             <div class="fio_student" data-hover="3" data-idStudent="563">Волкова Алевтина Никитишна</div>
@@ -153,14 +152,14 @@
                 <div class="grade" data-hover="2"  data-idStudent="423" data-idRating="4"></div>
                 <div class="grade" data-hover="3"  data-idStudent="563" data-idRating="2"></div>
                 <div class="grade" data-hover="4"  data-idStudent="21" data-idRating="7">9</div>
-                <div class="grade" data-hover="5">4</div>
-                <div class="grade" data-hover="6">2</div>
-                <div class="grade" data-hover="7">10</div>
-                <div class="grade" data-hover="8">Нб.отр.</div>
-                <div class="grade" data-hover="9"></div>
-                <div class="grade" data-hover="10">5</div>
-                <div class="grade" data-hover="11">3</div>
-                <div class="grade" data-hover="12"></div>
+                <div class="grade" data-hover="5" data-idStudent="1" data-idRating="1">4</div>
+                <div class="grade" data-hover="6" data-idStudent="4" data-idRating="2">2</div>
+                <div class="grade" data-hover="7" data-idStudent="5" data-idRating="6">10</div>
+                <div class="grade" data-hover="8" data-idStudent="456" data-idRating="17">Нб.отр.</div>
+                <div class="grade" data-hover="9" data-idStudent="4578" data-idRating="16"></div>
+                <div class="grade" data-hover="10" data-idStudent="93" data-idRating="14">5</div>
+                <div class="grade" data-hover="11" data-idStudent="97" data-idRating="13">3</div>
+                <div class="grade" data-hover="12" data-idStudent="653" data-idRating="45"></div>
                 <div class="grade" data-hover="13"></div>
                 <div class="grade" data-hover="14"></div>
                 <div class="grade" data-hover="15">5</div>

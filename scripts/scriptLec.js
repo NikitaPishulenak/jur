@@ -18,80 +18,28 @@ $(function () {
         else {
             var dateLesson = $("#lesson-date").val();
             var cnt = $("div.container-list").find("div.fio_student").length;
-            if ($("#colloquium_rb").is(':checked')) {
-                $.ajax({
-                    type:'post',//тип запроса: get,post либо head
-                    url:'ajax.php',//url адрес файла обработчика
-                    data:{'dateLesson':dateLesson, 'typePractice':"1",'idGroup': $("input#idGroup").val(),'idSubject': $("input#idSubject").val(),'typeLesson':"0",'idLesson': $("input#idLesson").val()},//параметры запроса
-                    response:'text',//тип возвращаемого ответа text либо xml
-                    success:function (data,status) {//возвращаемый результат от сервера
-                        // $$('result',$$('result').innerHTML+'<br />'+data);
-                        if(status=="1"){
-                            alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
-                        }
-                        else if (status=="2"){
-                            alert("Закройте, пожалуйста, окно и авторизуйтесь заново!");
-                        }
-                        else{
-                            $("<div class='date_col colloquium_theme'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
-                            for (var i = 0; i < cnt; i++) {
-                                $("div.date_col:last").append("<div class='grade' data-hover="+(i+1)+"></div>");
-                            }
-                        }
-
+            $.ajax({
+                type:'post',//тип запроса: get,post либо head
+                url:'ajax.php',//url адрес файла обработчика
+                data:{'dateLesson':dateLesson, 'idGroup': $("input#idGroup").val(),'idSubject': $("input#idSubject").val(),'typeLesson':"1",'idLesson': $("input#idLesson").val()},//параметры запроса
+                response:'text',//тип возвращаемого ответа text либо xml
+                success:function (data,status) {//возвращаемый результат от сервера
+                    // $$('result',$$('result').innerHTML+'<br />'+data);
+                    if(status=="1"){
+                        alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
                     }
-                });
-            }
-            else if ($("#exam_rb").is(':checked')) {
-                $.ajax({
-                    type:'post',//тип запроса: get,post либо head
-                    url:'ajax.php',//url адрес файла обработчика
-                    data:{'dateLesson':dateLesson, 'typePractice':"2",'idGroup': $("input#idGroup").val(),'idSubject': $("input#idSubject").val(),'typeLesson':"0",'idLesson': $("input#idLesson").val()},//параметры запроса
-                    response:'text',//тип возвращаемого ответа text либо xml
-                    success:function (data,status) {//возвращаемый результат от сервера
-                        // $$('result',$$('result').innerHTML+'<br />'+data);
-                        if(status=="1"){
-                            alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
-                        }
-                        else if (status=="2"){
-                            alert("Закройте, пожалуйста, окно и авторизуйтесь заново!");
-                        }
-                        else{
-                            $("<div class='date_col exam_theme'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
-                            for (var i = 0; i < cnt; i++) {
-                                $("div.date_col:last").append("<div class='grade' data-hover="+(i+1)+"></div>");
-                            }
-                        }
-
+                    else if (status=="2"){
+                        alert("Закройте, пожалуйста, окно и авторизуйтесь заново!");
                     }
-                });
-
-            }
-            else {
-
-                $.ajax({
-                    type:'post',//тип запроса: get,post либо head
-                    url:'ajax.php',//url адрес файла обработчика
-                    data:{'dateLesson':dateLesson, 'typePractice':"0",'idGroup': $("input#idGroup").val(),'idSubject': $("input#idSubject").val(),'typeLesson':"0",'idLesson': $("input#idLesson").val()},//параметры запроса
-                    response:'text',//тип возвращаемого ответа text либо xml
-                    success:function (data,status) {//возвращаемый результат от сервера
-                        // $$('result',$$('result').innerHTML+'<br />'+data);
-                        if(status=="1"){
-                            alert("Возможно, колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
+                    else{
+                        $("<div class='date_col'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+                        for (var i = 0; i < cnt; i++) {
+                            $("div.date_col:last").append("<div class='grade' data-hover="+(i+1)+"></div>");
                         }
-                        else if (status=="2"){
-                            alert("Закройте, пожалуйста, окно и авторизуйтесь заново!");
-                        }
-                        else{
-                            $("<div class='date_col'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
-                            for (var i = 0; i < cnt; i++) {
-                                $("div.date_col:last").append("<div class='grade' data-hover="+(i+1)+"></div>");
-                            }
-                        }
-
                     }
-                });
-            }
+
+                }
+            });
             // console.log(dateLesson);
             dialog.dialog("close");
         }
@@ -99,8 +47,8 @@ $(function () {
     dialog = $("#form-lesson").dialog({
         resizable:false,
         autoOpen: false,
-        height: 350,
-        width: 400,
+        height: 'auto',
+        width: 'auto',
         modal: true,
         buttons: {
             "Создать": addLesson,
@@ -128,12 +76,10 @@ $(function () {
 
     $('div').delegate(".grade", "mouseover", function () {
         data_hover=$(this).attr('data-hover');
-        //$(this).css('background', 'greenyellow');
         $('div [data-hover="'+data_hover+'"]').css('background', 'greenyellow');
     });
     $('div').delegate(".grade", "mouseout", function () {
         data_hover=$(this).attr('data-hover');
-        //$(this).css('background', 'white');
         $('div [data-hover="'+data_hover+'"]').css('background', 'inherit');
     });
 
@@ -141,16 +87,9 @@ $(function () {
         dat=$(this).parent().find('div.date_title').html();//Дата столбца
         //console.log(dat);
         student_id=$(this).attr('data-idStudent');
-//                $("#ddd").html(dat);
         edit_dialog.dialog("open");
         edit_form[0].reset();
-        $("button#add_grade_input").removeAttr('disabled');
-        //dateLes=$("b#dateLesson").val();
         $("#inp_0").focus();
-        $('#inp_2').slideUp(1);
-        --countCell;
-        $('#inp_1').slideUp(1);
-        --countCell;
         cur_grade = $(this).text();
         elem = $(this);
         grades = cur_grade.split("/");
@@ -172,25 +111,7 @@ $(function () {
             $("b#3").click(function(){
                 $("#" + inp_id).val("Нб.о.");
             });
-            $("b#4").click(function(){
-                $("#" + inp_id).val("Зач.");
-            });
-            $("b#5").click(function(){
-                $("#" + inp_id).val("Незач.");
-            });
-            $("b#6").click(function(){
-                $("#" + inp_id).val("Недоп");
-            });
         });
-        var countOpenCell = 0;
-        for (j = 0; j < 3; j++) {
-            if ($("#inp_" + j).val() != "") {
-                countOpenCell++;
-            }
-        }
-        if (countOpenCell == 3) {
-            $("button#add_grade_input").attr('disabled', true);
-        }
         var absenteeisms = /\w/;
         $(".inp_cell:text").keydown(function (event) {
             if (event.keyCode == 8 || event.keyCode == 46) {	//если это удаление
@@ -203,18 +124,12 @@ $(function () {
     $("#edit").click(function () {
         var coding = "";
         //alert(student_id);
-        var bit1 = $("#inp_0").val();
-        var bit2 = $("#inp_1").val();
-        var bit3 = $("#inp_2").val();
-        bit1 = (bit1 == "") ? "" : bit1;
-        bit2 = (bit2 == "") ? "" : "/" + bit2;
-        bit3 = (bit3 == "") ? "" : "/" + bit3;
-        var cur_res = bit1 + bit2 + bit3;
+
+        var cur_res = $("#inp_0").val();
         //alert(cur_res);
         coding = Encrypt(cur_res);
         elem.text(cur_res);
-        //alert(coding);
-        //alert("cur_grade "+cur_grade+" cur_res "+cur_res);
+
         if((cur_grade=="") && (cur_res!="")){
             $.ajax({
                 type:'post',//тип запроса: get,post либо head
@@ -222,11 +137,10 @@ $(function () {
                 data:{'dateLes': dat,'typeProcedure': "ADD",'idStudent': student_id, 'grades': coding},//параметры запроса'grades': coding,
                 response:'text',//тип возвращаемого ответа text либо xml
                 success:function (data, status) {//возвращаемый результат от сервера
-                    // $$('result',$$('result').innerHTML+'<br />'+data);
+                    // $$('result',$$('result').innerHTML+'<br/>'+data);
                     if (status=="2"){
                         alert("Закройте, пожалуйста, окно и авторизуйтесь заново!");
                     }
-
                 }
             });
         }
@@ -237,7 +151,7 @@ $(function () {
                 data:{'dateLes': dat,'typeProcedure': "UPDATE",'idStudent': student_id, 'grades': coding},//параметры запроса'grades': coding,
                 response:'text',//тип возвращаемого ответа text либо xml
                 success:function (data, status) {//возвращаемый результат от сервера
-                    // $$('result',$$('result').innerHTML+'<br />'+data);
+                    // $$('result',$$('result').innerHTML+'<br/>'+data);
                     if (status=="2"){
                         alert("Закройте, пожалуйста, окно и авторизуйтесь заново!");
                     }
@@ -255,24 +169,7 @@ $(function () {
     $("#create_lesson").button().on("click", function () {
         dialog.dialog("open");
     });
-    $("#add_grade_input").click(function () {
-        if (countCell < 3) {
-            if (countCell <= 0)
-                countCell = 1;
-            if ($("#inp_" + (countCell - 1)).val() != "") {
-                $("#inp_" + countCell).slideDown(1);
-                $("#inp_" + countCell).focus();
-                ++countCell;
-            }
-            else {
-                alert("Заполните, пожалуйста, доступное поле ввода оценки!");
-            }
-        }
-        else {
-            alert("Допускается не более 3 полей ввода!");
-            $("button#add_grade_input").attr('disabled', true);
-        }
-    });
+
 });
 
 $(document).ready(function () {
@@ -343,15 +240,6 @@ function MatchEncrypt(val) {
             case 'Нб.о.':
                 return '22';
                 break;
-            case 'Зач.':
-                return '23';
-                break;
-            case 'Незач.':
-                return '24';
-                break;
-            case 'Недоп':
-                return '25';
-                break;
         }
     }
 
@@ -370,15 +258,6 @@ function MatchDecrypt(val) {
                 break;
             case '22':
                 return 'Нб.о.';
-                break;
-            case '23':
-                return 'Зач.';
-                break;
-            case '24':
-                return 'Незач.';
-                break;
-            case '25':
-                return 'Недоп';
                 break;
         }
     }
