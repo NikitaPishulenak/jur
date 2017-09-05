@@ -156,7 +156,7 @@ div .hidden{
 .result_box {
     white-space: nowrap;  /* чтобы картинки стояли в одну линию, не переходя на другую строку */
     word-wrap: normal;
-    overflow-x: scroll;
+    overflow-x: auto;
     width: 540px;
     /*overflow: hidden;*/
     left:260px;
@@ -190,4 +190,23 @@ div .hidden{
 .result{
     position: absolute;
     left: 80%;
+}
+
+.statistic{
+    position: absolute;
+    left:810px;
+    border: solid black 1px;
+}
+.statist {
+    font-size: 0.82em;
+    border-bottom: solid black 1px;
+    border-top: solid black 1px;
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    /*white-space: pre-wrap;*/
+    word-wrap: break-word;      /* IE 5.5-7 */
+    white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+    white-space: pre-wrap;
 }
