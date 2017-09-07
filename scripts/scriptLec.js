@@ -11,6 +11,14 @@
 });
 
 $(function () {
+    $("div.grade").each(function () {
+        if($(this).text()!=""){
+            $(this).text(Decrypt($(this).text()));
+        }
+    });
+});
+
+$(function () {
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
@@ -227,6 +235,35 @@ $(function () {
 });
 
 $(document).ready(function () {
+    $("div.grade").each(function () {
+        if($(this).text()!=""){
+            $(this).append('<div class="triangle-topright"></div>');
+        }
+    });
+
+    prepod="Пискун Олег Маркович";
+    $('div').delegate(".triangle-topright", "mouseover", function () {
+        dat=$(this).parent().parent().find('div.date_title').html();//Дата столбца
+        console.log(dat+"-"+$("input#idGroup").val()+"-"+$("input#idSubject").val());
+        $.ajax({
+            type:'get',
+            url:'p.php',
+            data:{
+                'dateLesson':dat,
+                'idGroup': $("input#idGroup").val(),
+                'idLessons': $("input#idSubject").val()
+            },
+            success:function () {
+                $(this).attr('title',"Преподаватель: "+prepod);
+            },
+            error: function () {
+                $(this).attr('title',"Данные отсутствуют");
+            }
+        });
+
+    });
+
+
     countCell = 1;
     groupNumber="";
     subject="";

@@ -76,6 +76,8 @@ input[type=text] {
     word-wrap: break-word;      /* IE 5.5-7 */
     white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
     white-space: pre-wrap;
+    float: left;
+    display: inline-table;
 }
 
 
@@ -157,7 +159,7 @@ div .hidden{
     white-space: nowrap;  /* чтобы картинки стояли в одну линию, не переходя на другую строку */
     word-wrap: normal;
     overflow-x: auto;
-    width: 540px;
+    width: 70%;
     /*overflow: hidden;*/
     left:260px;
     position: absolute;
@@ -209,4 +211,17 @@ div .hidden{
     word-wrap: break-word;      /* IE 5.5-7 */
     white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
     white-space: pre-wrap;
+}
+
+.triangle-topright {
+    position: relative;
+    width: 0;
+    left: 70px;
+    height: 0;
+    top:0;
+    border-top: 10px solid #DAA520;
+    border-left: 10px solid transparent;
+    float: left;
+    display: inline-table;
+
 }

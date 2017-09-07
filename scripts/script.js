@@ -11,6 +11,15 @@
 });
 
 $(function () {
+    $("div.grade").each(function () {
+        if($(this).text()!=""){
+            $(this).text(Decrypt($(this).text()));
+        }
+    });
+});
+
+$(function () {
+
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
@@ -202,6 +211,7 @@ $(function () {
         id_Less=$(this).attr('data-idLes');
         PKE=$(this).attr('data-PKE');
         id_Zapis=$(this).attr('data-zapis');
+
         edit_dialog.dialog("open");
         edit_form[0].reset();
         $("button#add_grade_input").removeAttr('disabled');
@@ -365,7 +375,41 @@ $(function () {
     });
 });
 
+
 $(document).ready(function () {
+
+    $("div.grade").each(function () {
+        if($(this).text()!=""){
+            $(this).append('<div class="triangle-topright"></div>');
+            // $(this).text(Decrypt($(this).text()));
+        }
+    });
+
+    prepod="Пискун Олег Маркович";
+    $('div').delegate(".triangle-topright", "mouseover", function () {
+        dat=$(this).parent().parent().find('div.date_title').html();//Дата столбца
+        console.log(dat+"-"+$("input#idGroup").val()+"-"+$("input#idSubject").val());
+        $.ajax({
+            type:'get',
+            url:'p.php',
+            data:{
+                'dateLesson':dat,
+                'idGroup': $("input#idGroup").val(),
+                'idLessons': $("input#idSubject").val()
+            },
+            success:function () {
+                $(this).attr('title',"Преподаватель: "+prepod);
+            },
+            error: function () {
+                $(this).attr('title',"Данные отсутствуют");
+            }
+        });
+
+    });
+
+
+
+
     countCell = 1;
     groupNumber="";
     subject="";
@@ -474,3 +518,4 @@ function MatchDecrypt(val) {
     }
 
 }
+
