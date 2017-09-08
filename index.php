@@ -81,7 +81,6 @@
     <div class="tools" align="center">
         <button id="create_lesson">Новое занятие</button>
     </div>
-    <br>
     <hr>
     <br>
 
@@ -132,11 +131,11 @@
             <div class='date_col hidden'></div>
             <div class="date_col">
                 <div class="date_title" data-idLesson="1">01.09.2017</div>
-                <div class="grade" data-idStudent="1" data-idRating="3">21</div>
+                <div class="grade" data-idStudent="1" data-idRating="3">111213</div>
                 <div class="grade" data-idStudent="2" data-idRating="4">22</div>
                 <div class="grade" data-idStudent="3" data-idRating="2">23</div>
                 <div class="grade" data-idStudent="4" data-idRating="7">11</div>
-                <div class="grade" data-idStudent="5" data-idRating="1">12</div>
+                <div class="grade" data-idStudent="5" data-idRating="1">1219</div>
                 <div class="grade" data-idStudent="6" data-idRating="2">2</div>
                 <div class="grade" data-idStudent="7" data-idRating="6">10</div>
                 <div class="grade" data-idStudent="8" data-idRating="17">Нб.отр.</div>
@@ -197,40 +196,475 @@
                 <div class="grade" data-idStudent="30" data-idRating="2">10</div>
             </div>
 
-<!--            <div class='date_col' data-idLesson="4">-->
-<!--                <div class="date_title">09.09.2017</div>-->
-<!--                <div class="grade" data-hover="1">2</div>-->
-<!--                <div class="grade" data-hover="2"></div>-->
-<!--                <div class="grade" data-hover="3"></div>-->
-<!--                <div class="grade" data-hover="4">9</div>-->
-<!--                <div class="grade" data-hover="5">7</div>-->
-<!--                <div class="grade" data-hover="6">2</div>-->
-<!--                <div class="grade" data-hover="7">10</div>-->
-<!--                <div class="grade" data-hover="8">Нб.отр.</div>-->
-<!--                <div class="grade" data-hover="9"></div>-->
-<!--                <div class="grade" data-hover="10">5</div>-->
-<!--                <div class="grade" data-hover="11">9</div>-->
-<!--                <div class="grade" data-hover="12"></div>-->
-<!--                <div class="grade" data-hover="13"></div>-->
-<!--                <div class="grade" data-hover="14"></div>-->
-<!--                <div class="grade" data-hover="15">6</div>-->
-<!--                <div class="grade" data-hover="16">5</div>-->
-<!--                <div class="grade" data-hover="17">6</div>-->
-<!--                <div class="grade" data-hover="18">9</div>-->
-<!--                <div class="grade" data-hover="19">Нб.отр.</div>-->
-<!--                <div class="grade" data-hover="20">10</div>-->
-<!--                <div class="grade" data-hover="21">8</div>-->
-<!--                <div class="grade" data-hover="22">4</div>-->
-<!--                <div class="grade" data-hover="23">9</div>-->
-<!--                <div class="grade" data-hover="24">1</div>-->
-<!--                <div class="grade" data-hover="25">3</div>-->
-<!--                <div class="grade" data-hover="26">1</div>-->
-<!--                <div class="grade" data-hover="27"></div>-->
-<!--                <div class="grade" data-hover="28">2</div>-->
-<!--                <div class="grade" data-hover="29">8</div>-->
-<!--                <div class="grade" data-hover="30">8</div>-->
-<!--            </div>-->
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">20.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3">2</div>
+                <div class="grade" data-idStudent="2" data-idRating="4">2</div>
+                <div class="grade" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="5" data-idRating="1">9</div>
+                <div class="grade" data-idStudent="6" data-idRating="2"></div>
+                <div class="grade" data-idStudent="7" data-idRating="6"></div>
+                <div class="grade" data-idStudent="8" data-idRating="17">Нб.отр.</div>
+                <div class="grade" data-idStudent="9" data-idRating="16">9</div>
+                <div class="grade" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45">8</div>
+                <div class="grade" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4"></div>
+                <div class="grade" data-idStudent="15" data-idRating="2">2</div>
+                <div class="grade" data-idStudent="16" data-idRating="7"></div>
+                <div class="grade" data-idStudent="17" data-idRating="1">7</div>
+                <div class="grade" data-idStudent="18" data-idRating="2">7</div>
+                <div class="grade" data-idStudent="19" data-idRating="6">7</div>
+                <div class="grade" data-idStudent="20" data-idRating="17">5</div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14"></div>
+                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="24" data-idRating="45"></div>
+                <div class="grade" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2">4</div>
+                <div class="grade" data-idStudent="28" data-idRating="7">3</div>
+                <div class="grade" data-idStudent="29" data-idRating="1"></div>
+                <div class="grade" data-idStudent="30" data-idRating="2"></div>
+            </div>
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">20.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3"></div>
+                <div class="grade" data-idStudent="2" data-idRating="4"></div>
+                <div class="grade" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade" data-idStudent="4" data-idRating="7">8</div>
+                <div class="grade" data-idStudent="5" data-idRating="1"></div>
+                <div class="grade" data-idStudent="6" data-idRating="2"></div>
+                <div class="grade" data-idStudent="7" data-idRating="6">10</div>
+                <div class="grade" data-idStudent="8" data-idRating="17"></div>
+                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45"></div>
+                <div class="grade" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4">7</div>
+                <div class="grade" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade" data-idStudent="16" data-idRating="7"></div>
+                <div class="grade" data-idStudent="17" data-idRating="1"></div>
+                <div class="grade" data-idStudent="18" data-idRating="2">4</div>
+                <div class="grade" data-idStudent="19" data-idRating="6"></div>
+                <div class="grade" data-idStudent="20" data-idRating="17"></div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14">7</div>
+                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="24" data-idRating="45">4</div>
+                <div class="grade" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2">2</div>
+                <div class="grade" data-idStudent="28" data-idRating="7">1</div>
+                <div class="grade" data-idStudent="29" data-idRating="1"></div>
+                <div class="grade" data-idStudent="30" data-idRating="2"></div>
+            </div>
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">01.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3">21</div>
+                <div class="grade" data-idStudent="2" data-idRating="4">22</div>
+                <div class="grade" data-idStudent="3" data-idRating="2">23</div>
+                <div class="grade" data-idStudent="4" data-idRating="7">11</div>
+                <div class="grade" data-idStudent="5" data-idRating="1">12</div>
+                <div class="grade" data-idStudent="6" data-idRating="2">2</div>
+                <div class="grade" data-idStudent="7" data-idRating="6">10</div>
+                <div class="grade" data-idStudent="8" data-idRating="17">Нб.отр.</div>
+                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="10" data-idRating="14">5</div>
+                <div class="grade" data-idStudent="11" data-idRating="13">3</div>
+                <div class="grade" data-idStudent="12" data-idRating="45"></div>
+                <div class="grade" data-idStudent="13" data-idRating="3">5</div>
+                <div class="grade" data-idStudent="14" data-idRating="4"></div>
+                <div class="grade" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade" data-idStudent="16" data-idRating="7">9</div>
+                <div class="grade" data-idStudent="17" data-idRating="1">4</div>
+                <div class="grade" data-idStudent="18" data-idRating="2">2</div>
+                <div class="grade" data-idStudent="19" data-idRating="6">10</div>
+                <div class="grade" data-idStudent="20" data-idRating="17">Нб.отр.</div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14">5</div>
+                <div class="grade" data-idStudent="23" data-idRating="13">3</div>
+                <div class="grade" data-idStudent="24" data-idRating="45"></div>
+                <div class="grade" data-idStudent="25" data-idRating="3">5</div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2"></div>
+                <div class="grade" data-idStudent="28" data-idRating="7">9</div>
+                <div class="grade" data-idStudent="29" data-idRating="1">4</div>
+                <div class="grade" data-idStudent="30" data-idRating="2">2</div>
+            </div>
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">12.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3">8</div>
+                <div class="grade" data-idStudent="2" data-idRating="4">7</div>
+                <div class="grade" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="5" data-idRating="1"></div>
+                <div class="grade" data-idStudent="6" data-idRating="2">2</div>
+                <div class="grade" data-idStudent="7" data-idRating="6"></div>
+                <div class="grade" data-idStudent="8" data-idRating="17">Нб.отр.</div>
+                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45"></div>
+                <div class="grade" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4"></div>
+                <div class="grade" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade" data-idStudent="16" data-idRating="7">3</div>
+                <div class="grade" data-idStudent="17" data-idRating="1"></div>
+                <div class="grade" data-idStudent="18" data-idRating="2"></div>
+                <div class="grade" data-idStudent="19" data-idRating="6">8</div>
+                <div class="grade" data-idStudent="20" data-idRating="17">Нб.отр.</div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14"></div>
+                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="24" data-idRating="45">7</div>
+                <div class="grade" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2"></div>
+                <div class="grade" data-idStudent="28" data-idRating="7"></div>
+                <div class="grade" data-idStudent="29" data-idRating="1">9</div>
+                <div class="grade" data-idStudent="30" data-idRating="2">10</div>
+            </div>
+
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">20.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3">2</div>
+                <div class="grade" data-idStudent="2" data-idRating="4"></div>
+                <div class="grade" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="5" data-idRating="1"></div>
+                <div class="grade" data-idStudent="6" data-idRating="2"></div>
+                <div class="grade" data-idStudent="7" data-idRating="6"></div>
+                <div class="grade" data-idStudent="8" data-idRating="17">Нб.отр.</div>
+                <div class="grade" data-idStudent="9" data-idRating="16">9</div>
+                <div class="grade" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45">8</div>
+                <div class="grade" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4"></div>
+                <div class="grade" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade" data-idStudent="16" data-idRating="7"></div>
+                <div class="grade" data-idStudent="17" data-idRating="1">7</div>
+                <div class="grade" data-idStudent="18" data-idRating="2">7</div>
+                <div class="grade" data-idStudent="19" data-idRating="6">7</div>
+                <div class="grade" data-idStudent="20" data-idRating="17">5</div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14"></div>
+                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="24" data-idRating="45"></div>
+                <div class="grade" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2">4</div>
+                <div class="grade" data-idStudent="28" data-idRating="7"></div>
+                <div class="grade" data-idStudent="29" data-idRating="1"></div>
+                <div class="grade" data-idStudent="30" data-idRating="2"></div>
+            </div>
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">20.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3"></div>
+                <div class="grade" data-idStudent="2" data-idRating="4"></div>
+                <div class="grade" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="5" data-idRating="1"></div>
+                <div class="grade" data-idStudent="6" data-idRating="2"></div>
+                <div class="grade" data-idStudent="7" data-idRating="6">1</div>
+                <div class="grade" data-idStudent="8" data-idRating="17"></div>
+                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45">8</div>
+                <div class="grade" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4">7</div>
+                <div class="grade" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade" data-idStudent="16" data-idRating="7">4</div>
+                <div class="grade" data-idStudent="17" data-idRating="1"></div>
+                <div class="grade" data-idStudent="18" data-idRating="2">4</div>
+                <div class="grade" data-idStudent="19" data-idRating="6"></div>
+                <div class="grade" data-idStudent="20" data-idRating="17"></div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14">7</div>
+                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="24" data-idRating="45"></div>
+                <div class="grade" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2">2</div>
+                <div class="grade" data-idStudent="28" data-idRating="7">1</div>
+                <div class="grade" data-idStudent="29" data-idRating="1"></div>
+                <div class="grade" data-idStudent="30" data-idRating="2"></div>
+            </div>
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">20.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3">2</div>
+                <div class="grade" data-idStudent="2" data-idRating="4"></div>
+                <div class="grade" data-idStudent="3" data-idRating="2">3</div>
+                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="5" data-idRating="1"></div>
+                <div class="grade" data-idStudent="6" data-idRating="2"></div>
+                <div class="grade" data-idStudent="7" data-idRating="6">6</div>
+                <div class="grade" data-idStudent="8" data-idRating="17"></div>
+                <div class="grade" data-idStudent="9" data-idRating="16">5</div>
+                <div class="grade" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45">4</div>
+                <div class="grade" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4"></div>
+                <div class="grade" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade" data-idStudent="16" data-idRating="7"></div>
+                <div class="grade" data-idStudent="17" data-idRating="1"></div>
+                <div class="grade" data-idStudent="18" data-idRating="2"></div>
+                <div class="grade" data-idStudent="19" data-idRating="6"></div>
+                <div class="grade" data-idStudent="20" data-idRating="17"></div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14"></div>
+                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="24" data-idRating="45"></div>
+                <div class="grade" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2">2</div>
+                <div class="grade" data-idStudent="28" data-idRating="7">10</div>
+                <div class="grade" data-idStudent="29" data-idRating="1"></div>
+                <div class="grade" data-idStudent="30" data-idRating="2"></div>
+            </div>
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">20.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3"></div>
+                <div class="grade" data-idStudent="2" data-idRating="4">8</div>
+                <div class="grade" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="5" data-idRating="1"></div>
+                <div class="grade" data-idStudent="6" data-idRating="2">4</div>
+                <div class="grade" data-idStudent="7" data-idRating="6">3</div>
+                <div class="grade" data-idStudent="8" data-idRating="17"></div>
+                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45"></div>
+                <div class="grade" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4">6</div>
+                <div class="grade" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade" data-idStudent="16" data-idRating="7">4</div>
+                <div class="grade" data-idStudent="17" data-idRating="1"></div>
+                <div class="grade" data-idStudent="18" data-idRating="2">4</div>
+                <div class="grade" data-idStudent="19" data-idRating="6"></div>
+                <div class="grade" data-idStudent="20" data-idRating="17"></div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14">3</div>
+                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="24" data-idRating="45"></div>
+                <div class="grade" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2"></div>
+                <div class="grade" data-idStudent="28" data-idRating="7">9</div>
+                <div class="grade" data-idStudent="29" data-idRating="1"></div>
+                <div class="grade" data-idStudent="30" data-idRating="2">9</div>
+            </div>
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">20.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3"></div>
+                <div class="grade" data-idStudent="2" data-idRating="4"></div>
+                <div class="grade" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="5" data-idRating="1"></div>
+                <div class="grade" data-idStudent="6" data-idRating="2"></div>
+                <div class="grade" data-idStudent="7" data-idRating="6">1</div>
+                <div class="grade" data-idStudent="8" data-idRating="17"></div>
+                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45">8</div>
+                <div class="grade" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4">7</div>
+                <div class="grade" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade" data-idStudent="16" data-idRating="7">4</div>
+                <div class="grade" data-idStudent="17" data-idRating="1"></div>
+                <div class="grade" data-idStudent="18" data-idRating="2">4</div>
+                <div class="grade" data-idStudent="19" data-idRating="6"></div>
+                <div class="grade" data-idStudent="20" data-idRating="17"></div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14">7</div>
+                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="24" data-idRating="45"></div>
+                <div class="grade" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2">2</div>
+                <div class="grade" data-idStudent="28" data-idRating="7">1</div>
+                <div class="grade" data-idStudent="29" data-idRating="1"></div>
+                <div class="grade" data-idStudent="30" data-idRating="2"></div>
+            </div>
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">20.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3"></div>
+                <div class="grade" data-idStudent="2" data-idRating="4"></div>
+                <div class="grade" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="5" data-idRating="1"></div>
+                <div class="grade" data-idStudent="6" data-idRating="2"></div>
+                <div class="grade" data-idStudent="7" data-idRating="6">1</div>
+                <div class="grade" data-idStudent="8" data-idRating="17"></div>
+                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45">8</div>
+                <div class="grade" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4">7</div>
+                <div class="grade" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade" data-idStudent="16" data-idRating="7">4</div>
+                <div class="grade" data-idStudent="17" data-idRating="1"></div>
+                <div class="grade" data-idStudent="18" data-idRating="2">4</div>
+                <div class="grade" data-idStudent="19" data-idRating="6"></div>
+                <div class="grade" data-idStudent="20" data-idRating="17"></div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14">7</div>
+                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="24" data-idRating="45"></div>
+                <div class="grade" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2">2</div>
+                <div class="grade" data-idStudent="28" data-idRating="7">1</div>
+                <div class="grade" data-idStudent="29" data-idRating="1"></div>
+                <div class="grade" data-idStudent="30" data-idRating="2"></div>
+            </div>
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">20.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3"></div>
+                <div class="grade" data-idStudent="2" data-idRating="4"></div>
+                <div class="grade" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="5" data-idRating="1"></div>
+                <div class="grade" data-idStudent="6" data-idRating="2"></div>
+                <div class="grade" data-idStudent="7" data-idRating="6">1</div>
+                <div class="grade" data-idStudent="8" data-idRating="17"></div>
+                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45">8</div>
+                <div class="grade" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4">7</div>
+                <div class="grade" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade" data-idStudent="16" data-idRating="7">4</div>
+                <div class="grade" data-idStudent="17" data-idRating="1"></div>
+                <div class="grade" data-idStudent="18" data-idRating="2">4</div>
+                <div class="grade" data-idStudent="19" data-idRating="6"></div>
+                <div class="grade" data-idStudent="20" data-idRating="17"></div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14">7</div>
+                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="24" data-idRating="45"></div>
+                <div class="grade" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2">2</div>
+                <div class="grade" data-idStudent="28" data-idRating="7">1</div>
+                <div class="grade" data-idStudent="29" data-idRating="1"></div>
+                <div class="grade" data-idStudent="30" data-idRating="2"></div>
+            </div>
+            <div class="date_col">
+                <div class="date_title" data-idLesson="1">20.09.2017</div>
+                <div class="grade" data-idStudent="1" data-idRating="3"></div>
+                <div class="grade" data-idStudent="2" data-idRating="4"></div>
+                <div class="grade" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="5" data-idRating="1"></div>
+                <div class="grade" data-idStudent="6" data-idRating="2"></div>
+                <div class="grade" data-idStudent="7" data-idRating="6">1</div>
+                <div class="grade" data-idStudent="8" data-idRating="17"></div>
+                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45">8</div>
+                <div class="grade" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4">7</div>
+                <div class="grade" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade" data-idStudent="16" data-idRating="7">4</div>
+                <div class="grade" data-idStudent="17" data-idRating="1"></div>
+                <div class="grade" data-idStudent="18" data-idRating="2">4</div>
+                <div class="grade" data-idStudent="19" data-idRating="6"></div>
+                <div class="grade" data-idStudent="20" data-idRating="17"></div>
+                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14">7</div>
+                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="24" data-idRating="45"></div>
+                <div class="grade" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade" data-idStudent="27" data-idRating="2">2</div>
+                <div class="grade" data-idStudent="28" data-idRating="7">1</div>
+                <div class="grade" data-idStudent="29" data-idRating="1"></div>
+                <div class="grade" data-idStudent="30" data-idRating="2"></div>
+            </div>
+
+
         </div>
+
+<!--        <div class="statistic">-->
+<!--            <div class="date_col_stat">-->
+<!--                <div class="date_title">Ср. балл.</div>-->
+<!--                <div class="average" data-idStudent="1"></div>-->
+<!--                <div class="average" data-idStudent="2"></div>-->
+<!--                <div class="average" data-idStudent="3"></div>-->
+<!--                <div class="average" data-idStudent="4"></div>-->
+<!--                <div class="average" data-idStudent="5"></div>-->
+<!--                <div class="average" data-idStudent="6"></div>-->
+<!--                <div class="average" data-idStudent="7"></div>-->
+<!--                <div class="average" data-idStudent="8"></div>-->
+<!--                <div class="average" data-idStudent="9"></div>-->
+<!--                <div class="average" data-idStudent="10"></div>-->
+<!--                <div class="average" data-idStudent="11"></div>-->
+<!--                <div class="average" data-idStudent="12"></div>-->
+<!--                <div class="average" data-idStudent="13"></div>-->
+<!--                <div class="average" data-idStudent="14"></div>-->
+<!--                <div class="average" data-idStudent="15"></div>-->
+<!--                <div class="average" data-idStudent="16"></div>-->
+<!--                <div class="average" data-idStudent="17"></div>-->
+<!--                <div class="average" data-idStudent="18"></div>-->
+<!--                <div class="average" data-idStudent="19"></div>-->
+<!--                <div class="average" data-idStudent="20"></div>-->
+<!--                <div class="average" data-idStudent="21"></div>-->
+<!--                <div class="average" data-idStudent="22"></div>-->
+<!--                <div class="average" data-idStudent="23"></div>-->
+<!--                <div class="average" data-idStudent="24"></div>-->
+<!--                <div class="average" data-idStudent="25"></div>-->
+<!--                <div class="average" data-idStudent="26"></div>-->
+<!--                <div class="average" data-idStudent="27"></div>-->
+<!--                <div class="average" data-idStudent="28"></div>-->
+<!--                <div class="average" data-idStudent="29"></div>-->
+<!--                <div class="average" data-idStudent="30"></div>-->
+<!--            </div>-->
+<!--            <div class="date_col_stat">-->
+<!--                <div class="date_title">% отв.</div>-->
+<!--                <div class="answer" data-idStudent="1"></div>-->
+<!--                <div class="answer" data-idStudent="2"></div>-->
+<!--                <div class="answer" data-idStudent="3"></div>-->
+<!--                <div class="answer" data-idStudent="4"></div>-->
+<!--                <div class="answer" data-idStudent="5"></div>-->
+<!--                <div class="answer" data-idStudent="6"></div>-->
+<!--                <div class="answer" data-idStudent="7"></div>-->
+<!--                <div class="answer" data-idStudent="8"></div>-->
+<!--                <div class="answer" data-idStudent="9"></div>-->
+<!--                <div class="answer" data-idStudent="10"></div>-->
+<!--                <div class="answer" data-idStudent="11"></div>-->
+<!--                <div class="answer" data-idStudent="12"></div>-->
+<!--                <div class="answer" data-idStudent="13"></div>-->
+<!--                <div class="answer" data-idStudent="14"></div>-->
+<!--                <div class="answer" data-idStudent="15"></div>-->
+<!--                <div class="answer" data-idStudent="16"></div>-->
+<!--                <div class="answer" data-idStudent="17"></div>-->
+<!--                <div class="answer" data-idStudent="18"></div>-->
+<!--                <div class="answer" data-idStudent="19"></div>-->
+<!--                <div class="answer" data-idStudent="20"></div>-->
+<!--                <div class="answer" data-idStudent="21"></div>-->
+<!--                <div class="answer" data-idStudent="22"></div>-->
+<!--                <div class="answer" data-idStudent="23"></div>-->
+<!--                <div class="answer" data-idStudent="24"></div>-->
+<!--                <div class="answer" data-idStudent="25"></div>-->
+<!--                <div class="answer" data-idStudent="26"></div>-->
+<!--                <div class="answer" data-idStudent="27"></div>-->
+<!--                <div class="answer" data-idStudent="28"></div>-->
+<!--                <div class="answer" data-idStudent="29"></div>-->
+<!--                <div class="answer" data-idStudent="30"></div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 
 </div>

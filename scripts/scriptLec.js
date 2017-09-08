@@ -38,7 +38,8 @@ $(function () {
                     'idGroup': $("input#idGroup").val(),
                     'idLessons': $("input#idSubject").val(),
                     'PL':"1",
-                    'menuactiv': "addLesson"
+                    'menuactiv': "addLesson",
+                    'PKE': '0'
                 },//параметры запроса
                 success:function (st) {
                     if ((st!="No")&&(st!="Access is denied!")&&(st!="No access rights!")){
@@ -168,7 +169,8 @@ $(function () {
                     'idPrepod': $("input#idPrepod").val(),
                     'idLess': id_Less,
                     'menuactiv': "addLessonStudent",
-                    'grades': coding
+                    'grades': coding,
+                    'PKE': '0'
                 },
                 success:function (st) {
                     if ((st!="Access is denied!")&&(st!="No access rights!")){
@@ -206,7 +208,8 @@ $(function () {
                     'idStudent': student_id,
                     'idPrepod': $("input#idPrepod").val(),
                     'menuactiv': "editLessonStudent",
-                    'grades': coding
+                    'grades': coding,
+                    'PKE': '0'
                 },
                 success:function (st) {
                     if (st=="Access is denied!"){
