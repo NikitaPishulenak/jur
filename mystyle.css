@@ -3,10 +3,6 @@ input[type=text] {
     margin: 2px 2px 2px 2px;
 }
 
-.col1 {
-    width: 50px;
-}
-
 .button {
     width: 40%;
     height: 20%;
@@ -78,6 +74,7 @@ input[type=text] {
     white-space: pre-wrap;
     float: left;
     display: inline-table;
+    position: relative;
 }
 
 
@@ -102,11 +99,11 @@ input[type=text] {
 
 
 .colloquium_theme {
-    background-color: cornflowerblue;
+    background-color: #d7e8ed;
 }
 
 .exam_theme {
-    background-color: burlywood;
+    background-color: #ded09f;
 }
 
 input .edit_grade {
@@ -135,10 +132,6 @@ input .edit_grade {
     color: #8c0000;
 }
 
-.grade:hover{
-    background-color: greenyellow;
-}
-
 #dateLast{
     display: none;
 }
@@ -155,14 +148,19 @@ div .hidden{
     cursor: pointer;
 }
 
-.result_box {
+.result_box, .result_box_statistic {
     white-space: nowrap;  /* чтобы картинки стояли в одну линию, не переходя на другую строку */
     word-wrap: normal;
     overflow-x: auto;
-    width: 60%;
     /*overflow: hidden;*/
     left:260px;
     position: absolute;
+}
+.result_box{
+    width: 80%;
+}
+.result_box_statistic{
+    width: 60%;
 }
 
 .date_col {
@@ -216,12 +214,12 @@ div .hidden{
 }
 
 .triangle-topright {
-    position: relative;
+    position: absolute;
     width: 0;
     left: 70px;
     height: 0;
-    top:0;
-    border-top: 10px solid #DAA520;
+    bottom:0;
+    border-bottom: 10px solid black;
     border-left: 10px solid transparent;
     float: left;
     display: inline-table;
@@ -230,4 +228,38 @@ div .hidden{
 
 #create_lesson{
     margin-bottom: 30px;
+}
+
+.hide {
+    display: none;
+}
+
+.illumination{
+    background-color: #d3d3d3;
+}
+.popup {
+    width:auto;
+    position:absolute;
+}
+
+
+.popup-content {
+    width:150px;
+    height: auto;
+    padding:5px;
+    color: #000000;
+    background-color: #c1c5c5;
+    border-radius:5px;
+    box-shadow: 0 0 10px #000;
+    position: relative;
+    z-index: 10;
+}
+
+.loading{
+    width: 30px;
+    height: 30px;
+    margin-left: 60px;
+}
+.header{
+    text-align: center;
 }

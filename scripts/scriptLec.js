@@ -104,12 +104,12 @@ $(function () {
 
     $('div').delegate(".grade", "mouseover", function () {
         data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').css('background', 'greenyellow');
+        $('div [data-idStudent="'+data_st+'"]').addClass("illumination");
     });
 
     $('div').delegate(".grade", "mouseout", function () {
         data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').css('background', 'inherit');
+        $('div [data-idStudent="'+data_st+'"]').removeClass("illumination");
     });
 
     $('div').delegate(".grade", "dblclick", function () {

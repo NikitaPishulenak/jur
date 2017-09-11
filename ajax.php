@@ -1,5 +1,4 @@
-﻿<meta charset="windows-1251">
-<?php
+﻿<?php
 
 header("Content-Type: text/html; charset=windows-1251");
 if(isset($_POST['dateLesson'])){
@@ -39,6 +38,11 @@ if(isset($_POST['idStudent'])){
 
 if(isset($_POST['grades'])){
     echo ' Оценки в зашифрованном виде='.$_POST['grades'];
+}
+
+if(isset($_GET['id_Zapis'])){
+    echo'Отметки: 10/5; Исправил: Кульба О.Е. 22.09.2017';
+
 }
 
 ?>

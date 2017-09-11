@@ -71,12 +71,12 @@ $(function () {
 
     $('div').delegate(".grade", "mouseover", function () {
         data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').css('background', 'greenyellow');
+        $('div [data-idStudent="'+data_st+'"]').addClass("illumination");
     });
 
     $('div').delegate(".grade", "mouseout", function () {
         data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').css('background', 'inherit');
+        $('div [data-idStudent="'+data_st+'"]').removeClass("illumination");
     });
 
 
@@ -95,19 +95,20 @@ $(document).ready(function () {
     $('div').delegate(".triangle-topright", "mouseover", function () {
         dat=$(this).parent().parent().find('div.date_title').html();//Дата столбца
         console.log(dat+"-"+$("input#idGroup").val()+"-"+$("input#idSubject").val());
+        var elem=$(this);
         $.ajax({
             type:'get',
-            url:'p.php',
+            url:'ajax.php',
             data:{
                 'dateLesson':dat,
                 'idGroup': $("input#idGroup").val(),
                 'idLessons': $("input#idSubject").val()
             },
-            success:function () {
-                $(this).attr('title',"Преподаватель: "+prepod);
+            success:function (info) {
+                $(elem).attr('title',"Преподаватель: "+info);
             },
             error: function () {
-                $(this).attr('title',"Данные отсутствуют");
+                $(elem).attr('title',"Данные отсутствуют");
             }
         });
 

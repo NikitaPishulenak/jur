@@ -240,12 +240,12 @@ $(function () {
 
     $('div').delegate(".grade", "mouseover", function () {
         data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').css('background', 'greenyellow');
+        $('div [data-idStudent="'+data_st+'"]').addClass("illumination");
     });
 
     $('div').delegate(".grade", "mouseout", function () {
         data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').css('background', 'inherit');
+        $('div [data-idStudent="'+data_st+'"]').removeClass("illumination");
     });
 
     $('div').delegate(".grade", "dblclick", function () {
@@ -420,37 +420,43 @@ $(function () {
 
 
 $(document).ready(function () {
+    PopUpHide();
+
 
     $("div.grade").each(function () {
         if($(this).text()!=""){
             $(this).append('<div class="triangle-topright"></div>');
-            // $(this).text(Decrypt($(this).text()));
         }
     });
 
-    prepod="Пискун Олег Маркович";
-    $('div').delegate(".triangle-topright", "mouseover", function () {
-        dat=$(this).parent().parent().find('div.date_title').html();//Дата столбца
-        console.log(dat+"-"+$("input#idGroup").val()+"-"+$("input#idSubject").val());
+    $('div').delegate(".triangle-topright", "mouseleave", function () {
+      PopUpHide();
+    });
+
+    $('div').delegate(".triangle-topright", "mouseover", function (e) {
+
+        var id_Zap=$(this).closest("div .grade").attr('data-zapis');
+        $("#window-popup").css("left",Number(e.pageX+15));
+        $("#window-popup").css("top",Number(e.pageY+10));
+        PopUpShow();
+
         $.ajax({
             type:'get',
-            url:'p.php',
+            url:'ajax.php',
             data:{
-                'dateLesson':dat,
-                'idGroup': $("input#idGroup").val(),
-                'idLessons': $("input#idSubject").val()
+                'id_Zapis':id_Zap,
+                'idGroup': $("input#idGroup").val()
             },
-            success:function () {
-                $(this).attr('title',"Преподаватель: "+prepod);
+            success:function (info) {
+                $(".loader").hide();
+                $(".popup-content").text(info);
             },
             error: function () {
-                $(this).attr('title',"Данные отсутствуют");
+                $(".popup-content").text("Данные отсутствуют!");
             }
         });
 
     });
-
-
 
 
     countCell = 1;
@@ -560,5 +566,14 @@ function MatchDecrypt(val) {
         }
     }
 
+}
+
+//Функция отображения PopUp
+function PopUpShow(){
+    $("#window-popup").show();
+}
+//Функция скрытия PopUp
+function PopUpHide(){
+    $("#window-popup").hide();
 }
 
