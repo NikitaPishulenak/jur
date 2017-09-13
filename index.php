@@ -143,70 +143,70 @@
         <div class="result_box">
             <div class='date_col hidden'></div>
             <div class="date_col">
-                <div class="date_title" data-idLesson="1">01.09.2017</div>
-                <div class="grade" data-idStudent="1" data-idRating="3" data-zapis="1">111213</div>
-                <div class="grade" data-idStudent="2" data-idRating="4" data-zapis="2"></div>
-                <div class="grade" data-idStudent="3" data-idRating="2" data-zapis="3"></div>
-                <div class="grade" data-idStudent="4" data-idRating="7" data-zapis="4">11</div>
-                <div class="grade" data-idStudent="5" data-idRating="1" data-zapis="5">1219</div>
-                <div class="grade" data-idStudent="6" data-idRating="2" data-zapis="6">2</div>
-                <div class="grade" data-idStudent="7" data-idRating="6" data-zapis="7">10</div>
-                <div class="grade" data-idStudent="8" data-idRating="17" data-zapis="8">Нб.отр.</div>
-                <div class="grade" data-idStudent="9" data-idRating="16" data-zapis="9"></div>
-                <div class="grade" data-idStudent="10" data-idRating="14" data-zapis="10">5</div>
-                <div class="grade" data-idStudent="11" data-idRating="13" data-zapis="11">3</div>
-                <div class="grade" data-idStudent="12" data-idRating="45" data-zapis="12"></div>
-                <div class="grade" data-idStudent="13" data-idRating="3" data-zapis="13">5</div>
-                <div class="grade" data-idStudent="14" data-idRating="4" data-zapis="14"></div>
-                <div class="grade" data-idStudent="15" data-idRating="2" data-zapis="15"></div>
-                <div class="grade" data-idStudent="16" data-idRating="7" data-zapis="16">9</div>
-                <div class="grade" data-idStudent="17" data-idRating="1" data-zapis="17">4</div>
-                <div class="grade" data-idStudent="18" data-idRating="2" data-zapis="18">2</div>
-                <div class="grade" data-idStudent="19" data-idRating="6" data-zapis="19">10</div>
-                <div class="grade" data-idStudent="20" data-idRating="17" data-zapis="20">Нб.отр.</div>
-                <div class="grade" data-idStudent="21" data-idRating="16" data-zapis="21"></div>
-                <div class="grade" data-idStudent="22" data-idRating="14" data-zapis="22">5</div>
-                <div class="grade" data-idStudent="23" data-idRating="13" data-zapis="23">3</div>
-                <div class="grade" data-idStudent="24" data-idRating="45" data-zapis="24"></div>
-                <div class="grade" data-idStudent="25" data-idRating="3" data-zapis="25">5</div>
-                <div class="grade" data-idStudent="26" data-idRating="4" data-zapis="26"></div>
-                <div class="grade" data-idStudent="27" data-idRating="2" data-zapis="27"></div>
-                <div class="grade" data-idStudent="28" data-idRating="7" data-zapis="28">9</div>
-                <div class="grade" data-idStudent="29" data-idRating="1" data-zapis="29">4</div>
-                <div class="grade" data-idStudent="30" data-idRating="2" data-zapis="30">2</div>
+                <div class="date_title exam_theme" data-idLesson="1">01.09.2017</div>
+                <div class="grade exam_theme" data-idStudent="1" data-idRating="3" data-zapis="1">111213</div>
+                <div class="grade exam_theme" data-idStudent="2" data-idRating="4" data-zapis="2">122215</div>
+                <div class="grade exam_theme" data-idStudent="3" data-idRating="2" data-zapis="3"></div>
+                <div class="grade exam_theme" data-idStudent="4" data-idRating="7" data-zapis="4">11</div>
+                <div class="grade exam_theme" data-idStudent="5" data-idRating="1" data-zapis="5">1219</div>
+                <div class="grade exam_theme" data-idStudent="6" data-idRating="2" data-zapis="6">2</div>
+                <div class="grade exam_theme" data-idStudent="7" data-idRating="6" data-zapis="7">10</div>
+                <div class="grade exam_theme" data-idStudent="8" data-idRating="17" data-zapis="8">Нб.отр.</div>
+                <div class="grade exam_theme" data-idStudent="9" data-idRating="16" data-zapis="9"></div>
+                <div class="grade exam_theme" data-idStudent="10" data-idRating="14" data-zapis="10">5</div>
+                <div class="grade exam_theme" data-idStudent="11" data-idRating="13" data-zapis="11">3</div>
+                <div class="grade exam_theme" data-idStudent="12" data-idRating="45" data-zapis="12"></div>
+                <div class="grade exam_theme" data-idStudent="13" data-idRating="3" data-zapis="13">5</div>
+                <div class="grade exam_theme" data-idStudent="14" data-idRating="4" data-zapis="14"></div>
+                <div class="grade exam_theme" data-idStudent="15" data-idRating="2" data-zapis="15"></div>
+                <div class="grade exam_theme" data-idStudent="16" data-idRating="7" data-zapis="16">9</div>
+                <div class="grade exam_theme" data-idStudent="17" data-idRating="1" data-zapis="17">4</div>
+                <div class="grade exam_theme" data-idStudent="18" data-idRating="2" data-zapis="18">2</div>
+                <div class="grade exam_theme" data-idStudent="19" data-idRating="6" data-zapis="19">10</div>
+                <div class="grade exam_theme" data-idStudent="20" data-idRating="17" data-zapis="20">Нб.отр.</div>
+                <div class="grade exam_theme" data-idStudent="21" data-idRating="16" data-zapis="21"></div>
+                <div class="grade exam_theme" data-idStudent="22" data-idRating="14" data-zapis="22">5</div>
+                <div class="grade exam_theme" data-idStudent="23" data-idRating="13" data-zapis="23">3</div>
+                <div class="grade exam_theme" data-idStudent="24" data-idRating="45" data-zapis="24"></div>
+                <div class="grade exam_theme" data-idStudent="25" data-idRating="3" data-zapis="25">5</div>
+                <div class="grade exam_theme" data-idStudent="26" data-idRating="4" data-zapis="26"></div>
+                <div class="grade exam_theme" data-idStudent="27" data-idRating="2" data-zapis="27"></div>
+                <div class="grade exam_theme" data-idStudent="28" data-idRating="7" data-zapis="28">9</div>
+                <div class="grade exam_theme" data-idStudent="29" data-idRating="1" data-zapis="29">4</div>
+                <div class="grade exam_theme" data-idStudent="30" data-idRating="2" data-zapis="30">2</div>
             </div>
             <div class="date_col">
-                <div class="date_title" data-idLesson="1">12.09.2017</div>
-                <div class="grade" data-idStudent="1" data-idRating="3">8</div>
-                <div class="grade" data-idStudent="2" data-idRating="4">7</div>
-                <div class="grade" data-idStudent="3" data-idRating="2"></div>
-                <div class="grade" data-idStudent="4" data-idRating="7">3</div>
-                <div class="grade" data-idStudent="5" data-idRating="1">9</div>
-                <div class="grade" data-idStudent="6" data-idRating="2">2</div>
-                <div class="grade" data-idStudent="7" data-idRating="6">1</div>
-                <div class="grade" data-idStudent="8" data-idRating="17">Нб.отр.</div>
-                <div class="grade" data-idStudent="9" data-idRating="16"></div>
-                <div class="grade" data-idStudent="10" data-idRating="14"></div>
-                <div class="grade" data-idStudent="11" data-idRating="13"></div>
-                <div class="grade" data-idStudent="12" data-idRating="45"></div>
-                <div class="grade" data-idStudent="13" data-idRating="3"></div>
-                <div class="grade" data-idStudent="14" data-idRating="4"></div>
-                <div class="grade" data-idStudent="15" data-idRating="2"></div>
-                <div class="grade" data-idStudent="16" data-idRating="7">3</div>
-                <div class="grade" data-idStudent="17" data-idRating="1"></div>
-                <div class="grade" data-idStudent="18" data-idRating="2">2</div>
-                <div class="grade" data-idStudent="19" data-idRating="6">8</div>
-                <div class="grade" data-idStudent="20" data-idRating="17">Нб.отр.</div>
-                <div class="grade" data-idStudent="21" data-idRating="16"></div>
-                <div class="grade" data-idStudent="22" data-idRating="14"></div>
-                <div class="grade" data-idStudent="23" data-idRating="13"></div>
-                <div class="grade" data-idStudent="24" data-idRating="45">7</div>
-                <div class="grade" data-idStudent="25" data-idRating="3"></div>
-                <div class="grade" data-idStudent="26" data-idRating="4"></div>
-                <div class="grade" data-idStudent="27" data-idRating="2">5</div>
-                <div class="grade" data-idStudent="28" data-idRating="7">9</div>
-                <div class="grade" data-idStudent="29" data-idRating="1">9</div>
-                <div class="grade" data-idStudent="30" data-idRating="2">10</div>
+                <div class="date_title colloquium_theme" data-idLesson="1">12.09.2017</div>
+                <div class="grade  colloquium_theme" data-idStudent="1" data-idRating="3">8</div>
+                <div class="grade colloquium_theme" data-idStudent="2" data-idRating="4">7</div>
+                <div class="grade colloquium_theme" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade colloquium_theme" data-idStudent="4" data-idRating="7">3</div>
+                <div class="grade colloquium_theme" data-idStudent="5" data-idRating="1">9</div>
+                <div class="grade colloquium_theme" data-idStudent="6" data-idRating="2">2</div>
+                <div class="grade colloquium_theme" data-idStudent="7" data-idRating="6">1</div>
+                <div class="grade colloquium_theme" data-idStudent="8" data-idRating="17">Нб.отр.</div>
+                <div class="grade colloquium_theme" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade colloquium_theme" data-idStudent="10" data-idRating="14"></div>
+                <div class="grade colloquium_theme" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade colloquium_theme" data-idStudent="12" data-idRating="45"></div>
+                <div class="grade colloquium_theme" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade colloquium_theme" data-idStudent="14" data-idRating="4"></div>
+                <div class="grade colloquium_theme" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade colloquium_theme" data-idStudent="16" data-idRating="7">3</div>
+                <div class="grade colloquium_theme" data-idStudent="17" data-idRating="1"></div>
+                <div class="grade colloquium_theme" data-idStudent="18" data-idRating="2">2</div>
+                <div class="grade colloquium_theme" data-idStudent="19" data-idRating="6">8</div>
+                <div class="grade colloquium_theme" data-idStudent="20" data-idRating="17">Нб.отр.</div>
+                <div class="grade colloquium_theme" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade colloquium_theme" data-idStudent="22" data-idRating="14"></div>
+                <div class="grade colloquium_theme" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade colloquium_theme" data-idStudent="24" data-idRating="45">7</div>
+                <div class="grade colloquium_theme" data-idStudent="25" data-idRating="3"></div>
+                <div class="grade colloquium_theme" data-idStudent="26" data-idRating="4"></div>
+                <div class="grade colloquium_theme" data-idStudent="27" data-idRating="2">5</div>
+                <div class="grade colloquium_theme" data-idStudent="28" data-idRating="7">9</div>
+                <div class="grade colloquium_theme" data-idStudent="29" data-idRating="1">9</div>
+                <div class="grade colloquium_theme" data-idStudent="30" data-idRating="2">10</div>
             </div>
 
             <div class="date_col">

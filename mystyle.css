@@ -43,7 +43,7 @@ input[type=text] {
     border: none;
     color: #fff;
     cursor: pointer;
-    text-shadow: 0 1px 2px black;
+    text-shadow: 0 1px 2px #000000;
     font-size: 26px;
     font-weight: bold;
     margin-bottom: 40px;
@@ -61,8 +61,9 @@ input[type=text] {
 .grade {
     font-size: 0.82em;
     line-height: 0.98em;
-    border-bottom: solid black 1px;
-    border-top: solid black 1px;
+    border-bottom: solid #000000 1px;
+    border-left: solid #000000 1px;
+    border-right: solid #000000 1px;
     width: 80px;
     height: 30px;
     text-align: center;
@@ -73,27 +74,38 @@ input[type=text] {
     white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
     white-space: pre-wrap;
     float: left;
-    display: inline-table;
+    /*display: inline-table;*/
     position: relative;
 }
 
 
 .title {
+    font-weight: 600;
     text-align: center;
-    border: solid black 1px;
-    /*border-bottom: none;*/
+    border: solid #000000 1px;
 }
 
 
 .date_title{
-    border-bottom: solid black 1px;
+    font-weight: 600;
+    border: solid #000000 1px;
     text-align: center;
+    width: 80px;
+}
+.info_title{
+    font-weight: 600;
+    border: solid #000000 1px;
+    text-align: center;
+    width: 60px;
 }
 
 
 .fio_student {
-    border: solid black 1px;
+    border: solid #000000 1px;
+    border-top: none;
     height: 30px;
+    width: 265px;
+    overflow: hidden;
 }
 
 
@@ -120,12 +132,12 @@ input .edit_grade {
 }
 
 .space{
-    border-left: solid blue 1px;
+    border-left: solid #807f80 1px;
     margin: 0 8px 0 8px;
 }
 
 .tool:hover{
-    color: blue;
+    color: #0000ff;
 }
 
 .fail{
@@ -153,10 +165,12 @@ div .hidden{
     word-wrap: normal;
     overflow-x: auto;
     /*overflow: hidden;*/
-    left:260px;
+    left:280px;
     position: absolute;
+    box-shadow: 8px 8px 10px 3px rgba(0, 0, 0, 0.2);
 }
 .result_box{
+    border: 1px solid #ccc;
     width: 80%;
 }
 .result_box_statistic{
@@ -165,17 +179,15 @@ div .hidden{
 
 .date_col {
     display: inline-table;
-    border: solid black 1px;
     width: 80px;
 }
 .date_col_stat {
     display: inline-table;
-    border: solid black 1px;
     width: 60px;
+    border:none;
 }
 
 .fio {
-    border-bottom: solid black 1px;
     float: left;
     width: auto;
 }
@@ -200,11 +212,12 @@ div .hidden{
     width: 120px;
     left: calc(65% + 260px);
     position: absolute;
+    border: none;
 }
 
 .average, .answer {
-    border-bottom: solid black 1px;
-    border-top: solid black 1px;
+    border: solid #000000 1px;
+    border-top: none;
     width: 60px;
     height: 30px;
     text-align: center;
@@ -219,7 +232,7 @@ div .hidden{
     left: 70px;
     height: 0;
     bottom:0;
-    border-bottom: 10px solid black;
+    border-bottom: 10px solid #000000;
     border-left: 10px solid transparent;
     float: left;
     display: inline-table;
@@ -235,8 +248,9 @@ div .hidden{
 }
 
 .illumination{
-    background-color: #d3d3d3;
+    box-shadow:  0 0 0.4em #000000;
 }
+
 .popup {
     width:auto;
     position:absolute;
@@ -260,6 +274,11 @@ div .hidden{
     height: 30px;
     margin-left: 60px;
 }
+
 .header{
     text-align: center;
+}
+.fail{
+    color: #ff0000;
+    font-weight: bolder;
 }

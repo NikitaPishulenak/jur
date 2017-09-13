@@ -19,6 +19,11 @@ $(function () {
 });
 
 $(function () {
+    $('div .grade').mousedown(function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
+    });
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
@@ -238,32 +243,41 @@ $(function () {
 });
 
 $(document).ready(function () {
+    PopUpHide();
+
+
     $("div.grade").each(function () {
         if($(this).text()!=""){
             $(this).append('<div class="triangle-topright"></div>');
         }
     });
 
-    prepod="Пискун Олег Маркович";
-    $('div').delegate(".triangle-topright", "mouseover", function () {
-        dat=$(this).parent().parent().find('div.date_title').html();//Дата столбца
-        console.log(dat+"-"+$("input#idGroup").val()+"-"+$("input#idSubject").val());
+    $('div').delegate(".triangle-topright", "mouseleave", function () {
+        PopUpHide();
+    });
+
+    $('div').delegate(".triangle-topright", "mouseover", function (e) {
+
+        var id_Zap=$(this).closest("div .grade").attr('data-zapis');
+        $("#window-popup").css("left",Number(e.pageX+15));
+        $("#window-popup").css("top",Number(e.pageY+10));
+        PopUpShow();
+
         $.ajax({
             type:'get',
             url:'p.php',
             data:{
-                'dateLesson':dat,
-                'idGroup': $("input#idGroup").val(),
-                'idLessons': $("input#idSubject").val()
+                'id_Zapis':id_Zap,
+                'idGroup': $("input#idGroup").val()
             },
-            success:function () {
-                $(this).attr('title',"Преподаватель: "+prepod);
+            success:function (info) {
+                $(".loader").hide();
+                $(".popup-content").text(info);
             },
             error: function () {
-                $(this).attr('title',"Данные отсутствуют");
+                $(".popup-content").text("Данные отсутствуют!");
             }
         });
-
     });
 
 
@@ -300,6 +314,7 @@ $(document).ready(function () {
         }
     });
 });
+
 function Encrypt(value) {
     var res = "";
     var grade = value.split("/");
@@ -308,6 +323,7 @@ function Encrypt(value) {
     }
     return res;
 }
+
 function Decrypt(value) {
     var res = "";
     var mas = value.match(/.{2}/g);
@@ -317,6 +333,7 @@ function Decrypt(value) {
     res = mas.join('/');
     return res;
 }
+
 function MatchEncrypt(val) {
 
     if (val>=1 && val<=10){
@@ -337,6 +354,7 @@ function MatchEncrypt(val) {
     }
 
 }
+
 function MatchDecrypt(val) {
     if(val>=10 && val<20){
         return Number(val)-9;
@@ -355,4 +373,14 @@ function MatchDecrypt(val) {
         }
     }
 
+}
+
+//Функция отображения PopUp
+function PopUpShow(){
+    $("#window-popup").show();
+}
+
+//Функция скрытия PopUp
+function PopUpHide(){
+    $("#window-popup").hide();
 }

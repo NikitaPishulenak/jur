@@ -16,6 +16,15 @@
 
 </head>
 <body>
+<div class="popup" id="window-popup">
+    <div class="popup-content">
+
+        <div class="loader">
+            <img class="loading" src="img/loading.gif"><br><strong class="header">Идет загрузка...</strong>
+        </div>
+
+    </div>
+</div>
 
 <div class="container-list">
 

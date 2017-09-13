@@ -53,8 +53,7 @@ $(function () {
         var gr=$(this).text().split("/");
         for(var i=0; i<gr.length; i++){
             if(gr[i] < 4){
-                $(this).css('color', 'red');
-                $(this).css('font-weight', 'bolder');
+                $(this).addClass("fail");
             }
         }
 
@@ -62,6 +61,11 @@ $(function () {
 });
 
 $(function () {
+    $('div .grade').mousedown(function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
+    });
 
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
@@ -442,7 +446,7 @@ $(document).ready(function () {
 
         $.ajax({
             type:'get',
-            url:'ajax.php',
+            url:'p.php',
             data:{
                 'id_Zapis':id_Zap,
                 'idGroup': $("input#idGroup").val()
