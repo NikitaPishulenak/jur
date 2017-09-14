@@ -1,4 +1,22 @@
-﻿$(function () {
+﻿function proverka(event, id) {
+    $(function () {
+        el=$("#inp_"+id).val();
+        if((el>10) ||(el<1)){
+            $("#inp_"+id).val("");
+        }
+    });
+
+
+    if((event.keyCode==8) || (event.keyCode==46) ) {
+        return;
+    }
+    else if((event.keyCode<48) || (event.keyCode>57)) {
+            return false;
+        }
+}
+
+
+$(function () {
     $.datepicker.regional['ru'] = {
         monthNames: ['Январь', 'Февраль', 'Март', 'Апрель',
             'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
@@ -307,6 +325,7 @@ $(function () {
         if (countOpenCell == 3) {
             $("button#add_grade_input").attr('disabled', true);
         }
+
         var absenteeisms = /\w/;
         $(".inp_cell:text").keydown(function (event) {
             if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
@@ -315,6 +334,8 @@ $(function () {
                 }
             }
         });
+
+
     });
     $("#edit").click(function () {
         var coding = "";
@@ -427,11 +448,12 @@ $(document).ready(function () {
     PopUpHide();
 
 
-    $("div.grade").each(function () {
-        if($(this).text()!=""){
-            $(this).append('<div class="triangle-topright"></div>');
-        }
-    });
+    //Дорисовка триугольника
+    // $("div.grade").each(function () {
+    //     if($(this).text()!=""){
+    //         $(this).append('<div class="triangle-topright"></div>');
+    //     }
+    // });
 
     $('div').delegate(".triangle-topright", "mouseleave", function () {
       PopUpHide();

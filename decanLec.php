@@ -42,11 +42,11 @@
                 <br><br>
 
                 <input class='inp_cell' id="inp_0" type=text maxlength='6'
-                       onkeyup="this.value=this.value.replace(/[^*]/,''); if (this.value<1 || this.value>10) this.value='';">
+                       onkeydown="return proverka(event,0);">
                 <input class='inp_cell' id="inp_1" type='text' maxlength='6'
-                       onkeyup="this.value=this.value.replace(/[^*]/,''); if (this.value<1 || this.value>10) this.value='';">
+                       onkeydown="return proverka(event,1);">
                 <input class='inp_cell' id="inp_2" type='text' maxlength='6'
-                       onkeyup="this.value=this.value.replace(/[^*]/,''); if (this.value<1 || this.value>10) this.value='';">
+                       onkeydown="return proverka(event,2);">
 
                 <br>
                 <hr>

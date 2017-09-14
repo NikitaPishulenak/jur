@@ -1,4 +1,21 @@
-﻿$(function () {
+﻿function proverka(event, id) {
+    $(function () {
+        el=$("#inp_"+id).val();
+        if((el>10) ||(el<1)){
+            $("#inp_"+id).val("");
+        }
+    });
+
+
+    if((event.keyCode==8) || (event.keyCode==46) ) {
+        return;
+    }
+    else {
+        return false;
+    }
+}
+
+$(function () {
     $("div.grade").each(function () {
         if($(this).text()!=""){
             $(this).text(Decrypt($(this).text()));
@@ -278,11 +295,12 @@ $(document).ready(function () {
     PopUpHide();
 
 
-    $("div.grade").each(function () {
-        if($(this).text()!=""){
-            $(this).append('<div class="triangle-topright"></div>');
-        }
-    });
+    //Дорисовка триугольника
+    // $("div.grade").each(function () {
+    //     if($(this).text()!=""){
+    //         $(this).append('<div class="triangle-topright"></div>');
+    //     }
+    // });
 
     $('div').delegate(".triangle-topright", "mouseleave", function () {
         PopUpHide();

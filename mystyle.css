@@ -282,3 +282,7 @@ div .hidden{
     color: #ff0000;
     font-weight: bolder;
 }
+
+.fail_grade{
+    border: solid #ff0000 1px;
+}
