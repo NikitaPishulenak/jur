@@ -48,17 +48,17 @@ $(function () {
     });
 });
 
-$(function () {
-    $("div.grade").each(function () {
-        var gr=$(this).text().split("/");
-        for(var i=0; i<gr.length; i++){
-            if(gr[i] < 4){
-                $(this).addClass("fail");
-            }
-        }
-
-    });
-});
+// $(function () {
+//     $("div.grade").each(function () {
+//         var gr=$(this).text().split("/");
+//         for(var i=0; i<gr.length; i++){
+//             if(gr[i] < 4){
+//                 $(this).addClass("fail");
+//             }
+//         }
+//
+//     });
+// });
 
 $(function () {
     $('div .grade').mousedown(function(event){

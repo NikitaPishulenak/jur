@@ -232,71 +232,34 @@ $(function () {
         var cur_res = bit1 + bit2 + bit3;
         coding = Encrypt(cur_res);
         elem.text(cur_res);
-        if((cur_grade=="") && (cur_res!="")){
+
+        if(id_Zapis == 0 && myStudentZapis[id_Less+'Zapis'+student_id]==0){
+            alert("�_�_�_из�_�_�>а �_�_и�+ка п�_и п���_���_а�+�� �_а�_�_�<�:");
+        }else{
+            if(id_Zapis == 0) id_Zapis = myStudentZapis[id_Less+'Zapis'+student_id];
             $.ajax({
                 type:'get',
-                url:'p.php',//url адрес файла обработчика
+                url:'d.php',
                 data:{
+                    'id_Zapis': id_Zapis,
                     'dateLes': dat,
-                    'idLessons': $("input#idSubject").val(),
                     'idStudent': student_id,
-                    'PL': $("input#idPL").val(),
-                    'PKE': PKE,
                     'idPrepod': $("input#idPrepod").val(),
-                    'idLess': id_Less,
-                    'menuactiv': "addLessonStudent",
+                    'menuactiv': "editLessonStudent",
                     'grades': coding
                 },
                 success:function (st) {
-                    if ((st!="Access is denied!")&&(st!="No access rights!")){
-                        myStudentZapis[id_Less+'Zapis'+student_id]=st;
-                    }else{
-                        if (st=="Access is denied!"){
-                            alert("��_�_�'�_п зап�_���%���_!");
-                        }
-                        else if (st=="No access rights!"){
-                            alert("�_�� �_�_�_�'а�'�_�+�_�_ п�_а�_!");
-                        }
-                        else{
-                            alert("Ч�'�_-�'�_ п�_�_�>�_ �_�� �'ак! ");
-                        }
-
+                    if (st=="Access is denied!"){
+                        alert("Доступ запрещен!");
+                    }
+                    else if (st=="No access rights!"){
+                        alert("Не достаточно прав!");
                     }
                 },
                 error: function () {
                     alert("Произошла ошибка при передаче данных");
                 }
             });
-        }
-        else{
-            if(id_Zapis == 0 && myStudentZapis[id_Less+'Zapis'+student_id]==0){
-                alert("�_�_�_из�_�_�>а �_�_и�+ка п�_и п���_���_а�+�� �_а�_�_�<�:");
-            }else{
-                if(id_Zapis == 0) id_Zapis = myStudentZapis[id_Less+'Zapis'+student_id];
-                $.ajax({
-                    type:'get',
-                    url:'p.php',
-                    data:{
-                        'id_Zapis': id_Zapis,
-                        'dateLes': dat,
-                        'idStudent': student_id,
-                        'idPrepod': $("input#idPrepod").val(),
-                        'menuactiv': "editLessonStudent",
-                        'grades': coding
-                    },
-                    success:function (st) {
-                        if (st=="Access is denied!"){
-                            alert("Доступ запрещен!");
-                        }
-                        else if (st=="No access rights!"){
-                            alert("Не достаточно прав!");
-                        }
-                    },
-                    error: function () {
-                        alert("Произошла ошибка при передаче данных");
-                    }
-                });
-            }
         }
 
         inp_id=2;
@@ -334,7 +297,7 @@ $(document).ready(function () {
 
         $.ajax({
             type:'get',
-            url:'ajax.php',
+            url:'d.php',
             data:{
                 'id_Zapis':id_Zap,
                 'idGroup': $("input#idGroup").val()

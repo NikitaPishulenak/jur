@@ -26,6 +26,37 @@
     </div>
 </div>
 
+<div id="form-edit" title="Редактирование отметки">
+    <form id="form-edit">
+        <fieldset>
+            <div class="panel">
+
+                <b id="1" class="tool"><b>Н<sub>у</sub></b></b>
+                <span class="space"></span>
+                <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>
+                <span class="space"></span>
+                <b id="3" class="tool"><b>Н<sub>б.о.</sub></b></b>
+                <!--                <span class="space"></span>-->
+                <!--                <b id="6" class="tool fail"><b>Недоп</b></b>-->
+
+                <br><br>
+
+                <input class='inp_cell' id="inp_0" type=text maxlength='6'
+                       onkeyup="this.value=this.value.replace(/[^*]/,''); if (this.value<1 || this.value>10) this.value='';">
+                <input class='inp_cell' id="inp_1" type='text' maxlength='6'
+                       onkeyup="this.value=this.value.replace(/[^*]/,''); if (this.value<1 || this.value>10) this.value='';">
+                <input class='inp_cell' id="inp_2" type='text' maxlength='6'
+                       onkeyup="this.value=this.value.replace(/[^*]/,''); if (this.value<1 || this.value>10) this.value='';">
+
+                <br>
+                <hr>
+                <br>
+                <button id="edit" class="button"><b>ОК</b></button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
 <div class="container-list">
 
     <br>
