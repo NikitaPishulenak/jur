@@ -1,29 +1,4 @@
-﻿$(function () {
-    $("div.grade").each(function () {
-        if($(this).text()!=""){
-            $(this).text(Decrypt($(this).text()));
-        }
-    });
-});
-
-$(function () {
-    $("div.statistic").append("<div class='date_col_stat'><div class='title'>Ср. б.</div><div class='average'></div></div>");
-    // $("div.statistic").html($r);
-    var count=$("div.fio_student").length;
-    for(var i=0; i<count; i++){
-        data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
-        $("div .average:last").append("<div class='avg' data-idStudent='"+data_idS+"'></div>");
-    }
-    $("div .average:last").append("<div class='avg result_div' id='avg_avrige'></div>");
-
-   $("div.date_col_stat:last").after("<div class='date_col_stat'><div class='title'>% отв.</div><div class='answer'></div></div>");
-    for(var i=0; i<count; i++){
-        data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
-        $("div .answer:last").append("<div class='ans' data-idStudent='"+data_idS+"'></div>");
-    }
-});
-
-function proverka(event, id) {
+﻿function proverka(event, id) {
     $(function () {
         el=$("#inp_"+id).val();
         if((el>10) ||(el<1)){
@@ -40,10 +15,16 @@ function proverka(event, id) {
     }
 }
 
-
+$(function () {
+    $("div.grade").each(function () {
+        if($(this).text()!=""){
+            $(this).text(Decrypt($(this).text()));
+        }
+    });
+});
 
 $(function () {
-    $("div.avg").each(function () {
+    $("div.average").each(function () {
         var sum=0,countGrade=0;
         var elem=$(this).attr('data-idStudent');
         $('div.grade[data-idStudent="'+elem+'"]').each(function () {
@@ -56,9 +37,9 @@ $(function () {
             }
 
         });
-        $('div.avg[data-idStudent="'+elem+'"]').html(Math.round(10*(sum/countGrade))/10);
+        $('div.average[data-idStudent="'+elem+'"]').html(Math.round(10*(sum/countGrade))/10);
     });
-    $("div.ans").each(function () {
+    $("div.answer").each(function () {
         var countAnswer=0;
         var elem=$(this).attr('data-idStudent');
         $('div.grade[data-idStudent="'+elem+'"]').each(function () {
@@ -68,13 +49,13 @@ $(function () {
             }
 
         });
-        $('div.ans[data-idStudent="'+elem+'"]').html(Math.round(100*(countAnswer*100/$('div.grade[data-idStudent="'+elem+'"]').length))/100+"%");
+        $('div.answer[data-idStudent="'+elem+'"]').html(Math.round(100*(countAnswer*100/$('div.grade[data-idStudent="'+elem+'"]').length))/100+"%");
     });
 });
 
 
 $(function () {
-    $("div.avg").each(function () {
+    $("div.average").each(function () {
         if(Number($(this).text()) < 4){
             $(this).addClass("fail");
         }
@@ -82,24 +63,13 @@ $(function () {
 });
 
 $(function () {
-    $("div.ans").each(function () {
+    $("div.answer").each(function () {
         if(Number($(this).text().substr(0,$(this).text().length-1))< 50){
             $(this).addClass("fail");
         }
     });
 });
 
-$(function () {
-    var avg_sum=0, avg_count=0;
-    var count=$("div.avg").length;
-    for (var k=0; k<count-1; k++){
-        if($("div.avg:eq("+k+")").text()!=""){
-            avg_sum+=Number($("div.avg:eq("+k+")").text());
-            avg_count++;
-        }
-    }
-    $("div#avg_avrige").html(Math.round(100*(avg_sum/avg_count))/100);
-});
 
 $(function () {
     $.datepicker.regional['ru'] = {
@@ -163,7 +133,6 @@ $(function () {
     });
 });
 
-
 $(function () {
     $('div .grade').mousedown(function(event){
         event.stopPropagation();
@@ -171,7 +140,7 @@ $(function () {
         return false;
     });
 
-    var  form, edit_dialog, edit_form, log_dialog, log_form;
+    var  form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
 
@@ -184,17 +153,6 @@ $(function () {
         modal: true
     });
     edit_form = edit_dialog.find("form").on("submit", function (event) {
-        event.preventDefault();
-    });
-
-    log_dialog = $("#log").dialog({
-        resizable:false,
-        autoOpen: false,
-        height: 'auto',
-        width: 'auto',
-        modal: true
-    });
-    log_form = log_dialog.find("form").on("submit", function (event) {
         event.preventDefault();
     });
 
@@ -290,13 +248,7 @@ $(function () {
 
     $("#edit").click(function () {
         var coding = "";
-        var bit1 = $("#inp_0").val();
-        var bit2 = $("#inp_1").val();
-        var bit3 = $("#inp_2").val();
-        bit1 = (bit1 == "") ? "" : bit1;
-        bit2 = (bit2 == "") ? "" : "/" + bit2;
-        bit3 = (bit3 == "") ? "" : "/" + bit3;
-        var cur_res = bit1 + bit2 + bit3;
+        var cur_res = $("#inp_0").val();
         coding = Encrypt(cur_res);
         elem.text(cur_res);
 
@@ -333,17 +285,11 @@ $(function () {
 
         edit_dialog.dialog("close");
     });
-    $("#close").click(function () {
-        edit_dialog.dialog("close");
-    });
     $(".inp_cell:text").click(function () {
         $(this).select();
     });
-
-    $('div').delegate(".triangle-topright", "click", function () {
-        log_dialog.dialog("open");
-
-
+    $("#close").click(function () {
+        edit_dialog.dialog("close");
     });
 
 
@@ -355,42 +301,41 @@ $(document).ready(function () {
 
 
     //Дорисовка триугольника
-    $("div.grade[data-Log='1']").each(function () {
-        $(this).append('<div class="triangle-topright"></div>');
+    // $("div.grade").each(function () {
+    //     if($(this).text()!=""){
+    //         $(this).append('<div class="triangle-topright"></div>');
+    //     }
+    // });
+
+
+    $('div').delegate(".triangle-topright", "mouseleave", function () {
+        PopUpHide();
     });
 
+    $('div').delegate(".triangle-topright", "mouseover", function (e) {
 
+        var id_Zap=$(this).closest("div .grade").attr('data-zapis');
+        $("#window-popup").css("left",Number(e.pageX+15));
+        $("#window-popup").css("top",Number(e.pageY+10));
+        PopUpShow();
 
-    // //оказать-скрыть блок при наведении на треугольник
-    //
-    // $('div').delegate(".triangle-topright", "mouseleave", function () {
-    //     PopUpHide();
-    // });
-    //
-    // $('div').delegate(".triangle-topright", "mouseover", function (e) {
-    //
-    //     var id_Zap=$(this).closest("div .grade").attr('data-zapis');
-    //     $("#window-popup").css("left",Number(e.pageX+15));
-    //     $("#window-popup").css("top",Number(e.pageY+10));
-    //     PopUpShow();
-    //
-    //     $.ajax({
-    //         type:'get',
-    //         url:'d.php',
-    //         data:{
-    //             'id_Zapis':id_Zap,
-    //             'idGroup': $("input#idGroup").val()
-    //         },
-    //         success:function (info) {
-    //             $(".loader").hide();
-    //             $(".popup-content").text(info);
-    //         },
-    //         error: function () {
-    //             $(".popup-content").text("Данные отсутствуют!");
-    //         }
-    //     });
-    //
-    // });
+        $.ajax({
+            type:'get',
+            url:'d.php',
+            data:{
+                'id_Zapis':id_Zap,
+                'idGroup': $("input#idGroup").val()
+            },
+            success:function (info) {
+                $(".loader").hide();
+                $(".popup-content").text(info);
+            },
+            error: function () {
+                $(".popup-content").text("Данные отсутствуют!");
+            }
+        });
+
+    });
 
 
     countCell = 1;

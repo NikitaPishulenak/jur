@@ -1,4 +1,29 @@
-﻿$(function () {
+﻿function proverka(event, id) {
+    $(function () {
+        el=$("#inp_"+id).val();
+        if((el>10) ||(el<1)){
+            $("#inp_"+id).val("");
+        }
+    });
+
+
+    if((event.keyCode==8) || (event.keyCode==46) ) {
+        return;
+    }
+    else {
+        return false;
+    }
+}
+
+$(function () {
+    $('b.tool').mousedown(function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
+    });
+});
+
+$(function () {
     $.datepicker.regional['ru'] = {
         monthNames: ['Январь', 'Февраль', 'Март', 'Апрель',
             'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
@@ -81,7 +106,7 @@ $(function () {
         resizable:false,
         autoOpen: false,
         height: 'auto',
-        width: 'auto',
+        width: 300,
         modal: true,
         buttons: {
             "Создать": addLesson,
@@ -233,6 +258,9 @@ $(function () {
         }
         edit_dialog.dialog("close");
     });
+    $("#close").click(function () {
+        edit_dialog.dialog("close");
+    });
     $(".inp_cell:text").click(function () {
         $(this).select();
     });
@@ -246,11 +274,14 @@ $(document).ready(function () {
     PopUpHide();
 
 
-    $("div.grade").each(function () {
-        if($(this).text()!=""){
-            $(this).append('<div class="triangle-topright"></div>');
-        }
-    });
+    //Дорисовка триугольника
+    // $("div.grade").each(function () {
+    //     if($(this).text()!=""){
+    //         $(this).append('<div class="triangle-topright"></div>');
+    //     }
+    // });
+
+
 
     $('div').delegate(".triangle-topright", "mouseleave", function () {
         PopUpHide();

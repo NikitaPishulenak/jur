@@ -1,4 +1,50 @@
-﻿$(function () {
+﻿/*function proverka(event, id) {
+    $(function () {
+        el=$("#inp_"+id).val();
+        if((el>10) ||(el<1)){
+            $("#inp_"+id).val("");
+        }
+    });
+
+
+    if((event.keyCode==8) || (event.keyCode==46) ) {
+        return;
+    }
+
+    else if((event.key<48) || (event.keyCode>57) && ((event.key<96) || (event.keyCode>105)) {
+            return false;
+        }
+}*/
+function proverka(event, id) {
+    if((event.keyCode==8) || (event.keyCode==46) ) {
+        return;
+    }
+
+    if (!isNaN(parseInt(event.key))) return;
+    return false
+}
+
+
+window.addEventListener('keyDown', function(e){
+    if (!isNaN(parseInt(e.key))){
+        console.log(e);
+    }
+}, false);
+
+
+
+document.addEventListener('keydown', function(e){
+    var val = parseInt(e.key);
+    val = (!isNaN(val)) ? val : false;
+    if (val !== false)
+        if ((e.altKey)){
+            alert('Hello chukcha!'+val);
+        }
+}, false);
+
+
+
+$(function () {
     $.datepicker.regional['ru'] = {
         monthNames: ['Январь', 'Февраль', 'Март', 'Апрель',
             'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
@@ -59,6 +105,14 @@ $(function () {
 //
 //     });
 // });
+
+$(function () {
+    $('b.tool').mousedown(function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
+    });
+});
 
 $(function () {
     $('div .grade').mousedown(function(event){
@@ -212,6 +266,10 @@ $(function () {
             dialog.dialog("close");
         }
     }
+
+    $("button#close").click(function () {
+
+    });
     dialog = $("#form-lesson").dialog({
         resizable:false,
         autoOpen: false,
@@ -237,9 +295,14 @@ $(function () {
         height: 'auto',
         width: 'auto',
         modal: true
+
     });
     edit_form = edit_dialog.find("form").on("submit", function (event) {
         event.preventDefault();
+    });
+
+    $("#close").click(function () {
+        edit_dialog.dialog("close");
     });
 
     $('div').delegate(".grade", "mouseover", function () {
@@ -307,6 +370,7 @@ $(function () {
         if (countOpenCell == 3) {
             $("button#add_grade_input").attr('disabled', true);
         }
+
         var absenteeisms = /\w/;
         $(".inp_cell:text").keydown(function (event) {
             if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
@@ -315,6 +379,8 @@ $(function () {
                 }
             }
         });
+
+
     });
     $("#edit").click(function () {
         var coding = "";
@@ -427,11 +493,12 @@ $(document).ready(function () {
     PopUpHide();
 
 
-    $("div.grade").each(function () {
-        if($(this).text()!=""){
-            $(this).append('<div class="triangle-topright"></div>');
-        }
-    });
+    //Дорисовка триугольника
+    // $("div.grade").each(function () {
+    //     if($(this).text()!=""){
+    //         $(this).append('<div class="triangle-topright"></div>');
+    //     }
+    // });
 
     $('div').delegate(".triangle-topright", "mouseleave", function () {
       PopUpHide();
