@@ -1,4 +1,5 @@
-﻿/*function proverka(event, id) {
+﻿function proverka(event, id) {
+
     $(function () {
         el=$("#inp_"+id).val();
         if((el>10) ||(el<1)){
@@ -6,22 +7,13 @@
         }
     });
 
-
-    if((event.keyCode==8) || (event.keyCode==46) ) {
-        return;
-    }
-
-    else if((event.key<48) || (event.keyCode>57) && ((event.key<96) || (event.keyCode>105)) {
-            return false;
-        }
-}*/
-function proverka(event, id) {
-    if((event.keyCode==8) || (event.keyCode==46) ) {
+    if((event.keyCode==8) || (event.keyCode==27) ) {
         return;
     }
 
     if (!isNaN(parseInt(event.key))) return;
-    return false
+    return false;
+
 }
 
 
@@ -31,14 +23,21 @@ window.addEventListener('keyDown', function(e){
     }
 }, false);
 
-
+$(function () {
+   $("input.inp_cell").focus(function () {
+       id_input=$(this).attr('id');
+   });
+});
 
 document.addEventListener('keydown', function(e){
+
+
     var val = parseInt(e.key);
     val = (!isNaN(val)) ? val : false;
     if (val !== false)
         if ((e.altKey)){
-            alert('Hello chukcha!'+val);
+
+            $("#"+id_input).val($("#panel>#"+val).text());
         }
 }, false);
 

@@ -10,12 +10,17 @@
     if((event.keyCode==8) || (event.keyCode==46) ) {
         return;
     }
+<<<<<<< HEAD
     else {
+=======
+    else if((event.keyCode<48) || (event.keyCode>57)) {
+>>>>>>> 5af9f40fcd3ebfcc4060e2e29a10a78d3bd3f477
         return false;
     }
 }
 
 $(function () {
+<<<<<<< HEAD
     $('b.tool').mousedown(function(event){
         event.stopPropagation();
         event.preventDefault();
@@ -24,6 +29,8 @@ $(function () {
 });
 
 $(function () {
+=======
+>>>>>>> 5af9f40fcd3ebfcc4060e2e29a10a78d3bd3f477
     $.datepicker.regional['ru'] = {
         monthNames: ['Январь', 'Февраль', 'Март', 'Апрель',
             'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
@@ -280,8 +287,11 @@ $(document).ready(function () {
     //         $(this).append('<div class="triangle-topright"></div>');
     //     }
     // });
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5af9f40fcd3ebfcc4060e2e29a10a78d3bd3f477
 
     $('div').delegate(".triangle-topright", "mouseleave", function () {
         PopUpHide();

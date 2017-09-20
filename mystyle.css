@@ -301,9 +301,12 @@ div .hidden{
 
 .fail_grade{
     border: solid #ff0000 1px;
+<<<<<<< HEAD
 }
 .result_div{
     color: #000;
     background-color: #d3d3d3;
     font-size: 1.4em;
+=======
+>>>>>>> 5af9f40fcd3ebfcc4060e2e29a10a78d3bd3f477
 }

@@ -1,4 +1,21 @@
-﻿$(function () {
+﻿function proverka(event, id) {
+    $(function () {
+        el=$("#inp_"+id).val();
+        if((el>10) ||(el<1)){
+            $("#inp_"+id).val("");
+        }
+    });
+
+
+    if((event.keyCode==8) || (event.keyCode==46) ) {
+        return;
+    }
+    else {
+        return false;
+    }
+}
+
+$(function () {
     $("div.grade").each(function () {
         if($(this).text()!=""){
             $(this).text(Decrypt($(this).text()));
@@ -355,9 +372,17 @@ $(document).ready(function () {
 
 
     //Дорисовка триугольника
+<<<<<<< HEAD
     $("div.grade[data-Log='1']").each(function () {
         $(this).append('<div class="triangle-topright"></div>');
     });
+=======
+    // $("div.grade").each(function () {
+    //     if($(this).text()!=""){
+    //         $(this).append('<div class="triangle-topright"></div>');
+    //     }
+    // });
+>>>>>>> 5af9f40fcd3ebfcc4060e2e29a10a78d3bd3f477
 
 
 
