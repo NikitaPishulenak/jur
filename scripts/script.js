@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿/*function proverka(event, id) {
+=======
+﻿function proverka(event, id) {
+>>>>>>> 5af9f40fcd3ebfcc4060e2e29a10a78d3bd3f477
     $(function () {
         el=$("#inp_"+id).val();
         if((el>10) ||(el<1)){
@@ -10,6 +14,7 @@
     if((event.keyCode==8) || (event.keyCode==46) ) {
         return;
     }
+<<<<<<< HEAD
 
     else if((event.key<48) || (event.keyCode>57) && ((event.key<96) || (event.keyCode>105)) {
             return false;
@@ -44,6 +49,14 @@ document.addEventListener('keydown', function(e){
 
 
 
+=======
+    else if((event.keyCode<48) || (event.keyCode>57)) {
+            return false;
+        }
+}
+
+
+>>>>>>> 5af9f40fcd3ebfcc4060e2e29a10a78d3bd3f477
 $(function () {
     $.datepicker.regional['ru'] = {
         monthNames: ['Январь', 'Февраль', 'Март', 'Апрель',
