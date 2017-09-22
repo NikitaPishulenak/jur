@@ -30,14 +30,17 @@
     <form id="form-edit">
         <fieldset>
             <div class="panel">
+                <div id="panel">
+                    <b id="1" class="tool"><b>Н<sub>у</sub></b></b>
+                    <span class="space"></span>
+                    <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>
+                    <span class="space"></span>
+                    <b id="3" class="tool"><b>Н<sub>б.о.</sub></b></b>
+                    <!--                <span class="space"></span>-->
+                    <!--                <b id="6" class="tool fail"><b>Недоп</b></b>-->
+                </div>
 
-                <b id="1" class="tool"><b>Н<sub>у</sub></b></b>
-                <span class="space"></span>
-                <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>
-                <span class="space"></span>
-                <b id="3" class="tool"><b>Н<sub>б.о.</sub></b></b>
-<!--                <span class="space"></span>-->
-<!--                <b id="6" class="tool fail"><b>Недоп</b></b>-->
+
 
                 <br><br>
 
@@ -153,11 +156,11 @@
             <div class="date_col">
                 <div class="date_title" data-idLesson="1">08.09.2017</div>
                 <div class="grade" data-idStudent="1" data-idRating="3">111516</div>
-                <div class="grade" data-idStudent="2" data-idRating="4"></div>
+                <div class="grade" data-idStudent="2" data-idRating="4">26</div>
                 <div class="grade" data-idStudent="3" data-idRating="2">15</div>
-                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="4" data-idRating="7">26</div>
                 <div class="grade" data-idStudent="5" data-idRating="1">14</div>
-                <div class="grade" data-idStudent="6" data-idRating="2"></div>
+                <div class="grade" data-idStudent="6" data-idRating="2">26</div>
                 <div class="grade" data-idStudent="7" data-idRating="6">21</div>
                 <div class="grade" data-idStudent="8" data-idRating="17">252423</div>
                 <div class="grade" data-idStudent="9" data-idRating="16"></div>

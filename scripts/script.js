@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-﻿/*function proverka(event, id) {
-=======
 ﻿function proverka(event, id) {
->>>>>>> 5af9f40fcd3ebfcc4060e2e29a10a78d3bd3f477
+
     $(function () {
         el=$("#inp_"+id).val();
         if((el>10) ||(el<1)){
@@ -10,53 +7,40 @@
         }
     });
 
-
-    if((event.keyCode==8) || (event.keyCode==46) ) {
-        return;
-    }
-<<<<<<< HEAD
-
-    else if((event.key<48) || (event.keyCode>57) && ((event.key<96) || (event.keyCode>105)) {
-            return false;
-        }
-}*/
-function proverka(event, id) {
-    if((event.keyCode==8) || (event.keyCode==46) ) {
+    if((event.keyCode==8) || (event.keyCode==27) ) {
         return;
     }
 
     if (!isNaN(parseInt(event.key))) return;
-    return false
+    return false;
 }
 
-
-window.addEventListener('keyDown', function(e){
-    if (!isNaN(parseInt(e.key))){
-        console.log(e);
-    }
-}, false);
-
-
+$(function () {
+   $("input.inp_cell").focus(function () {
+       id_input=$(this).attr('id');
+   });
+});
 
 document.addEventListener('keydown', function(e){
+
     var val = parseInt(e.key);
     val = (!isNaN(val)) ? val : false;
-    if (val !== false)
-        if ((e.altKey)){
-            alert('Hello chukcha!'+val);
+    if (val !== false){
+        if (e.altKey){
+            $("#"+id_input).val($("#panel>#"+val).text());
+            $("#"+id_input).blur();
         }
+    }
+
+    if(e.keyCode==13){
+        $("#edit").click();
+    }
+
+
 }, false);
 
 
 
-=======
-    else if((event.keyCode<48) || (event.keyCode>57)) {
-            return false;
-        }
-}
-
-
->>>>>>> 5af9f40fcd3ebfcc4060e2e29a10a78d3bd3f477
 $(function () {
     $.datepicker.regional['ru'] = {
         monthNames: ['Январь', 'Февраль', 'Март', 'Апрель',
@@ -355,23 +339,10 @@ $(function () {
         $(".inp_cell:text").focus(function () {
             inp_id = $(this).attr('id');
 
-            $("b#1").click(function(){
-                $("#" + inp_id).val("Ну");
-            });
-            $("b#2").click(function(){
-                $("#" + inp_id).val("Нб.у");
-            });
-            $("b#3").click(function(){
-                $("#" + inp_id).val("Нб.о.");
-            });
-            $("b#4").click(function(){
-                $("#" + inp_id).val("Зач.");
-            });
-            $("b#5").click(function(){
-                $("#" + inp_id).val("Незач.");
-            });
-            $("b#6").click(function(){
-                $("#" + inp_id).val("Недоп");
+            //При нажатии на кнопку с результатами текст выводится в поле ввода
+            $("b.tool").click(function () {
+                var text = $(this).text();
+                $("#"+inp_id).val(text);
             });
         });
         var countOpenCell = 0;
@@ -513,32 +484,19 @@ $(document).ready(function () {
     //     }
     // });
 
-    $('div').delegate(".triangle-topright", "mouseleave", function () {
+    $('div').delegate(".info", "mouseleave", function () {
       PopUpHide();
     });
 
-    $('div').delegate(".triangle-topright", "mouseover", function (e) {
+
+
+    $('div').delegate(".info", "mouseover", function (e) {
 
         var id_Zap=$(this).closest("div .grade").attr('data-zapis');
         $("#window-popup").css("left",Number(e.pageX+15));
         $("#window-popup").css("top",Number(e.pageY+10));
         PopUpShow();
 
-        $.ajax({
-            type:'get',
-            url:'p.php',
-            data:{
-                'id_Zapis':id_Zap,
-                'idGroup': $("input#idGroup").val()
-            },
-            success:function (info) {
-                $(".loader").hide();
-                $(".popup-content").text(info);
-            },
-            error: function () {
-                $(".popup-content").text("Данные отсутствуют!");
-            }
-        });
 
     });
 
@@ -619,6 +577,9 @@ function MatchEncrypt(val) {
             case 'Недоп':
                 return '25';
                 break;
+            case 'Н':
+                return '26';
+                break;
         }
     }
 
@@ -646,6 +607,9 @@ function MatchDecrypt(val) {
                 break;
             case '25':
                 return 'Недоп';
+                break;
+            case '26':
+                return 'Н';
                 break;
         }
     }

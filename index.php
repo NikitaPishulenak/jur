@@ -20,12 +20,16 @@
 <div class="popup" id="window-popup">
     <div class="popup-content">
 
-        <div class="loader">
-            <img class="loading" src="img/loading.gif"><br><strong class="header">Идет загрузка...</strong>
-        </div>
+        <p>Для выставления отметки кликните по соответствующему значению или используйте сочетание клавишь:
+        <p>Alt+1 -> Н (прогул);</p>
+        <p>Alt+2 -> Зач. (Зачтено);</p>
+        <p>Alt+3 -> Незач. (Не зачтено1);</p>
+        <p>Alt+4 -> Недоп (Недопуск);</p>
+        </p>
 
     </div>
 </div>
+
 
 <div id="form-lesson" title="Создание занятия">
     <form>
@@ -51,22 +55,27 @@
     <form id="form-edit">
         <fieldset>
             <div class="panel">
+                <div id="panel">
                 <button id="add_grade_input" class="add_grade"
                         title="Для добавления дополнительной оценки нажмите на кнопку!">+
                 </button>
-                <div id="panel">
                     <span class="space"></span>
-                    <b id="1" class="tool"><b>Н<sub>у</sub></b></b>
+                    <b id="1" class="tool"><b>Н</b></b>
                     <span class="space"></span>
-                    <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>
+<!--                    <b id="1" class="tool"><b>Н<sub>у</sub></b></b>-->
+<!--                    <span class="space"></span>-->
+<!--                    <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>-->
+<!--                    <span class="space"></span>-->
+<!--                    <b id="3" class="tool"><b>Н<sub>б.о.</sub></b></b>-->
+<!--                    <span class="space"></span>-->
+                    <b id="2" class="tool"><b>Зач.</b></b>
                     <span class="space"></span>
-                    <b id="3" class="tool"><b>Н<sub>б.о.</sub></b></b>
+                    <b id="3" class="tool"><b>Незач.</b></b>
                     <span class="space"></span>
-                    <b id="4" class="tool"><b>Зач.</b></b>
-                    <span class="space"></span>
-                    <b id="5" class="tool"><b>Незач.</b></b>
-                    <span class="space"></span>
-                    <b id="6" class="tool fail"><b>Недоп</b></b>
+                    <b id="4" class="tool fail"><b>Недоп</b></b>
+                    <img class="info" src="img/information.jpg">
+
+
                 </div>
 
 

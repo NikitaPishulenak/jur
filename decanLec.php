@@ -31,13 +31,16 @@
         <fieldset>
             <div class="panel">
 
-                <b id="1" class="tool"><b>Н<sub>у</sub></b></b>
-                <span class="space"></span>
-                <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>
-                <span class="space"></span>
-                <b id="3" class="tool"><b>Н<sub>б.о.</sub></b></b>
-                <!--                <span class="space"></span>-->
-                <!--                <b id="6" class="tool fail"><b>Недоп</b></b>-->
+                <div id="panel">
+                    <b id="1" class="tool"><b>Н<sub>у</sub></b></b>
+                    <span class="space"></span>
+                    <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>
+                    <span class="space"></span>
+                    <b id="3" class="tool"><b>Н<sub>б.о.</sub></b></b>
+                    <!--                <span class="space"></span>-->
+                    <!--                <b id="6" class="tool fail"><b>Недоп</b></b>-->
+                </div>
+
 
                 <br><br>
 
@@ -111,8 +114,8 @@
                 <div class="date_title" data-idLesson="1">20.09.2017</div>
                 <div class="grade" data-idStudent="1" data-idRating="3"></div>
                 <div class="grade" data-idStudent="2" data-idRating="4">22</div>
-                <div class="grade" data-idStudent="3" data-idRating="2"></div>
-                <div class="grade" data-idStudent="4" data-idRating="7"></div>
+                <div class="grade" data-idStudent="3" data-idRating="2">26</div>
+                <div class="grade" data-idStudent="4" data-idRating="7">26</div>
                 <div class="grade" data-idStudent="5" data-idRating="1">21</div>
                 <div class="grade" data-idStudent="6" data-idRating="2"></div>
                 <div class="grade" data-idStudent="7" data-idRating="6">21</div>

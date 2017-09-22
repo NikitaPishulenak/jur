@@ -1,4 +1,4 @@
-input[type=text] {
+﻿input[type=text] {
     border-radius: 4px;
     margin: 2px 2px 2px 2px;
 }
@@ -116,7 +116,7 @@ input[type=text] {
 }
 
 
-.fio_student, .subject_student {
+.fio_student {
     border: solid #000000 1px;
     border-top: none;
     height: 30px;
@@ -203,7 +203,7 @@ div .hidden{
     border:none;
 }
 
-.fio, .subjects {
+.fio {
     float: left;
     width: auto;
 }
@@ -231,7 +231,7 @@ div .hidden{
     border: none;
 }
 
-.average, .answer, .absenteeism {
+.average, .answer {
     border: solid #000000 1px;
     border-top: none;
     width: 60px;
