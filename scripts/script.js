@@ -580,6 +580,9 @@ function MatchEncrypt(val) {
             case 'Н':
                 return '26';
                 break;
+            default:
+                return '50';
+                break;
         }
     }
 
@@ -610,6 +613,9 @@ function MatchDecrypt(val) {
                 break;
             case '26':
                 return 'Н';
+                break;
+            default:
+                return '';
                 break;
         }
     }

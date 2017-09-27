@@ -13,6 +13,7 @@
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/script.js"></script>
+    <script src="scripts/corporate.js"></script>
 
 </head>
 <body>
@@ -73,7 +74,7 @@
                     <b id="3" class="tool"><b>Незач.</b></b>
                     <span class="space"></span>
                     <b id="4" class="tool fail"><b>Недоп</b></b>
-                    <img class="info" src="img/information.jpg">
+<!--                    <img class="info" src="img/information.jpg">-->
 
 
                 </div>
@@ -192,7 +193,7 @@
                 <div class="date_title colloquium_theme" data-idLesson="1">03.09.2017</div>
                 <div class="grade  colloquium_theme" data-idStudent="1" data-idRating="3">8</div>
                 <div class="grade colloquium_theme" data-idStudent="2" data-idRating="4">7</div>
-                <div class="grade colloquium_theme" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade colloquium_theme" data-idStudent="3" data-idRating="2">26</div>
                 <div class="grade colloquium_theme" data-idStudent="4" data-idRating="7">3</div>
                 <div class="grade colloquium_theme" data-idStudent="5" data-idRating="1">9</div>
                 <div class="grade colloquium_theme" data-idStudent="6" data-idRating="2">2</div>
@@ -204,7 +205,7 @@
                 <div class="grade colloquium_theme" data-idStudent="12" data-idRating="45"></div>
                 <div class="grade colloquium_theme" data-idStudent="13" data-idRating="3"></div>
                 <div class="grade colloquium_theme" data-idStudent="14" data-idRating="4"></div>
-                <div class="grade colloquium_theme" data-idStudent="15" data-idRating="2"></div>
+                <div class="grade colloquium_theme" data-idStudent="15" data-idRating="2">26</div>
                 <div class="grade colloquium_theme" data-idStudent="16" data-idRating="7">3</div>
                 <div class="grade colloquium_theme" data-idStudent="17" data-idRating="1"></div>
                 <div class="grade colloquium_theme" data-idStudent="18" data-idRating="2">2</div>

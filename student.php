@@ -13,6 +13,7 @@
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/scriptStud.js"></script>
+    <script src="scripts/corporate.js"></script>
 
 </head>
 <body>
@@ -387,42 +388,42 @@
         </div>
 
                 <div class="statistic">
-                    <div class="date_col_stat">
-                        <div class="info_title">Ср. б.</div>
-                        <div class="average" data-idSubject="1"></div>
-                        <div class="average" data-idSubject="2"></div>
-                        <div class="average" data-idSubject="3"></div>
-                        <div class="average" data-idSubject="4"></div>
-                        <div class="average" data-idSubject="5"></div>
-                        <div class="average" data-idSubject="6"></div>
-                        <div class="average" data-idSubject="7"></div>
-                        <div class="average" data-idSubject="8"></div>
-                        <div class="average" data-idSubject="9"></div>
-                    </div>
-                    <div class="date_col_stat">
-                        <div class="info_title">% отв.</div>
-                        <div class="answer" data-idSubject="1"></div>
-                        <div class="answer" data-idSubject="2"></div>
-                        <div class="answer" data-idSubject="3"></div>
-                        <div class="answer" data-idSubject="4"></div>
-                        <div class="answer" data-idSubject="5"></div>
-                        <div class="answer" data-idSubject="6"></div>
-                        <div class="answer" data-idSubject="7"></div>
-                        <div class="answer" data-idSubject="8"></div>
-                        <div class="answer" data-idSubject="9"></div>
-                    </div>
-                    <div class="date_col_stat">
-                        <div class="info_title">Н (ув.)</div>
-                        <div class="absenteeism" data-idSubject="1"></div>
-                        <div class="absenteeism" data-idSubject="2"></div>
-                        <div class="absenteeism" data-idSubject="3"></div>
-                        <div class="absenteeism" data-idSubject="4"></div>
-                        <div class="absenteeism" data-idSubject="5"></div>
-                        <div class="absenteeism" data-idSubject="6"></div>
-                        <div class="absenteeism" data-idSubject="7"></div>
-                        <div class="absenteeism" data-idSubject="8"></div>
-                        <div class="absenteeism" data-idSubject="9"></div>
-                    </div>
+<!--                    <div class="date_col_stat">-->
+<!--                        <div class="info_title">Ср. б.</div>-->
+<!--                        <div class="average" data-idSubject="1"></div>-->
+<!--                        <div class="average" data-idSubject="2"></div>-->
+<!--                        <div class="average" data-idSubject="3"></div>-->
+<!--                        <div class="average" data-idSubject="4"></div>-->
+<!--                        <div class="average" data-idSubject="5"></div>-->
+<!--                        <div class="average" data-idSubject="6"></div>-->
+<!--                        <div class="average" data-idSubject="7"></div>-->
+<!--                        <div class="average" data-idSubject="8"></div>-->
+<!--                        <div class="average" data-idSubject="9"></div>-->
+<!--                    </div>-->
+<!--                    <div class="date_col_stat">-->
+<!--                        <div class="info_title">% отв.</div>-->
+<!--                        <div class="answer" data-idSubject="1"></div>-->
+<!--                        <div class="answer" data-idSubject="2"></div>-->
+<!--                        <div class="answer" data-idSubject="3"></div>-->
+<!--                        <div class="answer" data-idSubject="4"></div>-->
+<!--                        <div class="answer" data-idSubject="5"></div>-->
+<!--                        <div class="answer" data-idSubject="6"></div>-->
+<!--                        <div class="answer" data-idSubject="7"></div>-->
+<!--                        <div class="answer" data-idSubject="8"></div>-->
+<!--                        <div class="answer" data-idSubject="9"></div>-->
+<!--                    </div>-->
+<!--                    <div class="date_col_stat">-->
+<!--                        <div class="info_title">Н (ув.)</div>-->
+<!--                        <div class="absenteeism" data-idSubject="1"></div>-->
+<!--                        <div class="absenteeism" data-idSubject="2"></div>-->
+<!--                        <div class="absenteeism" data-idSubject="3"></div>-->
+<!--                        <div class="absenteeism" data-idSubject="4"></div>-->
+<!--                        <div class="absenteeism" data-idSubject="5"></div>-->
+<!--                        <div class="absenteeism" data-idSubject="6"></div>-->
+<!--                        <div class="absenteeism" data-idSubject="7"></div>-->
+<!--                        <div class="absenteeism" data-idSubject="8"></div>-->
+<!--                        <div class="absenteeism" data-idSubject="9"></div>-->
+<!--                    </div>-->
                 </div>
 
 </div>

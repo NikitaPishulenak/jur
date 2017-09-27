@@ -7,7 +7,30 @@
 });
 
 $(function () {
-    $("div.average").each(function () {
+    $("div.statistic").append("<div class='date_col_stat'><div class='title'>Ср. б.</div><div class='average'></div></div>");
+    // $("div.statistic").html($r);
+    var count=$("div.subject_student").length;
+    for(var i=0; i<count; i++){
+        data_idS=$(".grade:eq("+i+")").attr('data-idSubject');
+        $("div .average:last").append("<div class='avg' data-idSubject='"+data_idS+"'></div>");
+    }
+    $("div .average:last").append("<div class='avg result_div' id='avg_avrige'></div>");
+
+    $("div.date_col_stat:last").after("<div class='date_col_stat'><div class='title'>% отв.</div><div class='answer'></div></div>");
+    for(var i=0; i<count; i++){
+        data_idS=$(".grade:eq("+i+")").attr('data-idSubject');
+        $("div .answer:last").append("<div class='ans' data-idSubject='"+data_idS+"'></div>");
+    }
+
+    $("div.date_col_stat:last").after("<div class='date_col_stat'><div class='title'>Н(ув.)</div><div class='absenteeism'></div></div>");
+    for(var i=0; i<count; i++){
+        data_idS=$(".grade:eq("+i+")").attr('data-idSubject');
+        $("div .absenteeism:last").append("<div class='abs' data-idSubject='"+data_idS+"'></div>");
+    }
+});
+
+$(function () {
+    $("div.avg").each(function () {
         var sum=0,countGrade=0;
         var elem=$(this).attr('data-idSubject');
         $('div.grade[data-idSubject="'+elem+'"]').each(function () {
@@ -20,9 +43,10 @@ $(function () {
             }
 
         });
-        $('div.average[data-idSubject="'+elem+'"]').html(Math.round(10*(sum/countGrade))/10);
+        $('div.avg[data-idSubject="'+elem+'"]').html(Math.round(10*(sum/countGrade))/10);
     });
-    $("div.answer").each(function () {
+
+    $("div.ans").each(function () {
         var countAnswer=0;
         var elem=$(this).attr('data-idSubject');
         $('div.grade[data-idSubject="'+elem+'"]').each(function () {
@@ -32,10 +56,10 @@ $(function () {
             }
 
         });
-        $('div.answer[data-idSubject="'+elem+'"]').html(Math.round(100*(countAnswer*100/$('div.grade[data-idSubject="'+elem+'"]').length))/100+"%");
+        $('div.ans[data-idSubject="'+elem+'"]').html(Math.round(100*(countAnswer*100/$('div.grade[data-idSubject="'+elem+'"]').length))/100+"%");
     });
 
-    $("div.absenteeism").each(function () {
+    $("div.abs").each(function () {
         var countAbsenteesm=0, countAbsRespect=0, countAbsUnrespect=0, countAbsFree=0;
         var elem=$(this).attr('data-idSubject');
         $('div.grade[data-idSubject="'+elem+'"]').each(function () {
@@ -46,40 +70,42 @@ $(function () {
                     if(gr[i]=="Ну"){
                         countAbsRespect++;
                     }
-                    // if(gr[i]=="Нб.у"){
-                    //     countAbsUnrespect++;
-                    // }
-                    // if(gr[i]=="Нб.о."){
-                    //     countAbsFree++;
-                    // }
                 }
             }
         });
-        $('div.absenteeism[data-idSubject="'+elem+'"]').html(countAbsenteesm+"("+countAbsRespect+")");
+        $('div.abs[data-idSubject="'+elem+'"]').html(countAbsenteesm+"("+countAbsRespect+")");
     });
 });
 
-
-var wDelta = 120;
-function scrollDoc(e) {
-    if (!e) e = event;
-    if (e.preventDefault) { e.preventDefault(); } else { e.returnValue = false; }
-    var __delta = e.wheelDelta || -e.detail;
-    __delta /= Math.abs(__delta);
-    document.documentElement.scrollLeft -= __delta * wDelta; // FF, Opera, IE
-    if (this.attachEvent) return false;
-    document.body.scrollLeft -= __delta * wDelta; // Chrome
-}
-window.onload = function() {
-        var html = document.documentElement;
-        if (html.attachEvent) {
-            html.attachEvent("onmousewheel", scrollDoc); // IE and Opera
-        } else {
-            html.addEventListener("DOMMouseScroll", scrollDoc, false); // FF
-            html.addEventListener("mousewheel", scrollDoc, false); // Chrome
+$(function () {
+    var avg_sum=0, avg_count=0;
+    var count=$("div.avg").length;
+    for (var k=0; k<count-1; k++){
+        if($("div.avg:eq("+k+")").text()!=""){
+            avg_sum+=Number($("div.avg:eq("+k+")").text());
+            avg_count++;
         }
     }
+    $("div#avg_avrige").html(Math.round(100*(avg_sum/avg_count))/100);
+});
 
+
+
+//Горизонтальная прокрутка при кручении колесом
+document.addEventListener('wheel', function(e){
+    el = document.querySelector('div.result_box_statistic');
+    if(e.path.indexOf(el)!=-1){
+        e.preventDefault();
+        var delta=100;
+        var curLeft=$(".result_box_statistic").scrollLeft();
+        if(e.deltaY==100){
+            $(".result_box_statistic").scrollLeft(curLeft+delta);
+        }
+        else if(e.deltaY==-100){
+            $(".result_box_statistic").scrollLeft(curLeft-delta);
+        }
+    }
+}, false);
 
 document.addEventListener('keydown', function(e){
 

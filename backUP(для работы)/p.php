@@ -432,6 +432,7 @@ function HeaderFooterGroup($content,$title){
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/script.js"></script>
+    <script src="scripts/corporate.js"></script>
 </head>
 <body>
 <div class="Exit"><a href="exit.php" title="Выхожу">Выхожу</a></div>
@@ -462,6 +463,7 @@ function HeaderFooterGroupL($content,$title){
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/scriptLec.js"></script>
+    <script src="scripts/corporate.js"></script>
 </head>
 <body>
 <div class="Exit"><a href="exit.php" title="Выхожу">Выхожу</a></div>

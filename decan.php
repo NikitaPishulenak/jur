@@ -13,6 +13,7 @@
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/scriptDec.js"></script>
+    <script src="scripts/corporate.js"></script>
 
 </head>
 <body>

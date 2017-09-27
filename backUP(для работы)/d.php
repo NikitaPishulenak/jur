@@ -406,6 +406,7 @@ function HeaderFooterGroup($content,$title){
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/scriptDec.js"></script>
+    <script src="scripts/corporate.js"></script>
 </head>
 <body>
 <div class="Exit"><a href="exit.php" title="Выхожу">Выхожу</a></div>
@@ -436,6 +437,7 @@ function HeaderFooterGroupL($content,$title){
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/scriptDecLec.js"></script>
+    <script src="scripts/corporate.js"></script>
 </head>
 <body>
 <div class="Exit"><a href="exit.php" title="Выхожу">Выхожу</a></div>
@@ -544,6 +546,7 @@ $ret="<div id='form-edit' title='Редактирование отметки'>
         <div class='result_box'><div class='date_col hidden'></div>".$contentO."
 
         </div>
+        <div class='statistic'></div>
     </div>
 </div>";
 

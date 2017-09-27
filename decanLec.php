@@ -13,6 +13,7 @@
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/scriptDecLec.js"></script>
+    <script src="scripts/corporate.js"></script>
 
 </head>
 <body>
@@ -209,6 +210,11 @@
                 <div class="grade" data-idStudent="29" data-idRating="1"></div>
                 <div class="grade" data-idStudent="30" data-idRating="2"></div>
             </div>
+
+        </div>
+
+        <div class="statistic">
+
 
         </div>
 

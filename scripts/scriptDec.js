@@ -15,6 +15,7 @@
     return false;
 }
 
+
 $(function () {
     $("input.inp_cell").focus(function () {
         id_input=$(this).attr('id');
@@ -65,24 +66,15 @@ $(function () {
         data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
         $("div .answer:last").append("<div class='ans' data-idStudent='"+data_idS+"'></div>");
     }
+
+    $("div.date_col_stat:last").after("<div class='date_col_stat'><div class='title'>Н(уваж.)</div><div class='absenteeism'></div></div>");
+    for(var i=0; i<count; i++){
+        data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
+        $("div .absenteeism:last").append("<div class='abs' data-idStudent='"+data_idS+"'></div>");
+    }
 });
 
-function proverka(event, id) {
-    $(function () {
-        el=$("#inp_"+id).val();
-        if((el>10) ||(el<1)){
-            $("#inp_"+id).val("");
-        }
-    });
 
-
-    if((event.keyCode==8) || (event.keyCode==46) ) {
-        return;
-    }
-    else {
-        return false;
-    }
-}
 
 
 
@@ -113,6 +105,23 @@ $(function () {
 
         });
         $('div.ans[data-idStudent="'+elem+'"]').html(Math.round(100*(countAnswer*100/$('div.grade[data-idStudent="'+elem+'"]').length))/100+"%");
+    });
+
+    $("div.abs").each(function () {
+        var countAbsenteesm=0, countAbsRespect=0;
+        var elem=$(this).attr('data-idStudent');
+        $('div.grade[data-idStudent="'+elem+'"]').each(function () {
+            var gr=$(this).text().split("/");
+            for(i=0; i<gr.length;i++){
+                if(gr[i]=="Н" || gr[i]=="Ну"|| gr[i]=="Нб.у"|| gr[i]=="Нб.о."){
+                    countAbsenteesm++;
+                    if(gr[i]=="Ну"){
+                        countAbsRespect++;
+                    }
+                }
+            }
+        });
+        $('div.abs[data-idStudent="'+elem+'"]').html(countAbsenteesm+"("+countAbsRespect+")");
     });
 });
 
