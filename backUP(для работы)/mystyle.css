@@ -4,7 +4,7 @@
 }
 
 .button {
-    width: 100px;
+    width: 40%;
     height: 20%;
     background: #6b8bad;
     border-radius: 5px;
@@ -78,7 +78,7 @@
     position: relative;
 }
 
-.avg, .ans {
+.avg, .ans, .abs {
     border-bottom: solid #000000 1px;
     width: 80px;
     height: 30px;
@@ -116,7 +116,7 @@
 }
 
 
-.fio_student {
+.fio_student, .subject_student {
     border: solid #000000 1px;
     border-top: none;
     height: 30px;
@@ -188,9 +188,11 @@ div .hidden{
 .result_box{
     border: 1px solid #ccc;
     width: 80%;
+    border-top: none;
 }
 .result_box_statistic{
     width: 60%;
+    border-top: none;
 }
 
 .date_col {
@@ -200,10 +202,10 @@ div .hidden{
 .date_col_stat {
     display: inline-table;
     width: 60px;
-    border:none;
+    border-bottom:none;
 }
 
-.fio {
+.fio, .subjects {
     float: left;
     width: auto;
 }
@@ -231,7 +233,7 @@ div .hidden{
     border: none;
 }
 
-.average, .answer {
+.average, .answer, .absenteeism {
     border: solid #000000 1px;
     border-top: none;
     width: 60px;
@@ -274,7 +276,7 @@ div .hidden{
 
 
 .popup-content {
-    width:250px;
+    width:150px;
     height: auto;
     padding:5px;
     color: #000000;
@@ -310,14 +312,4 @@ div .hidden{
 
 .undef{
     background-color: #d3d3d3;
-}
-
-.info{
-    padding: 0 0 0 5px;
-    margin: -5px -5px 0 15px;
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
 }

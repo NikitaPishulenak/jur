@@ -4,7 +4,7 @@ input[type=text] {
 }
 
 .button {
-    width: 40%;
+    width: 105px;
     height: 20%;
     background: #6b8bad;
     border-radius: 5px;
@@ -107,7 +107,9 @@ input[type=text] {
     border: solid #000000 1px;
     text-align: center;
     width: 80px;
+    cursor: pointer;
 }
+
 .info_title{
     font-weight: 600;
     border: solid #000000 1px;
@@ -310,4 +312,9 @@ div .hidden{
 
 .undef{
     background-color: #d3d3d3;
+}
+
+.datepicker{
+    width: 100px;
+
 }

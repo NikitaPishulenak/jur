@@ -13,7 +13,7 @@
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/script.js"></script>
-    <script src="scripts/corporate.js"></script>
+    <script src="backUP(для работы)/scripts/corporate.js"></script>
 
 </head>
 <body>
@@ -31,6 +31,18 @@
     </div>
 </div>
 
+<div id="form-edit-date" title="Редактирование даты занятия">
+    <form>
+        <fieldset>
+            <div class="box">
+                <div class="oldInfo"></div><br>
+                <span align="center">Исправить на дату: </span>
+                <input type="text" id="lesson-date-change" required class="datepicker" value="">
+
+            </div>
+        </fieldset>
+    </form>
+</div>
 
 <div id="form-lesson" title="Создание занятия">
     <form>

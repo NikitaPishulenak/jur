@@ -384,6 +384,29 @@ $(function () {
 
     $('div').delegate(".triangle-topright", "click", function () {
         log_dialog.dialog("open");
+        // $.ajax({
+        //     type:'get',
+        //     url:'d.php',
+        //     data:{
+        //         'id_Zapis': id_Zapis,
+        //         'dateLes': dat,
+        //         'idStudent': student_id,
+        //         'idPrepod': $("input#idPrepod").val(),
+        //         'menuactiv': "editLessonStudent",
+        //         'grades': coding
+        //     },
+        //     success:function (st) {
+        //         if (st=="Access is denied!"){
+        //             alert("Доступ запрещен!");
+        //         }
+        //         else if (st=="No access rights!"){
+        //             alert("Не достаточно прав!");
+        //         }
+        //     },
+        //     error: function () {
+        //         alert("Произошла ошибка при передаче данных");
+        //     }
+        // });
 
 
     });

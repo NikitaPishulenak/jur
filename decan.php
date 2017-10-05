@@ -13,7 +13,7 @@
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/scriptDec.js"></script>
-    <script src="scripts/corporate.js"></script>
+    <script src="backUP(для работы)/scripts/corporate.js"></script>
 
 </head>
 <body>
@@ -193,8 +193,8 @@
                 <div class="grade" data-idStudent="2" data-idRating="4">22</div>
                 <div class="grade" data-idStudent="3" data-idRating="2"></div>
                 <div class="grade" data-idStudent="4" data-idRating="7" data-Log="1">151110</div>
-                <div class="grade" data-idStudent="5" data-idRating="1">21</div>
-                <div class="grade" data-idStudent="6" data-idRating="2">16</div>
+                <div class="grade" data-idStudent="5" data-idRating="1" data-Log="0">21</div>
+                <div class="grade" data-idStudent="6" data-idRating="2" data-Log="1">16</div>
                 <div class="grade" data-idStudent="7" data-idRating="6">21</div>
                 <div class="grade" data-idStudent="8" data-idRating="17"></div>
                 <div class="grade" data-idStudent="9" data-idRating="16">1511</div>
