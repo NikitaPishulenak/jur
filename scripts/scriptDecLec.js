@@ -196,6 +196,8 @@ $(function () {
     });
 
     $('div').delegate(".grade", "dblclick", function () {
+        $("button#edit").removeAttr('disabled');
+        $("button#close").removeAttr('disabled');
         elem = $(this);
 
         if(elem.text()!=""){
@@ -299,6 +301,8 @@ $(function () {
 
         inp_id=2;
 
+        $("button#edit").attr('disabled', true);
+        $("button#close").attr('disabled', true);
         edit_dialog.dialog("close");
     });
     $(".inp_cell:text").click(function () {

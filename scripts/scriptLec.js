@@ -167,6 +167,8 @@ $(function () {
     });
 
     $('div').delegate(".grade", "dblclick", function () {
+        $("button#edit").removeAttr('disabled');
+        $("button#close").removeAttr('disabled');
         dat=$(this).parent().find('div.date_title').html();//�"а�'а �_�'�_�>�+�+а
         student_id=$(this).attr('data-idStudent');
         id_Less=$(this).attr('data-idLes');
@@ -238,9 +240,18 @@ $(function () {
 
                     }
                 },
-                error: function () {
-                    alert("Произошла ошибка при передаче данных");
-                }
+                error: function (x,t) {
+                    if( t === 'timeout') {
+                        alert("Не удалось получить ответ от сервера");
+                        edit_dialog.dialog("close");
+                        window.location.reload();
+
+                    }
+                    else{
+                        alert("Произошла ошибка при передаче данных");
+                    }
+                },
+                timeout:30000
             });
         }
         else{
@@ -269,13 +280,24 @@ $(function () {
                             alert("�_�� �_�_�_�'а�'�_�+�_�_ п�_а�_!");
                         }
                     },
-                    error: function () {
-                        alert("�_�_�_из�_�_�>а �_�_и�+ка п�_и п���_���_а�+�� �_а�_�_�<�:");
-                    }
+                    error: function (x,t) {
+                        if( t === 'timeout') {
+                            alert("Не удалось получить ответ от сервера");
+                            edit_dialog.dialog("close");
+                            window.location.reload();
+
+                        }
+                        else{
+                            alert("Произошла ошибка при передаче данных");
+                        }
+                    },
+                    timeout:30000
                 });
             }
 
         }
+        $("button#edit").attr('disabled', true);
+        $("button#close").attr('disabled', true);
         edit_dialog.dialog("close");
     });
     $("#close").click(function () {
@@ -404,6 +426,25 @@ function MatchEncrypt(val) {
             case 'Н':
                 return '26';
                 break;
+
+            case 'Н1ч.':
+                return '31';
+                break;
+            case 'Н2ч.':
+                return '32';
+                break;
+            case 'Н3ч.':
+                return '33';
+                break;
+            case 'Н4ч.':
+                return '34';
+                break;
+            case 'Н5ч.':
+                return '35';
+                break;
+            case 'Н6ч.':
+                return '36';
+                break;
         }
     }
 
@@ -426,6 +467,25 @@ function MatchDecrypt(val) {
                 break;
             case '26':
                 return 'Н';
+                break;
+
+            case '31':
+                return 'Н1ч.';
+                break;
+            case '32':
+                return 'Н2ч.';
+                break;
+            case '33':
+                return 'Н3ч.';
+                break;
+            case '34':
+                return 'Н4ч.';
+                break;
+            case '35':
+                return 'Н5ч.';
+                break;
+            case '36':
+                return 'Н6ч.';
                 break;
         }
     }

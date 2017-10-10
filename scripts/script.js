@@ -104,7 +104,7 @@ $(function () {
 // });
 
 $(function () {
-    $('b.tool').mousedown(function(event){
+    $('b.tool, span.tool').mousedown(function(event){
         event.stopPropagation();
         event.preventDefault();
         return false;
@@ -122,53 +122,53 @@ $(function () {
     var myStudentId = new Array();
     var myStudentZapis = new Array();
     
-    function editDate() {
-        var oldDateLesson=$("#lesson-date-change").val();
-        if(oldDateLesson!='') {
-            var currDate = $("#lesson-date-change").val();
-
-            $.ajax({
-                type: 'get',//тип запроса: get,post либо head
-                url: 'p.php',//url адрес файла обработчика
-                data: {
-                    'idGroup': $("input#idGroup").val(),
-                    'idLessons': $("input#idSubject").val(),
-                    'oldDateLesson': oldDateLesson,
-                    'newDateLesson': currDate
-                },
-                success: function (st) {
-                    if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
-                        edit_date_dialog.dialog("close");
-                        dat_col_object.html(currDate);
-                    }
-                    else {
-                        if (st == "No") {
-                            alert("Колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
-                        }
-                        else if (st == "Access is denied!") {
-                            alert("Доступ запрещен!");
-                        }
-                        else if (st == "No access rights!") {
-                            alert("Не достаточно прав!");
-                        }
-                        else {
-                            alert("Что-то пошло не так! ");
-                        }
-
-                    }
-                },
-                error: function () {
-                    alert("Произошла ошибка при передаче данных");
-                }
-
-            })
-
-        }
-        else{
-            alert("Исправление даты на пустое значение не возможно!");
-        }
-        
-    }
+    // function editDate() {
+    //     var oldDateLesson=$("#lesson-date-change").val();
+    //     if(oldDateLesson!='') {
+    //         var currDate = $("#lesson-date-change").val();
+    //
+    //         $.ajax({
+    //             type: 'get',//тип запроса: get,post либо head
+    //             url: 'p.php',//url адрес файла обработчика
+    //             data: {
+    //                 'idGroup': $("input#idGroup").val(),
+    //                 'idLessons': $("input#idSubject").val(),
+    //                 'oldDateLesson': oldDateLesson,
+    //                 'newDateLesson': currDate
+    //             },
+    //             success: function (st) {
+    //                 if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
+    //                     edit_date_dialog.dialog("close");
+    //                     dat_col_object.html(currDate);
+    //                 }
+    //                 else {
+    //                     if (st == "No") {
+    //                         alert("Колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
+    //                     }
+    //                     else if (st == "Access is denied!") {
+    //                         alert("Доступ запрещен!");
+    //                     }
+    //                     else if (st == "No access rights!") {
+    //                         alert("Не достаточно прав!");
+    //                     }
+    //                     else {
+    //                         alert("Что-то пошло не так! ");
+    //                     }
+    //
+    //                 }
+    //             },
+    //             error: function () {
+    //                 alert("Произошла ошибка при передаче данных");
+    //             }
+    //
+    //         })
+    //
+    //     }
+    //     else{
+    //         alert("Исправление даты на пустое значение не возможно!");
+    //     }
+    //
+    // }
 
     function addLesson() {
         if ($("#lesson-date").val() == "")
@@ -346,25 +346,26 @@ $(function () {
         event.preventDefault();
     });
 
-    edit_date_dialog = $("#form-edit-date").dialog({
-        resizable:false,
-        autoOpen: false,
-        height: 230,
-        width: 340,
-        modal: true,
-        buttons: {
-            "Заменить": editDate,
-            Отмена: function () {
-                edit_date_dialog.dialog("close");
-            }
-        },
-        close: function () {
-            form[0].reset();
-        }
-    });
-    edit_date_form = edit_date_dialog.find("form").on("submit", function (event) {
-        event.preventDefault();
-    });
+    //Форма редактирования даты
+    // edit_date_dialog = $("#form-edit-date").dialog({
+    //     resizable:false,
+    //     autoOpen: false,
+    //     height: 230,
+    //     width: 340,
+    //     modal: true,
+    //     buttons: {
+    //         "Заменить": editDate,
+    //         Отмена: function () {
+    //             edit_date_dialog.dialog("close");
+    //         }
+    //     },
+    //     close: function () {
+    //         form[0].reset();
+    //     }
+    // });
+    // edit_date_form = edit_date_dialog.find("form").on("submit", function (event) {
+    //     event.preventDefault();
+    // });
 
     $("#close").click(function () {
         edit_dialog.dialog("close");
@@ -385,6 +386,8 @@ $(function () {
     });
 
     $('div').delegate(".grade", "dblclick", function () {
+        $("button#edit").removeAttr('disabled');
+        $("button#close").removeAttr('disabled');
         dat=$(this).parent().find('div.date_title').html();//Дата столбца
         student_id=$(this).attr('data-idStudent');
         id_Less=$(this).attr('data-idLes');
@@ -412,10 +415,16 @@ $(function () {
             inp_id = $(this).attr('id');
 
             //При нажатии на кнопку с результатами текст выводится в поле ввода
-            $("b.tool").click(function () {
+            $("b.tool, span.tool").click(function () {
                 var text = $(this).text();
                 $("#"+inp_id).val(text);
             });
+
+            // //При нажатии на пропуск с количеством часов текст выводится в поле ввода
+            // $("span.tool").click(function () {
+            //     var text = $(this).text();
+            //     $("#"+inp_id).val(text);
+            // });
         });
         var countOpenCell = 0;
         for (j = 0; j < 3; j++) {
@@ -430,9 +439,9 @@ $(function () {
         var absenteeisms = /\w/;
         $(".inp_cell:text").keydown(function (event) {
             if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
-                if (!absenteeisms.test(this.value)) {
+                // if (!absenteeisms.test(this.value)) {
                     $(this).val("")
-                }
+                // }
             }
         });
 
@@ -480,9 +489,17 @@ $(function () {
 
                     }
                 },
-                error: function () {
-                    alert("Произошла ошибка при передаче данных");
-                }
+                error: function (x,t) {
+                    if( t === 'timeout') {
+                        alert("Не удалось получить ответ от сервера");
+                        edit_dialog.dialog("close");
+                        window.location.reload();
+
+                    } else {
+                        alert("Произошла ошибка при передаче данных");
+                    }
+                },
+                timeout:30000
             });
         }
         //удаление оценки
@@ -546,13 +563,24 @@ $(function () {
                             alert("Не достаточно прав!");
                         }
                     },
-                    error: function () {
-                        alert("Произошла ошибка при передаче данных");
-                    }
+                    error: function (x,t) {
+                        if( t === 'timeout') {
+                            alert("Не удалось получить ответ от сервера");
+                            edit_dialog.dialog("close");
+                            window.location.reload();
+
+                        }
+                        else{
+                            alert("Произошла ошибка при передаче данных");
+                        }
+                    },
+                    timeout:30000
                 });
             }
         }
 
+        $("button#edit").attr('disabled', true);
+        $("button#close").attr('disabled', true);
         edit_dialog.dialog("close");
     });
     $(".inp_cell:text").click(function () {
@@ -791,9 +819,26 @@ function MatchEncrypt(val) {
             case 'Н':
                 return '26';
                 break;
-            default:
-                return '50';
+
+            case 'Н1ч.':
+                return '31';
                 break;
+            case 'Н2ч.':
+                return '32';
+                break;
+            case 'Н3ч.':
+                return '33';
+                break;
+            case 'Н4ч.':
+                return '34';
+                break;
+            case 'Н5ч.':
+                return '35';
+                break;
+            case 'Н6ч.':
+                return '36';
+                break;
+
         }
     }
 
@@ -825,9 +870,26 @@ function MatchDecrypt(val) {
             case '26':
                 return 'Н';
                 break;
-            default:
-                return '';
+
+            case '31':
+                return 'Н1ч.';
                 break;
+            case '32':
+                return 'Н2ч.';
+                break;
+            case '33':
+                return 'Н3ч.';
+                break;
+            case '34':
+                return 'Н4ч.';
+                break;
+            case '35':
+                return 'Н5ч.';
+                break;
+            case '36':
+                return 'Н6ч.';
+                break;
+
         }
     }
 

@@ -31,18 +31,19 @@
     </div>
 </div>
 
-<div id="form-edit-date" title="Редактирование даты занятия">
-    <form>
-        <fieldset>
-            <div class="box">
-                <div class="oldInfo"></div><br>
-                <span align="center">Исправить на дату: </span>
-                <input type="text" id="lesson-date-change" required class="datepicker" value="">
-
-            </div>
-        </fieldset>
-    </form>
-</div>
+<!--мена даты-->
+<!--<div id="form-edit-date" title="Редактирование даты занятия">-->
+<!--    <form>-->
+<!--        <fieldset>-->
+<!--            <div class="box">-->
+<!--                <div class="oldInfo"></div><br>-->
+<!--                <span align="center">Исправить на дату: </span>-->
+<!--                <input type="text" id="lesson-date-change" required class="datepicker" value="">-->
+<!---->
+<!--            </div>-->
+<!--        </fieldset>-->
+<!--    </form>-->
+<!--</div>-->
 
 <div id="form-lesson" title="Создание занятия">
     <form>
@@ -86,13 +87,25 @@
                     <b id="3" class="tool"><b>Незач.</b></b>
                     <span class="space"></span>
                     <b id="4" class="tool fail"><b>Недоп</b></b>
+                    <br><br>
+                    <span id="5" class="tool"><span>Н<sub>1ч.</sub></span></span>
+                    <span class="space"></span>
+                    <span id="6" class="tool"><span>Н<sub>2ч.</sub></span></span></b>
+                    <span class="space"></span>
+                    <span id="7" class="tool"><span>Н<sub>3ч.</sub></span></span></b>
+                    <span class="space"></span>
+                    <span id="8" class="tool"><span>Н<sub>4ч.</sub></span></span></b>
+                    <span class="space"></span>
+                    <span id="9" class="tool"><span>Н<sub>5ч.</sub></span></span></b>
+                    <span class="space"></span>
+                    <span id="10" class="tool"><span>Н<sub>6ч.</sub></span></span></b>
 <!--                    <img class="info" src="img/information.jpg">-->
 
 
                 </div>
 
 
-                <br><br>
+                <br>
 
                 <input class='inp_cell' id="inp_0" type=text maxlength='6'
                        onkeydown="return proverka(event,0);">
@@ -104,8 +117,8 @@
                 <br>
                 <hr>
                 <br>
-                <button id="edit" class="button"><b>Сохранить</b></button>
-                <button id="close" class="attention"><b>Отмена</b></button>
+                <button id="edit" class="button">Сохранить</button>
+                <button id="close" class="attention">Отмена</button>
             </div>
         </fieldset>
     </form>
@@ -172,7 +185,7 @@
                 <div class="date_title exam_theme" data-idLesson="1">01.09.2017</div>
                 <div class="grade exam_theme" data-idStudent="1" data-idRating="3" data-zapis="1">111213</div>
                 <div class="grade exam_theme" data-idStudent="2" data-idRating="4" data-zapis="2">122215</div>
-                <div class="grade exam_theme" data-idStudent="3" data-idRating="2" data-zapis="3"></div>
+                <div class="grade exam_theme" data-idStudent="3" data-idRating="2" data-zapis="3">30</div>
                 <div class="grade exam_theme" data-idStudent="4" data-idRating="7" data-zapis="4">11</div>
                 <div class="grade exam_theme" data-idStudent="5" data-idRating="1" data-zapis="5">1219</div>
                 <div class="grade exam_theme" data-idStudent="6" data-idRating="2" data-zapis="6">2</div>
@@ -183,8 +196,8 @@
                 <div class="grade exam_theme" data-idStudent="11" data-idRating="13" data-zapis="11">3</div>
                 <div class="grade exam_theme" data-idStudent="12" data-idRating="45" data-zapis="12"></div>
                 <div class="grade exam_theme" data-idStudent="13" data-idRating="3" data-zapis="13">5</div>
-                <div class="grade exam_theme" data-idStudent="14" data-idRating="4" data-zapis="14"></div>
-                <div class="grade exam_theme" data-idStudent="15" data-idRating="2" data-zapis="15"></div>
+                <div class="grade exam_theme" data-idStudent="14" data-idRating="4" data-zapis="14">31</div>
+                <div class="grade exam_theme" data-idStudent="15" data-idRating="2" data-zapis="15">32</div>
                 <div class="grade exam_theme" data-idStudent="16" data-idRating="7" data-zapis="16">9</div>
                 <div class="grade exam_theme" data-idStudent="17" data-idRating="1" data-zapis="17">4</div>
                 <div class="grade exam_theme" data-idStudent="18" data-idRating="2" data-zapis="18">2</div>
@@ -192,11 +205,11 @@
                 <div class="grade exam_theme" data-idStudent="20" data-idRating="17" data-zapis="20">Нб.отр.</div>
                 <div class="grade exam_theme" data-idStudent="21" data-idRating="16" data-zapis="21"></div>
                 <div class="grade exam_theme" data-idStudent="22" data-idRating="14" data-zapis="22">5</div>
-                <div class="grade exam_theme" data-idStudent="23" data-idRating="13" data-zapis="23">3</div>
+                <div class="grade exam_theme" data-idStudent="23" data-idRating="13" data-zapis="23">33</div>
                 <div class="grade exam_theme" data-idStudent="24" data-idRating="45" data-zapis="24"></div>
                 <div class="grade exam_theme" data-idStudent="25" data-idRating="3" data-zapis="25">5</div>
                 <div class="grade exam_theme" data-idStudent="26" data-idRating="4" data-zapis="26"></div>
-                <div class="grade exam_theme" data-idStudent="27" data-idRating="2" data-zapis="27"></div>
+                <div class="grade exam_theme" data-idStudent="27" data-idRating="2" data-zapis="27">34</div>
                 <div class="grade exam_theme" data-idStudent="28" data-idRating="7" data-zapis="28">9</div>
                 <div class="grade exam_theme" data-idStudent="29" data-idRating="1" data-zapis="29">4</div>
                 <div class="grade exam_theme" data-idStudent="30" data-idRating="2" data-zapis="30">2</div>
@@ -204,14 +217,14 @@
             <div class="date_col">
                 <div class="date_title colloquium_theme" data-idLesson="1">03.09.2017</div>
                 <div class="grade  colloquium_theme" data-idStudent="1" data-idRating="3">8</div>
-                <div class="grade colloquium_theme" data-idStudent="2" data-idRating="4">7</div>
+                <div class="grade colloquium_theme" data-idStudent="2" data-idRating="4">34</div>
                 <div class="grade colloquium_theme" data-idStudent="3" data-idRating="2">26</div>
                 <div class="grade colloquium_theme" data-idStudent="4" data-idRating="7">3</div>
                 <div class="grade colloquium_theme" data-idStudent="5" data-idRating="1">9</div>
-                <div class="grade colloquium_theme" data-idStudent="6" data-idRating="2">2</div>
+                <div class="grade colloquium_theme" data-idStudent="6" data-idRating="2">35</div>
                 <div class="grade colloquium_theme" data-idStudent="7" data-idRating="6">1</div>
                 <div class="grade colloquium_theme" data-idStudent="8" data-idRating="17">Нб.отр.</div>
-                <div class="grade colloquium_theme" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade colloquium_theme" data-idStudent="9" data-idRating="16">36</div>
                 <div class="grade colloquium_theme" data-idStudent="10" data-idRating="14"></div>
                 <div class="grade colloquium_theme" data-idStudent="11" data-idRating="13"></div>
                 <div class="grade colloquium_theme" data-idStudent="12" data-idRating="45"></div>

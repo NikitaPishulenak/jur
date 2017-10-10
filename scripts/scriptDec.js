@@ -262,6 +262,8 @@ $(function () {
     });
 
     $('div').delegate(".grade", "dblclick", function () {
+        $("button#edit").removeAttr('disabled');
+        $("button#close").removeAttr('disabled');
         elem = $(this);
 
         if(elem.text()!=""){
@@ -331,6 +333,7 @@ $(function () {
     });
 
     $("#edit").click(function () {
+
         var coding = "";
         var bit1 = $("#inp_0").val();
         var bit2 = $("#inp_1").val();
@@ -373,6 +376,8 @@ $(function () {
 
         inp_id=2;
 
+        $("button#edit").attr('disabled', true);
+        $("button#close").attr('disabled', true);
         edit_dialog.dialog("close");
     });
     $("#close").click(function () {
