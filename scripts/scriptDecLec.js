@@ -210,6 +210,12 @@ $(function () {
 
                 edit_dialog.dialog("open");
                 edit_form[0].reset();
+
+                //title формы= ФИО студента
+                var data_studentID=$(this).attr('data-idStudent');
+                var fio_stud=$('div.fio_student[data-idStudent="'+data_studentID+'"]').text();
+                edit_dialog.dialog({title: fio_stud});
+
                 $("#inp_0").focus().blur();
                 $('#inp_2').slideUp(1);
                 --countCell;

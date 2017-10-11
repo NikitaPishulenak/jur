@@ -65,7 +65,7 @@
     </form>
 </div>
 
-<div id="form-edit" title="Редактирование отметки">
+<div id="form-edit" title="Редактирование отметки ">
     <form id="form-edit">
         <fieldset>
             <div class="panel">
@@ -73,52 +73,52 @@
                 <button id="add_grade_input" class="add_grade"
                         title="Для добавления дополнительной оценки нажмите на кнопку!">+
                 </button>
-                    <span class="space"></span>
-                    <b id="1" class="tool"><b>Н</b></b>
-                    <span class="space"></span>
+
+                    <span class='space'></span>
+                    <b id='1' class='tool'><b>Н</b></b>
+                    <span class='space'></span>
 <!--                    <b id="1" class="tool"><b>Н<sub>у</sub></b></b>-->
 <!--                    <span class="space"></span>-->
 <!--                    <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>-->
 <!--                    <span class="space"></span>-->
 <!--                    <b id="3" class="tool"><b>Н<sub>б.о.</sub></b></b>-->
 <!--                    <span class="space"></span>-->
-                    <b id="2" class="tool"><b>Зач.</b></b>
-                    <span class="space"></span>
-                    <b id="3" class="tool"><b>Незач.</b></b>
-                    <span class="space"></span>
-                    <b id="4" class="tool fail"><b>Недоп</b></b>
+                    <b id='2' class='tool'><b>Зач.</b></b>
+                    <span class='space'></span>
+                    <b id='3' class='tool'><b>Незач.</b></b>
+                    <span class='space'></span>
+                    <b id='4' class='tool fail'><b>Недоп</b></b>
                     <br><br>
-                    <span id="5" class="tool"><span>Н<sub>1ч.</sub></span></span>
-                    <span class="space"></span>
-                    <span id="6" class="tool"><span>Н<sub>2ч.</sub></span></span></b>
-                    <span class="space"></span>
-                    <span id="7" class="tool"><span>Н<sub>3ч.</sub></span></span></b>
-                    <span class="space"></span>
-                    <span id="8" class="tool"><span>Н<sub>4ч.</sub></span></span></b>
-                    <span class="space"></span>
-                    <span id="9" class="tool"><span>Н<sub>5ч.</sub></span></span></b>
-                    <span class="space"></span>
-                    <span id="10" class="tool"><span>Н<sub>6ч.</sub></span></span></b>
+                    <span id='5' class='tool'><span>Н<sub>1ч.</sub></span></span>
+                    <span class='space'></span>
+                    <span id='6' class='tool'><span>Н<sub>2ч.</sub></span></span></b>
+                    <span class='space'></span>
+                    <span id='7' class='tool'><span>Н<sub>3ч.</sub></span></span></b>
+                    <span class='space'></span>
+                    <span id='8' class='tool'><span>Н<sub>4ч.</sub></span></span></b>
+                    <span class='space'></span>
+                    <span id='9' class='tool'><span>Н<sub>5ч.</sub></span></span></b>
+                    <span class='space'></span>
+                    <span id='10' class='tool'><span>Н<sub>6ч.</sub></span></span></b>
 <!--                    <img class="info" src="img/information.jpg">-->
-
 
                 </div>
 
 
                 <br>
 
-                <input class='inp_cell' id="inp_0" type=text maxlength='6'
-                       onkeydown="return proverka(event,0);">
-                <input class='inp_cell' id="inp_1" type='text' maxlength='6'
-                       onkeydown="return proverka(event,1);">
-                <input class='inp_cell' id="inp_2" type='text' maxlength='6'
-                       onkeydown="return proverka(event,2);">
+                <input class='inp_cell' id='inp_0' type=text maxlength='6'
+                       onkeydown='return proverka(event,0);'>
+                <input class='inp_cell' id='inp_1' type='text' maxlength='6'
+                       onkeydown='return proverka(event,1);'>
+                <input class='inp_cell' id='inp_2' type='text' maxlength='6'
+                       onkeydown='return proverka(event,2);'>
 
                 <br>
                 <hr>
                 <br>
-                <button id="edit" class="button">Сохранить</button>
-                <button id="close" class="attention">Отмена</button>
+                <button id='edit' class='button'>Сохранить</button>
+                <button id='close' class='attention'>Отмена</button>
             </div>
         </fieldset>
     </form>

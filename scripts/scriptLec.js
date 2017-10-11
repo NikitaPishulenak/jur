@@ -40,7 +40,7 @@ document.addEventListener('keydown', function(e){
 }, false);
 
 $(function () {
-    $('b.tool').mousedown(function(event){
+    $('b.tool, span.tool').mousedown(function(event){
         event.stopPropagation();
         event.preventDefault();
         return false;
@@ -175,6 +175,11 @@ $(function () {
         id_Zapis=$(this).attr('data-zapis');
         edit_dialog.dialog("open");
         edit_form[0].reset();
+
+        //title формы= ФИО студента
+        var data_studentID=$(this).attr('data-idStudent');
+        var fio_stud=$('div.fio_student[data-idStudent="'+data_studentID+'"]').text();
+        edit_dialog.dialog({title: fio_stud});
         $("#inp_0").focus();
         cur_grade = $(this).text();
         elem = $(this);
@@ -189,7 +194,7 @@ $(function () {
             inp_id = $(this).attr('id');
 
             //При нажатии на кнопку с результатами текст выводится в поле ввода
-            $("b.tool").click(function () {
+            $("b.tool, span.tool").click(function () {
                 var text = $(this).text();
                 $("#"+inp_id).val(text);
             });

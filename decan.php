@@ -32,11 +32,11 @@
         <fieldset>
             <div class="panel">
                 <div id="panel">
-                    <b id="1" class="tool"><b>Н<sub>у</sub></b></b>
-                    <span class="space"></span>
-                    <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>
-                    <span class="space"></span>
-                    <b id="3" class="tool"><b>Н<sub>б.о.</sub></b></b>
+                    <b id='1' class='tool'><b>Н<sub>у</sub></b></b>
+                    <span class='space'></span>
+                    <b id='2' class='tool'><b>Н<sub>б.у</sub></b></b>
+                    <span class='space'></span>
+                    <b id='3' class='tool'><b>Н<sub>б.о.</sub></b></b>
                     <!--                <span class="space"></span>-->
                     <!--                <b id="6" class="tool fail"><b>Недоп</b></b>-->
                 </div>
