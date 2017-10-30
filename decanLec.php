@@ -13,7 +13,7 @@
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/scriptDecLec.js"></script>
-    <script src="backUP(для работы)/scripts/corporate.js"></script>
+    <script src="scripts/corporate.js"></script>
 
 </head>
 <body>

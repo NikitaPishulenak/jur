@@ -13,7 +13,7 @@
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/script.js"></script>
-    <script src="backUP(для работы)/scripts/corporate.js"></script>
+    <script src="scripts/corporate.js"></script>
 
 </head>
 <body>
@@ -91,15 +91,15 @@
                     <br><br>
                     <span id='5' class='tool'><span>Н<sub>1ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='6' class='tool'><span>Н<sub>2ч.</sub></span></span></b>
+                    <span id='6' class='tool'><span>Н<sub>2ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='7' class='tool'><span>Н<sub>3ч.</sub></span></span></b>
+                    <span id='7' class='tool'><span>Н<sub>3ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='8' class='tool'><span>Н<sub>4ч.</sub></span></span></b>
+                    <span id='8' class='tool'><span>Н<sub>4ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='9' class='tool'><span>Н<sub>5ч.</sub></span></span></b>
+                    <span id='9' class='tool'><span>Н<sub>5ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='10' class='tool'><span>Н<sub>6ч.</sub></span></span></b>
+                    <span id='10' class='tool'><span>Н<sub>6ч.</sub></span></span>
 <!--                    <img class="info" src="img/information.jpg">-->
 
                 </div>
@@ -179,7 +179,7 @@
         </div>
 
 
-        <div class="result_box">
+        <div class="result_box_statistic result_box">
             <div class='date_col hidden'></div>
             <div class="date_col">
                 <div class="date_title exam_theme" data-idLesson="1">01.09.2017</div>

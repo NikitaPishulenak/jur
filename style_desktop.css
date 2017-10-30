@@ -1,0 +1,98 @@
+@media only screen and (min-width: 781px)
+{
+    html{
+        font-size: 16px;
+    }
+    .button {
+        width: 115px;
+        margin-bottom: 40px;
+    }
+
+    .attention {
+        width: 85px;
+        margin-bottom: 40px;
+        margin-left: 20px;
+    }
+
+    .date_title{
+        width: 80px;
+    }
+
+    .info_title{
+        width: 60px;
+    }
+
+    .inp_cell {
+        width: 60px;
+    }
+
+    .space {
+        margin: 0 10px 0 10px;
+    }
+
+    #create_lesson{
+        margin-bottom: 30px;
+    }
+
+    .datepicker {
+        width: 100px;
+    }
+
+    .fio_student, .subject_student {
+        height: 30px;
+        width: 265px;
+    }
+
+    .result_box, .result_box_statistic {
+        left:280px;
+    }
+
+    .statistic {
+        left: calc(60% + 260px);
+        position: absolute;
+        border: none;
+    }
+
+    .result_box{
+        width: 80%;
+    }
+
+    .result_box_statistic{
+        width: 50%;
+    }
+
+    .date_col {
+        width: 80px;
+    }
+
+    .date_col_stat {
+        width: 60px;
+    }
+
+    .grade {
+        font-size: 0.83em;
+        width: 80px;
+        height: 30px;
+    }
+
+    .triangle-topright {
+        left: 70px;
+        border-bottom: 10px solid #000000;
+        border-left: 10px solid transparent;
+    }
+
+    .avg, .ans, .abs {
+        width: 80px;
+        height: 30px;
+    }
+
+    .average, .answer, .absenteeism {
+        width: 60px;
+        height: 30px;
+    }
+
+
+
+
+
+}

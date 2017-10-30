@@ -1,4 +1,18 @@
-﻿//Горизонтальная прокрутка при кручении колесом
+﻿//Календарь
+$(function () {
+    $.datepicker.regional['ru'] = {
+        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель',
+            'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
+            'Октябрь', 'Ноябрь', 'Декабрь'],
+        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+        maxDate: 0
+    };
+    $('.datepicker').datepicker({dateFormat: 'dd.mm.yy', firstDay: 1});
+    $.datepicker.setDefaults($.datepicker.regional['ru']);
+    $('.datepicker').mask("99.99.9999");
+});
+
+//Горизонтальная прокрутка при кручении колесом
 // Функция для добавления обработчика событий
 function addHandler(object, event, handler) {
     if (object.addEventListener) {
@@ -41,5 +55,41 @@ function wheel(event) {
         }
 
     }
+}
 
+// функция по отмене возможности "Зач.878787" т е запрет дописывать после вставленного значения
+$(function () {
+    $('input.inp_cell').mousedown(function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
+    });
+});
+
+$(function (event) {
+    if(event.keyCode==38 || event.keyCode==40){
+        return false;
+    }
+});
+
+
+//функция проверки введенных данных в поле оценка
+function proverka(event, id) {
+
+    if((event.keyCode==8) || (event.keyCode==27) ) {
+        return;
+    }
+    if(((event.keyCode>=48) && (event.keyCode<=57)) || ((event.keyCode>=96) && (event.keyCode<=105))){
+
+        $(function () {
+            var str_id='inp_'+id;
+            var el=document.getElementById(str_id);
+            if((el.value>10) || (el.value<1)){
+                el.value="";
+            }
+        });
+    }
+    else{
+        return false;
+    }
 }

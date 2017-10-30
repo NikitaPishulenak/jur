@@ -1,22 +1,4 @@
-﻿function proverka(event, id) {
-
-    $(function () {
-        el=$("#inp_"+id).val();
-        if((el>10) ||(el<1)){
-            $("#inp_"+id).val("");
-        }
-    });
-
-    if((event.keyCode==8) || (event.keyCode==27) ) {
-        return;
-    }
-
-    if (!isNaN(parseInt(event.key))) return;
-    return false;
-}
-
-
-$(function () {
+﻿$(function () {
     $("input.inp_cell").focus(function () {
         id_input=$(this).attr('id');
     });
@@ -34,7 +16,13 @@ document.addEventListener('keydown', function(e){
     }
 
     if(e.keyCode==13){
-        $("#edit").click();
+        if($("#edit").prop("disabled"))
+        {
+            return false;
+        }
+        else{
+            $("#edit").click();
+        }
     }
 
 
@@ -67,7 +55,7 @@ $(function () {
         $("div .answer:last").append("<div class='ans' data-idStudent='"+data_idS+"'></div>");
     }
 
-    $("div.date_col_stat:last").after("<div class='date_col_stat'><div class='title'>Н(уваж.)</div><div class='absenteeism'></div></div>");
+    $("div.date_col_stat:last").after("<div class='date_col_stat'><div class='title'>Н(ув.)</div><div class='absenteeism'></div></div>");
     for(var i=0; i<count; i++){
         data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
         $("div .absenteeism:last").append("<div class='abs' data-idStudent='"+data_idS+"'></div>");
@@ -154,18 +142,6 @@ $(function () {
         }
     }
     $("div#avg_avrige").html(Math.round(100*(avg_sum/avg_count))/100);
-});
-
-$(function () {
-    $.datepicker.regional['ru'] = {
-        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель',
-            'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
-            'Октябрь', 'Ноябрь', 'Декабрь'],
-        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
-    };
-    $('.datepicker').datepicker({dateFormat: 'dd.mm.yy', firstDay: 1});
-    $.datepicker.setDefaults($.datepicker.regional['ru']);
-    $('.datepicker').mask("99.99.9999");
 });
 
 $(function () {
@@ -306,6 +282,7 @@ $(function () {
                     $("b.tool").click(function () {
                         var text = $(this).text();
                         $("#"+inp_id).val(text);
+                        $("#"+inp_id).blur();
                     });
                 });
                 var countOpenCell = 0, enabled=false;
@@ -370,7 +347,7 @@ $(function () {
                 },
                 success:function (st) {
                     if (st=="Access is denied!"){
-                        alert("Доступ запрещен!");
+                        alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
                     }
                     else if (st=="No access rights!"){
                         alert("Не достаточно прав!");

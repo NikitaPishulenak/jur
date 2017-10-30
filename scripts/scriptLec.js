@@ -1,21 +1,4 @@
-﻿function proverka(event, id) {
-
-    $(function () {
-        el=$("#inp_"+id).val();
-        if((el>10) ||(el<1)){
-            $("#inp_"+id).val("");
-        }
-    });
-
-    if((event.keyCode==8) || (event.keyCode==27) ) {
-        return;
-    }
-
-    if (!isNaN(parseInt(event.key))) return;
-    return false;
-}
-
-$(function () {
+﻿$(function () {
     $("input.inp_cell").focus(function () {
         id_input=$(this).attr('id');
     });
@@ -33,7 +16,13 @@ document.addEventListener('keydown', function(e){
     }
 
     if(e.keyCode==13){
-        $("#edit").click();
+        if($("#edit").prop("disabled"))
+        {
+            return false;
+        }
+        else{
+            $("#edit").click();
+        }
     }
 
 
@@ -45,18 +34,6 @@ $(function () {
         event.preventDefault();
         return false;
     });
-});
-
-$(function () {
-    $.datepicker.regional['ru'] = {
-        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель',
-            'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь',
-            'Октябрь', 'Ноябрь', 'Декабрь'],
-        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб']
-    };
-    $('.datepicker').datepicker({dateFormat: 'dd.mm.yy', firstDay: 1});
-    $.datepicker.setDefaults($.datepicker.regional['ru']);
-    $('.datepicker').mask("99.99.9999");
 });
 
 $(function () {
@@ -108,7 +85,7 @@ $(function () {
                             alert("Колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
                         }
                         else if (st=="Access is denied!"){
-                            alert("Доступ запрещен!");
+                            alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
                         }
                         else if (st=="No access rights!"){
                             alert("Не достаточно прав!");
@@ -197,6 +174,7 @@ $(function () {
             $("b.tool, span.tool").click(function () {
                 var text = $(this).text();
                 $("#"+inp_id).val(text);
+                $("#"+inp_id).blur();
             });
         });
         var absenteeisms = /\w/;
@@ -234,13 +212,13 @@ $(function () {
                         myStudentZapis[id_Less+'Zapis'+student_id]=st;
                     }else{
                         if (st=="Access is denied!"){
-                            alert("��_�_�'�_п зап�_���%���_!");
+                            alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
                         }
                         else if (st=="No access rights!"){
-                            alert("�_�� �_�_�_�'а�'�_�+�_�_ п�_а�_!");
+                            alert("Не достаточно прав!");
                         }
                         else{
-                            alert("Ч�'�_-�'�_ п�_�_�>�_ �_�� �'ак! ");
+                            alert("Что-то пошло не так! ");
                         }
 
                     }
@@ -279,10 +257,10 @@ $(function () {
                     },
                     success:function (st) {
                         if (st=="Access is denied!"){
-                            alert("� �_�_�'�_п зап�_���%���_!");
+                            alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
                         }
                         else if (st=="No access rights!"){
-                            alert("�_�� �_�_�_�'а�'�_�+�_�_ п�_а�_!");
+                            alert("Не достаточно прав!");
                         }
                     },
                     error: function (x,t) {

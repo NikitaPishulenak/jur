@@ -13,7 +13,7 @@
     <script src="scripts/jquery-ui.js"></script>
     <script src="scripts/jquery.maskedinput.js"></script>
     <script src="scripts/scriptDec.js"></script>
-    <script src="backUP(для работы)/scripts/corporate.js"></script>
+    <script src="scripts/corporate.js"></script>
 
 </head>
 <body>
@@ -130,13 +130,13 @@
                 <div class="grade" data-idStudent="5" data-idRating="1">212022</div>
                 <div class="grade" data-idStudent="6" data-idRating="2">221223</div>
                 <div class="grade" data-idStudent="7" data-idRating="6">212521</div>
-                <div class="grade" data-idStudent="8" data-idRating="17"></div>
-                <div class="grade" data-idStudent="9" data-idRating="16">1511</div>
+                <div class="grade" data-idStudent="8" data-idRating="17">1819</div>
+                <div class="grade" data-idStudent="9" data-idRating="16"></div>
                 <div class="grade" data-idStudent="10" data-idRating="14"></div>
                 <div class="grade" data-idStudent="11" data-idRating="13"></div>
-                <div class="grade" data-idStudent="12" data-idRating="45">14</div>
+                <div class="grade" data-idStudent="12" data-idRating="45">1919</div>
                 <div class="grade" data-idStudent="13" data-idRating="3"></div>
-                <div class="grade" data-idStudent="14" data-idRating="4"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4">1919</div>
                 <div class="grade" data-idStudent="15" data-idRating="2">16</div>
                 <div class="grade" data-idStudent="16" data-idRating="7">20</div>
                 <div class="grade" data-idStudent="17" data-idRating="1"></div>
