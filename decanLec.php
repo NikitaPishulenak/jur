@@ -27,36 +27,34 @@
     </div>
 </div>
 
-<div id="form-edit" title="Редактирование отметки">
-    <form id="form-edit">
+<div id='form-edit' title='Редактирование отметки'>
+    <form id='form-edit'>
         <fieldset>
-            <div class="panel">
+            <div class='panel'>
 
-                <div id="panel">
-                    <b id="1" class="tool"><b>Н<sub>у</sub></b></b>
-                    <span class="space"></span>
-                    <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>
-                    <span class="space"></span>
-                    <b id="3" class="tool"><b>Н<sub>б.о.</sub></b></b>
-                    <!--                <span class="space"></span>-->
-                    <!--                <b id="6" class="tool fail"><b>Недоп</b></b>-->
+                <div id='panel'>
+                    <b id='1' class='tool' title='Пропуск занятия по уважительной причине.'><b>Н<sub>у</sub></b></b>
+                    <span class='space'></span>
+                    <b id='2' class='tool' title='Пропуск занятия без уважительной причины.'><b>Н<sub>б.у</sub></b></b>
+                    <span class='space'></span>
+                    <b id='3' class='tool' title='Пропуск занятия без отработки.'><b>Н<sub>б.о.</sub></b></b>
                 </div>
 
 
                 <br><br>
 
-                <input class='inp_cell' id="inp_0" type=text maxlength='6'
-                       onkeydown="return proverka(event,0);">
-                <input class='inp_cell' id="inp_1" type='text' maxlength='6'
-                       onkeydown="return proverka(event,1);">
-                <input class='inp_cell' id="inp_2" type='text' maxlength='6'
-                       onkeydown="return proverka(event,2);">
+                <input class='inp_cell' id='inp_0' type=text maxlength='6'
+                       onkeydown='return proverka(event,0);' onblur='return proverka(event,0);'>
+                <input class='inp_cell' id='inp_1' type='text' maxlength='6'
+                       onkeydown='return proverka(event,1);' onblur='return proverka(event,1);'>
+                <input class='inp_cell' id='inp_2' type='text' maxlength='6'
+                       onkeydown='return proverka(event,2);' onblur='return proverka(event,2);'>
 
                 <br>
                 <hr>
                 <br>
-                <button id="edit" class="button"><b>ОК</b></button>
-                <button id="close" class="attention"><b>Отмена</b></button>
+                <button id='edit' class='button'><b>ОК</b></button>
+                <button id='close' class='attention'><b>Отмена</b></button>
             </div>
         </fieldset>
     </form>
@@ -120,11 +118,11 @@
                 <div class="grade" data-idStudent="5" data-idRating="1">21</div>
                 <div class="grade" data-idStudent="6" data-idRating="2"></div>
                 <div class="grade" data-idStudent="7" data-idRating="6">21</div>
-                <div class="grade" data-idStudent="8" data-idRating="17"></div>
-                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="8" data-idRating="17">27</div>
+                <div class="grade" data-idStudent="9" data-idRating="16">34</div>
                 <div class="grade" data-idStudent="10" data-idRating="14"></div>
                 <div class="grade" data-idStudent="11" data-idRating="13"></div>
-                <div class="grade" data-idStudent="12" data-idRating="45"></div>
+                <div class="grade" data-idStudent="12" data-idRating="45">33</div>
                 <div class="grade" data-idStudent="13" data-idRating="3"></div>
                 <div class="grade" data-idStudent="14" data-idRating="4"></div>
                 <div class="grade" data-idStudent="15" data-idRating="2"></div>
@@ -134,7 +132,7 @@
                 <div class="grade" data-idStudent="19" data-idRating="6"></div>
                 <div class="grade" data-idStudent="20" data-idRating="17"></div>
                 <div class="grade" data-idStudent="21" data-idRating="16">20</div>
-                <div class="grade" data-idStudent="22" data-idRating="14">21</div>
+                <div class="grade" data-idStudent="22" data-idRating="14">2132</div>
                 <div class="grade" data-idStudent="23" data-idRating="13"></div>
                 <div class="grade" data-idStudent="24" data-idRating="45"></div>
                 <div class="grade" data-idStudent="25" data-idRating="3"></div>
@@ -148,13 +146,13 @@
                 <div class="date_title" data-idLesson="1">20.09.2017</div>
                 <div class="grade" data-idStudent="1" data-idRating="3"></div>
                 <div class="grade" data-idStudent="2" data-idRating="4"></div>
-                <div class="grade" data-idStudent="3" data-idRating="2"></div>
+                <div class="grade" data-idStudent="3" data-idRating="2">27</div>
                 <div class="grade" data-idStudent="4" data-idRating="7"></div>
                 <div class="grade" data-idStudent="5" data-idRating="1"></div>
                 <div class="grade" data-idStudent="6" data-idRating="2"></div>
                 <div class="grade" data-idStudent="7" data-idRating="6">21</div>
                 <div class="grade" data-idStudent="8" data-idRating="17"></div>
-                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="9" data-idRating="16">30</div>
                 <div class="grade" data-idStudent="10" data-idRating="14">22</div>
                 <div class="grade" data-idStudent="11" data-idRating="13"></div>
                 <div class="grade" data-idStudent="12" data-idRating="45"></div>
@@ -167,8 +165,8 @@
                 <div class="grade" data-idStudent="19" data-idRating="6"></div>
                 <div class="grade" data-idStudent="20" data-idRating="17">23</div>
                 <div class="grade" data-idStudent="21" data-idRating="16"></div>
-                <div class="grade" data-idStudent="22" data-idRating="14"></div>
-                <div class="grade" data-idStudent="23" data-idRating="13"></div>
+                <div class="grade" data-idStudent="22" data-idRating="14">21</div>
+                <div class="grade" data-idStudent="23" data-idRating="13">27</div>
                 <div class="grade" data-idStudent="24" data-idRating="45"></div>
                 <div class="grade" data-idStudent="25" data-idRating="3"></div>
                 <div class="grade" data-idStudent="26" data-idRating="4"></div>
@@ -187,7 +185,7 @@
                 <div class="grade" data-idStudent="6" data-idRating="2"></div>
                 <div class="grade" data-idStudent="7" data-idRating="6"></div>
                 <div class="grade" data-idStudent="8" data-idRating="17"></div>
-                <div class="grade" data-idStudent="9" data-idRating="16"></div>
+                <div class="grade" data-idStudent="9" data-idRating="16">27</div>
                 <div class="grade" data-idStudent="10" data-idRating="14"></div>
                 <div class="grade" data-idStudent="11" data-idRating="13"></div>
                 <div class="grade" data-idStudent="12" data-idRating="45"></div>
@@ -199,7 +197,7 @@
                 <div class="grade" data-idStudent="18" data-idRating="2"></div>
                 <div class="grade" data-idStudent="19" data-idRating="6"></div>
                 <div class="grade" data-idStudent="20" data-idRating="17"></div>
-                <div class="grade" data-idStudent="21" data-idRating="16"></div>
+                <div class="grade" data-idStudent="21" data-idRating="16">27</div>
                 <div class="grade" data-idStudent="22" data-idRating="14"></div>
                 <div class="grade" data-idStudent="23" data-idRating="13"></div>
                 <div class="grade" data-idStudent="24" data-idRating="45"></div>

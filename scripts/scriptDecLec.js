@@ -1,4 +1,7 @@
-﻿$(function () {
+﻿absenteeisms = new Array("Н", "Н1ч.", "Н2ч.", "Н3ч.", "Н4ч.", "Н5ч.", "Н6ч.");
+absenteeisms_with_cause = new Array("Ну", "Нб.у", "Нб.о.");
+
+$(function () {
     $("input.inp_cell").focus(function () {
         id_input=$(this).attr('id');
     });
@@ -28,13 +31,20 @@ document.addEventListener('keydown', function(e){
 
 }, false);
 
+//Функция выделения серым цветом поля, где есть Н без причины
 $(function () {
     $("div.grade").each(function () {
         if($(this).text()!=""){
             $(this).text(Decrypt($(this).text()));
         }
-        if($(this).text()=="Н"){
-            $(this).addClass("undef");
+        var c_res=$(this).text().split("/");
+        for (var i=0; i<c_res.length; i++) {
+            if(absenteeisms.indexOf(c_res[i])!=-1){
+                $(this).addClass("undef");
+            }
+        }
+        if($(this).text()=="Отр."){
+            $(this).addClass("absenteeism_closed_cell");
         }
     });
 });
@@ -59,7 +69,7 @@ $(function () {
         $('div.grade[data-idStudent="'+elem+'"]').each(function () {
             var gr=$(this).text().split("/");
             for(i=0; i<gr.length;i++){
-                if(gr[i]=="Н" || gr[i]=="Ну"|| gr[i]=="Нб.у"|| gr[i]=="Нб.о."){
+                if((absenteeisms.indexOf(gr[i])!=-1) || (absenteeisms_with_cause.indexOf(gr[i])!=-1) ){
                     countAbsenteesm++;
                     if(gr[i]=="Ну"){
                         countAbsRespect++;
@@ -177,71 +187,77 @@ $(function () {
         elem = $(this);
 
         if(elem.text()!=""){
-            if((elem.text().indexOf('Ну')!=-1)||(elem.text().indexOf('Нб.у')!=-1)||(elem.text().indexOf('Нб.о.')!=-1) || (elem.text().indexOf('Н')!=-1)){
-                dat=$(this).parent().find('div.date_title').html();//Дата столбца
-                student_id=$(this).attr('data-idStudent');
-                id_Less=$(this).attr('data-idLes');
-                PKE=$(this).attr('data-PKE');
-                id_Zapis=$(this).attr('data-zapis');
+            var c_res=elem.text().split("/");
+            for(var i=0; i<c_res.length; i++){
+                if((absenteeisms.indexOf(c_res[i])!=-1) || (absenteeisms_with_cause.indexOf(c_res[i])!=-1) ){
+                    dat=$(this).parent().find('div.date_title').html();//Дата столбца
+                    student_id=$(this).attr('data-idStudent');
+                    id_Less=$(this).attr('data-idLes');
+                    PKE=$(this).attr('data-PKE');
+                    id_Zapis=$(this).attr('data-zapis');
 
-                edit_dialog.dialog("open");
-                edit_form[0].reset();
+                    edit_dialog.dialog("open");
+                    edit_form[0].reset();
 
-                //title формы= ФИО студента
-                var data_studentID=$(this).attr('data-idStudent');
-                var fio_stud=$('div.fio_student[data-idStudent="'+data_studentID+'"]').text();
-                edit_dialog.dialog({title: fio_stud});
+                    //title формы= ФИО студента
+                    var data_studentID=$(this).attr('data-idStudent');
+                    var fio_stud=$('div.fio_student[data-idStudent="'+data_studentID+'"]').text();
+                    edit_dialog.dialog({title: fio_stud});
 
-                $("#inp_0").focus().blur();
-                $('#inp_2').slideUp(1);
-                --countCell;
-                $('#inp_1').slideUp(1);
-                --countCell;
-                cur_grade = $(this).text();
+                    $("#inp_0").focus().blur();
+                    $('#inp_2').slideUp(1);
+                    --countCell;
+                    $('#inp_1').slideUp(1);
+                    --countCell;
+                    cur_grade = $(this).text();
 
-                grades = cur_grade.split("/");
-                for (var i = 0; i < grades.length; i++) {
-                    $("div.panel").find('input#inp_' + i).slideDown(1);
-                    $("div.panel").find('input#inp_' + i).val(grades[i]);
-                }
-                inp_id=-1;
-                // $('input#inp_0').focus();
-                // $('input#inp_0').select();
-                $(".inp_cell:text").focus(function () {
-                    inp_id = $(this).attr('id');
+                    grades = cur_grade.split("/");
+                    for (var i = 0; i < grades.length; i++) {
+                        $("div.panel").find('input#inp_' + i).slideDown(1);
+                        $("div.panel").find('input#inp_' + i).val(grades[i]);
+                    }
+                    inp_id=-1;
+                    // $('input#inp_0').focus();
+                    // $('input#inp_0').select();
+                    $(".inp_cell:text").focus(function () {
+                        inp_id = $(this).attr('id');
 
-                    //При нажатии на кнопку с результатами текст выводится в поле ввода
-                    $("b.tool").click(function () {
-                        var text = $(this).text();
-                        $("#"+inp_id).val(text);
-                        $("#"+inp_id).blur();
+                        //При нажатии на кнопку с результатами текст выводится в поле ввода
+                        $("b.tool").click(function () {
+                            var text = $(this).text();
+                            $("#"+inp_id).val(text);
+                            $("#"+inp_id).blur();
+                        });
                     });
-                });
-                var countOpenCell = 0, enabled=false;
-                for (j = 0; j < 3; j++) {
-                    $("#inp_" + j).removeAttr('disabled');
-                    if ($("#inp_" + j).val() != "") {
-                        countOpenCell++;
-                        if(($("#inp_" + j).val()!='Ну')&&($("#inp_" + j).val()!='Нб.у') && ($("#inp_" + j).val()!='Нб.о.') && ($("#inp_" + j).val()!='Н')){
-                            $("#inp_" + j).attr('disabled', 'disabled');
-                            // $("#inp_" + j).hide(1);
-                        }
-                        else if (!enabled){
-                            $("#inp_" + j).focus();
-                            enabled=true;
+                    var countOpenCell = 0, enabled=false;
+                    for (j = 0; j < 3; j++) {
+                        $("#inp_" + j).removeAttr('disabled');
+                        if ($("#inp_" + j).val() != "") {
+                            countOpenCell++;
+                            if((absenteeisms.indexOf($("#inp_" + j).val())==-1) && (absenteeisms_with_cause.indexOf($("#inp_" + j).val())==-1)){
+                                // if(($("#inp_" + j).val()!='Ну')&&($("#inp_" + j).val()!='Нб.у') && ($("#inp_" + j).val()!='Нб.о.')){//условие на случай изменения только причинных отсутствий
+
+                                $("#inp_" + j).attr('disabled', 'disabled');
+                            }
+                            else if (!enabled){
+                                $("#inp_" + j).focus();
+                                enabled=true;
+                            }
                         }
                     }
+
+                    var absenteeism = /\w/;
+                    $(".inp_cell:text").keydown(function (event) {
+                        if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
+                            if (!absenteeism.test(this.value)) {
+                                $(this).val("")
+                            }
+                        }
+                    });
                 }
 
-                var absenteeisms = /\w/;
-                $(".inp_cell:text").keydown(function (event) {
-                    if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
-                        if (!absenteeisms.test(this.value)) {
-                            $(this).val("")
-                        }
-                    }
-                });
             }
+
 
 
         }
@@ -350,87 +366,6 @@ $(document).ready(function () {
 
 });
 
-function Encrypt(value) {
-    var res = "";
-    var grade = value.split("/");
-    for (i = 0; i < grade.length; i++) {
-        res += MatchEncrypt(grade[i]);
-    }
-    return res;
-}
-function Decrypt(value) {
-    var res = "";
-    var mas = value.match(/.{2}/g);
-    for (i = 0; i < mas.length; i++) {
-        mas[i] = MatchDecrypt(mas[i]);
-    }
-    res = mas.join('/');
-    // alert(res);
-    return res;
-}
-function MatchEncrypt(val) {
-
-    if (val>=1 && val<=10){
-        return Number(val)+9;
-    }
-    else{
-        switch (val) {
-            case 'Ну':
-                return '20';
-                break;
-            case 'Нб.у':
-                return '21';
-                break;
-            case 'Нб.о.':
-                return '22';
-                break;
-            case 'Зач.':
-                return '23';
-                break;
-            case 'Незач.':
-                return '24';
-                break;
-            case 'Недоп':
-                return '25';
-                break;
-            case 'Н':
-                return '26';
-                break;
-        }
-    }
-
-}
-function MatchDecrypt(val) {
-    if(val>=10 && val<20){
-        return Number(val)-9;
-    }
-    else{
-        switch (val) {
-            case '20':
-                return 'Ну';
-                break;
-            case '21':
-                return 'Нб.у';
-                break;
-            case '22':
-                return 'Нб.о.';
-                break;
-            case '23':
-                return 'Зач.';
-                break;
-            case '24':
-                return 'Незач.';
-                break;
-            case '25':
-                return 'Недоп';
-                break;
-            case '26':
-                return 'Н';
-                break;
-        }
-    }
-
-}
 
 //Функция отображения PopUp
 function PopUpShow(){

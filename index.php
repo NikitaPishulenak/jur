@@ -45,62 +45,59 @@
 <!--    </form>-->
 <!--</div>-->
 
-<div id="form-lesson" title="Создание занятия">
+<div id='form-lesson' title='Создание занятия'>
     <form>
         <fieldset>
-            <div class="box">
-                <b align="center">Дата занятия</b>
-                <div id="date_col">
-                    <input type="text" id="lesson-date" required class="datepicker" value="<?php echo date('d.m.Y') ?>">
+            <div class='box'>
+                <b align='center'>Дата занятия</b>
+                <div id='date_col'>
+                    <input type='text' id='lesson-date' required class='datepicker' value='<?php echo date('d.m.Y') ?>'>
                 </div>
                 <br>
-                <label><input type="radio" class="type_lesson" id="simple_lesson_rb" name="type_lesson" value="sl" checked><b class="type_lesson">Обычное занятие</b></label>
+                <label><input type='radio' class='type_lesson' id='simple_lesson_rb' name='type_lesson' value='sl' checked><b class='type_lesson'>Обычное занятие</b></label>
                 <br><br>
-                <label><input type="radio" class="type_lesson" id="colloquium_rb" name="type_lesson" value="col"><b class="type_lesson">Коллоквиум</b></label>
+                <label><input type='radio' class='type_lesson' id='colloquium_rb' name='type_lesson' value='col'><b class='type_lesson'>Коллоквиум</b></label>
                 <br><br>
-                <label><input type="radio" class="type_lesson" id="exam_rb" name="type_lesson" value="exam"><b class="type_lesson">Аттестация</b></label>
+                <label><input type='radio' class='type_lesson' id='exam_rb' name='type_lesson' value='exam'><b class='type_lesson'>Аттестация</b></label>
                 <br><br>
             </div>
         </fieldset>
     </form>
 </div>
 
-<div id="form-edit" title="Редактирование отметки ">
-    <form id="form-edit">
+<div id='form-edit' title='Редактирование отметки '>
+    <form id='form-edit'>
         <fieldset>
-            <div class="panel">
-                <div id="panel">
-                <button id="add_grade_input" class="add_grade"
-                        title="Для добавления дополнительной оценки нажмите на кнопку!">+
+            <div class='panel'>
+                <div id='panel'>
+                <button id='add_grade_input' class='add_grade'
+                        title='Для добавления дополнительной оценки нажмите на кнопку!'>+
                 </button>
 
                     <span class='space'></span>
-                    <b id='1' class='tool'><b>Н</b></b>
+                    <b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b>
                     <span class='space'></span>
-<!--                    <b id="1" class="tool"><b>Н<sub>у</sub></b></b>-->
-<!--                    <span class="space"></span>-->
-<!--                    <b id="2" class="tool"><b>Н<sub>б.у</sub></b></b>-->
-<!--                    <span class="space"></span>-->
-<!--                    <b id="3" class="tool"><b>Н<sub>б.о.</sub></b></b>-->
-<!--                    <span class="space"></span>-->
-                    <b id='2' class='tool'><b>Зач.</b></b>
+                    <b id='2' class='tool' title='Зачтено.'><b>Зач.</b></b>
                     <span class='space'></span>
-                    <b id='3' class='tool'><b>Незач.</b></b>
+                    <b id='3' class='tool' title='Не зачтено.'><b>Незач.</b></b>
                     <span class='space'></span>
-                    <b id='4' class='tool fail'><b>Недоп</b></b>
+                    <b id='4' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b>
+                    <span class='space'></span>
+                    <b id='11' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b>
+
                     <br><br>
-                    <span id='5' class='tool'><span>Н<sub>1ч.</sub></span></span>
+
+                    <span id='5' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='6' class='tool'><span>Н<sub>2ч.</sub></span></span>
+                    <span id='6' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='7' class='tool'><span>Н<sub>3ч.</sub></span></span>
+                    <span id='7' class='tool' title='Пропуск занятия на 3 часа.'> <span>Н<sub>3ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='8' class='tool'><span>Н<sub>4ч.</sub></span></span>
+                    <span id='8' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='9' class='tool'><span>Н<sub>5ч.</sub></span></span>
+                    <span id='9' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='10' class='tool'><span>Н<sub>6ч.</sub></span></span>
-<!--                    <img class="info" src="img/information.jpg">-->
+                    <span id='10' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span>
 
                 </div>
 
@@ -108,11 +105,11 @@
                 <br>
 
                 <input class='inp_cell' id='inp_0' type=text maxlength='6'
-                       onkeydown='return proverka(event,0);'>
+                       onkeydown='return proverka(event,0);' onblur='return proverka(event,0);'>
                 <input class='inp_cell' id='inp_1' type='text' maxlength='6'
-                       onkeydown='return proverka(event,1);'>
+                       onkeydown='return proverka(event,1);' onblur='return proverka(event,1);'>
                 <input class='inp_cell' id='inp_2' type='text' maxlength='6'
-                       onkeydown='return proverka(event,2);'>
+                       onkeydown='return proverka(event,2);' onblur='return proverka(event,2);'>
 
                 <br>
                 <hr>
@@ -186,7 +183,7 @@
                 <div class="grade exam_theme" data-idStudent="1" data-idRating="3" data-zapis="1">111213</div>
                 <div class="grade exam_theme" data-idStudent="2" data-idRating="4" data-zapis="2">122215</div>
                 <div class="grade exam_theme" data-idStudent="3" data-idRating="2" data-zapis="3">30</div>
-                <div class="grade exam_theme" data-idStudent="4" data-idRating="7" data-zapis="4">11</div>
+                <div class="grade exam_theme" data-idStudent="4" data-idRating="7" data-zapis="4">1127</div>
                 <div class="grade exam_theme" data-idStudent="5" data-idRating="1" data-zapis="5">1219</div>
                 <div class="grade exam_theme" data-idStudent="6" data-idRating="2" data-zapis="6">2</div>
                 <div class="grade exam_theme" data-idStudent="7" data-idRating="6" data-zapis="7">10</div>
@@ -200,13 +197,13 @@
                 <div class="grade exam_theme" data-idStudent="15" data-idRating="2" data-zapis="15">32</div>
                 <div class="grade exam_theme" data-idStudent="16" data-idRating="7" data-zapis="16">9</div>
                 <div class="grade exam_theme" data-idStudent="17" data-idRating="1" data-zapis="17">4</div>
-                <div class="grade exam_theme" data-idStudent="18" data-idRating="2" data-zapis="18">2</div>
+                <div class="grade exam_theme" data-idStudent="18" data-idRating="2" data-zapis="18">227</div>
                 <div class="grade exam_theme" data-idStudent="19" data-idRating="6" data-zapis="19">10</div>
                 <div class="grade exam_theme" data-idStudent="20" data-idRating="17" data-zapis="20">Нб.отр.</div>
                 <div class="grade exam_theme" data-idStudent="21" data-idRating="16" data-zapis="21"></div>
                 <div class="grade exam_theme" data-idStudent="22" data-idRating="14" data-zapis="22">5</div>
                 <div class="grade exam_theme" data-idStudent="23" data-idRating="13" data-zapis="23">33</div>
-                <div class="grade exam_theme" data-idStudent="24" data-idRating="45" data-zapis="24"></div>
+                <div class="grade exam_theme" data-idStudent="24" data-idRating="45" data-zapis="24">27</div>
                 <div class="grade exam_theme" data-idStudent="25" data-idRating="3" data-zapis="25">5</div>
                 <div class="grade exam_theme" data-idStudent="26" data-idRating="4" data-zapis="26"></div>
                 <div class="grade exam_theme" data-idStudent="27" data-idRating="2" data-zapis="27">34</div>
@@ -221,14 +218,14 @@
                 <div class="grade colloquium_theme" data-idStudent="3" data-idRating="2">26</div>
                 <div class="grade colloquium_theme" data-idStudent="4" data-idRating="7">3</div>
                 <div class="grade colloquium_theme" data-idStudent="5" data-idRating="1">9</div>
-                <div class="grade colloquium_theme" data-idStudent="6" data-idRating="2">35</div>
-                <div class="grade colloquium_theme" data-idStudent="7" data-idRating="6">1</div>
+                <div class="grade colloquium_theme" data-idStudent="6" data-idRating="2">27</div>
+                <div class="grade colloquium_theme" data-idStudent="7" data-idRating="6">27</div>
                 <div class="grade colloquium_theme" data-idStudent="8" data-idRating="17">Нб.отр.</div>
                 <div class="grade colloquium_theme" data-idStudent="9" data-idRating="16">36</div>
                 <div class="grade colloquium_theme" data-idStudent="10" data-idRating="14"></div>
                 <div class="grade colloquium_theme" data-idStudent="11" data-idRating="13"></div>
                 <div class="grade colloquium_theme" data-idStudent="12" data-idRating="45"></div>
-                <div class="grade colloquium_theme" data-idStudent="13" data-idRating="3"></div>
+                <div class="grade colloquium_theme" data-idStudent="13" data-idRating="3">27</div>
                 <div class="grade colloquium_theme" data-idStudent="14" data-idRating="4"></div>
                 <div class="grade colloquium_theme" data-idStudent="15" data-idRating="2">26</div>
                 <div class="grade colloquium_theme" data-idStudent="16" data-idRating="7">3</div>
@@ -258,12 +255,12 @@
                 <div class="grade" data-idStudent="6" data-idRating="2"></div>
                 <div class="grade" data-idStudent="7" data-idRating="6"></div>
                 <div class="grade" data-idStudent="8" data-idRating="17">Нб.отр.</div>
-                <div class="grade" data-idStudent="9" data-idRating="16">9</div>
+                <div class="grade" data-idStudent="9" data-idRating="16">27</div>
                 <div class="grade" data-idStudent="10" data-idRating="14"></div>
                 <div class="grade" data-idStudent="11" data-idRating="13"></div>
-                <div class="grade" data-idStudent="12" data-idRating="45">8</div>
+                <div class="grade" data-idStudent="12" data-idRating="45">27</div>
                 <div class="grade" data-idStudent="13" data-idRating="3"></div>
-                <div class="grade" data-idStudent="14" data-idRating="4"></div>
+                <div class="grade" data-idStudent="14" data-idRating="4">27</div>
                 <div class="grade" data-idStudent="15" data-idRating="2">2</div>
                 <div class="grade" data-idStudent="16" data-idRating="7"></div>
                 <div class="grade" data-idStudent="17" data-idRating="1">7</div>

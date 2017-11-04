@@ -75,8 +75,12 @@ input .edit_grade {
     text-align: center;
 }
 
-.date_title, .tool, .type_lesson, .add_grade{
+.date_title, .tool, .type_lesson, .add_grade,.pointer{
     cursor: pointer;
+}
+
+.simple_cursor{
+    cursor: default;
 }
 
 .tool:hover{
@@ -90,6 +94,15 @@ input .edit_grade {
 .fail{
     color: #ff0000;
     font-weight: bolder;
+}
+
+.absenteeism_closed{
+    color: #17ad0f;
+    font-weight: bolder;
+}
+
+.absenteeism_closed_cell{
+    background-color: #BCF5A9;
 }
 
 .fail_grade{

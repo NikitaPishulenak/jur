@@ -29,17 +29,18 @@ document.addEventListener('keydown', function(e){
 
 }, false);
 
-
-
-
-
+//Функция дешифрирования оценок
 $(function () {
     $("div.grade").each(function () {
         if($(this).text()!=""){
             $(this).text(Decrypt($(this).text()));
         }
+        if($(this).text()=="Отр."){
+            $(this).addClass("absenteeism_closed_cell");
+        }
     });
 });
+
 
 $(function () {
     $("div.average").each(function () {
@@ -153,8 +154,10 @@ $(function () {
     // }
 
     function addLesson() {
-        if ($("#lesson-date").val() == "")
-            alert("Для сохранения необходимо заполнить поле 'Дата'");
+        checkDate();
+        if ($("#lesson-date").val() == ""){
+            //alert("Для сохранения необходимо заполнить поле 'Дата'");
+        }
         else {
             var dateLesson = $("#lesson-date").val();
             var cnt = $("div.container-list").find("div.fio_student").length;
@@ -438,115 +441,42 @@ $(function () {
         var bit1 = $("#inp_0").val();
         var bit2 = $("#inp_1").val();
         var bit3 = $("#inp_2").val();
-        bit1 = (bit1 == "") ? "" : bit1;
-        bit2 = (bit2 == "") ? "" : "/" + bit2;
-        bit3 = (bit3 == "") ? "" : "/" + bit3;
-        var cur_res = bit1 + bit2 + bit3;
-        coding = Encrypt(cur_res);
-        elem.text(cur_res);
-        if((cur_grade=="") && (cur_res!="")){
-            $.ajax({
-                type:'get',
-                url:'p.php',//url адрес файла обработчика
-                data:{
-                    'dateLes': dat,
-                    'idLessons': $("input#idSubject").val(),
-                    'idStudent': student_id,
-                    'PL': $("input#idPL").val(),
-                    'PKE': PKE,
-                    'idPrepod': $("input#idPrepod").val(),
-                    'idLess': id_Less,
-                    'menuactiv': "addLessonStudent",
-                    'grades': coding
-                },
-                success:function (st) {
-                    if ((st!="Access is denied!")&&(st!="No access rights!")){
-                        myStudentZapis[id_Less+'Zapis'+student_id]=st;
-                    }else{
-                        if (st=="Access is denied!"){
-                            alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
-                        }
-                        else if (st=="No access rights!"){
-                            alert("Не достаточно прав!");
-                        }
-                        else{
-                            alert("Что-то пошло не так! ");
-                        }
-
-                    }
-                },
-                error: function (x,t) {
-                    if( t === 'timeout') {
-                        alert("Не удалось получить ответ от сервера");
-                        edit_dialog.dialog("close");
-                        window.location.reload();
-
-                    } else {
-                        alert("Произошла ошибка при передаче данных");
-                    }
-                },
-                timeout:30000
-            });
-        }
-        //удаление оценки
-        // else if((cur_grade!="") && (cur_res=="")){
-        //     $.ajax({
-        //         type:'get',
-        //         url:'p.php',//url адрес файла обработчика
-        //         data:{
-        //             'dateLes': dat,
-        //             'idLessons': $("input#idSubject").val(),
-        //             'idStudent': student_id,
-        //             'PL': $("input#idPL").val(),
-        //             'PKE': PKE,
-        //             'idPrepod': $("input#idPrepod").val(),
-        //             'idLess': id_Less,
-        //             'menuactiv': "deleteLessonStudent",
-        //             'grades': coding
-        //         },
-        //         success:function (st) {
-        //             if ((st!="Access is denied!")&&(st!="No access rights!")){
-        //                 myStudentZapis[id_Less+'Zapis'+student_id]=st;
-        //             }else{
-        //                 if (st=="Access is denied!"){
-        //                     alert("��_�_�'�_п зап�_���%���_!");
-        //                 }
-        //                 else if (st=="No access rights!"){
-        //                     alert("�_�� �_�_�_�'а�'�_�+�_�_ п�_а�_!");
-        //                 }
-        //                 else{
-        //                     alert("Ч�'�_-�'�_ п�_�_�>�_ �_�� �'ак! ");
-        //                 }
-        //
-        //             }
-        //         },
-        //         error: function () {
-        //             alert("Произошла ошибка при передаче данных");
-        //         }
-        //     });
-        // }
-        else{
-            if(id_Zapis == 0 && myStudentZapis[id_Less+'Zapis'+student_id]==0){
-                alert("�_�_�_из�_�_�>а �_�_и�+ка п�_и п���_���_а�+�� �_а�_�_�<�:");
-            }else{
-                if(id_Zapis == 0) id_Zapis = myStudentZapis[id_Less+'Zapis'+student_id];
+        if (bit1!=""){
+            bit1 = (bit1 == "") ? "" : bit1;
+            bit2 = (bit2 == "") ? "" : "/" + bit2;
+            bit3 = (bit3 == "") ? "" : "/" + bit3;
+            var cur_res = bit1 + bit2 + bit3;
+            coding = Encrypt(cur_res);
+            elem.text(cur_res);
+            if((cur_grade=="") && (cur_res!="")){
                 $.ajax({
                     type:'get',
-                    url:'p.php',
+                    url:'p.php',//url адрес файла обработчика
                     data:{
-                        'id_Zapis': id_Zapis,
                         'dateLes': dat,
+                        'idLessons': $("input#idSubject").val(),
                         'idStudent': student_id,
+                        'PL': $("input#idPL").val(),
+                        'PKE': PKE,
                         'idPrepod': $("input#idPrepod").val(),
-                        'menuactiv': "editLessonStudent",
+                        'idLess': id_Less,
+                        'menuactiv': "addLessonStudent",
                         'grades': coding
                     },
                     success:function (st) {
-                        if (st=="Access is denied!"){
-                            alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
-                        }
-                        else if (st=="No access rights!"){
-                            alert("Не достаточно прав!");
+                        if ((st!="Access is denied!")&&(st!="No access rights!")){
+                            myStudentZapis[id_Less+'Zapis'+student_id]=st;
+                        }else{
+                            if (st=="Access is denied!"){
+                                alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
+                            }
+                            else if (st=="No access rights!"){
+                                alert("Не достаточно прав!");
+                            }
+                            else{
+                                alert("Что-то пошло не так! ");
+                            }
+
                         }
                     },
                     error: function (x,t) {
@@ -555,19 +485,99 @@ $(function () {
                             edit_dialog.dialog("close");
                             window.location.reload();
 
-                        }
-                        else{
+                        } else {
                             alert("Произошла ошибка при передаче данных");
                         }
                     },
                     timeout:30000
                 });
             }
+            //удаление оценки
+            // else if((cur_grade!="") && (cur_res=="")){
+            //     $.ajax({
+            //         type:'get',
+            //         url:'p.php',//url адрес файла обработчика
+            //         data:{
+            //             'dateLes': dat,
+            //             'idLessons': $("input#idSubject").val(),
+            //             'idStudent': student_id,
+            //             'PL': $("input#idPL").val(),
+            //             'PKE': PKE,
+            //             'idPrepod': $("input#idPrepod").val(),
+            //             'idLess': id_Less,
+            //             'menuactiv': "deleteLessonStudent",
+            //             'grades': coding
+            //         },
+            //         success:function (st) {
+            //             if ((st!="Access is denied!")&&(st!="No access rights!")){
+            //                 myStudentZapis[id_Less+'Zapis'+student_id]=st;
+            //             }else{
+            //                 if (st=="Access is denied!"){
+            //                     alert("��_�_�'�_п зап�_���%���_!");
+            //                 }
+            //                 else if (st=="No access rights!"){
+            //                     alert("�_�� �_�_�_�'а�'�_�+�_�_ п�_а�_!");
+            //                 }
+            //                 else{
+            //                     alert("Ч�'�_-�'�_ п�_�_�>�_ �_�� �'ак! ");
+            //                 }
+            //
+            //             }
+            //         },
+            //         error: function () {
+            //             alert("Произошла ошибка при передаче данных");
+            //         }
+            //     });
+            // }
+            else{
+                if(id_Zapis == 0 && myStudentZapis[id_Less+'Zapis'+student_id]==0){
+                    alert("�_�_�_из�_�_�>а �_�_и�+ка п�_и п���_���_а�+�� �_а�_�_�<�:");
+                }else{
+                    if(id_Zapis == 0) id_Zapis = myStudentZapis[id_Less+'Zapis'+student_id];
+                    $.ajax({
+                        type:'get',
+                        url:'p.php',
+                        data:{
+                            'id_Zapis': id_Zapis,
+                            'dateLes': dat,
+                            'idStudent': student_id,
+                            'idPrepod': $("input#idPrepod").val(),
+                            'menuactiv': "editLessonStudent",
+                            'grades': coding
+                        },
+                        success:function (st) {
+                            if (st=="Access is denied!"){
+                                alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
+                            }
+                            else if (st=="No access rights!"){
+                                alert("Не достаточно прав!");
+                            }
+                        },
+                        error: function (x,t) {
+                            if( t === 'timeout') {
+                                alert("Не удалось получить ответ от сервера");
+                                edit_dialog.dialog("close");
+                                window.location.reload();
+
+                            }
+                            else{
+                                alert("Произошла ошибка при передаче данных");
+                            }
+                        },
+                        timeout:30000
+                    });
+                }
+            }
+            $("button#edit").attr('disabled', true);
+            $("button#close").attr('disabled', true);
+            edit_dialog.dialog("close");
+        }
+        else{
+            alert("Для сохранения необходимо ввести хоть одну оценку!");
         }
 
-        $("button#edit").attr('disabled', true);
-        $("button#close").attr('disabled', true);
-        edit_dialog.dialog("close");
+
+
     });
     $(".inp_cell:text").click(function () {
         $(this).select();
@@ -604,14 +614,14 @@ $(function () {
         id_Less=$(this).attr('data-idLes');
         PKE=$(this).attr('data-PKE');
         id_Zapis=$(this).attr('data-zapis');
-        edit_date_dialog.dialog("open");
-        edit_date_form[0].reset();
-        // alert("Date: "+ dat);
-        //console.log(dat);
-        $(".oldInfo").html("Дата до исправления: " +dat);
-        $("#lesson-date-change").datepicker("setDate", dat);
-        $("#lesson-date-change").text(dat);
-        $("#lesson-date-change").val(dat);
+        dialog.dialog("open");
+        form[0].reset();
+        $("#lesson-date").val(dat);
+
+               // $(".oldInfo").html("Дата до исправления: " +dat);
+        // $("#lesson-date-change").datepicker("setDate", dat);
+        // $("#lesson-date-change").text(dat);
+        // $("#lesson-date-change").val(dat);
 
 
         // $("input#lesson-date-change").datepicker({
@@ -702,184 +712,9 @@ $(document).ready(function () {
     dateLesson=$("div.date_title:last").val();
     idLesson="";
 
-    $("#lesson-date").change(function () {
-        if ($("#lesson-date").val().length == 10) {
-            var arrD = $("#lesson-date").val().split(".");
-            arrD[1] -= 1;
-            var d = new Date(arrD[2], arrD[1], arrD[0]);
-            if ((d.getFullYear() == arrD[2]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[0])) {
-                if ((arrD[2] > 2016) && (arrD[2]) < 2030) {
-                    return true;
-                }
-                else {
-                    alert("Проверьте правильность введенного значения года!");
-                    $("#lesson-date").val('');
-                    return false;
-                }
-            } else {
-                alert("Введена некорректная дата! " + $("#lesson-date").val());
-                $("#lesson-date").val('');
-                return false;
-            }
-        }
-        else {
-            alert("Дата должна быть введена в формате: дд.мм.гггг");
-            return false;
-        }
-    });
-
-    //Проверка на корректность даты после редактирования
-    $("#lesson-date-change").change(function () {
-            if ($("#lesson-date-change").val().length == 10) {
-                var arrD = $("#lesson-date-change").val().split(".");
-                arrD[1] -= 1;
-                var d = new Date(arrD[2], arrD[1], arrD[0]);
-                if ((d.getFullYear() == arrD[2]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[0])) {
-                    if ((arrD[2] > 2016) && (arrD[2]) < 2030) {
-                        return true;
-                    }
-                    else {
-                        alert("Проверьте правильность введенного значения года!");
-                        $("#lesson-date").val('');
-                        return false;
-                    }
-                } else {
-                    alert("Введена некорректная дата! " + $("#lesson-date-change").val());
-                    $("#lesson-date-change").val('');
-                    return false;
-                }
-            }
-            else {
-                alert("Дата должна быть введена в формате: дд.мм.гггг");
-                return false;
-            }
-
-    });
-
-
 
 });
-function Encrypt(value) {
-    var res = "";
-    var grade = value.split("/");
-    for (i = 0; i < grade.length; i++) {
-        res += MatchEncrypt(grade[i]);
-    }
-    return res;
-}
-function Decrypt(value) {
-    var res = "";
-    var mas = value.match(/.{2}/g);
-    for (i = 0; i < mas.length; i++) {
-        mas[i] = MatchDecrypt(mas[i]);
-    }
-    res = mas.join('/');
-    // alert(res);
-    return res;
-}
-function MatchEncrypt(val) {
 
-    if (val>=1 && val<=10){
-        return Number(val)+9;
-    }
-    else{
-        switch (val) {
-            case 'Ну':
-                return '20';
-                break;
-            case 'Нб.у':
-                return '21';
-                break;
-            case 'Нб.о.':
-                return '22';
-                break;
-            case 'Зач.':
-                return '23';
-                break;
-            case 'Незач.':
-                return '24';
-                break;
-            case 'Недоп':
-                return '25';
-                break;
-            case 'Н':
-                return '26';
-                break;
-
-            case 'Н1ч.':
-                return '31';
-                break;
-            case 'Н2ч.':
-                return '32';
-                break;
-            case 'Н3ч.':
-                return '33';
-                break;
-            case 'Н4ч.':
-                return '34';
-                break;
-            case 'Н5ч.':
-                return '35';
-                break;
-            case 'Н6ч.':
-                return '36';
-                break;
-
-        }
-    }
-
-}
-function MatchDecrypt(val) {
-    if(val>=10 && val<20){
-        return Number(val)-9;
-    }
-    else{
-        switch (val) {
-            case '20':
-                return 'Ну';
-                break;
-            case '21':
-                return 'Нб.у';
-                break;
-            case '22':
-                return 'Нб.о.';
-                break;
-            case '23':
-                return 'Зач.';
-                break;
-            case '24':
-                return 'Незач.';
-                break;
-            case '25':
-                return 'Недоп';
-                break;
-            case '26':
-                return 'Н';
-                break;
-
-            case '31':
-                return 'Н1ч.';
-                break;
-            case '32':
-                return 'Н2ч.';
-                break;
-            case '33':
-                return 'Н3ч.';
-                break;
-            case '34':
-                return 'Н4ч.';
-                break;
-            case '35':
-                return 'Н5ч.';
-                break;
-            case '36':
-                return 'Н6ч.';
-                break;
-
-        }
-    }
-
-}
 
 //Функция отображения PopUp
 function PopUpShow(){
