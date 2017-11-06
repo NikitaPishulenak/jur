@@ -78,7 +78,7 @@
     .triangle-topright {
         left: 70px;
         border-bottom: 10px solid #000000;
-        border-left: 10px solid transparent;
+        border-left: 11px solid transparent;
     }
 
     .avg, .ans, .abs {

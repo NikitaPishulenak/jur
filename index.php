@@ -11,39 +11,34 @@
     <title>Оценочная ведомость</title>
     <script src="scripts/jquery-3.2.1.min.js"></script>
     <script src="scripts/jquery-ui.js"></script>
-    <script src="scripts/jquery.maskedinput.js"></script>
+    <script src="scripts/jquery.mask.js"></script>
     <script src="scripts/script.js"></script>
     <script src="scripts/corporate.js"></script>
+    <script src="scripts/teachers.js"></script>
 
 </head>
 <body>
 
-<div class="popup" id="window-popup">
-    <div class="popup-content">
 
-        <p>Для выставления отметки кликните по соответствующему значению или используйте сочетание клавишь:
-        <p>Alt+1 -> Н (прогул);</p>
-        <p>Alt+2 -> Зач. (Зачтено);</p>
-        <p>Alt+3 -> Незач. (Не зачтено1);</p>
-        <p>Alt+4 -> Недоп (Недопуск);</p>
-        </p>
 
-    </div>
+<!--//замена даты-->
+<div id="form-edit-date" title="Редактирование даты занятия">
+    <form>
+        <fieldset>
+            <div class="box">
+                <b align='center'>Дата занятия</b>
+                    <input type='text' id='edit-lesson-date' required class='datepicker' value='<?php echo date('d.m.Y') ?>' placeholder='дд.мм.гггг''>
+                <br><br>
+                <label><input type='radio' class='type_lesson' id='edit_simple_lesson_rb' name='type_lesson' value='sl' checked><b class='type_lesson'>Обычное занятие</b></label>
+                <br><br>
+                <label><input type='radio' class='type_lesson' id='edit_colloquium_rb' name='type_lesson' value='col'><b class='type_lesson'>Коллоквиум</b></label>
+                <br><br>
+                <label><input type='radio' class='type_lesson' id='edit_exam_rb' name='type_lesson' value='exam'><b class='type_lesson'>Аттестация</b></label>
+                <br>
+            </div>
+        </fieldset>
+    </form>
 </div>
-
-<!--мена даты-->
-<!--<div id="form-edit-date" title="Редактирование даты занятия">-->
-<!--    <form>-->
-<!--        <fieldset>-->
-<!--            <div class="box">-->
-<!--                <div class="oldInfo"></div><br>-->
-<!--                <span align="center">Исправить на дату: </span>-->
-<!--                <input type="text" id="lesson-date-change" required class="datepicker" value="">-->
-<!---->
-<!--            </div>-->
-<!--        </fieldset>-->
-<!--    </form>-->
-<!--</div>-->
 
 <div id='form-lesson' title='Создание занятия'>
     <form>
@@ -51,7 +46,7 @@
             <div class='box'>
                 <b align='center'>Дата занятия</b>
                 <div id='date_col'>
-                    <input type='text' id='lesson-date' required class='datepicker' value='<?php echo date('d.m.Y') ?>'>
+                    <input type='text' id='lesson-date' required class='datepicker' value='<?php echo date('d.m.Y') ?>' placeholder='дд.мм.гггг'>
                 </div>
                 <br>
                 <label><input type='radio' class='type_lesson' id='simple_lesson_rb' name='type_lesson' value='sl' checked><b class='type_lesson'>Обычное занятие</b></label>
@@ -188,16 +183,16 @@
                 <div class="grade exam_theme" data-idStudent="6" data-idRating="2" data-zapis="6">2</div>
                 <div class="grade exam_theme" data-idStudent="7" data-idRating="6" data-zapis="7">10</div>
                 <div class="grade exam_theme" data-idStudent="8" data-idRating="17" data-zapis="8">Нб.отр.</div>
-                <div class="grade exam_theme" data-idStudent="9" data-idRating="16" data-zapis="9"></div>
+                <div class="grade exam_theme" data-idStudent="9" data-idRating="16" data-zapis="9"data-Log="1"></div>
                 <div class="grade exam_theme" data-idStudent="10" data-idRating="14" data-zapis="10">5</div>
                 <div class="grade exam_theme" data-idStudent="11" data-idRating="13" data-zapis="11">3</div>
-                <div class="grade exam_theme" data-idStudent="12" data-idRating="45" data-zapis="12"></div>
+                <div class="grade exam_theme" data-idStudent="12" data-idRating="45" data-zapis="12"data-Log="1"></div>
                 <div class="grade exam_theme" data-idStudent="13" data-idRating="3" data-zapis="13">5</div>
                 <div class="grade exam_theme" data-idStudent="14" data-idRating="4" data-zapis="14">31</div>
                 <div class="grade exam_theme" data-idStudent="15" data-idRating="2" data-zapis="15">32</div>
                 <div class="grade exam_theme" data-idStudent="16" data-idRating="7" data-zapis="16">9</div>
                 <div class="grade exam_theme" data-idStudent="17" data-idRating="1" data-zapis="17">4</div>
-                <div class="grade exam_theme" data-idStudent="18" data-idRating="2" data-zapis="18">227</div>
+                <div class="grade exam_theme" data-idStudent="18" data-idRating="2" data-zapis="18" data-Log="1">227</div>
                 <div class="grade exam_theme" data-idStudent="19" data-idRating="6" data-zapis="19">10</div>
                 <div class="grade exam_theme" data-idStudent="20" data-idRating="17" data-zapis="20">Нб.отр.</div>
                 <div class="grade exam_theme" data-idStudent="21" data-idRating="16" data-zapis="21"></div>
@@ -213,7 +208,7 @@
             </div>
             <div class="date_col">
                 <div class="date_title colloquium_theme" data-idLesson="1">03.09.2017</div>
-                <div class="grade  colloquium_theme" data-idStudent="1" data-idRating="3">8</div>
+                <div class="grade  colloquium_theme" data-idStudent="1" data-idRating="3" data-Log="1">8</div>
                 <div class="grade colloquium_theme" data-idStudent="2" data-idRating="4">34</div>
                 <div class="grade colloquium_theme" data-idStudent="3" data-idRating="2">26</div>
                 <div class="grade colloquium_theme" data-idStudent="4" data-idRating="7">3</div>

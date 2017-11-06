@@ -9,7 +9,9 @@ $(function () {
     };
     $('.datepicker').datepicker({dateFormat: 'dd.mm.yy', firstDay: 1});
     $.datepicker.setDefaults($.datepicker.regional['ru']);
-    //$('.datepicker').mask("99.99.9999");
+    $('.datepicker').mask("99.99.9999");
+    $.datepicker.setDefaults({showAnim:'show'});
+
 
 });
 
@@ -58,14 +60,6 @@ function wheel(event) {
     }
 }
 
-// функция по отмене возможности "Зач.878787" т е запрет дописывать после вставленного значения
-$(function () {
-    $('input.inp_cell').mousedown(function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        return false;
-    });
-});
 
 $(function (event) {
     if(event.keyCode==38 || event.keyCode==40){
@@ -73,10 +67,13 @@ $(function (event) {
     }
 });
 
-
+absenteeisms = new Array("Н", "Н1ч.", "Н2ч.", "Н3ч.", "Н4ч.", "Н5ч.", "Н6ч.");
+absenteeisms_with_cause = new Array("Ну", "Нб.у", "Нб.о.");
+other_symbols=new Array("Отр");
 //функция проверки введенных данных в поле оценка
 function proverka(event, id) {
 
+    var not_digital = /\D/;
     var str_id='inp_'+id;
     var el=document.getElementById(str_id);
 
@@ -92,7 +89,8 @@ function proverka(event, id) {
             }
         });
     }
-    else if((el.value>10) || (el.value<1)){
+
+    else if((el.value>10) || (el.value<1) ){
         el.value="";
         return false;
     }
@@ -102,13 +100,13 @@ function proverka(event, id) {
 }
 
 //Функция по проверке дату на корректность. Запрещено выбирать дату будущего
-function checkDate() {
-    if($("#lesson-date").val()==""){
+function checkDate(id_field) {
+    if($("#"+id_field).val()==""){
         alert("Заполните поле 'Дата'.");
         return false;
     }
-    if ($("#lesson-date").val().length == 10) {
-        var arrD = $("#lesson-date").val().split(".");
+    if ($("#"+id_field).val().length == 10) {
+        var arrD = $("#"+id_field).val().split(".");
         arrD[1] -= 1;
         var d = new Date(arrD[2], arrD[1], arrD[0]);//0-день 1-месяц 2-год
         if ((d.getFullYear() == arrD[2]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[0])) {
@@ -123,21 +121,21 @@ function checkDate() {
 
             if ((arrD[2]>newDate.getFullYear()) || ((arrD[2]>=newDate.getFullYear()) && (arrD[1]>newDate.getMonth()))
                 || ((arrD[2]>=newDate.getFullYear()) && (arrD[1]>=newDate.getMonth()) && arrD[0]>newDate.getDate())){
-                alert("Введенная Вами дата '"+$("#lesson-date").val()+"' еще не наступила!");
-                $("#lesson-date").val('');
+                alert("Введенная Вами дата '"+$("#"+id_field).val()+"' еще не наступила!");
+                $("#"+id_field).val('');
                 return false;
             }
         }
         else{
-            alert("Введена некорректная дата! " + $("#lesson-date").val());
-            $("#lesson-date").val('');
+            alert("Введена некорректная дата! " + $("#"+id_field).val());
+            $("#"+id_field).val('');
             return false;
         }
 
     }
     else{
         alert("Дата должна быть введена в формате: дд.мм.гггг");
-        $("#lesson-date").val('');
+        $("#"+id_field).val('');
         return false;
     }
 }
@@ -273,3 +271,46 @@ function MatchDecrypt(val) {
     }
 
 }
+
+//Функция по обработке горячих клавиш и Enter
+document.addEventListener('keydown', function(e){
+    var val = parseInt(e.key);
+    val = (!isNaN(val)) ? val : false;
+    if (val !== false){
+        if (e.altKey){
+            $("#"+id_input).val($("#panel>#"+val).text());
+            $("#"+id_input).blur();
+        }
+    }
+
+    if(e.keyCode==13){
+        if($("#form-edit").dialog("isOpen")){
+            if($("#edit").prop("disabled"))
+            {
+                return false;
+            }
+            else{
+                $("#edit").click();
+            }
+        }
+    }
+
+
+}, false);
+
+//При выставление фокуса input в переменную получает id inputa
+$(function () {
+    $("input.inp_cell").focus(function () {
+        id_input=$(this).attr('id');
+    });
+});
+
+
+$(function () {
+    $('b.tool, span.tool, div.grade, div.date_title, input.inp_cell').mousedown(function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
+    });
+});
+

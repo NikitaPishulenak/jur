@@ -1,0 +1,46 @@
+//Функция выделение красным где оценки <4
+// $(function () {
+//     $("div.grade").each(function () {
+//         var gr=$(this).text().split("/");
+//         for(var i=0; i<gr.length; i++){
+//             if(gr[i] < 4){
+//                 $(this).addClass("fail");
+//             }
+//         }
+//
+//     });
+// });
+
+//Показать-скрыть popUp
+    $('div').delegate(".info", "mouseleave", function () {
+      PopUpHide();
+    });
+    $('div').delegate(".info", "mouseover", function (e) {
+
+        var id_Zap=$(this).closest("div .grade").attr('data-zapis');
+        $("#window-popup").css("left",Number(e.pageX+15));
+        $("#window-popup").css("top",Number(e.pageY+10));
+        PopUpShow();
+    });
+//Функция отображения PopUp
+function PopUpShow(){
+    $("#window-popup").show();
+}
+//Функция скрытия PopUp
+function PopUpHide(){
+    $("#window-popup").hide();
+}
+
+//Сам popUp
+<div class="popup" id="window-popup">
+    <div class="popup-content">
+
+        <p>Для выставления отметки кликните по соответствующему значению или используйте сочетание клавишь:
+        <p>Alt+1 -> Н (прогул);</p>
+        <p>Alt+2 -> Зач. (Зачтено);</p>
+        <p>Alt+3 -> Незач. (Не зачтено1);</p>
+        <p>Alt+4 -> Недоп (Недопуск);</p>
+        </p>
+
+    </div>
+</div>

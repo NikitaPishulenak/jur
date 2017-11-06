@@ -1,48 +1,4 @@
 ﻿$(function () {
-   $("input.inp_cell").focus(function () {
-       id_input=$(this).attr('id');
-
-   });
-});
-
-
-document.addEventListener('keydown', function(e){
-
-    var val = parseInt(e.key);
-    val = (!isNaN(val)) ? val : false;
-    if (val !== false){
-        if (e.altKey){
-            $("#"+id_input).val($("#panel>#"+val).text());
-            $("#"+id_input).blur();
-        }
-    }
-
-    if(e.keyCode==13){
-        if($("#edit").prop("disabled"))
-        {
-            return false;
-        }
-        else{
-            $("#edit").click();
-        }
-    }
-
-}, false);
-
-//Функция дешифрирования оценок
-$(function () {
-    $("div.grade").each(function () {
-        if($(this).text()!=""){
-            $(this).text(Decrypt($(this).text()));
-        }
-        if($(this).text()=="Отр."){
-            $(this).addClass("absenteeism_closed_cell");
-        }
-    });
-});
-
-
-$(function () {
     $("div.average").each(function () {
         var sum=0,countGrade=0;
         var elem=$(this).attr('data-idStudent');
@@ -54,10 +10,10 @@ $(function () {
                     countGrade++;
                 }
             }
-
         });
         $('div.average[data-idStudent="'+elem+'"]').html(Math.round(10*(sum/countGrade))/10);
     });
+
     $("div.answer").each(function () {
         var countAnswer=0;
         var elem=$(this).attr('data-idStudent');
@@ -66,108 +22,31 @@ $(function () {
             if(Number(gr[0])){
                 countAnswer++
             }
-
         });
         $('div.answer[data-idStudent="'+elem+'"]').html(Math.round(100*(countAnswer*100/$('div.grade[data-idStudent="'+elem+'"]').length))/100+"%");
     });
 });
 
-// $(function () {
-//     $("div.grade").each(function () {
-//         var gr=$(this).text().split("/");
-//         for(var i=0; i<gr.length; i++){
-//             if(gr[i] < 4){
-//                 $(this).addClass("fail");
-//             }
-//         }
-//
-//     });
-// });
-
-$(function () {
-    $('b.tool, span.tool').mousedown(function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        return false;
-    });
-});
-
 
 
 $(function () {
-    $('div .grade').mousedown(function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        return false;
-    });
-
-    var dialog, form, edit_dialog, edit_form, edit_date_dialog, edit_date_form;
+    var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
     
-    // function editDate() {
-    //     var oldDateLesson=$("#lesson-date-change").val();
-    //     if(oldDateLesson!='') {
-    //         var currDate = $("#lesson-date-change").val();
-    //
-    //         $.ajax({
-    //             type: 'get',//тип запроса: get,post либо head
-    //             url: 'p.php',//url адрес файла обработчика
-    //             data: {
-    //                 'idGroup': $("input#idGroup").val(),
-    //                 'idLessons': $("input#idSubject").val(),
-    //                 'oldDateLesson': oldDateLesson,
-    //                 'newDateLesson': currDate
-    //             },
-    //             success: function (st) {
-    //                 if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
-    //                     edit_date_dialog.dialog("close");
-    //                     dat_col_object.html(currDate);
-    //                 }
-    //                 else {
-    //                     if (st == "No") {
-    //                         alert("Колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
-    //                     }
-    //                     else if (st == "Access is denied!") {
-    //                         alert("Доступ запрещен!");
-    //                     }
-    //                     else if (st == "No access rights!") {
-    //                         alert("Не достаточно прав!");
-    //                     }
-    //                     else {
-    //                         alert("Что-то пошло не так! ");
-    //                     }
-    //
-    //                 }
-    //             },
-    //             error: function () {
-    //                 alert("Произошла ошибка при передаче данных");
-    //             }
-    //
-    //         })
-    //
-    //     }
-    //     else{
-    //         alert("Исправление даты на пустое значение не возможно!");
-    //     }
-    //
-    // }
-
     function addLesson() {
-        checkDate();
-        if ($("#lesson-date").val() == ""){
-            //alert("Для сохранения необходимо заполнить поле 'Дата'");
-        }
-        else {
+        checkDate("lesson-date");
+        if ($("#lesson-date").val() != ""){
             var dateLesson = $("#lesson-date").val();
             var cnt = $("div.container-list").find("div.fio_student").length;
             $('div.fio_student').each(function (index, element) {
                 myStudentId[index]=$(element).attr('data-idStudent');
             });
+
             if ($("#colloquium_rb").is(':checked')) {
                 $.ajax({
-                    type:'get',//тип запроса: get,post либо head
-                    url:'p.php',//url адрес файла обработчика
+                    type:'get',
+                    url:'p.php',
                     data:{
                         'dateLesson':dateLesson,
                         'PKE':"1",
@@ -175,7 +54,6 @@ $(function () {
                         'idLessons': $("input#idSubject").val(),
                         'PL':"0",
                         'menuactiv': "addLesson"
-                        // 'idLesson': $("input#idLesson").val()
                     },
                     success:function (st) {
                         if ((st!="No")&&(st!="Access is denied!")&&(st!="No access rights!")){
@@ -198,7 +76,6 @@ $(function () {
                             else{
                                 alert("Что-то пошло не так! ");
                             }
-
                         }
 
                     },
@@ -240,16 +117,12 @@ $(function () {
                             else{
                                 alert("Что-то пошло не так! ");
                             }
-
                         }
-
-
                     },
                     error: function () {
                         alert("Произошла ошибка при передаче данных");
                     }
                 });
-
             }
             else {
 
@@ -285,7 +158,6 @@ $(function () {
                             else{
                                 alert("Что-то пошло не так! ");
                             }
-
                         }
                     },
                     error: function () {
@@ -297,14 +169,9 @@ $(function () {
         }
     }
 
-    $("button#close").click(function () {
-
-    });
     dialog = $("#form-lesson").dialog({
         resizable:false,
         autoOpen: false,
-        height: 350,
-        width: 400,
         modal: true,
         buttons: {
             "Создать": addLesson,
@@ -319,6 +186,8 @@ $(function () {
     form = dialog.find("form").on("submit", function (event) {
         event.preventDefault();
     });
+
+    //Редактирование отметки
     edit_dialog = $("#form-edit").dialog({
         resizable:false,
         autoOpen: false,
@@ -331,26 +200,6 @@ $(function () {
         event.preventDefault();
     });
 
-    //Форма редактирования даты
-    // edit_date_dialog = $("#form-edit-date").dialog({
-    //     resizable:false,
-    //     autoOpen: false,
-    //     height: 230,
-    //     width: 340,
-    //     modal: true,
-    //     buttons: {
-    //         "Заменить": editDate,
-    //         Отмена: function () {
-    //             edit_date_dialog.dialog("close");
-    //         }
-    //     },
-    //     close: function () {
-    //         form[0].reset();
-    //     }
-    // });
-    // edit_date_form = edit_date_dialog.find("form").on("submit", function (event) {
-    //     event.preventDefault();
-    // });
 
     $("#close").click(function () {
         edit_dialog.dialog("close");
@@ -425,17 +274,13 @@ $(function () {
             $("button#add_grade_input").attr('disabled', true);
         }
 
-        var absenteeisms = /\w/;
         $(".inp_cell:text").keydown(function (event) {
             if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
-                // if (!absenteeisms.test(this.value)) {
                     $(this).val("");
-                // }
             }
         });
-
-
     });
+
     $("#edit").click(function () {
         var coding = "";
         var bit1 = $("#inp_0").val();
@@ -451,7 +296,7 @@ $(function () {
             if((cur_grade=="") && (cur_res!="")){
                 $.ajax({
                     type:'get',
-                    url:'p.php',//url адрес файла обработчика
+                    url:'p.php',
                     data:{
                         'dateLes': dat,
                         'idLessons': $("input#idSubject").val(),
@@ -492,43 +337,7 @@ $(function () {
                     timeout:30000
                 });
             }
-            //удаление оценки
-            // else if((cur_grade!="") && (cur_res=="")){
-            //     $.ajax({
-            //         type:'get',
-            //         url:'p.php',//url адрес файла обработчика
-            //         data:{
-            //             'dateLes': dat,
-            //             'idLessons': $("input#idSubject").val(),
-            //             'idStudent': student_id,
-            //             'PL': $("input#idPL").val(),
-            //             'PKE': PKE,
-            //             'idPrepod': $("input#idPrepod").val(),
-            //             'idLess': id_Less,
-            //             'menuactiv': "deleteLessonStudent",
-            //             'grades': coding
-            //         },
-            //         success:function (st) {
-            //             if ((st!="Access is denied!")&&(st!="No access rights!")){
-            //                 myStudentZapis[id_Less+'Zapis'+student_id]=st;
-            //             }else{
-            //                 if (st=="Access is denied!"){
-            //                     alert("��_�_�'�_п зап�_���%���_!");
-            //                 }
-            //                 else if (st=="No access rights!"){
-            //                     alert("�_�� �_�_�_�'а�'�_�+�_�_ п�_а�_!");
-            //                 }
-            //                 else{
-            //                     alert("Ч�'�_-�'�_ п�_�_�>�_ �_�� �'ак! ");
-            //                 }
-            //
-            //             }
-            //         },
-            //         error: function () {
-            //             alert("Произошла ошибка при передаче данных");
-            //         }
-            //     });
-            // }
+
             else{
                 if(id_Zapis == 0 && myStudentZapis[id_Less+'Zapis'+student_id]==0){
                     alert("�_�_�_из�_�_�>а �_�_и�+ка п�_и п���_���_а�+�� �_а�_�_�<�:");
@@ -575,18 +384,15 @@ $(function () {
         else{
             alert("Для сохранения необходимо ввести хоть одну оценку!");
         }
+   });
 
-
-
-    });
     $(".inp_cell:text").click(function () {
         $(this).select();
     });
+
     $("#create_lesson").button().on("click", function () {
         dialog.dialog("open");
     });
-
-
 
     $("#add_grade_input").click(function () {
         if (countCell < 3) {
@@ -607,123 +413,14 @@ $(function () {
         }
     });
 
-    $('div').delegate(".date_title", "dblclick", function () {
-        dat=$(this).parent().find('div.date_title').html();//Дата столбца
-        dat_col_object=$(this).parent().find('div.date_title');// объект которому принадлежит значение
-        student_id=$(this).attr('data-idStudent');
-        id_Less=$(this).attr('data-idLes');
-        PKE=$(this).attr('data-PKE');
-        id_Zapis=$(this).attr('data-zapis');
-        dialog.dialog("open");
-        form[0].reset();
-        $("#lesson-date").val(dat);
-
-               // $(".oldInfo").html("Дата до исправления: " +dat);
-        // $("#lesson-date-change").datepicker("setDate", dat);
-        // $("#lesson-date-change").text(dat);
-        // $("#lesson-date-change").val(dat);
-
-
-        // $("input#lesson-date-change").datepicker({
-        //     defaultDate: "01.01.2017"
-        // });
-
-//     // $("button#add_grade_input").removeAttr('disabled');
-//     // $("#inp_0").focus();
-//     // $('#inp_2').slideUp(1);
-//     // --countCell;
-//     // $('#inp_1').slideUp(1);
-//     // --countCell;
-//     // cur_grade = $(this).text();
-//     // elem = $(this);
-//     // grades = cur_grade.split("/");
-//     // for (var i = 0; i < grades.length; i++) {
-//     //     $("div.panel").find('input#inp_' + i).slideDown(1);
-//     //     $("div.panel").find('input#inp_' + i).val(grades[i]);
-//     // }
-//     // $('input#inp_0').focus();
-//     // $('input#inp_0').select();
-//     // $(".inp_cell:text").focus(function () {
-//     //     inp_id = $(this).attr('id');
-//     //
-//     //     //При нажатии на кнопку с результатами текст выводится в поле ввода
-//     //     $("b.tool").click(function () {
-//     //         var text = $(this).text();
-//     //         $("#"+inp_id).val(text);
-//     //     });
-//     // });
-//     // var countOpenCell = 0;
-//     // for (j = 0; j < 3; j++) {
-//     //     if ($("#inp_" + j).val() != "") {
-//     //         countOpenCell++;
-//     //     }
-//     // }
-//     // if (countOpenCell == 3) {
-//     //     $("button#add_grade_input").attr('disabled', true);
-//     // }
-//     //
-//     // var absenteeisms = /\w/;
-//     // $(".inp_cell:text").keydown(function (event) {
-//     //     if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
-//     //         if (!absenteeisms.test(this.value)) {
-//     //             $(this).val("")
-//     //         }
-//     //     }
-//     // });
-    });
-
-
 });
 
 
-
 $(document).ready(function () {
-    PopUpHide();
-
-
-    //Дорисовка триугольника
-    // $("div.grade").each(function () {
-    //     if($(this).text()!=""){
-    //         $(this).append('<div class="triangle-topright"></div>');
-    //     }
-    // });
-
-    $('div').delegate(".info", "mouseleave", function () {
-      PopUpHide();
-    });
-
-
-
-    $('div').delegate(".info", "mouseover", function (e) {
-
-        var id_Zap=$(this).closest("div .grade").attr('data-zapis');
-        $("#window-popup").css("left",Number(e.pageX+15));
-        $("#window-popup").css("top",Number(e.pageY+10));
-        PopUpShow();
-
-
-    });
-
-
     countCell = 1;
     groupNumber="";
     subject="";
     teacher="";
     dateLesson=$("div.date_title:last").val();
     idLesson="";
-
-
 });
-
-
-//Функция отображения PopUp
-function PopUpShow(){
-    $("#window-popup").show();
-}
-//Функция скрытия PopUp
-function PopUpHide(){
-    $("#window-popup").hide();
-}
-
-
-

@@ -1,68 +1,11 @@
 ﻿$(function () {
-    $("input.inp_cell").focus(function () {
-        id_input=$(this).attr('id');
-    });
-});
-
-document.addEventListener('keydown', function(e){
-
-    var val = parseInt(e.key);
-    val = (!isNaN(val)) ? val : false;
-    if (val !== false){
-        if (e.altKey){
-            $("#"+id_input).val($("#panel>#"+val).text());
-            $("#"+id_input).blur();
-        }
-    }
-
-    if(e.keyCode==13){
-        if($("#edit").prop("disabled"))
-        {
-            return false;
-        }
-        else{
-            $("#edit").click();
-        }
-    }
-
-
-}, false);
-
-$(function () {
-    $('b.tool, span.tool').mousedown(function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        return false;
-    });
-});
-
-//Функция дешифрирования оценок
-$(function () {
-    $("div.grade").each(function () {
-        if($(this).text()!=""){
-            $(this).text(Decrypt($(this).text()));
-        }
-
-    });
-});
-
-
-$(function () {
-    $('div .grade').mousedown(function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        return false;
-    });
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
 
     function addLesson() {
-        checkDate();
-        if ($("#lesson-date").val() == ""){
-            //alert("Для сохранения необходимо заполнить поле 'Дата'");
-        }
-        else {
+        checkDate("lesson-date");
+        if ($("#lesson-date").val() != ""){
             var dateLesson = $("#lesson-date").val();
             var cnt = $("div.container-list").find("div.fio_student").length;
             $('div.fio_student').each(function (index, element) { myStudentId[index]=$(element).attr('data-idStudent'); });
@@ -76,7 +19,7 @@ $(function () {
                     'PL':"1",
                     'menuactiv': "addLesson",
                     'PKE': '0'
-                },//параметры запроса
+                },
                 success:function (st) {
                     if ((st!="No")&&(st!="Access is denied!")&&(st!="No access rights!")){
                         $("<div class='date_col'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
@@ -98,7 +41,6 @@ $(function () {
                         else{
                             alert("Что-то пошло не так! ");
                         }
-
                     }
                 },
                 error:function(){
@@ -111,8 +53,6 @@ $(function () {
     dialog = $("#form-lesson").dialog({
         resizable:false,
         autoOpen: false,
-        height: 'auto',
-        width: 300,
         modal: true,
         buttons: {
             "Создать": addLesson,
@@ -124,6 +64,8 @@ $(function () {
     form = dialog.find("form").on("submit", function (event) {
         event.preventDefault();
     });
+
+    //Форма выставления оценок
     edit_dialog = $("#form-edit").dialog({
         resizable:false,
         autoOpen: false,
@@ -148,14 +90,13 @@ $(function () {
     $('div').delegate(".grade", "dblclick", function () {
         $("button#edit").removeAttr('disabled');
         $("button#close").removeAttr('disabled');
-        dat=$(this).parent().find('div.date_title').html();//�"а�'а �_�'�_�>�+�+а
+        dat=$(this).parent().find('div.date_title').html();
         student_id=$(this).attr('data-idStudent');
         id_Less=$(this).attr('data-idLes');
         id_Zapis=$(this).attr('data-zapis');
         edit_dialog.dialog("open");
         edit_form[0].reset();
 
-        //title формы= ФИО студента
         var data_studentID=$(this).attr('data-idStudent');
         var fio_stud=$('div.fio_student[data-idStudent="'+data_studentID+'"]').text();
         edit_dialog.dialog({title: fio_stud});
@@ -172,22 +113,22 @@ $(function () {
         $(".inp_cell:text").focus(function () {
             inp_id = $(this).attr('id');
 
-            //При нажатии на кнопку с результатами текст выводится в поле ввода
-            $("b.tool, span.tool").click(function () {
+              $("b.tool, span.tool").click(function () {
                 var text = $(this).text();
                 $("#"+inp_id).val(text);
                 $("#"+inp_id).blur();
             });
         });
-        var absenteeisms = /\w/;
+        var absenteeism = /\w/;
         $(".inp_cell:text").keydown(function (event) {
             if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
-                if (!absenteeisms.test(this.value)) {
+                if (!absenteeism.test(this.value)) {
                     $(this).val("")
                 }
             }
         });
     });
+
     $("#edit").click(function () {
         var coding = "";
         var cur_res = $("#inp_0").val();
@@ -223,7 +164,6 @@ $(function () {
                             else{
                                 alert("Что-то пошло не так! ");
                             }
-
                         }
                     },
                     error: function (x,t) {
@@ -231,7 +171,6 @@ $(function () {
                             alert("Не удалось получить ответ от сервера");
                             edit_dialog.dialog("close");
                             window.location.reload();
-
                         }
                         else{
                             alert("Произошла ошибка при передаче данных");
@@ -244,7 +183,8 @@ $(function () {
 
                 if(id_Zapis == 0 && myStudentZapis[id_Less+'Zapis'+student_id]==0){
                     alert("�_�_�_из�_�_�>а �_�_и�+ка п�_и п���_���_а�+�� �_а�_�_�<�:");
-                }else{
+                }
+                else{
                     if(id_Zapis == 0) id_Zapis = myStudentZapis[id_Less+'Zapis'+student_id];
                     $.ajax({
                         type:'get',
@@ -305,46 +245,6 @@ $(function () {
 });
 
 $(document).ready(function () {
-    PopUpHide();
-
-
-    //Дорисовка триугольника
-    // $("div.grade").each(function () {
-    //     if($(this).text()!=""){
-    //         $(this).append('<div class="triangle-topright"></div>');
-    //     }
-    // });
-
-
-
-    $('div').delegate(".triangle-topright", "mouseleave", function () {
-        PopUpHide();
-    });
-
-    $('div').delegate(".triangle-topright", "mouseover", function (e) {
-
-        var id_Zap=$(this).closest("div .grade").attr('data-zapis');
-        $("#window-popup").css("left",Number(e.pageX+15));
-        $("#window-popup").css("top",Number(e.pageY+10));
-        PopUpShow();
-
-        $.ajax({
-            type:'get',
-            url:'p.php',
-            data:{
-                'id_Zapis':id_Zap,
-                'idGroup': $("input#idGroup").val()
-            },
-            success:function (info) {
-                $(".loader").hide();
-                $(".popup-content").text(info);
-            },
-            error: function () {
-                $(".popup-content").text("Данные отсутствуют!");
-            }
-        });
-    });
-
 
     countCell = 1;
     groupNumber="";
@@ -353,16 +253,4 @@ $(document).ready(function () {
     dateLesson=$("div.date_title:last").val();
     idLesson="";
 
-
 });
-
-
-//Функция отображения PopUp
-function PopUpShow(){
-    $("#window-popup").show();
-}
-
-//Функция скрытия PopUp
-function PopUpHide(){
-    $("#window-popup").hide();
-}

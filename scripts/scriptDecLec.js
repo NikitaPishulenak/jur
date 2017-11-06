@@ -1,37 +1,4 @@
-﻿absenteeisms = new Array("Н", "Н1ч.", "Н2ч.", "Н3ч.", "Н4ч.", "Н5ч.", "Н6ч.");
-absenteeisms_with_cause = new Array("Ну", "Нб.у", "Нб.о.");
-
-$(function () {
-    $("input.inp_cell").focus(function () {
-        id_input=$(this).attr('id');
-    });
-});
-
-document.addEventListener('keydown', function(e){
-
-    var val = parseInt(e.key);
-    val = (!isNaN(val)) ? val : false;
-    if (val !== false){
-        if (e.altKey){
-            $("#"+id_input).val($("#panel>#"+val).text());
-            $("#"+id_input).blur();
-        }
-    }
-
-    if(e.keyCode==13){
-        if($("#edit").prop("disabled"))
-        {
-            return false;
-        }
-        else{
-            $("#edit").click();
-        }
-    }
-
-
-}, false);
-
-//Функция выделения серым цветом поля, где есть Н без причины
+﻿//Функция выделения серым цветом поля, где есть Н без причины
 $(function () {
     $("div.grade").each(function () {
         if($(this).text()!=""){
@@ -49,9 +16,9 @@ $(function () {
     });
 });
 
+//Функции вычисления статистики
 $(function () {
     $("div.statistic").append("<div class='date_col_stat'></div>");
-    // $("div.statistic").html($r);
     var count=$("div.fio_student").length;
 
     $("div.date_col_stat:last").after("<div class='date_col_stat'><div class='title'>Н(ув.)</div><div class='absenteeism'></div></div>");
@@ -60,7 +27,6 @@ $(function () {
         $("div .absenteeism:last").append("<div class='abs' data-idStudent='"+data_idS+"'></div>");
     }
 });
-
 
 $(function () {
     $("div.abs").each(function () {
@@ -83,83 +49,12 @@ $(function () {
 
 
 $(function () {
-    $("div.average").each(function () {
-        if(Number($(this).text()) < 4){
-            $(this).addClass("fail");
-        }
-    });
-});
-
-$(function () {
-    $("div.answer").each(function () {
-        if(Number($(this).text().substr(0,$(this).text().length-1))< 50){
-            $(this).addClass("fail");
-        }
-    });
-});
-
-$(function () {
-    $("div.average").each(function () {
-        var sum=0,countGrade=0;
-        var elem=$(this).attr('data-idStudent');
-        $('div.grade[data-idStudent="'+elem+'"]').each(function () {
-            var gr=$(this).text().split("/");
-            for (var i=0; i<gr.length; i++){
-                if(Number(gr[i])){
-                    sum+=Number(gr[i]);
-                    countGrade++;
-                }
-            }
-
-        });
-        $('div.average[data-idStudent="'+elem+'"]').html(Math.round(10*(sum/countGrade))/10);
-    });
-    $("div.answer").each(function () {
-        var countAnswer=0;
-        var elem=$(this).attr('data-idStudent');
-        $('div.grade[data-idStudent="'+elem+'"]').each(function () {
-            var gr=$(this).text().split("/");
-            if(Number(gr[0])){
-                countAnswer++
-            }
-
-        });
-        $('div.answer[data-idStudent="'+elem+'"]').html(Math.round(100*(countAnswer*100/$('div.grade[data-idStudent="'+elem+'"]').length))/100+"%");
-    });
-});
-
-// $(function () {
-//     $("div.grade").each(function () {
-//         var gr=$(this).text().split("/");
-//         for(var i=0; i<gr.length; i++){
-//             if(gr[i] < 4){
-//                 $(this).addClass("fail");
-//             }
-//         }
-//
-//     });
-// });
-
-$(function () {
-    $('b.tool').mousedown(function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        return false;
-    });
-});
-
-$(function () {
-    $('div .grade').mousedown(function(event){
-        event.stopPropagation();
-        event.preventDefault();
-        return false;
-    });
-
     var  form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
 
 
+    //Форма редактирования оценки
     edit_dialog = $("#form-edit").dialog({
         resizable:false,
         autoOpen: false,
@@ -199,7 +94,6 @@ $(function () {
                     edit_dialog.dialog("open");
                     edit_form[0].reset();
 
-                    //title формы= ФИО студента
                     var data_studentID=$(this).attr('data-idStudent');
                     var fio_stud=$('div.fio_student[data-idStudent="'+data_studentID+'"]').text();
                     edit_dialog.dialog({title: fio_stud});
@@ -217,12 +111,9 @@ $(function () {
                         $("div.panel").find('input#inp_' + i).val(grades[i]);
                     }
                     inp_id=-1;
-                    // $('input#inp_0').focus();
-                    // $('input#inp_0').select();
                     $(".inp_cell:text").focus(function () {
                         inp_id = $(this).attr('id');
 
-                        //При нажатии на кнопку с результатами текст выводится в поле ввода
                         $("b.tool").click(function () {
                             var text = $(this).text();
                             $("#"+inp_id).val(text);
@@ -235,8 +126,6 @@ $(function () {
                         if ($("#inp_" + j).val() != "") {
                             countOpenCell++;
                             if((absenteeisms.indexOf($("#inp_" + j).val())==-1) && (absenteeisms_with_cause.indexOf($("#inp_" + j).val())==-1)){
-                                // if(($("#inp_" + j).val()!='Ну')&&($("#inp_" + j).val()!='Нб.у') && ($("#inp_" + j).val()!='Нб.о.')){//условие на случай изменения только причинных отсутствий
-
                                 $("#inp_" + j).attr('disabled', 'disabled');
                             }
                             else if (!enabled){
@@ -255,11 +144,7 @@ $(function () {
                         }
                     });
                 }
-
             }
-
-
-
         }
     });
 
@@ -297,7 +182,6 @@ $(function () {
                 }
             });
         }
-
         inp_id=2;
 
         $("button#edit").attr('disabled', true);
@@ -310,52 +194,10 @@ $(function () {
     $("#close").click(function () {
         edit_dialog.dialog("close");
     });
-
-
 });
 
 
 $(document).ready(function () {
-    PopUpHide();
-
-
-    //Дорисовка триугольника
-    // $("div.grade").each(function () {
-    //     if($(this).text()!=""){
-    //         $(this).append('<div class="triangle-topright"></div>');
-    //     }
-    // });
-
-
-    $('div').delegate(".triangle-topright", "mouseleave", function () {
-        PopUpHide();
-    });
-
-    $('div').delegate(".triangle-topright", "mouseover", function (e) {
-
-        var id_Zap=$(this).closest("div .grade").attr('data-zapis');
-        $("#window-popup").css("left",Number(e.pageX+15));
-        $("#window-popup").css("top",Number(e.pageY+10));
-        PopUpShow();
-
-        $.ajax({
-            type:'get',
-            url:'d.php',
-            data:{
-                'id_Zapis':id_Zap,
-                'idGroup': $("input#idGroup").val()
-            },
-            success:function (info) {
-                $(".loader").hide();
-                $(".popup-content").text(info);
-            },
-            error: function () {
-                $(".popup-content").text("Данные отсутствуют!");
-            }
-        });
-
-    });
-
 
     countCell = 1;
     groupNumber="";
@@ -365,14 +207,3 @@ $(document).ready(function () {
     idLesson="";
 
 });
-
-
-//Функция отображения PopUp
-function PopUpShow(){
-    $("#window-popup").show();
-}
-//Функция скрытия PopUp
-function PopUpHide(){
-    $("#window-popup").hide();
-}
-

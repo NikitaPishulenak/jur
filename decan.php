@@ -11,21 +11,22 @@
     <title>Оценочная ведомость</title>
     <script src="scripts/jquery-3.2.1.min.js"></script>
     <script src="scripts/jquery-ui.js"></script>
-    <script src="scripts/jquery.maskedinput.js"></script>
+    <script src="scripts/jquery.mask.js"></script>
     <script src="scripts/scriptDec.js"></script>
     <script src="scripts/corporate.js"></script>
+    <script src="scripts/decanats.js"></script>
 
 </head>
 <body>
-<div class="popup" id="window-popup">
-    <div class="popup-content">
-
-        <div class="loader">
-            <img class="loading" src="img/loading.gif"><br><strong class="header">Идет загрузка...</strong>
-        </div>
-
-    </div>
-</div>
+<!--<div class="popup" id="window-popup">-->
+<!--    <div class="popup-content">-->
+<!---->
+<!--        <div class="loader">-->
+<!--            <img class="loading" src="img/loading.gif"><br><strong class="header">Идет загрузка...</strong>-->
+<!--        </div>-->
+<!---->
+<!--    </div>-->
+<!--</div>-->
 
 <div id='form-edit' title='Редактирование отметки'>
     <form id='form-edit'>
@@ -43,7 +44,7 @@
 
                 <input class='inp_cell' id='inp_0' type=text maxlength='6'
                        onkeydown='return proverka(event,0);' onblur='return proverka(event,0);'>
-                <input class='inp_cell' id='inp_' type='text' maxlength='6'
+                <input class='inp_cell' id='inp_1' type='text' maxlength='6'
                        onkeydown='return proverka(event,1);' onblur='return proverka(event,1);'>
                 <input class='inp_cell' id='inp_2' type='text' maxlength='6'
                        onkeydown='return proverka(event,2);' onblur='return proverka(event,2);'>
@@ -193,7 +194,7 @@
                 <div class="grade" data-idStudent="6" data-idRating="2" data-Log="1">16</div>
                 <div class="grade" data-idStudent="7" data-idRating="6">21</div>
                 <div class="grade" data-idStudent="8" data-idRating="17"></div>
-                <div class="grade" data-idStudent="9" data-idRating="16">1511</div>
+                <div class="grade" data-idStudent="9" data-idRating="16"data-Log="1">1511</div>
                 <div class="grade" data-idStudent="10" data-idRating="14"></div>
                 <div class="grade" data-idStudent="11" data-idRating="13"></div>
                 <div class="grade" data-idStudent="12" data-idRating="45">14</div>
@@ -222,7 +223,7 @@
                 <div class="grade" data-idStudent="2" data-idRating="4"></div>
                 <div class="grade" data-idStudent="3" data-idRating="2">15</div>
                 <div class="grade" data-idStudent="4" data-idRating="7"></div>
-                <div class="grade" data-idStudent="5" data-idRating="1">14</div>
+                <div class="grade" data-idStudent="5" data-idRating="1"data-Log="1">14</div>
                 <div class="grade" data-idStudent="6" data-idRating="2"></div>
                 <div class="grade" data-idStudent="7" data-idRating="6">21</div>
                 <div class="grade" data-idStudent="8" data-idRating="17">252423</div>
@@ -252,7 +253,7 @@
             <div class="date_col">
                 <div class="date_title" data-idLesson="1">20.09.2017</div>
                 <div class="grade" data-idStudent="1" data-idRating="3">111214</div>
-                <div class="grade" data-idStudent="2" data-idRating="4">22</div>
+                <div class="grade" data-idStudent="2" data-idRating="4"data-Log="1">22</div>
                 <div class="grade" data-idStudent="3" data-idRating="2"></div>
                 <div class="grade" data-idStudent="4" data-idRating="7">151110</div>
                 <div class="grade" data-idStudent="5" data-idRating="1">21</div>

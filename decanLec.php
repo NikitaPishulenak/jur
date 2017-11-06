@@ -11,21 +11,22 @@
     <title>Оценочная ведомость</title>
     <script src="scripts/jquery-3.2.1.min.js"></script>
     <script src="scripts/jquery-ui.js"></script>
-    <script src="scripts/jquery.maskedinput.js"></script>
+    <script src="scripts/jquery.mask.js"></script>
     <script src="scripts/scriptDecLec.js"></script>
     <script src="scripts/corporate.js"></script>
+    <script src="scripts/decanats.js"></script>
 
 </head>
 <body>
-<div class="popup" id="window-popup">
-    <div class="popup-content">
-
-        <div class="loader">
-            <img class="loading" src="img/loading.gif"><br><strong class="header">Идет загрузка...</strong>
-        </div>
-
-    </div>
-</div>
+<!--<div class="popup" id="window-popup">-->
+<!--    <div class="popup-content">-->
+<!---->
+<!--        <div class="loader">-->
+<!--            <img class="loading" src="img/loading.gif"><br><strong class="header">Идет загрузка...</strong>-->
+<!--        </div>-->
+<!---->
+<!--    </div>-->
+<!--</div>-->
 
 <div id='form-edit' title='Редактирование отметки'>
     <form id='form-edit'>
@@ -117,11 +118,11 @@
                 <div class="grade" data-idStudent="4" data-idRating="7">26</div>
                 <div class="grade" data-idStudent="5" data-idRating="1">21</div>
                 <div class="grade" data-idStudent="6" data-idRating="2"></div>
-                <div class="grade" data-idStudent="7" data-idRating="6">21</div>
+                <div class="grade" data-idStudent="7" data-idRating="6" data-Log="1">21</div>
                 <div class="grade" data-idStudent="8" data-idRating="17">27</div>
                 <div class="grade" data-idStudent="9" data-idRating="16">34</div>
                 <div class="grade" data-idStudent="10" data-idRating="14"></div>
-                <div class="grade" data-idStudent="11" data-idRating="13"></div>
+                <div class="grade" data-idStudent="11" data-idRating="13" data-Log="1"></div>
                 <div class="grade" data-idStudent="12" data-idRating="45">33</div>
                 <div class="grade" data-idStudent="13" data-idRating="3"></div>
                 <div class="grade" data-idStudent="14" data-idRating="4"></div>
@@ -139,14 +140,14 @@
                 <div class="grade" data-idStudent="26" data-idRating="4"></div>
                 <div class="grade" data-idStudent="27" data-idRating="2">22</div>
                 <div class="grade" data-idStudent="28" data-idRating="7"></div>
-                <div class="grade" data-idStudent="29" data-idRating="1"></div>
+                <div class="grade" data-idStudent="29" data-idRating="1" data-Log="1"></div>
                 <div class="grade" data-idStudent="30" data-idRating="2"></div>
             </div>
             <div class="date_col">
                 <div class="date_title" data-idLesson="1">20.09.2017</div>
                 <div class="grade" data-idStudent="1" data-idRating="3"></div>
                 <div class="grade" data-idStudent="2" data-idRating="4"></div>
-                <div class="grade" data-idStudent="3" data-idRating="2">27</div>
+                <div class="grade" data-idStudent="3" data-idRating="2" data-Log="1">27</div>
                 <div class="grade" data-idStudent="4" data-idRating="7"></div>
                 <div class="grade" data-idStudent="5" data-idRating="1"></div>
                 <div class="grade" data-idStudent="6" data-idRating="2"></div>
@@ -197,7 +198,7 @@
                 <div class="grade" data-idStudent="18" data-idRating="2"></div>
                 <div class="grade" data-idStudent="19" data-idRating="6"></div>
                 <div class="grade" data-idStudent="20" data-idRating="17"></div>
-                <div class="grade" data-idStudent="21" data-idRating="16">27</div>
+                <div class="grade" data-idStudent="21" data-idRating="16" data-Log="1">27</div>
                 <div class="grade" data-idStudent="22" data-idRating="14"></div>
                 <div class="grade" data-idStudent="23" data-idRating="13"></div>
                 <div class="grade" data-idStudent="24" data-idRating="45"></div>
