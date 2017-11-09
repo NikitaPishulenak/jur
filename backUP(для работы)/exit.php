@@ -8,8 +8,9 @@ session_destroy();
 
 
 //header('Refresh: 0;URL=');
-
-header('HTTP/1.1 401 Unauthorized');
-echo "До встречи."
+unset($_SERVER['REMOTE_USER'], $_SERVER['PHP_AUTH_PW'],  $_SERVER['PHP_AUTH_USER']);
+   header('WWW-Authenticate: Basic realm="Auth"');
+   header('HTTP/1.0 401 Unauthorized');
+   echo "До встречи."
 
 ?>

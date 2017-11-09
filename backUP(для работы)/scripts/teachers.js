@@ -1,10 +1,10 @@
-﻿//Функция по вызову последующих функций редактирования даты занятия
+//Функция по вызову последующих функций редактирования даты занятия
 $(function () {
    var edit_date_dialog, edit_date_form;
     edit_date_dialog = $("#form-edit-date").dialog({
         resizable:false,
         autoOpen: false,
-        modal: true,
+         modal: true,
         buttons: {
             "Изменить": editDate,
             "Отмена": function () {
@@ -65,24 +65,12 @@ $(function () {
     $('div').delegate(".date_title", "dblclick", function () {
         dat=$(this).parent().find('div.date_title').html();//Дата столбца
         dat_col_object=$(this).parent().find('div.date_title');// объект которому принадлежит значение
-        pke_lesson=$(this).parent().find("div.grade:first").attr('data-PKE');
+        type_lesson="0";
         id_Zapis=$(this).attr('data-zapis');
         edit_date_dialog.dialog("open");
         edit_date_form[0].reset();
-        edit_date_dialog.dialog({title: dat});
         $("#edit-lesson-date").val(dat);
-        switch (pke_lesson){
-            case '0':
-                $("#edit_simple_lesson_rb").prop("checked", true);
-                break;
-            case'1':
-                $("#edit_colloquium_rb").prop("checked", true);
-                break;
-            case'2':
-                $("#edit_exam_rb").prop("checked", true);
-                break;
-        }
-
+        edit_date_dialog.dialog({title: dat});
     });
 });
 

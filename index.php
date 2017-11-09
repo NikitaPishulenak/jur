@@ -15,6 +15,7 @@
     <script src="scripts/script.js"></script>
     <script src="scripts/corporate.js"></script>
     <script src="scripts/teachers.js"></script>
+    <script src="scripts/jquery.mobile-1.4.5.min.js"></script>
 
 </head>
 <body>
@@ -27,13 +28,13 @@
         <fieldset>
             <div class="box">
                 <b align='center'>Дата занятия</b>
-                    <input type='text' id='edit-lesson-date' required class='datepicker' value='<?php echo date('d.m.Y') ?>' placeholder='дд.мм.гггг''>
+                    <input type='text' id='edit-lesson-date' required class='datepicker' value='<?php echo date('d.m.Y') ?>' placeholder='дд.мм.гггг'>
                 <br><br>
-                <label><input type='radio' class='type_lesson' id='edit_simple_lesson_rb' name='type_lesson' value='sl' checked><b class='type_lesson'>Обычное занятие</b></label>
+                <label><input type='radio' class='edit_type_lesson' id='edit_simple_lesson_rb' name='type_lesson' value='0' checked><b class='type_lesson'>Обычное занятие</b></label>
                 <br><br>
-                <label><input type='radio' class='type_lesson' id='edit_colloquium_rb' name='type_lesson' value='col'><b class='type_lesson'>Коллоквиум</b></label>
+                <label><input type='radio' class='edit_type_lesson' id='edit_colloquium_rb' name='type_lesson' value='1'><b class='type_lesson'>Коллоквиум</b></label>
                 <br><br>
-                <label><input type='radio' class='type_lesson' id='edit_exam_rb' name='type_lesson' value='exam'><b class='type_lesson'>Аттестация</b></label>
+                <label><input type='radio' class='edit_type_lesson' id='edit_exam_rb' name='type_lesson' value='2'><b class='type_lesson'>Аттестация</b></label>
                 <br>
             </div>
         </fieldset>
@@ -72,13 +73,14 @@
                     <span class='space'></span>
                     <b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b>
                     <span class='space'></span>
+                    <b id='11' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b>
+                    <span class='space'></span>
                     <b id='2' class='tool' title='Зачтено.'><b>Зач.</b></b>
                     <span class='space'></span>
                     <b id='3' class='tool' title='Не зачтено.'><b>Незач.</b></b>
                     <span class='space'></span>
                     <b id='4' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b>
-                    <span class='space'></span>
-                    <b id='11' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b>
+
 
                     <br><br>
 
@@ -93,6 +95,28 @@
                     <span id='9' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span>
                     <span class='space'></span>
                     <span id='10' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span>
+
+                    <br><br>
+
+                    <span class='tool fail' title='Отметка: один'>1</span>
+                    <span class='space'></span>
+                    <span class='tool fail' title='Отметка: два'>2</span>
+                    <span class='space'></span>
+                    <span class='tool fail' title='Отметка: три'>3</span>
+                    <span class='space'></span>
+                    <span class='tool' title='Отметка: четыре'>4</span>
+                    <span class='space'></span>
+                    <span class='tool' title='Отметка: пять'>5</span>
+                    <span class='space'></span>
+                    <span class='tool' title='Отметка: шесть'>6</span>
+                    <span class='space'></span>
+                    <span class='tool' title='Отметка: семь'>7</span>
+                    <span class='space'></span>
+                    <span class='tool' title='Отметка: восемь'>8</span>
+                    <span class='space'></span>
+                    <span class='tool' title='Отметка: девять'>9</span>
+                    <span class='space'></span>
+                    <span class='tool' title='Отметка: десять'>10</span>
 
                 </div>
 

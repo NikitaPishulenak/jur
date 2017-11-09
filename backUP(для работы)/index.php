@@ -1,13 +1,20 @@
 <?php
 unset($_SESSION['SesVar']);
-session_start();
 session_unset();
 session_destroy();
+ini_set("display_errors", 1);
 session_start();
 
 $_SESSION['SesVar']['Auth']=false;                  
 
-ini_set("display_errors", 1);
+
+/*
+if(isset($_GET['go']) && $_GET['go']=='exit'){
+   ExitFromSystem();
+}
+*/
+
+
 // $dbStud - указатель на соединения с БД Студенты (mssql)
 // $dbMain - указатель на соединения с БД Главной (mysqli)
 
@@ -89,7 +96,7 @@ function GetMainBD($vser,$dbMain,$dbStud){
             if($lev == 3){
                $idKaf=GetStudentBD($Indepartment[$i][1],$dbStud);
                if($idKaf){
-                  $resPredmet = mysqli_query($dbMain, "SELECT id, name, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10 FROM lessons WHERE k1=$idKaf or k2=$idKaf or k3=$idKaf or k4=$idKaf or k5=$idKaf or k6=$idKaf or k7=$idKaf or k8=$idKaf ORDER BY name");
+                  $resPredmet = mysqli_query($dbMain, "SELECT id, IF(CHAR_LENGTH(name)>88,CONCAT(LEFT(name, 85),'...'),name), f1, f2, f3, f4, f5, f6, f7, f8, f9, f10 FROM lessons WHERE k1=$idKaf or k2=$idKaf or k3=$idKaf or k4=$idKaf or k5=$idKaf or k6=$idKaf or k7=$idKaf or k8=$idKaf ORDER BY name");
                   if(mysqli_num_rows($resPredmet)>=1){
                      $iPredmet = 0;
                      while($arr = mysqli_fetch_row($resPredmet)){
@@ -128,7 +135,7 @@ function GetMainBD($vser,$dbMain,$dbStud){
             } else if($lev == 2) {
                $idDek=GetStudentBDDekan($Indepartment[$i][1],$dbStud);
                if($idDek){
-                  $resPredmet = mysqli_query($dbMain, "SELECT id, name FROM lessons WHERE f1=$idDek or f2=$idDek or f3=$idDek or f4=$idDek or f5=$idDek or f6=$idDek or f7=$idDek or f8=$idDek or f9=$idDek or f10=$idDek ORDER BY name");
+                  $resPredmet = mysqli_query($dbMain, "SELECT id, IF(CHAR_LENGTH(name)>88,CONCAT(LEFT(name, 85),'...'),name) FROM lessons WHERE f1=$idDek or f2=$idDek or f3=$idDek or f4=$idDek or f5=$idDek or f6=$idDek or f7=$idDek or f8=$idDek or f9=$idDek or f10=$idDek ORDER BY name");
                   if(mysqli_num_rows($resPredmet)>=1){
                      $iPredmet = 0;
                      while($arr = mysqli_fetch_row($resPredmet)){
@@ -149,6 +156,35 @@ function GetMainBD($vser,$dbMain,$dbStud){
 //               for($ii=0; $ii<=($countPredmet-1); $ii++){
 //                  echo $_SESSION['SesVar']['PredmetDekan'][$ii][0]." ".$_SESSION['SesVar']['PredmetDekan'][$ii][1]."<br>";                  
 //               }
+
+            } else if($lev == 4){
+               $idKaf=GetStudentBD($Indepartment[$i][1],$dbStud);
+               if($idKaf){
+                  $resPredmet = mysqli_query($dbMain, "SELECT id, IF(CHAR_LENGTH(name)>88,CONCAT(LEFT(name, 85),'...'),name), f1, f2, f3, f4, f5, f6, f7, f8, f9, f10 FROM lessons WHERE k1=$idKaf or k2=$idKaf or k3=$idKaf or k4=$idKaf or k5=$idKaf or k6=$idKaf or k7=$idKaf or k8=$idKaf ORDER BY name");
+                  if(mysqli_num_rows($resPredmet)>=1){
+                     $iPredmet = 0;
+                     while($arr = mysqli_fetch_row($resPredmet)){
+                        $fak='';
+                        if($arr[2]>0){
+                           $fak=$arr[2];
+                           if($arr[3]>0) $fak.="%".$arr[3]; 
+                           if($arr[4]>0) $fak.="%".$arr[4]; 
+                           if($arr[5]>0) $fak.="%".$arr[5]; 
+                           if($arr[6]>0) $fak.="%".$arr[6]; 
+                           if($arr[7]>0) $fak.="%".$arr[7]; 
+                           if($arr[8]>0) $fak.="%".$arr[8]; 
+                           if($arr[9]>0) $fak.="%".$arr[9]; 
+                           if($arr[10]>0) $fak.="%".$arr[10]; 
+                           if($arr[11]>0) $fak.="%".$arr[11]; 
+                        }                     
+                        $_SESSION['SesVar']['PredmetZav'][$iPredmet]=Array($arr[0],$arr[1],$fak);
+                        $iPredmet++;
+                     }
+                  }
+                  mysqli_free_result($resPredmet);
+                  $_SESSION['SesVar']['Zav']=Array($Indepartment[$i][0],$Indepartment[$i][1],$idKaf);
+                  $_SESSION['SesVar']['Auth']=true;                  
+               }
 
             } else if($lev == 1) {
 
@@ -216,5 +252,21 @@ function GetLU($user){
    }
    ldap_close($ad);
 }
+
+/*
+function ExitFromSystem(){
+
+$_SESSION['SesVar']['Auth']=false;                  
+unset($_SESSION['SesVar']);
+session_unset();
+session_destroy();
+unset($_SERVER['REMOTE_USER'], $_SERVER['PHP_AUTH_PW'],  $_SERVER['PHP_AUTH_USER']);
+header('Refresh: 0;URL=');
+//header('WWW-Authenticate: Basic realm="Auth"');
+//header('HTTP/1.0 401 Unauthorized');
+echo "До встречи.";
+exit;
+}
+*/
 
 ?>

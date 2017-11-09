@@ -4,7 +4,7 @@ unset($_SESSION['SesVar']);
 session_start();
 
 if(!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth']!==true){
-   echo "Доступ запрещён!";
+   echo "Access is denied!";
    exit;
 }                  
 
@@ -45,9 +45,13 @@ if(!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth']!==true){
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
     <title>Куда идём?</title>
+    <script src="scripts/jquery-3.2.1.min.js"></script>
+    <script src="scripts/online.js"></script>
 </head>
 <body>
-<div class="Exit"><a href="exit.php" title="Выйти">Выйти</a></div>
+<?php
+//<div class="Exit"><a href="index.php?go=exit" title="Выхожу">Выхожу</a></div>
+?>
 <div class="Header"><H1><?php echo $_SESSION['SesVar']['FIO'][1]; ?><H1></div>
 <div class="DialogV">
 <div class="titleBox"><H2>Куда идём?</H2></div>
@@ -63,6 +67,9 @@ if(!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth']!==true){
                break;
             case 3:
                echo "<p><a href='p.php'><strong>".$_SESSION['SesVar']['Prepod'][0]."</strong> (".$_SESSION['SesVar']['Prepod'][1].")</a></p>";
+               break;
+            case 4:
+               echo "<p><a href='z.php'><strong>".$_SESSION['SesVar']['Zav'][0]."</strong> (".$_SESSION['SesVar']['Zav'][1].")</a></p>";
                break;
          }
       }
