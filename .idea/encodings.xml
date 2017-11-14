@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/../foreigns/config/configForeigners.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/../foreigns/crudForeigner.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/../foreigns/csv.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/../foreigns/foreignersList.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/../foreigns/importcsv.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/../foreigns/index.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/backUP(21-09)/p.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/backUP(для работы)/config.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/backUP(для работы)/configMain.php" charset="windows-1251" />

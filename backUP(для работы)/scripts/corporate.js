@@ -35,6 +35,7 @@ function wheel(event) {
     var target=$(event.target);
     if (target.is("div.grade")){
         var curLeft=$(".result_box_statistic").scrollLeft();
+        var curLeft1=$(".result_box").scrollLeft();
         var delta; // Направление колёсика мыши
         event = event || window.event;
         // Opera и IE работают со свойством wheelDelta
@@ -52,9 +53,11 @@ function wheel(event) {
         //alert(delta); // Выводим направление колёсика мыши
         if(delta==1){
             $(".result_box_statistic").scrollLeft(curLeft+50);
+            $(".result_box").scrollLeft(curLeft1+50);
         }
         else if(delta==-1){
             $(".result_box_statistic").scrollLeft(curLeft-50);
+            $(".result_box").scrollLeft(curLeft1-50);
         }
 
     }

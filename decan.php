@@ -59,8 +59,8 @@
     </form>
 </div>
 
-<div id="log" title="История изменений">
-    <form id="form-log">
+<div id='log' title='История изменений'>
+    <form id='form-log'>
         <fieldset>
             <h4>Здесь все логи Данного студента</h4>
         </fieldset>

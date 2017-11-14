@@ -498,6 +498,9 @@ function StudentView($content,$contentO=''){
     </form>
 </div>
 
+<div class='popup-content' id='history'>
+    <span id='log_text'>Здесь все логи данного студента</span>
+</div>
 
 <div class='container-list'>
     <div class='container'>
@@ -543,6 +546,10 @@ function StudentViewL($content,$contentO=''){
             </div>
         </fieldset>
     </form>
+</div>
+
+<div class='popup-content' id='history'>
+    <span id='log_text'>Здесь все логи данного студента</span>
 </div>
 
 <div class='container-list'>

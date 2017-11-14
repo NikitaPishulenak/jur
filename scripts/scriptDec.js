@@ -66,7 +66,7 @@ $(function () {
             }
 
         });
-        var res=Math.round(100*(countAnswer*100/$('div.grade[data-idStudent="'+elem+'"]').length))/100;
+        var res=Math.round(100*(countAnswer*10/$('div.grade[data-idStudent="'+elem+'"]').length))/10;
         if(isNaN(res)){res="";} else{ res+="%";}
         $('div.ans[data-idStudent="'+elem+'"]').html(res);
     });

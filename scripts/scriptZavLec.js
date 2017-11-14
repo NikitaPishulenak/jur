@@ -11,7 +11,7 @@
             $('div.fio_student').each(function (index, element) { myStudentId[index]=$(element).attr('data-idStudent'); });
             $.ajax({
                 type:'get',
-                url:'p.php',
+                url:'z.php',
                 data:{
                     'dateLesson':dateLesson,
                     'idGroup': $("input#idGroup").val(),
@@ -113,7 +113,7 @@
         $(".inp_cell:text").focus(function () {
             inp_id = $(this).attr('id');
 
-              $("b.tool, span.tool").click(function () {
+            $("b.tool, span.tool").click(function () {
                 var text = $(this).text();
                 $("#"+inp_id).val(text);
                 $("#"+inp_id).blur();
@@ -139,7 +139,7 @@
             if((cur_grade=="") && (cur_res!="")){
                 $.ajax({
                     type:'get',
-                    url:'p.php',
+                    url:'z.php',
                     data:{
                         'dateLes': dat,
                         'idLessons': $("input#idSubject").val(),
@@ -188,7 +188,7 @@
                     if(id_Zapis == 0) id_Zapis = myStudentZapis[id_Less+'Zapis'+student_id];
                     $.ajax({
                         type:'get',
-                        url:'p.php',
+                        url:'z.php',
                         data:{
                             'id_Zapis': id_Zapis,
                             'dateLes': dat,
@@ -284,41 +284,41 @@ $(function () {
 
             if(dat!=new_date){
                 //Замена даты
-                    $.ajax({
-                        type:'get',
-                        url:'p.php',
-                        data:{
-                            'newDate': new_date,
-                            'PKE': "0",
-                            'idGroup': $("input#idGroup").val(),
-                            'idLessons': $("input#idSubject").val(),
-                            'PL':"1",
-                            'menuactiv': "editDate"
-                        },
-                        success:function (st) {
-                            if ((st!="Access is denied!")&&(st!="No access rights!")){
-                                dat_col_object.html(new_date);
-                                alert("Дата "+dat+" успешно заменена на "+new_date+"!");
-                                window.location.reload();
+                $.ajax({
+                    type:'get',
+                    url:'z.php',
+                    data:{
+                        'newDate': new_date,
+                        'PKE': "0",
+                        'idGroup': $("input#idGroup").val(),
+                        'idLessons': $("input#idSubject").val(),
+                        'PL':"1",
+                        'menuactiv': "editDate"
+                    },
+                    success:function (st) {
+                        if ((st!="Access is denied!")&&(st!="No access rights!")){
+                            dat_col_object.html(new_date);
+                            alert("Дата "+dat+" успешно заменена на "+new_date+"!");
+                            window.location.reload();
+                        }
+                        else{
+                            if (st=="Access is denied!"){
+                                alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
+                            }
+                            else if (st=="No access rights!"){
+                                alert("Не достаточно прав!");
                             }
                             else{
-                                if (st=="Access is denied!"){
-                                    alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
-                                }
-                                else if (st=="No access rights!"){
-                                    alert("Не достаточно прав!");
-                                }
-                                else{
-                                    alert("Что-то пошло не так! ");
-                                }
-
+                                alert("Что-то пошло не так! ");
                             }
-                        },
-                        error: function () {
-                            alert("Произошла ошибка при передаче данных");
+
                         }
-                    });
-                
+                    },
+                    error: function () {
+                        alert("Произошла ошибка при передаче данных");
+                    }
+                });
+
                 edit_date_dialog.dialog("close");
             }
             else{

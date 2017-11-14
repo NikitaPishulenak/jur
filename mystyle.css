@@ -92,12 +92,12 @@ input .edit_grade {
 }
 
 .fail{
-    color: #ff0000;
+    color: #890706;
     font-weight: bolder;
 }
 
 .absenteeism_closed{
-    color: #17ad0f;
+    color: #254b72;
     font-weight: bolder;
 }
 
@@ -127,15 +127,15 @@ div .hidden{
 }
 
 .popup-content {
-    width:150px;
     height: auto;
-    padding:5px;
+    padding:4px;
     color: #000000;
     background-color: #c1c5c5;
-    border-radius:5px;
+    border-radius:1px;
     box-shadow: 0 0 10px #000;
-    position: relative;
+    position: absolute;
     z-index: 10;
+    border: solid #000000 1px;
 }
 
 .loading{
@@ -191,7 +191,7 @@ div .hidden{
 }
 
 .grade {
-    line-height: 0.99em;
+    /*line-height: 0.99em;*/
     border-bottom: solid #000000 1px;
     border-left: solid #000000 1px;
     border-right: solid #000000 1px;

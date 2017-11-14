@@ -13,7 +13,7 @@ $dbStud=mssql_connect($opStud['host'], $opStud['login'], $opStud['password']) or
 //  return $result;
 //} 
 
-$verS='?v=2'; //Версия скриптов для подстановки в html
-$verC='?v=2'; //Версия css и css для подстановки в html
+$verS='?v=3'; //Версия скриптов для подстановки в html
+$verC='?v=3'; //Версия css и css для подстановки в html
 
 ?>

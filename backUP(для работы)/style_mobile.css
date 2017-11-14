@@ -87,9 +87,9 @@
     }
 
     .triangle-topright {
-        left: 50px;
-        border-bottom: 11px solid #000000;
-        border-left: 11px solid transparent;
+        left: 53px;
+        border-bottom: 7px solid #000000;
+        border-left: 7px solid transparent;
     }
 
     .avg, .ans, .abs {
@@ -102,9 +102,6 @@
         height: 20px;
     }
 
-    .popup-content {
-        width: 150px;
-    }
 
 
 }

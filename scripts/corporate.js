@@ -1,4 +1,76 @@
-﻿//Календарь
+﻿$(document).ready(function () {
+    hideHistory();
+    //Дорисовка треугольника
+    $("div.grade").each(function () {
+        if ($(this).text() != "") {
+            $(this).append('<div class="triangle-topright"></div>');
+        }
+    });
+
+    //Функция логирования
+    $('div').delegate(".triangle-topright", "click", function (e) {
+        var patch = window.location.pathname.slice(1);
+        var stud_id = $(this).parent().attr("data-idStudent");
+        var zap_id = $(this).parent().attr("data-zapis");
+
+        var remainder=Number($(window).width()-e.pageX);
+
+        $("#history").css("top", Number($(this).offset().top + 11));//11 размер триугольника
+         if(remainder > 270){
+            $("#history").css("left", Number($(this).offset().left + 10));
+        }
+        else{
+             $("#history").css("left", Number($(this).offset().left - 260)); //250- ширина окна логов + 10 в резерв
+        }
+
+
+        $.ajax({
+            type: 'get',
+            url: patch,
+            data: {
+                'idLessons': $("input#idSubject").val(),
+                'idStudent': stud_id,
+                'idZapis': zap_id,
+                'menuactiv': "log"
+            },
+            success: function (st) {
+                if ((st != "Access is denied!") && (st != "No access rights!")) {
+                    $("#log_text").insertAfter(st.toString());
+                }
+                else {
+                    if (st == "Access is denied!") {
+                        alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
+                    }
+                    else if (st == "No access rights!") {
+                        alert("Не достаточно прав!");
+                    }
+                    else {
+                        alert("Что-то пошло не так! ");
+                    }
+                }
+            },
+            error: function () {
+                alert("Не удалось просмотреть историю изменений!");
+            }
+        });
+
+
+        showHistory();
+
+        $(function () {
+            $(document).mouseup(function (e) {
+                if (!$("#history").is(e.target) && $("#history").has(e.target).length === 0) { // и не по его дочерним элементам
+                    hideHistory();
+                }
+            });
+        });
+    });
+
+
+});
+
+
+//Календарь
 $(function () {
     $.datepicker.regional['ru'] = {
         monthNames: ['Январь', 'Февраль', 'Март', 'Апрель',
@@ -10,7 +82,7 @@ $(function () {
     $('.datepicker').datepicker({dateFormat: 'dd.mm.yy', firstDay: 1});
     $.datepicker.setDefaults($.datepicker.regional['ru']);
     $('.datepicker').mask("99.99.9999");
-    $.datepicker.setDefaults({showAnim:'show'});
+    $.datepicker.setDefaults({showAnim: 'show'});
 
 
 });
@@ -32,10 +104,11 @@ addHandler(window, 'mousewheel', wheel);
 addHandler(document, 'mousewheel', wheel);
 
 function wheel(event) {
-    var target=$(event.target);
-    if (target.is("div.grade")){
-        var curLeft=$(".result_box_statistic").scrollLeft();
-        var curLeft1=$(".result_box").scrollLeft();
+    hideHistory();
+    var target = $(event.target);
+    if (target.is("div.grade")) {
+        var curLeft = $(".result_box_statistic").scrollLeft();
+        var curLeft1 = $(".result_box").scrollLeft();
         var delta; // Направление колёсика мыши
         event = event || window.event;
         // Opera и IE работают со свойством wheelDelta
@@ -51,13 +124,13 @@ function wheel(event) {
         if (event.preventDefault) event.preventDefault();
         event.returnValue = false;
         //alert(delta); // Выводим направление колёсика мыши
-        if(delta==1){
-            $(".result_box_statistic").scrollLeft(curLeft+50);
-            $(".result_box").scrollLeft(curLeft1+50);
+        if (delta == 1) {
+            $(".result_box_statistic").scrollLeft(curLeft + 50);
+            $(".result_box").scrollLeft(curLeft1 + 50);
         }
-        else if(delta==-1){
-            $(".result_box_statistic").scrollLeft(curLeft-50);
-            $(".result_box").scrollLeft(curLeft1-50);
+        else if (delta == -1) {
+            $(".result_box_statistic").scrollLeft(curLeft - 50);
+            $(".result_box").scrollLeft(curLeft1 - 50);
         }
 
     }
@@ -65,51 +138,52 @@ function wheel(event) {
 
 
 $(function (event) {
-    if(event.keyCode==38 || event.keyCode==40){
+    if (event.keyCode == 38 || event.keyCode == 40) {
         return false;
     }
 });
 
 absenteeisms = new Array("Н", "Н1ч.", "Н2ч.", "Н3ч.", "Н4ч.", "Н5ч.", "Н6ч.");
 absenteeisms_with_cause = new Array("Ну", "Нб.у", "Нб.о.");
-other_symbols=new Array("Отр");
+other_symbols = new Array("Отр");
+
 //функция проверки введенных данных в поле оценка
 function proverka(event, id) {
 
     var not_digital = /\D/;
-    var str_id='inp_'+id;
-    var el=document.getElementById(str_id);
+    var str_id = 'inp_' + id;
+    var el = document.getElementById(str_id);
 
-    if((event.keyCode==8) || (event.keyCode==27) ) {
+    if ((event.keyCode == 8) || (event.keyCode == 27)) {
         return;
     }
-    if(((event.keyCode>=48) && (event.keyCode<=57)) || ((event.keyCode>=96) && (event.keyCode<=105))){
+    if (((event.keyCode >= 48) && (event.keyCode <= 57)) || ((event.keyCode >= 96) && (event.keyCode <= 105))) {
 
         $(function () {
 
-            if((el.value>10) || (el.value<1)){
-                el.value="";
+            if ((el.value > 10) || (el.value < 1)) {
+                el.value = "";
             }
         });
     }
 
-    else if((el.value>10) || (el.value<1) ){
-        el.value="";
+    else if ((el.value > 10) || (el.value < 1)) {
+        el.value = "";
         return false;
     }
-    else{
+    else {
         return false;
     }
 }
 
 //Функция по проверке дату на корректность. Запрещено выбирать дату будущего
 function checkDate(id_field) {
-    if($("#"+id_field).val()==""){
+    if ($("#" + id_field).val() == "") {
         alert("Заполните поле 'Дата'.");
         return false;
     }
-    if ($("#"+id_field).val().length == 10) {
-        var arrD = $("#"+id_field).val().split(".");
+    if ($("#" + id_field).val().length == 10) {
+        var arrD = $("#" + id_field).val().split(".");
         arrD[1] -= 1;
         var d = new Date(arrD[2], arrD[1], arrD[0]);//0-день 1-месяц 2-год
         if ((d.getFullYear() == arrD[2]) && (d.getMonth() == arrD[1]) && (d.getDate() == arrD[0])) {
@@ -119,26 +193,26 @@ function checkDate(id_field) {
                 return false;
             }
 
-            var newDate=new Date();
-            var now=newDate.getDate()+"."+(newDate.getMonth()+1)+"."+newDate.getFullYear();
+            var newDate = new Date();
+            var now = newDate.getDate() + "." + (newDate.getMonth() + 1) + "." + newDate.getFullYear();
 
-            if ((arrD[2]>newDate.getFullYear()) || ((arrD[2]>=newDate.getFullYear()) && (arrD[1]>newDate.getMonth()))
-                || ((arrD[2]>=newDate.getFullYear()) && (arrD[1]>=newDate.getMonth()) && arrD[0]>newDate.getDate())){
-                alert("Введенная Вами дата '"+$("#"+id_field).val()+"' еще не наступила!");
-                $("#"+id_field).val('');
+            if ((arrD[2] > newDate.getFullYear()) || ((arrD[2] >= newDate.getFullYear()) && (arrD[1] > newDate.getMonth()))
+                || ((arrD[2] >= newDate.getFullYear()) && (arrD[1] >= newDate.getMonth()) && arrD[0] > newDate.getDate())) {
+                alert("Введенная Вами дата '" + $("#" + id_field).val() + "' еще не наступила!");
+                $("#" + id_field).val('');
                 return false;
             }
         }
-        else{
-            alert("Введена некорректная дата! " + $("#"+id_field).val());
-            $("#"+id_field).val('');
+        else {
+            alert("Введена некорректная дата! " + $("#" + id_field).val());
+            $("#" + id_field).val('');
             return false;
         }
 
     }
-    else{
+    else {
         alert("Дата должна быть введена в формате: дд.мм.гггг");
-        $("#"+id_field).val('');
+        $("#" + id_field).val('');
         return false;
     }
 }
@@ -153,6 +227,7 @@ function Encrypt(value) {
     }
     return res;
 }
+
 function Decrypt(value) {
     var res = "";
     var mas = value.match(/.{2}/g);
@@ -167,10 +242,10 @@ function Decrypt(value) {
 
 function MatchEncrypt(val) {
 
-    if (val>=1 && val<=10){
-        return Number(val)+9;
+    if (val >= 1 && val <= 10) {
+        return Number(val) + 9;
     }
-    else{
+    else {
         switch (val) {
             case 'Ну':
                 return '20';
@@ -220,11 +295,12 @@ function MatchEncrypt(val) {
     }
 
 }
+
 function MatchDecrypt(val) {
-    if(val>=10 && val<20){
-        return Number(val)-9;
+    if (val >= 10 && val < 20) {
+        return Number(val) - 9;
     }
-    else{
+    else {
         switch (val) {
             case '20':
                 return 'Ну';
@@ -276,44 +352,56 @@ function MatchDecrypt(val) {
 }
 
 //Функция по обработке горячих клавиш и Enter
-document.addEventListener('keydown', function(e){
+document.addEventListener('keydown', function (e) {
     var val = parseInt(e.key);
     val = (!isNaN(val)) ? val : false;
-    if (val !== false){
-        if (e.altKey){
-            $("#"+id_input).val($("#panel>#"+val).text());
-            $("#"+id_input).blur();
+    if (val !== false) {
+        if (e.altKey) {
+            $("#" + id_input).val($("#panel>#" + val).text());
+            $("#" + id_input).blur();
         }
     }
 
-    if(e.keyCode==13){
-        if($("#form-edit").dialog("isOpen")){
-            if($("#edit").prop("disabled"))
-            {
+    if (e.keyCode == 13) {
+        if ($("#form-edit").dialog("isOpen")) {
+            if ($("#edit").prop("disabled")) {
                 return false;
             }
-            else{
+            else {
                 $("#edit").click();
             }
         }
     }
-
-
 }, false);
+
 
 //При выставление фокуса input в переменную получает id inputa
 $(function () {
     $("input.inp_cell").focus(function () {
-        id_input=$(this).attr('id');
+        id_input = $(this).attr('id');
     });
 });
 
-
 $(function () {
-    $('b.tool, span.tool, div.grade, div.date_title, input.inp_cell').mousedown(function(event){
+    $('b.tool, span.tool, div.grade, div.date_title, input.inp_cell').mousedown(function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        return false;
+    });
+});
+$(function () {
+    $('div.triangle-topright').dblclick(function (event) {
         event.stopPropagation();
         event.preventDefault();
         return false;
     });
 });
 
+
+function hideHistory() {
+    $("#history").hide();
+}
+
+function showHistory() {
+    $("#history").show();
+}

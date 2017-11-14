@@ -33,7 +33,7 @@ $(function () {
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
-    
+
     function addLesson() {
         checkDate("lesson-date");
         if ($("#lesson-date").val() != ""){
@@ -46,7 +46,7 @@ $(function () {
             if ($("#colloquium_rb").is(':checked')) {
                 $.ajax({
                     type:'get',
-                    url:'p.php',
+                    url:'z.php',
                     data:{
                         'dateLesson':dateLesson,
                         'PKE':"1",
@@ -87,7 +87,7 @@ $(function () {
             else if ($("#exam_rb").is(':checked')) {
                 $.ajax({
                     type:'get',
-                    url:'p.php',
+                    url:'z.php',
                     data:{
                         'dateLesson':dateLesson,
                         'PKE':"2",
@@ -128,7 +128,7 @@ $(function () {
 
                 $.ajax({
                     type:'get',
-                    url:'p.php',
+                    url:'z.php',
                     data:{
                         'dateLesson':dateLesson,
                         'PKE':"0",
@@ -276,7 +276,7 @@ $(function () {
 
         $(".inp_cell:text").keydown(function (event) {
             if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
-                    $(this).val("");
+                $(this).val("");
             }
         });
     });
@@ -296,7 +296,7 @@ $(function () {
             if((cur_grade=="") && (cur_res!="")){
                 $.ajax({
                     type:'get',
-                    url:'p.php',
+                    url:'z.php',
                     data:{
                         'dateLes': dat,
                         'idLessons': $("input#idSubject").val(),
@@ -345,7 +345,7 @@ $(function () {
                     if(id_Zapis == 0) id_Zapis = myStudentZapis[id_Less+'Zapis'+student_id];
                     $.ajax({
                         type:'get',
-                        url:'p.php',
+                        url:'z.php',
                         data:{
                             'id_Zapis': id_Zapis,
                             'dateLes': dat,
@@ -384,7 +384,7 @@ $(function () {
         else{
             alert("Для сохранения необходимо ввести хоть одну оценку!");
         }
-   });
+    });
 
     $(".inp_cell:text").click(function () {
         $(this).select();
@@ -459,7 +459,7 @@ $(function () {
                 if((dat!=new_date)){
                     $.ajax({
                         type:'get',
-                        url:'p.php',
+                        url:'z.php',
                         data:{
                             'newDate': new_date,
                             'PKE': pke_lesson,
@@ -497,7 +497,7 @@ $(function () {
                 else if(newPKE!=pke_lesson){
                     $.ajax({
                         type:'get',
-                        url:'p.php',
+                        url:'z.php',
                         data:{
                             'date': dat,
                             'newPKE': newPKE,

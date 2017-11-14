@@ -85,7 +85,7 @@
 
     .triangle-topright {
         left: 70px;
-        border-bottom: 11px solid #000000;
+        border-bottom: 10px solid #000000;
         border-left: 11px solid transparent;
     }
 
@@ -99,9 +99,6 @@
         height: 30px;
     }
 
-    .popup-content {
-        width: 250px;
-    }
 
 
 
