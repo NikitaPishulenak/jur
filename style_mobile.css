@@ -4,17 +4,17 @@
         font-size: 12px;
     }
 
-    .button {
-        width: 75px;
-        margin-bottom: 20px;
-        font-weight: 100;
-    }
+    /*.button {*/
+        /*width: 75px;*/
+        /*margin-bottom: 20px;*/
+        /*font-weight: 100;*/
+    /*}*/
 
-    .attention {
-        width: 55px;
-        margin-bottom: 20px;
-        margin-left: 15px;
-    }
+    /*.attention {*/
+        /*width: 55px;*/
+        /*margin-bottom: 20px;*/
+        /*margin-left: 15px;*/
+    /*}*/
 
     .date_title{
         width: 60px;
@@ -37,9 +37,9 @@
         margin-left: 36px;
     }
 
-    .panel{
-        margin-bottom: -10px;
-    }
+    /*.panel{*/
+        /*margin-bottom: -10px;*/
+    /*}*/
 
     #create_lesson{
         margin-bottom: 20px;

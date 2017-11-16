@@ -171,10 +171,15 @@ function GroupViewL()
 function edtLessonStudent()
 {
     include_once 'configMain.php';
-    $resTime = mysqli_query($dbMain, "SELECT TIMESTAMPDIFF(MINUTE, CONCAT(DateO, ' ', TimeO), NOW()), idLessons, idLesson, DateO, TimeO, RatingO, idEmployess FROM rating WHERE id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
-    list($On) = mysqli_fetch_row($resPredmet);
-
-    mysqli_query($dbMain, "UPDATE rating SET RatingO=" . $_GET['grades'] . " WHERE id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
+    $resTime = mysqli_query($dbMain, "SELECT id, TIMESTAMPDIFF(MINUTE, CONCAT(DateO, ' ', TimeO), NOW()), idStud, idLessons, idLesson, DateO, TimeO, RatingO, idEmployess FROM rating WHERE id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
+    if (mysqli_num_rows($resTime) >= 1) {
+        list($arr) = mysqli_fetch_row($resTime);
+        if($arr[1] > 10){
+            mysqli_query($dbMain, "UPDATE rating SET RatingO=" . $_GET['grades'] . " WHERE id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
+        }
+        mysqli_query($dbMain, "UPDATE rating SET RatingO=" . $_GET['grades'] . " WHERE id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
+        mysqli_free_result($resTime);
+    }
 }
 
 
@@ -557,7 +562,7 @@ function StudentView($content, $contentO = '')
                     <span class='space'></span>
                     <span id='6' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='7' class='tool' title='Пропуск занятия на 3 часа.'> <span>Н<sub>3ч.</sub></span></span>
+                    <span id='7' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span>
                     <span class='space'></span>
                     <span id='8' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span>
                     <span class='space'></span>
@@ -596,12 +601,14 @@ function StudentView($content, $contentO = '')
 
 
                 <br>
-                <hr>
-                <br>
-                <button id='edit' class='button'>Сохранить</button>
-                <button id='close' class='attention'>Отмена</button>
-            </div>
         </fieldset>
+                <hr class='marg-line'>
+                <button id='close' class='attention'>Отмена</button>
+                <button id='edit' class='button'>Сохранить</button>
+                <br><br>
+
+            </div>
+
     </form>
 </div>
 
@@ -625,7 +632,7 @@ function StudentView($content, $contentO = '')
 
 
 <div class='popup-content' id='history'>
-    <span id='log_text'>Здесь все логи данного студента</span>
+    <span id='log_text'></span>
 </div>
 
 
@@ -686,7 +693,7 @@ function StudentViewL($content, $contentO = '')
                     <span class='space'></span>
                     <span id='6' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='7' class='tool' title='Пропуск занятия на 3 часа.'> <span>Н<sub>3ч.</sub></span></span>
+                    <span id='7' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span>
                     <span class='space'></span>
                     <span id='8' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span>
                     <span class='space'></span>
@@ -699,14 +706,15 @@ function StudentViewL($content, $contentO = '')
 
                 <input class='inp_cell' id='inp_0' type=text maxlength='0'
                        onkeydown='return proverka(event,0);' onblur='return proverka(event,0);'>
-                       
-                <br>
-                <hr>
-                <br>
-                <button id='edit' class='button'>Сохранить</button>
+        </fieldset>      
+                <hr class='marg-line'>
                 <button id='close' class='attention'>Отмена</button>
+                <button id='edit' class='button'>Сохранить</button>
+                <br><br>
+
+                
             </div>
-        </fieldset>
+        
     </form>
 </div>
 
@@ -723,7 +731,7 @@ function StudentViewL($content, $contentO = '')
 </div>
 
 <div class='popup-content' id='history'>
-    <span id='log_text'>Здесь все логи данного студента</span>
+    <span id='log_text'></span>
 </div>
 
 <div class='container-list'>

@@ -456,78 +456,39 @@ $(function () {
 
             if((dat!=new_date) || (newPKE!=pke_lesson)){
                 //Замена даты
-                if((dat!=new_date)){
-                    $.ajax({
-                        type:'get',
-                        url:'z.php',
-                        data:{
-                            'newDate': new_date,
-                            'PKE': pke_lesson,
-                            'idGroup': $("input#idGroup").val(),
-                            'idLessons': $("input#idSubject").val(),
-                            'PL':"0",
-                            'menuactiv': "editDate"
-                        },
-                        success:function (st) {
-                            if ((st!="Access is denied!")&&(st!="No access rights!")){
-                                dat_col_object.html(new_date);
-                                alert("Дата "+dat+" успешно заменена на "+new_date+"!");
-                                window.location.reload();
+                $.ajax({
+                    type:'get',
+                    url:'p.php',
+                    data:{
+                        'Date': new_date,
+                        'PKE': newPKE,
+                        'idGroup': $("input#idGroup").val(),
+                        'idLesson': id_Lesson,
+                        'menuactiv': "editDate"
+                    },
+                    success:function (st) {
+                        if ((st!="Access is denied!")&&(st!="No access rights!")){
+                            dat_col_object.html(new_date);
+                            // alert("Дата "+dat+" успешно заменена на "+new_date+"!");
+                            window.location.reload();
+                        }
+                        else{
+                            if (st=="Access is denied!"){
+                                alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
+                            }
+                            else if (st=="No access rights!"){
+                                alert("Не достаточно прав!");
                             }
                             else{
-                                if (st=="Access is denied!"){
-                                    alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
-                                }
-                                else if (st=="No access rights!"){
-                                    alert("Не достаточно прав!");
-                                }
-                                else{
-                                    alert("Что-то пошло не так! ");
-                                }
+                                alert("Что-то пошло не так! ");
+                            }
 
-                            }
-                        },
-                        error: function () {
-                            alert("Произошла ошибка при передаче данных");
                         }
-                    });
-                }
-
-                //Замена типа занятия
-                else if(newPKE!=pke_lesson){
-                    $.ajax({
-                        type:'get',
-                        url:'z.php',
-                        data:{
-                            'date': dat,
-                            'newPKE': newPKE,
-                            'oldPKE': pke_lesson,
-                            'idGroup': $("input#idGroup").val(),
-                            'idLessons': $("input#idSubject").val(),
-                            'PL':"0",
-                            'menuactiv': "editPKE"
-                        },
-                        success:function (st) {
-                            if ((st!="Access is denied!")&&(st!="No access rights!")){
-                                window.location.reload();
-                            }
-                            else{
-                                if (st=="Access is denied!"){
-                                    alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
-                                }
-                                else if (st=="No access rights!"){
-                                    alert("Не достаточно прав!");
-                                }
-                                else{
-                                    alert("Что-то пошло не так! ");
-                                }
-                            }
-                        },
-                        error: function () {
-                            alert("Произошла ошибка при передаче данных");
-                        }
-                    });
-                }
+                    },
+                    error: function () {
+                        alert("Произошла ошибка при передаче данных");
+                    }
+                });
 
                 edit_date_dialog.dialog("close");
             }
@@ -539,16 +500,18 @@ $(function () {
 
     $('div').delegate(".date_title", "dblclick", function () {
         dat=$(this).parent().find('div.date_title').html();//Дата столбца
-        var datemass = dat.split(".");
-        var datepickerDate=datemass[1]+'.'+datemass[0]+'.'+datemass[2];
+        // var datemass = dat.split(".");
+        // var datepickerDate=datemass[1]+'.'+datemass[0]+'.'+datemass[2];
         dat_col_object=$(this).parent().find('div.date_title');// объект которому принадлежит значение
         pke_lesson=$(this).parent().find("div.grade:first").attr('data-PKE');
-        id_Zapis=$(this).attr('data-zapis');
+        id_Lesson=$(this).attr('data-idLesson');
         edit_date_dialog.dialog("open");
         edit_date_form[0].reset();
         edit_date_dialog.dialog({title: dat});
         $("#edit-lesson-date").val(dat);
-        $('.datepicker').datepicker("setDate", new Date(datepickerDate) );
+        //$('.datepicker').datepicker("setDate", new Date(datepickerDate) );
+
+        $('.datepicker').datepicker("setDate", dat.toString());
         switch (pke_lesson){
             case '0':
                 $("#edit_simple_lesson_rb").prop("checked", true);
@@ -569,9 +532,6 @@ $(function () {
     $("div.grade").each(function () {
         if($(this).text()!=""){
             $(this).text(Decrypt($(this).text()));
-        }
-        if($(this).text()=="Отр."){
-            $(this).addClass("absenteeism_closed_cell");
         }
     });
 });

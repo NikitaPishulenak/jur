@@ -9,45 +9,42 @@
 
     //Функция логирования
     $('div').delegate(".triangle-topright", "click", function (e) {
-        var patch = window.location.pathname.slice(1);
         var stud_id = $(this).parent().attr("data-idStudent");
         var zap_id = $(this).parent().attr("data-zapis");
 
-        var remainder=Number($(window).width()-e.pageX);
+        var remainder = Number($(window).width() - e.pageX);
 
         $("#history").css("top", Number($(this).offset().top + 11));//11 размер триугольника
-         if(remainder > 270){
+        if (remainder > 270) {
             $("#history").css("left", Number($(this).offset().left + 10));
         }
-        else{
-             $("#history").css("left", Number($(this).offset().left - 260)); //250- ширина окна логов + 10 в резерв
+        else {
+            $("#history").css("left", Number($(this).offset().left - 260)); //250- ширина окна логов + 10 в резерв
         }
 
 
         $.ajax({
             type: 'get',
-            url: patch,
+            url: 'log.php',
             data: {
-                'idLessons': $("input#idSubject").val(),
                 'idStudent': stud_id,
-                'idZapis': zap_id,
-                'menuactiv': "log"
+                'idZapis': zap_id
             },
-            success: function (st) {
-                if ((st != "Access is denied!") && (st != "No access rights!")) {
-                    $("#log_text").insertAfter(st.toString());
+            success: function (st, event) {
+
+                if (st == "Access is denied!") {
+                    hideHistory();
+                    alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
+
                 }
                 else {
-                    if (st == "Access is denied!") {
-                        alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
-                    }
-                    else if (st == "No access rights!") {
-                        alert("Не достаточно прав!");
-                    }
-                    else {
-                        alert("Что-то пошло не так! ");
-                    }
+                    $("#log_text").html(st);
+                    $("#log_text").find(".gLog").each(function () {
+                       var c_g=$(this).html();
+                       $(this).html(Decrypt(c_g));
+                    });
                 }
+
             },
             error: function () {
                 alert("Не удалось просмотреть историю изменений!");

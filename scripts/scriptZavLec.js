@@ -286,19 +286,18 @@ $(function () {
                 //Замена даты
                 $.ajax({
                     type:'get',
-                    url:'z.php',
+                    url:'p.php',
                     data:{
-                        'newDate': new_date,
+                        'Date': new_date,
                         'PKE': "0",
                         'idGroup': $("input#idGroup").val(),
-                        'idLessons': $("input#idSubject").val(),
-                        'PL':"1",
+                        'idLesson': id_Lesson,
                         'menuactiv': "editDate"
                     },
                     success:function (st) {
                         if ((st!="Access is denied!")&&(st!="No access rights!")){
                             dat_col_object.html(new_date);
-                            alert("Дата "+dat+" успешно заменена на "+new_date+"!");
+                            // alert("Дата "+dat+" успешно заменена на "+new_date+"!");
                             window.location.reload();
                         }
                         else{
@@ -329,15 +328,15 @@ $(function () {
 
     $('div').delegate(".date_title", "dblclick", function () {
         dat=$(this).parent().find('div.date_title').html();//Дата столбца
-        var datemass = dat.split(".");
-        var datepickerDate=datemass[1]+'.'+datemass[0]+'.'+datemass[2];
+        // var datemass = dat.split(".");
+        // var datepickerDate=datemass[1]+'.'+datemass[0]+'.'+datemass[2];
         dat_col_object=$(this).parent().find('div.date_title');// объект которому принадлежит значение
-        id_Zapis=$(this).attr('data-zapis');
+        id_Lesson=$(this).attr('data-idLesson');
         edit_date_dialog.dialog("open");
         edit_date_form[0].reset();
         edit_date_dialog.dialog({title: dat});
         $("#edit-lesson-date").val(dat);
-        $('.datepicker').datepicker("setDate", new Date(datepickerDate) );
+        $('.datepicker').datepicker("setDate", dat.toString());
 
     });
 });
@@ -347,9 +346,6 @@ $(function () {
     $("div.grade").each(function () {
         if($(this).text()!=""){
             $(this).text(Decrypt($(this).text()));
-        }
-        if($(this).text()=="Отр."){
-            $(this).addClass("absenteeism_closed_cell");
         }
     });
 });

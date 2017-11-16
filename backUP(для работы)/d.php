@@ -489,17 +489,19 @@ function StudentView($content,$contentO=''){
                        onkeydown=\"return proverka(event,2);\">
 
                 <br>
-                <hr>
-                <br>
-                <button id='edit' class='button'>Сохранить</button>
-                <button id='close' class='attention'>Отмена</button>
-            </div>
         </fieldset>
+                <hr class='marg-line'>
+                <button id='close' class='attention'>Отмена</button>
+                <button id='edit' class='button'>Сохранить</button>
+                <br><br>
+                
+            </div>
+        
     </form>
 </div>
 
 <div class='popup-content' id='history'>
-    <span id='log_text'>Здесь все логи данного студента</span>
+    <span id='log_text'></span>
 </div>
 
 <div class='container-list'>
@@ -539,17 +541,19 @@ function StudentViewL($content,$contentO=''){
                        onkeydown=\"return proverka(event,0);\">
 
                 <br>
-                <hr>
-                <br>
-                <button id='edit' class='button'>Сохранить</button>
-                <button id='close' class='attention'>Отмена</button>
-            </div>
         </fieldset>
+                <hr class='marg-line'>
+                <button id='close' class='attention'>Отмена</button>
+                <button id='edit' class='button'>Сохранить</button>
+                <br><br>
+                
+            </div>
+
     </form>
 </div>
 
 <div class='popup-content' id='history'>
-    <span id='log_text'>Здесь все логи данного студента</span>
+    <span id='log_text'></span>
 </div>
 
 <div class='container-list'>

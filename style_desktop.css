@@ -3,16 +3,16 @@
     html{
         font-size: 16px;
     }
-    .button {
-        width: 115px;
-        margin-bottom: 40px;
-    }
+    /*.button {*/
+        /*width: 115px;*/
+        /*margin-bottom: 40px;*/
+    /*}*/
 
-    .attention {
-        width: 85px;
-        margin-bottom: 40px;
-        margin-left: 20px;
-    }
+    /*.attention {*/
+        /*width: 85px;*/
+        /*margin-bottom: 40px;*/
+        /*margin-left: 20px;*/
+    /*}*/
 
     .date_title{
         width: 80px;
@@ -34,9 +34,15 @@
         margin-left: 48px;
     }
 
-    .panel{
-        margin-bottom: -19px;
+
+    .marg-line{
+        margin-top: 17px;
+        margin-bottom: 14px;
     }
+
+    /*.panel{*/
+        /*margin-bottom: -19px;*/
+    /*}*/
 
     #create_lesson{
         margin-bottom: 30px;

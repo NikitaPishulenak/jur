@@ -10,9 +10,6 @@ $(function () {
                 $(this).addClass("undef");
             }
         }
-        if($(this).text()=="Отр."){
-            $(this).addClass("absenteeism_closed_cell");
-        }
     });
 });
 
