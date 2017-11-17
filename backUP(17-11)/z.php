@@ -14,7 +14,7 @@ for ($ii = 0; $ii <= ($countLev - 1); $ii++) {
 }
 
 if (!$Nepuschu) {
-    echo "Р—Р°РїСЂРµС‰С‘РЅРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ РґРѕСЃС‚СѓРїР°! Р”РѕСЃРІРёРґРѕСЃ.";
+    echo "Запрещённый уровень доступа! Досвидос.";
     exit;
 }
 
@@ -79,7 +79,7 @@ function GroupViewL()
 
     $retVal .= "<h3>" . $_GET['nPredmet'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
     $retVal .= $_GET['nF'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal .= "Р“СЂСѓРїРїР° в„– " . $_GET['nGroup'] . " (<a href='z.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $_GET['idGroup'] . "&PL=0&nPredmet=" . $_GET['nPredmet'] . "&nF=" . $_GET['nF'] . "&nGroup=" . $_GET['nGroup'] . "'>РџСЂР°РєС‚РёС‡РµСЃРєРѕРµ</a> / Р›Р•РљР¦РРЇ)</h3><hr>";
+    $retVal .= "Группа № " . $_GET['nGroup'] . " (<a href='z.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $_GET['idGroup'] . "&PL=0&nPredmet=" . $_GET['nPredmet'] . "&nF=" . $_GET['nF'] . "&nGroup=" . $_GET['nGroup'] . "'>Практическое</a> / ЛЕКЦИЯ)</h3><hr>";
 
 
     $retVal .= "
@@ -173,7 +173,7 @@ function GroupViewL()
     mysqli_free_result($resultL);
 
 
-    echo HeaderFooterGroupL($retVal, "в„– " . $_GET['nGroup'], $verC, $verS);
+    echo HeaderFooterGroupL($retVal, "№ " . $_GET['nGroup'], $verC, $verS);
 }
 
 
@@ -234,7 +234,7 @@ function GroupViewP()
 
     $retVal .= "<h3>" . $_GET['nPredmet'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
     $retVal .= $_GET['nF'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal .= "Р“СЂСѓРїРїР° в„– " . $_GET['nGroup'] . " (РџР РђРљРўРР§Р•РЎРљРћР• / <a href='z.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $_GET['idGroup'] . "&PL=1&nPredmet=" . $_GET['nPredmet'] . "&nF=" . $_GET['nF'] . "&nGroup=" . $_GET['nGroup'] . "'>Р›РµРєС†РёСЏ</a>)</h3><hr>";
+    $retVal .= "Группа № " . $_GET['nGroup'] . " (ПРАКТИЧЕСКОЕ / <a href='z.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $_GET['idGroup'] . "&PL=1&nPredmet=" . $_GET['nPredmet'] . "&nF=" . $_GET['nF'] . "&nGroup=" . $_GET['nGroup'] . "'>Лекция</a>)</h3><hr>";
 
 
     $retVal .= "
@@ -328,7 +328,7 @@ function GroupViewP()
     mysqli_free_result($resultL);
 
 
-    echo HeaderFooterGroup($retVal, "в„– " . $_GET['nGroup'], $verC, $verS);
+    echo HeaderFooterGroup($retVal, "№ " . $_GET['nGroup'], $verC, $verS);
 }
 
 
@@ -355,7 +355,7 @@ function Fakultet()
 
             $retVal .= "
       <div class='DialogP'>
-      <div class='titleBox'><H2>Р“СЂСѓРїРїС‹</H2></div>
+      <div class='titleBox'><H2>Группы</H2></div>
       ";
             if ($_GET['idF'] == 283) {
                 $result = mssql_query("SELECT IdGroup, Name FROM dbo.Groups WHERE ((IdF=" . $_GET['idF'] . " AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<" . $fac[$_GET['idF']][1] . " AND LEN(Name)>=4) OR (LEFT(Name,1)='" . $fac[$_GET['idF']][0] . "' AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<=" . $fac[$_GET['idF']][1] . " AND LEN(Name)>=4)) OR ((IdF=" . $_GET['idF'] . " AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<" . $fac[$_GET['idF']][3] . " AND LEN(Name)>=4) OR (LEFT(Name,1)='" . $fac[$_GET['idF']][2] . "' AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<=" . $fac[$_GET['idF']][3] . " AND LEN(Name)>=4)) ORDER BY Name", $dbStud);
@@ -368,8 +368,8 @@ function Fakultet()
                     if ($preChar != substr($arr[1], 0, 2)) $retVal .= "<div class='HRnext'></div>";
                     $preChar = substr($arr[1], 0, 2);
                     $retVal .= "<div class='DialogGr'><strong>" . $arr[1] . "</strong><div class='GroupPL'>";
-                    $retVal .= "<a href='z.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $arr[0] . "&PL=0&nPredmet=" . $Pre . "&nF=" . $idName . "&nGroup=" . $arr[1] . "'>РџСЂР°РєС‚.</a>&nbsp;&nbsp;&nbsp;";
-                    $retVal .= "<a href='z.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $arr[0] . "&PL=1&nPredmet=" . $Pre . "&nF=" . $idName . "&nGroup=" . $arr[1] . "'>Р›РµРєС†РёСЏ</a>";
+                    $retVal .= "<a href='z.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $arr[0] . "&PL=0&nPredmet=" . $Pre . "&nF=" . $idName . "&nGroup=" . $arr[1] . "'>Практ.</a>&nbsp;&nbsp;&nbsp;";
+                    $retVal .= "<a href='z.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $arr[0] . "&PL=1&nPredmet=" . $Pre . "&nF=" . $idName . "&nGroup=" . $arr[1] . "'>Лекция</a>";
                     $retVal .= "</div></div></div>\n";
                 }
             }
@@ -396,7 +396,7 @@ function MainF()
     $countPredmet = count($_SESSION['SesVar']['Predmet']);
     $retVal .= "
       <div class='DialogP'>
-      <div class='titleBox'><H2>Р”РёСЃС†РёРїР»РёРЅР°</H2></div>
+      <div class='titleBox'><H2>Дисциплина</H2></div>
    ";
 
     include_once 'configStudent.php';
@@ -439,7 +439,7 @@ function HeaderFooter($content, $title, $vC = '')
     </head>
     <body>
     <?php
-    //<div class="Exit"><a href="index.php?go=exit" title="Р’С‹С…РѕР¶Сѓ">Р’С‹С…РѕР¶Сѓ</a></div>
+    //<div class="Exit"><a href="index.php?go=exit" title="Выхожу">Выхожу</a></div>
     echo LevelView();
     ?>
     <div class="Header">
@@ -532,20 +532,20 @@ function HeaderFooterGroupL($content, $title, $vC = '', $vS = '')
 function StudentView($content, $contentO = '')
 {
 
-    $ret = "<div id='form-lesson' title='РЎРѕР·РґР°РЅРёРµ Р·Р°РЅСЏС‚РёСЏ'>
+    $ret = "<div id='form-lesson' title='Создание занятия'>
     <form>
         <fieldset>
             <div class='box'>
-                <b align='center'>Р”Р°С‚Р° Р·Р°РЅСЏС‚РёСЏ</b>
+                <b align='center'>Дата занятия</b>
                 <div id='date_col'>
-                    <input type='text' id='lesson-date' required class='datepicker' value='" . date('d.m.Y') . "' placeholder='РґРґ.РјРј.РіРіРіРі'>
+                    <input type='text' id='lesson-date' required class='datepicker' value='" . date('d.m.Y') . "' placeholder='дд.мм.гггг'>
                 </div>
                 <br>
-                <label><input type='radio' class='type_lesson' id='simple_lesson_rb' name='type_lesson' value='sl' checked><b class='type_lesson'>РћР±С‹С‡РЅРѕРµ Р·Р°РЅСЏС‚РёРµ</b></label>
+                <label><input type='radio' class='type_lesson' id='simple_lesson_rb' name='type_lesson' value='sl' checked><b class='type_lesson'>Обычное занятие</b></label>
                 <br><br>
-                <label><input type='radio' class='type_lesson' id='colloquium_rb' name='type_lesson' value='col'><b class='type_lesson'>РљРѕР»Р»РѕРєРІРёСѓРј</b></label>
+                <label><input type='radio' class='type_lesson' id='colloquium_rb' name='type_lesson' value='col'><b class='type_lesson'>Коллоквиум</b></label>
                 <br><br>
-                <label><input type='radio' class='type_lesson' id='exam_rb' name='type_lesson' value='exam'><b class='type_lesson'>РђС‚С‚РµСЃС‚Р°С†РёСЏ</b></label>
+                <label><input type='radio' class='type_lesson' id='exam_rb' name='type_lesson' value='exam'><b class='type_lesson'>Аттестация</b></label>
                 <br><br>
             </div>
         </fieldset>
@@ -553,54 +553,54 @@ function StudentView($content, $contentO = '')
 </div>
 
 
-<div id='form-edit' title='Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РѕС‚РјРµС‚РєСѓ'>
+<div id='form-edit' title='Редактировать отметку'>
     <form id='form-edit'>
         <fieldset>
             <div class='panel'>
 
-                    <b id='1' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ С†РµР»РёРєРѕРј.'><b>Рќ</b></b>
+                    <b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b>
                     <span class='space'></span>
-                    <b id='11' class='tool absenteeism_closed' title='Р—Р°РЅСЏС‚РёРµ РѕС‚СЂР°Р±РѕС‚Р°РЅРѕ.'><b>РћС‚СЂ.</b></b>
+                    <b id='11' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b>
                     <span class='space'></span>
-                    <b id='2' class='tool' title='Р—Р°С‡С‚РµРЅРѕ.'><b>Р—Р°С‡.</b></b>
+                    <b id='2' class='tool' title='Зачтено.'><b>Зач.</b></b>
                     <span class='space'></span>
-                    <b id='3' class='tool' title='РќРµ Р·Р°С‡С‚РµРЅРѕ.'><b>РќРµР·Р°С‡.</b></b>
+                    <b id='3' class='tool' title='Не зачтено.'><b>Незач.</b></b>
                     <span class='space'></span>
-                    <b id='4' class='tool fail' title='РќРµРґРѕРїСѓСЃРє Рє Р°С‚С‚РµСЃС‚Р°С†РёРё.'><b>РќРµРґРѕРї</b></b>
+                    <b id='4' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b>
 
                     <hr class='marg-line'>
 
-                    <span id='5' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 1 С‡Р°СЃ.'><span>Рќ<sub>1С‡.</sub></span></span>
+                    <span id='5' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='6' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 2 С‡Р°СЃР°.'><span>Рќ<sub>2С‡.</sub></span></span>
+                    <span id='6' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='7' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 3 С‡Р°СЃР°.'><span>Рќ<sub>3С‡.</sub></span></span>
+                    <span id='7' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='8' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 4 С‡Р°СЃР°.'><span>Рќ<sub>4С‡.</sub></span></span>
+                    <span id='8' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='9' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 5 С‡Р°СЃРѕРІ.'><span>Рќ<sub>5С‡.</sub></span></span>
+                    <span id='9' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='10' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 6 С‡Р°СЃРѕРІ.'><span>Рќ<sub>6С‡.</sub></span></span>
+                    <span id='10' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span>
                     <hr class='marg-line'>
-                    <span class='tool' title='РћС‚РјРµС‚РєР°: РѕРґРёРЅ'>1</span>
+                    <span class='tool' title='Отметка: один'>1</span>
                     <span class='space'></span>
-                    <span class='tool' title='РћС‚РјРµС‚РєР°: РґРІР°'>2</span>
+                    <span class='tool' title='Отметка: два'>2</span>
                     <span class='space'></span>
-                    <span class='tool' title='РћС‚РјРµС‚РєР°: С‚СЂРё'>3</span>
+                    <span class='tool' title='Отметка: три'>3</span>
                     <span class='space'></span>
-                    <span class='tool' title='РћС‚РјРµС‚РєР°: С‡РµС‚С‹СЂРµ'>4</span>
+                    <span class='tool' title='Отметка: четыре'>4</span>
                     <span class='space'></span>
-                    <span class='tool' title='РћС‚РјРµС‚РєР°: РїСЏС‚СЊ'>5</span>
+                    <span class='tool' title='Отметка: пять'>5</span>
                     <span class='space'></span>
-                    <span class='tool' title='РћС‚РјРµС‚РєР°: С€РµСЃС‚СЊ'>6</span>
+                    <span class='tool' title='Отметка: шесть'>6</span>
                     <span class='space'></span>
-                    <span class='tool' title='РћС‚РјРµС‚РєР°: СЃРµРјСЊ'>7</span>
+                    <span class='tool' title='Отметка: семь'>7</span>
                     <span class='space'></span>
-                    <span class='tool' title='РћС‚РјРµС‚РєР°: РІРѕСЃРµРјСЊ'>8</span>
+                    <span class='tool' title='Отметка: восемь'>8</span>
                     <span class='space'></span>
-                    <span class='tool' title='РћС‚РјРµС‚РєР°: РґРµРІСЏС‚СЊ'>9</span>
+                    <span class='tool' title='Отметка: девять'>9</span>
                     <span class='space'></span>
-                    <span class='tool' title='РћС‚РјРµС‚РєР°: РґРµСЃСЏС‚СЊ'>10</span>
+                    <span class='tool' title='Отметка: десять'>10</span>
 
                 <br><br>
 
@@ -610,31 +610,31 @@ function StudentView($content, $contentO = '')
                        onkeydown='return proverka(event,1);' onblur='return proverka(event,1);'>
                 <input class='inp_cell' id='inp_2' type='text' maxlength='6'
                        onkeydown='return proverka(event,2);' onblur='return proverka(event,2);'>
-      <button id='add_grade_input' class='add_grade' title='Р”Р»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕР№ РѕС†РµРЅРєРё РЅР°Р¶РјРёС‚Рµ РЅР° РєРЅРѕРїРєСѓ!'>+</button>
+      <button id='add_grade_input' class='add_grade' title='Для добавления дополнительной оценки нажмите на кнопку!'>+</button>
       <br><br>
       
         </fieldset>
                 <hr class='marg-line'>
-                <button id='close' class='attention'>РћС‚РјРµРЅР°</button>
-                <button id='edit' class='button'>РЎРѕС…СЂР°РЅРёС‚СЊ</button>
+                <button id='close' class='attention'>Отмена</button>
+                <button id='edit' class='button'>Сохранить</button>
                 
             </div>
 
     </form>
 </div>
 
-<div id=\"form-edit-date\" title=\"Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РґР°С‚С‹ Р·Р°РЅСЏС‚РёСЏ\">
+<div id=\"form-edit-date\" title=\"Редактирование даты занятия\">
     <form>
         <fieldset>
             <div class=\"box\">
-                <b align='center'>Р”Р°С‚Р° Р·Р°РЅСЏС‚РёСЏ</b>
-                    <input type='text' id='edit-lesson-date' required class='datepicker' value='" . date('d.m.Y') . "' placeholder='РґРґ.РјРј.РіРіРіРі'>
+                <b align='center'>Дата занятия</b>
+                    <input type='text' id='edit-lesson-date' required class='datepicker' value='" . date('d.m.Y') . "' placeholder='дд.мм.гггг'>
                 <br><br>
-                <label><input type='radio' class='edit_type_lesson' id='edit_simple_lesson_rb' name='type_lesson' value='0' checked><b class='type_lesson'>РћР±С‹С‡РЅРѕРµ Р·Р°РЅСЏС‚РёРµ</b></label>
+                <label><input type='radio' class='edit_type_lesson' id='edit_simple_lesson_rb' name='type_lesson' value='0' checked><b class='type_lesson'>Обычное занятие</b></label>
                 <br><br>
-                <label><input type='radio' class='edit_type_lesson' id='edit_colloquium_rb' name='type_lesson' value='1'><b class='type_lesson'>РљРѕР»Р»РѕРєРІРёСѓРј</b></label>
+                <label><input type='radio' class='edit_type_lesson' id='edit_colloquium_rb' name='type_lesson' value='1'><b class='type_lesson'>Коллоквиум</b></label>
                 <br><br>
-                <label><input type='radio' class='edit_type_lesson' id='edit_exam_rb' name='type_lesson' value='2'><b class='type_lesson'>РђС‚С‚РµСЃС‚Р°С†РёСЏ</b></label>
+                <label><input type='radio' class='edit_type_lesson' id='edit_exam_rb' name='type_lesson' value='2'><b class='type_lesson'>Аттестация</b></label>
                 <br>
             </div>
         </fieldset>
@@ -650,11 +650,11 @@ function StudentView($content, $contentO = '')
 <div class='container-list'>
 
     <div class='tools' align='center'>
-        <button id='create_lesson'>РќРѕРІРѕРµ Р·Р°РЅСЏС‚РёРµ</button>
+        <button id='create_lesson'>Новое занятие</button>
     </div>
     <div class='container'>
         <div class='fio'>
-            <div class='title'>Р¤РРћ</div>\n" . $content . "
+            <div class='title'>ФИО</div>\n" . $content . "
         </div>
 
         <div class='result_box'><div class='date_col hidden'></div>" . $contentO . "
@@ -674,11 +674,11 @@ function StudentView($content, $contentO = '')
 
 function StudentViewL($content, $contentO = '')
 {
-    $ret = "<div id='form-lesson' title='РЎРѕР·РґР°РЅРёРµ Р»РµРєС†РёРё'>
+    $ret = "<div id='form-lesson' title='Создание лекции'>
     <form>
         <fieldset>
             <div class='box'>
-                <b align='center'>Р”Р°С‚Р° Р·Р°РЅСЏС‚РёСЏ</b>
+                <b align='center'>Дата занятия</b>
                 <div id='date_col'>
                     <input type='text' id='lesson-date' required class='datepicker' value='" . date('d.m.Y') . "'>
                 </div>
@@ -690,28 +690,28 @@ function StudentViewL($content, $contentO = '')
 
 
 
-<div id='form-edit' title='Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РѕС‚РјРµС‚РєРё'>
+<div id='form-edit' title='Редактирование отметки'>
     <form id='form-edit'>
         <fieldset>
             <div class='panel'>
-                    <b id='1' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ С†РµР»РёРєРѕРј.'><b>Рќ</b></b>
+                    <b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b>
                      <span class='space'></span>
-                    <b id='11' class='tool absenteeism_closed' title='Р—Р°РЅСЏС‚РёРµ РѕС‚СЂР°Р±РѕС‚Р°РЅРѕ.'><b>РћС‚СЂ.</b></b>
+                    <b id='11' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b>
                      <span class='space'></span>
 
                     <hr class='marg-line'>
                     
-                    <span id='5' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 1 С‡Р°СЃ.'><span>Рќ<sub>1С‡.</sub></span></span>
+                    <span id='5' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='6' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 2 С‡Р°СЃР°.'><span>Рќ<sub>2С‡.</sub></span></span>
+                    <span id='6' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='7' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 3 С‡Р°СЃР°.'><span>Рќ<sub>3С‡.</sub></span></span>
+                    <span id='7' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='8' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 4 С‡Р°СЃР°.'><span>Рќ<sub>4С‡.</sub></span></span>
+                    <span id='8' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='9' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 5 С‡Р°СЃРѕРІ.'><span>Рќ<sub>5С‡.</sub></span></span>
+                    <span id='9' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span>
                     <span class='space'></span>
-                    <span id='10' class='tool' title='РџСЂРѕРїСѓСЃРє Р·Р°РЅСЏС‚РёСЏ РЅР° 6 С‡Р°СЃРѕРІ.'><span>Рќ<sub>6С‡.</sub></span></span>
+                    <span id='10' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span>
                     <span class='space'></span>
                     
                     <br><br>               
@@ -722,8 +722,8 @@ function StudentViewL($content, $contentO = '')
                        onkeydown='return proverka(event,0);' onblur='return proverka(event,0);'><br><br>
         </fieldset>      
                 <hr class='marg-line'>
-                <button id='close' class='attention'>РћС‚РјРµРЅР°</button>
-                <button id='edit' class='button'>РЎРѕС…СЂР°РЅРёС‚СЊ</button>
+                <button id='close' class='attention'>Отмена</button>
+                <button id='edit' class='button'>Сохранить</button>
                 
 
                 
@@ -732,12 +732,12 @@ function StudentViewL($content, $contentO = '')
     </form>
 </div>
 
-<div id=\"form-edit-date\" title=\"Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РґР°С‚С‹ Р·Р°РЅСЏС‚РёСЏ\">
+<div id=\"form-edit-date\" title=\"Редактирование даты занятия\">
     <form>
         <fieldset>
             <div class=\"box\">
-                <b align='center'>Р”Р°С‚Р° Р·Р°РЅСЏС‚РёСЏ</b>
-                    <input type='text' id='edit-lesson-date' required class='datepicker' value='" . date('d.m.Y') . "' placeholder='РґРґ.РјРј.РіРіРіРі'>
+                <b align='center'>Дата занятия</b>
+                    <input type='text' id='edit-lesson-date' required class='datepicker' value='" . date('d.m.Y') . "' placeholder='дд.мм.гггг'>
                 <br><br>
             </div>
         </fieldset>
@@ -751,11 +751,11 @@ function StudentViewL($content, $contentO = '')
 <div class='container-list'>
 
     <div class='tools' align='center'>
-        <button id='create_lesson'>РќРѕРІР°СЏ Р»РµРєС†РёСЏ</button>
+        <button id='create_lesson'>Новая лекция</button>
     </div>
     <div class='container'>
         <div class='fio'>
-            <div class='title'>Р¤РРћ</div>\n" . $content . "
+            <div class='title'>ФИО</div>\n" . $content . "
         </div>
 
         <div class='result_box'><div class='date_col hidden'></div>" . $contentO . "

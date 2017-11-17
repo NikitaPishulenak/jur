@@ -392,6 +392,9 @@ $(function () {
     });
 
     $("#create_lesson").button().on("click", function () {
+        var cr_d=new Date();
+        var cr_dStr=cr_d.getDate()+"."+Number(cr_d.getMonth()+1)+"."+cr_d.getFullYear();
+        $('.datepicker').datepicker("setDate", cr_dStr.toString());
         dialog.dialog("open");
     });
 

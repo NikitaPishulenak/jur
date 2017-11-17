@@ -12,3 +12,4 @@ Satisfy any
 #AddDefaultCharset UTF-8
 
 AddDefaultCharset windows-1251
+php_value session.gc_maxlifetime 21600

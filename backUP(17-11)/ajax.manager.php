@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 include_once 'configMain.php';
 mysqli_query($dbMain,'SET NAMES utf8');
 
