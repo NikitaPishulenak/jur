@@ -1,18 +1,32 @@
-﻿$(document).ready(function () {
+﻿//document.__proto__.delegator = false;
+$(document).ready(function () {
     hideHistory();
-    var path=window.location.pathname.slice(1);
+    path=window.location.pathname.slice(1);
     //Дорисовка треугольника
     $("div.grade").each(function () {
         if ($(this).text() != "") {
             $(this).append('<div class="triangle-topright"></div>');
+            $("div.triangle-topright").hide();
             if(path=="z.php"){
                 $(this).append('<img src="img/close.png" class="close" title="Удалить оценку из БД">');
+                $("img.close").hide();
             }
         }
     });
 
+    $('div').delegate(".grade", "mouseover", function (e) {
+        showTools($(this));
+    });
+
+    $('div').delegate(".grade", "mouseout", function () {
+            hideTools($(this));
+
+    });
+
     //Функция логирования
     $('div').delegate(".triangle-topright", "click", function (e) {
+/*        s=$(this).parent();
+        showTools(s);*/
         var stud_id = $(this).parent().attr("data-idStudent");
         var zap_id = $(this).parent().attr("data-zapis");
 
@@ -406,5 +420,24 @@ function hideHistory() {
 
 function showHistory() {
     $("#history").show();
+    //showTools($(this));
 }
 
+function showTools(thisEl) {
+    if (thisEl.text() != "") {
+        thisEl.find("div.triangle-topright").show();
+        if(path=="z.php"){
+            thisEl.find("img.close").show();
+        }
+    }
+}
+
+function hideTools(thisEl) {
+    if (thisEl.text() != "") {
+        //gradeWithTriangle=thisEl.find("div.triangle-topright");
+        thisEl.find("div.triangle-topright").hide();
+        if(path=="z.php"){
+            thisEl.find("img.close").hide();
+        }
+    }
+}
