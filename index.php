@@ -467,7 +467,7 @@
 
         </div>
 
-<!--        <div class="statistic">-->
+        <div class="statistic"></div>
 <!--            <div class="date_col_stat">-->
 <!--                <div class="date_title">Ср. балл.</div>-->
 <!--                <div class="average" data-idStudent="1"></div>-->

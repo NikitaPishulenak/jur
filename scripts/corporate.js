@@ -1,13 +1,14 @@
 ﻿//document.__proto__.delegator = false;
 $(document).ready(function () {
     hideHistory();
-    path=window.location.pathname.slice(1);
+    resize();
+    path = window.location.pathname.slice(1);
     //Дорисовка треугольника
     $("div.grade").each(function () {
         if ($(this).text() != "") {
             $(this).append('<div class="triangle-topright"></div>');
             $("div.triangle-topright").hide();
-            if(path=="z.php"){
+            if (path == "z.php") {
                 $(this).append('<img src="img/close.png" class="close" title="Удалить оценку из БД">');
                 $("img.close").hide();
             }
@@ -15,18 +16,22 @@ $(document).ready(function () {
     });
 
     $('div').delegate(".grade", "mouseover", function (e) {
+        data_st=$(this).attr('data-idStudent');
+        $('div [data-idStudent="'+data_st+'"]').addClass("illumination");
         showTools($(this));
     });
 
     $('div').delegate(".grade", "mouseout", function () {
-            hideTools($(this));
+        data_st=$(this).attr('data-idStudent');
+        $('div [data-idStudent="'+data_st+'"]').removeClass("illumination");
+        hideTools($(this));
 
     });
 
     //Функция логирования
     $('div').delegate(".triangle-topright", "click", function (e) {
-/*        s=$(this).parent();
-        showTools(s);*/
+        /*        s=$(this).parent();
+         showTools(s);*/
         var stud_id = $(this).parent().attr("data-idStudent");
         var zap_id = $(this).parent().attr("data-zapis");
 
@@ -58,8 +63,8 @@ $(document).ready(function () {
                 else {
                     $("#log_text").html(st);
                     $("#log_text").find(".gLog").each(function () {
-                       var c_g=$(this).html();
-                       $(this).html(Decrypt(c_g));
+                        var c_g = $(this).html();
+                        $(this).html(Decrypt(c_g));
                     });
                 }
 
@@ -84,6 +89,10 @@ $(document).ready(function () {
     });
 
 
+});
+
+$(window).resize(function () {
+    resize();
 });
 
 
@@ -426,7 +435,7 @@ function showHistory() {
 function showTools(thisEl) {
     if (thisEl.text() != "") {
         thisEl.find("div.triangle-topright").show();
-        if(path=="z.php"){
+        if (path == "z.php") {
             thisEl.find("img.close").show();
         }
     }
@@ -436,8 +445,23 @@ function hideTools(thisEl) {
     if (thisEl.text() != "") {
         //gradeWithTriangle=thisEl.find("div.triangle-topright");
         thisEl.find("div.triangle-topright").hide();
-        if(path=="z.php"){
+        if (path == "z.php") {
             thisEl.find("img.close").hide();
         }
     }
+}
+
+function resize() {
+    $windows_wid=$("body").width();// ширина монитора
+    $fio_div_wid=$("div.fio_student").width();// ширина столбика с ФИО
+    $stat_div_wid=$("div.statistic").width();//ширина столбика статистики
+
+    $result_div=$windows_wid-$fio_div_wid-$stat_div_wid-45;//ширина блока с оценками
+    $left_div_stat=$windows_wid-$stat_div_wid;
+
+    $("div.result_box_statistic").css("left",$fio_div_wid+20);
+    $("div.result_box_statistic").css("width", $result_div);
+    $("div.result_box").css("left",$fio_div_wid+20);
+    $("div.result_box").css("width", $result_div+30);
+    $("div.statistic").css("left",$left_div_stat);
 }
