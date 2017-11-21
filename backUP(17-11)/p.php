@@ -124,10 +124,10 @@ function GroupViewL()
 
     include_once 'configStudent.php';
     include_once 'configMain.php';
-    $retVal = "<p><a href='p.php'>" . $_SESSION['SesVar']['Prepod'][0] . " (" . $_SESSION['SesVar']['Prepod'][1] . ")</a></p>";
+    $retVal = "<p>" . $_SESSION['SesVar']['Prepod'][0] . " (" . $_SESSION['SesVar']['Prepod'][1] . ")</p>";
 
-    $retVal .= "<h3>" . $_GET['nPredmet'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal .= $_GET['nF'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+    $retVal .= "<h3><a href='p.php'>" . $_GET['nPredmet'] . "</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+    $retVal .= "<a href='p.php?menuactiv=goF&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idKaf=".$_SESSION['SesVar']['Prepod'][2]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."'>".$_GET['nF']."</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
     $retVal .= "Ãðóïïà ¹ " . $_GET['nGroup'] . " (<a href='p.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Prepod'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $_GET['idGroup'] . "&PL=0&nPredmet=" . $_GET['nPredmet'] . "&nF=" . $_GET['nF'] . "&nGroup=" . $_GET['nGroup'] . "'>Ïðàêòè÷åñêîå</a> / ËÅÊÖÈß)</h3><hr>";
 
 
@@ -235,10 +235,10 @@ function GroupViewP()
 {
     include_once 'configStudent.php';
     include_once 'configMain.php';
-    $retVal = "<p><a href='p.php'>" . $_SESSION['SesVar']['Prepod'][0] . " (" . $_SESSION['SesVar']['Prepod'][1] . ")</a></p>";
+    $retVal = "<p>" . $_SESSION['SesVar']['Prepod'][0] . " (" . $_SESSION['SesVar']['Prepod'][1] . ")</p>";
 
-    $retVal .= "<h3>" . $_GET['nPredmet'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal .= $_GET['nF'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+    $retVal .= "<h3><a href='p.php'>".$_GET['nPredmet']."</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+    $retVal .= "<a href='p.php?menuactiv=goF&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idKaf=".$_SESSION['SesVar']['Prepod'][2]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."'>".$_GET['nF']."</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
     $retVal .= "Ãðóïïà ¹ " . $_GET['nGroup'] . " (ÏÐÀÊÒÈ×ÅÑÊÎÅ / <a href='p.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Prepod'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $_GET['idGroup'] . "&PL=1&nPredmet=" . $_GET['nPredmet'] . "&nF=" . $_GET['nF'] . "&nGroup=" . $_GET['nGroup'] . "'>Ëåêöèÿ</a>)</h3><hr>";
 
 
@@ -346,12 +346,12 @@ function Fakultet()
     include_once 'configMain.php';
     include_once 'config.php';
 
-    $retVal = "<p><a href='p.php'>" . $_SESSION['SesVar']['Prepod'][0] . " (" . $_SESSION['SesVar']['Prepod'][1] . ")</a></p>";
+    $retVal = "<p>".$_SESSION['SesVar']['Prepod'][0]." (".$_SESSION['SesVar']['Prepod'][1].")</a></p>";
 
     $resPredmet = mysqli_query($dbMain, "SELECT name FROM lessons WHERE id=" . $_GET['idPredmet'] . "");
     if (mysqli_num_rows($resPredmet) >= 1) {
         list($Pre) = mysqli_fetch_row($resPredmet);
-        $retVal .= "<h3>$Pre<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+        $retVal .= "<h3><a href='p.php'>$Pre</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
         $result = mssql_query("SELECT Name FROM dbo.Facultets WHERE IdF=" . $_GET['idF'] . "", $dbStud);
         if (mssql_num_rows($result) >= 1) {
             list($idName) = mssql_fetch_row($result);
@@ -365,7 +365,7 @@ function Fakultet()
             if ($_GET['idF'] == 283) {
                 $result = mssql_query("SELECT IdGroup, Name FROM dbo.Groups WHERE ((IdF=" . $_GET['idF'] . " AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<" . $fac[$_GET['idF']][1] . " AND LEN(Name)>=4) OR (LEFT(Name,1)='" . $fac[$_GET['idF']][0] . "' AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<=" . $fac[$_GET['idF']][1] . " AND LEN(Name)>=4)) OR ((IdF=" . $_GET['idF'] . " AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<" . $fac[$_GET['idF']][3] . " AND LEN(Name)>=4) OR (LEFT(Name,1)='" . $fac[$_GET['idF']][2] . "' AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<=" . $fac[$_GET['idF']][3] . " AND LEN(Name)>=4)) ORDER BY Name", $dbStud);
             } else {
-                $result = mssql_query("SELECT IdGroup, Name FROM dbo.Groups WHERE (IdF=" . $_GET['idF'] . " AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<" . $fac[$_GET['idF']][1] . " AND LEN(Name)>=4) OR (LEFT(Name,1)='" . $fac[$_GET['idF']][0] . "' AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<=" . $fac[$_GET['idF']][1] . " AND LEN(Name)>=4) ORDER BY Name", $dbStud);
+                $result = mssql_query("SELECT IdGroup, Name FROM dbo.Groups WHERE (IdF=".$_GET['idF']." AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<".$fac[$_GET['idF']][1]." AND LEN(Name)>=4) OR (LEFT(Name,1)='".$fac[$_GET['idF']][0]."' AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<=".$fac[$_GET['idF']][1]." AND LEN(Name)>=4) ORDER BY Name", $dbStud);
             }
             if (mssql_num_rows($result) >= 1) {
                 $preChar = "";
@@ -666,7 +666,7 @@ function StudentView($content, $contentO = '')
 
         <div class='result_box'><div class='date_col hidden'></div>" . $contentO . "
 
-        </div>
+        </div><div class='statistic'></div>
     </div>
 </div>";
 
@@ -761,7 +761,7 @@ function StudentViewL($content, $contentO = '')
 
         <div class='result_box'><div class='date_col hidden'></div>" . $contentO . "
 
-        </div>
+        </div><div class='statistic'></div>
     </div>
 </div>";
 

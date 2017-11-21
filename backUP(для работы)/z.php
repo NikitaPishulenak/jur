@@ -65,8 +65,8 @@ function edtLess()
 {
     include_once 'configMain.php';
     $dt = explode(".", $_GET['Date']);
-    mysqli_query($dbMain, "UPDATE lesson SET LDate='".$dt[2]."-".$dt[1]."-".$dt[0]."', PKE=".$_GET['PKE']." WHERE id=".$_GET['idLesson']." AND idGroup=".$_GET['idGroup']);
-    mysqli_query($dbMain, "UPDATE rating SET DateO='".$dt[2]."-".$dt[1]."-".$dt[0]."', PKE=".$_GET['PKE']." WHERE idLesson=".$_GET['idLesson']);
+    mysqli_query($dbMain, "UPDATE lesson SET LDate='" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "', PKE=" . $_GET['PKE'] . " WHERE id=" . $_GET['idLesson'] . " AND idGroup=" . $_GET['idGroup']);
+    mysqli_query($dbMain, "UPDATE rating SET DateO='" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "', PKE=" . $_GET['PKE'] . " WHERE idLesson=" . $_GET['idLesson']);
 }
 
 
@@ -75,10 +75,11 @@ function GroupViewL()
 
     include_once 'configStudent.php';
     include_once 'configMain.php';
-    $retVal = "<p><a href='z.php'>" . $_SESSION['SesVar']['Zav'][0] . " (" . $_SESSION['SesVar']['Zav'][1] . ")</a></p>";
+    $retVal = "<p>" . $_SESSION['SesVar']['Zav'][0] . " (" . $_SESSION['SesVar']['Zav'][1] . ")</p>";
 
-    $retVal .= "<h3>" . $_GET['nPredmet'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal .= $_GET['nF'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+    $retVal .= "<h3><a href='z.php'>" . $_GET['nPredmet'] . "</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+    $retVal .= "<a href='z.php?menuactiv=goF&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "'>" . $_GET['nF'] . "</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+
     $retVal .= "Группа № " . $_GET['nGroup'] . " (<a href='z.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $_GET['idGroup'] . "&PL=0&nPredmet=" . $_GET['nPredmet'] . "&nF=" . $_GET['nF'] . "&nGroup=" . $_GET['nGroup'] . "'>Практическое</a> / ЛЕКЦИЯ)</h3><hr>";
 
 
@@ -183,14 +184,14 @@ function GroupViewL()
 function edtLessonStudent()
 {
     include_once 'configMain.php';
-    $resTime = mysqli_query($dbMain, "SELECT TIMESTAMPDIFF(MINUTE, CONCAT(DateO, ' ', TimeO), NOW()), idLessons, idLesson, DateO, TimeO, RatingO, idEmployess FROM rating WHERE id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
+    $resTime = mysqli_query($dbMain, "SELECT TIMESTAMPDIFF(MINUTE, CONCAT(DateO, ' ', TimeO), NOW()), idLessons, idLesson, DateO, TimeO, RatingO, idEmployess FROM rating WHERE id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
     if (mysqli_num_rows($resTime) >= 1) {
         $arr = mysqli_fetch_row($resTime);
-        if($arr[0] > 10){
-            mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (".$_GET['id_Zapis'].",".$arr[1].",".$arr[2].",".$_GET['idStudent'].",'".$arr[3]."','".$arr[4]."',".$arr[5].",".$arr[6].")");
-            mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
-        }else{
-            mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
+        if ($arr[0] > 10) {
+            mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (" . $_GET['id_Zapis'] . "," . $arr[1] . "," . $arr[2] . "," . $_GET['idStudent'] . ",'" . $arr[3] . "','" . $arr[4] . "'," . $arr[5] . "," . $arr[6] . ")");
+            mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=" . $_GET['grades'] . ", idEmployess=" . $_SESSION['SesVar']['FIO'][0] . " WHERE id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
+        } else {
+            mysqli_query($dbMain, "UPDATE rating SET RatingO=" . $_GET['grades'] . ", idEmployess=" . $_SESSION['SesVar']['FIO'][0] . " WHERE id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
         }
         mysqli_free_result($resTime);
     }
@@ -202,7 +203,7 @@ function addLessonStudent()
     include_once 'configMain.php';
     $dt = explode(".", $_GET['dateLes']);
 
-    mysqli_query($dbMain, "INSERT INTO rating (idLessons,idStud,PL,PKE,DateO,TimeO,RatingO,idEmployess,idLesson) VALUES (" . $_GET['idLessons'] . "," . $_GET['idStudent'] . "," . $_GET['PL'] . "," . $_GET['PKE'] . ",'" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "',CURTIME()," . $_GET['grades'] . ",".$_SESSION['SesVar']['FIO'][0].",".$_GET['idLess'].")");
+    mysqli_query($dbMain, "INSERT INTO rating (idLessons,idStud,PL,PKE,DateO,TimeO,RatingO,idEmployess,idLesson) VALUES (" . $_GET['idLessons'] . "," . $_GET['idStudent'] . "," . $_GET['PL'] . "," . $_GET['PKE'] . ",'" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "',CURTIME()," . $_GET['grades'] . "," . $_SESSION['SesVar']['FIO'][0] . "," . $_GET['idLess'] . ")");
     echo mysqli_insert_id($dbMain);
 }
 
@@ -230,10 +231,11 @@ function GroupViewP()
 {
     include_once 'configStudent.php';
     include_once 'configMain.php';
-    $retVal = "<p><a href='z.php'>" . $_SESSION['SesVar']['Zav'][0] . " (" . $_SESSION['SesVar']['Zav'][1] . ")</a></p>";
+    $retVal = "<p>" . $_SESSION['SesVar']['Zav'][0] . " (" . $_SESSION['SesVar']['Zav'][1] . ")</p>";
 
-    $retVal .= "<h3>" . $_GET['nPredmet'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal .= $_GET['nF'] . "<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+    $retVal .= "<h3><a href='z.php'>" . $_GET['nPredmet'] . "</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+    $retVal .= "<a href='z.php?menuactiv=goF&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "'>" . $_GET['nF'] . "</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+
     $retVal .= "Группа № " . $_GET['nGroup'] . " (ПРАКТИЧЕСКОЕ / <a href='z.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Zav'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $_GET['idGroup'] . "&PL=1&nPredmet=" . $_GET['nPredmet'] . "&nF=" . $_GET['nF'] . "&nGroup=" . $_GET['nGroup'] . "'>Лекция</a>)</h3><hr>";
 
 
@@ -341,12 +343,12 @@ function Fakultet()
     include_once 'configMain.php';
     include_once 'config.php';
 
-    $retVal = "<p><a href='z.php'>" . $_SESSION['SesVar']['Zav'][0] . " (" . $_SESSION['SesVar']['Zav'][1] . ")</a></p>";
+    $retVal = "<p>" . $_SESSION['SesVar']['Zav'][0] . " (" . $_SESSION['SesVar']['Zav'][1] . ")</p>";
 
     $resPredmet = mysqli_query($dbMain, "SELECT name FROM lessons WHERE id=" . $_GET['idPredmet'] . "");
     if (mysqli_num_rows($resPredmet) >= 1) {
         list($Pre) = mysqli_fetch_row($resPredmet);
-        $retVal .= "<h3>$Pre<br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
+        $retVal .= "<h3><a href='z.php'>$Pre</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
         $result = mssql_query("SELECT Name FROM dbo.Facultets WHERE IdF=" . $_GET['idF'] . "", $dbStud);
         if (mssql_num_rows($result) >= 1) {
             list($idName) = mssql_fetch_row($result);
@@ -623,6 +625,18 @@ function StudentView($content, $contentO = '')
     </form>
 </div>
 
+<div id='confirm_delete' title='Подтверждение удаления!'>
+    <form><br>
+    <fieldset>
+       <span id='delSt'></span><br><br>
+       <span id='delDat'></span><br><br>
+       <b id='delGr'></b><br>
+    </fieldset>
+    <span class='kursiv'><i>Данные будут удалены безвозвратно!</i></span>
+
+    </form>
+</div>
+
 <div id=\"form-edit-date\" title=\"Редактирование даты занятия\">
     <form>
         <fieldset>
@@ -659,7 +673,7 @@ function StudentView($content, $contentO = '')
 
         <div class='result_box'><div class='date_col hidden'></div>" . $contentO . "
 
-        </div>
+        </div><div class='statistic'></div>
     </div>
 </div>";
 
@@ -748,6 +762,18 @@ function StudentViewL($content, $contentO = '')
     <span id='log_text'></span>
 </div>
 
+<div id='confirm_delete' title='Подтверждение удаления!'>
+    <form><br>
+    <fieldset>
+       <span id='delSt'></span><br><br>
+       <span id='delDat'></span><br><br>
+       <b id='delGr'></b><br>
+    </fieldset>
+    <span class='kursiv'><i>Данные будут удалены безвозвратно!</i></span>
+
+    </form>
+</div>
+
 <div class='container-list'>
 
     <div class='tools' align='center'>
@@ -760,7 +786,7 @@ function StudentViewL($content, $contentO = '')
 
         <div class='result_box'><div class='date_col hidden'></div>" . $contentO . "
 
-        </div>
+        </div><div class='statistic'></div>
     </div>
 </div>";
 
@@ -781,7 +807,7 @@ function LevelView()
                     $preDiv .= "<p><a href='d.php'><strong>" . $_SESSION['SesVar']['Dekan'][0] . "</strong> (" . $_SESSION['SesVar']['Dekan'][1] . ")</a></p>";
                     break;
                 case 3:
-                    $preDiv.="<p><a href='p.php'><strong>".$_SESSION['SesVar']['Prepod'][0]."</strong> (".$_SESSION['SesVar']['Prepod'][1].")</a></p>";
+                    $preDiv .= "<p><a href='p.php'><strong>" . $_SESSION['SesVar']['Prepod'][0] . "</strong> (" . $_SESSION['SesVar']['Prepod'][1] . ")</a></p>";
                     break;
             }
         }

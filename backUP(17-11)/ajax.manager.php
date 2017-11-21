@@ -11,11 +11,11 @@ switch ($_GET['action']){
         or die("Не удалось извлечь предметы");
 
         if(mysqli_num_rows($res)!=0){
-            echo '<h3 id="sub_title">Читаемые дисциплины:</h3>';
+            echo '<h3 id="sub_title">Читаемые дисциплины1:</h3>';
             echo '<table>';
             while($row=mysqli_fetch_array($res))
             {
-                echo '<tr class="sub"><td><button class="del">x</button>'.$row['name'].'</td></tr>';
+                echo '<tr><td class="sub">'.$row['name'].'</td></tr>';
                 //print_r($row['name']);
             }
 

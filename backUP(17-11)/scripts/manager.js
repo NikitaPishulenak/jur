@@ -21,3 +21,16 @@
         alert("Для получения списка предметов необходимо выбрать факультет и/или курс!");
     }
 }
+
+$(function () {
+    $("td.sub").each(function () {
+        $(this).append('<img src="img/close.png" class="close" title="Удалить дисциплину из БД">');
+        $(this).hide();
+    });
+   $("td").delegate(".sub", "mouseover", function () {
+       $(this).find("img.close").show();
+   });
+    $("td").delegate(".sub", "ouseout", function () {
+        $(this).find("img.close").hide();
+    });
+});

@@ -22,9 +22,9 @@ input[type=text]:hover {
     margin-left: 60px;
 }
 
-/*.button{*/
-    /*margin-right: 0.1em;*/
-/*}*/
+.button{
+    margin-right: 0.4em;
+}
 
 /*.attention{*/
     /*margin-right: 0.1em;*/
@@ -125,7 +125,7 @@ input .edit_grade {
 }
 
 .date_title, .info_title{
-    font-weight: 600;
+    font-weight: 400;
     border: solid #000000 1px;
     text-align: center;
 }
@@ -268,6 +268,7 @@ div .hidden{
 
 .grade {
     /*line-height: 0.99em;*/
+    font-weight: 600;
     border-bottom: solid #000000 1px;
     border-left: solid #000000 1px;
     border-right: solid #000000 1px;
@@ -296,6 +297,16 @@ div .hidden{
     position: absolute;
     top: 1px;
     right: 1px;
+    width: 10px;
+    height: 10px;
+    float: right;
+    display: inline-table;
+}
+
+.tr {
+    position: absolute;
+    bottom: 0;
+    right: 0;
     width: 10px;
     height: 10px;
     float: right;
@@ -344,6 +355,13 @@ div .hidden{
     display: inline-table;
 }
 
+.kursiv{
+    font-size: 9pt;
+}
+
+b#delGr{
+    font-size: 1.5em;
+}
 
 /*-----------------manager.php*/
 select {
@@ -374,3 +392,14 @@ tr.sub:nth-child(odd){
     height: 23px;
 }
 
+
+
+/*position: absolute;*/
+/*width: 0;*/
+/*height: 0;*/
+/*bottom:0;*/
+/*float: left;*/
+/*display: inline-table;*/
+
+/**/
+/*display: inline-table;*/

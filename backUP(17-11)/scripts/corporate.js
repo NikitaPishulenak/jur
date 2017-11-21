@@ -1,18 +1,47 @@
-﻿$(document).ready(function () {
+﻿//document.__proto__.delegator = false;
+$(document).ready(function () {
     hideHistory();
-    var path=window.location.pathname.slice(1);
+    resize();
+    path = window.location.pathname.slice(1);
+
+    if((path=="p.php") || (path=="z.php")){
+        $('div').delegate(".date_title", "mouseover", function () {
+            $(this).attr('title', 'Кликните дважды для редактирования даты');
+        });
+    }
     //Дорисовка треугольника
     $("div.grade").each(function () {
         if ($(this).text() != "") {
             $(this).append('<div class="triangle-topright"></div>');
-            if(path=="z.php"){
+            $("div.triangle-topright").hide();
+            if (path == "z.php") {
                 $(this).append('<img src="img/close.png" class="close" title="Удалить оценку из БД">');
+                $("img.close").hide();
             }
         }
     });
 
+    $('div').delegate(".grade", "mouseover", function (e) {
+        data_st=$(this).attr('data-idStudent');
+        $('div [data-idStudent="'+data_st+'"]').addClass("illumination");
+        showTools($(this));
+    });
+
+    $('div').delegate(".grade", "mouseout", function () {
+
+        data_st=$(this).attr('data-idStudent');
+        $('div [data-idStudent="'+data_st+'"]').removeClass("illumination");
+        hideTools($(this));
+    });
+
     //Функция логирования
     $('div').delegate(".triangle-topright", "click", function (e) {
+        log_object=$(this).parent();
+        if($("#history").is(":visible")){
+                showTools(log_object);
+                log_object.append('<img src="img/tr.png" class="tr">');
+            }
+
         var stud_id = $(this).parent().attr("data-idStudent");
         var zap_id = $(this).parent().attr("data-zapis");
 
@@ -44,8 +73,8 @@
                 else {
                     $("#log_text").html(st);
                     $("#log_text").find(".gLog").each(function () {
-                       var c_g=$(this).html();
-                       $(this).html(Decrypt(c_g));
+                        var c_g = $(this).html();
+                        $(this).html(Decrypt(c_g));
                     });
                 }
 
@@ -61,6 +90,7 @@
         $(function () {
             $(document).mouseup(function (e) {
                 hideHistory();
+                $("img.tr").hide();
                 //Если кликаешь по всплывающему окну ничего не пропадет
                 // if (!$("#history").is(e.target) && $("#history").has(e.target).length === 0) { // и не по его дочерним элементам
                 //     hideHistory();
@@ -70,6 +100,10 @@
     });
 
 
+});
+
+$(window).resize(function () {
+    resize();
 });
 
 
@@ -408,3 +442,36 @@ function showHistory() {
     $("#history").show();
 }
 
+function showTools(thisEl) {
+    if (thisEl.text() != "") {
+        thisEl.find("div.triangle-topright").show();
+        if (path == "z.php") {
+            thisEl.find("img.close").show();
+        }
+    }
+}
+
+function hideTools(thisEl) {
+    if (thisEl.text() != "") {
+        //gradeWithTriangle=thisEl.find("div.triangle-topright");
+        thisEl.find("div.triangle-topright").hide();
+        if (path == "z.php") {
+            thisEl.find("img.close").hide();
+        }
+    }
+}
+
+function resize() {
+    $windows_wid=$("body").width();// ширина монитора
+    $fio_div_wid=$("div.fio_student").width();// ширина столбика с ФИО
+    $stat_div_wid=$("div.statistic").width();//ширина столбика статистики
+
+    $result_div=$windows_wid-$fio_div_wid-$stat_div_wid-45;//ширина блока с оценками
+    $left_div_stat=$windows_wid-$stat_div_wid;
+
+    $("div.result_box_statistic").css("left",$fio_div_wid+20);
+    $("div.result_box_statistic").css("width", $result_div-5);
+    $("div.result_box").css("left",$fio_div_wid+20);
+    $("div.result_box").css("width", $result_div);
+    $("div.statistic").css("left",$left_div_stat-10);
+}

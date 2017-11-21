@@ -4,15 +4,17 @@
         font-size: 12px;
     }
 
-    .button {
-        width: 85px;
-        margin-right: 10px;
-    }
+    /*.button {*/
+        /*width: 75px;*/
+        /*margin-bottom: 20px;*/
+        /*font-weight: 100;*/
+    /*}*/
 
-    .attention {
-        width: 65px;
-        margin-right: 0.1em;
-    }
+    /*.attention {*/
+        /*width: 55px;*/
+        /*margin-bottom: 20px;*/
+        /*margin-left: 15px;*/
+    /*}*/
 
     .date_title{
         width: 60px;
@@ -28,16 +30,16 @@
 
 
     .space {
-        margin-right: 4px;
+        margin: 0 5px 0 4px;
     }
 
     .marg-left{
         margin-left: 36px;
     }
 
-    .panel{
-        margin-bottom: -10px;
-    }
+    /*.panel{*/
+        /*margin-bottom: -10px;*/
+    /*}*/
 
     #create_lesson{
         margin-bottom: 20px;
@@ -49,7 +51,7 @@
 
     .fio_student, .subject_student {
         height: 20px;
-        width: 200px;
+        width: 210px;
     }
 
     .result_box, .result_box_statistic {
@@ -84,10 +86,10 @@
         height: 20px;
     }
 
-    .triangle-topright {
-        left: 53px;
-        border-bottom: 7px solid #000000;
-        border-left: 7px solid transparent;
+    .triangle-topright{
+        left: 50px;
+        border-bottom: 11px solid #000000;
+        border-left: 11px solid transparent;
     }
 
     .avg, .ans, .abs {
@@ -100,6 +102,9 @@
         height: 20px;
     }
 
+    .popup-content {
+        width: 150px;
+    }
 
 
 }

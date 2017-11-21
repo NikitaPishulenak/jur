@@ -77,15 +77,6 @@
         event.preventDefault();
     });
 
-    $('div').delegate(".grade", "mouseover", function () {
-        data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').addClass("illumination");
-    });
-
-    $('div').delegate(".grade", "mouseout", function () {
-        data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').removeClass("illumination");
-    });
 
     $('div').delegate(".grade", "dblclick", function () {
         $("button#edit").removeAttr('disabled');
@@ -256,6 +247,8 @@ $(document).ready(function () {
     dateLesson=$("div.date_title:last").val();
     idLesson="";
 
+    $.getScript('scripts/deleteGrade.js', function(){});
+
 });
 
 //Функция по вызову последующих функций редактирования даты занятия
@@ -343,9 +336,6 @@ $(function () {
 
     });
 
-    $('div').delegate(".close", "click", function () {
-        alert("Извините, функционал находится в стадии тестирования!");
-    });
 });
 
 //Функция дешифрирования оценок

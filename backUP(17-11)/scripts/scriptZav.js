@@ -33,6 +33,90 @@ $(function () {
     var myStudentId = new Array();
     var myStudentZapis = new Array();
 
+    var lttimer;
+    var gr=document.querySelectorAll("div.grade");
+    gr.forEach(function (e) {
+
+        e.addEventListener('touchstart', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            lttimer=setTimeout(longTouch($(this)),1200);
+        }, false);
+        e.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            clearTimeout(lttimer);
+        }, false);
+        e.addEventListener('touchend', function(event) {
+            clearTimeout(lttimer);
+        }, false);
+
+    });
+    function longTouch(e){
+        $("button#edit").removeAttr('disabled');
+        $("button#close").removeAttr('disabled');
+        dat = e.parent().find('div.date_title').html();//Дата столбца
+        student_id = e.attr('data-idStudent');
+        id_Less = e.attr('data-idLes');
+        PKE = e.attr('data-PKE');
+        id_Zapis = e.attr('data-zapis');
+
+        edit_dialog.dialog("open");
+        edit_form[0].reset();
+        var data_studentID = e.attr('data-idStudent');
+        var fio_stud = $('div.fio_student[data-idStudent="' + data_studentID + '"]').text();
+        edit_dialog.dialog({title: fio_stud});
+        $("button#add_grade_input").removeAttr('disabled');
+        $("#inp_0").focus();
+        $('#inp_2').slideUp(1);
+        --countCell;
+        $('#inp_1').slideUp(1);
+        --countCell;
+        cur_grade = e.text();
+        elem = e;
+        grades = cur_grade.split("/");
+        for (var i = 0; i < grades.length; i++) {
+            $("div.panel").find('input#inp_' + i).slideDown(1);
+            $("div.panel").find('input#inp_' + i).val(grades[i]);
+        }
+        $('input#inp_0').focus();
+        $('input#inp_0').select();
+
+
+        $(".inp_cell:text").focus(function () {
+            inp_id = $(this).attr('id');
+
+            //При нажатии на кнопку с результатами текст выводится в поле ввода
+            $("b.tool, span.tool").click(function () {
+                var text = $(this).text();
+                $("#" + inp_id).val(text);
+                $("#" + inp_id).blur();
+            });
+
+            // //При нажатии на пропуск с количеством часов текст выводится в поле ввода
+            // $("span.tool").click(function () {
+            //     var text = $(this).text();
+            //     $("#"+inp_id).val(text);
+            // });
+        });
+        var countOpenCell = 0;
+        for (j = 0; j < 3; j++) {
+            if ($("#inp_" + j).val() != "") {
+                countOpenCell++;
+            }
+        }
+        if (countOpenCell == 3) {
+            $("button#add_grade_input").attr('disabled', true);
+        }
+
+        $(".inp_cell:text").keydown(function (event) {
+            if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
+                $(this).val("");
+            }
+        });
+
+    }
+
     function addLesson() {
         checkDate("lesson-date");
         if ($("#lesson-date").val() != "") {
@@ -205,19 +289,6 @@ $(function () {
         edit_dialog.dialog("close");
     });
 
-    $('div').delegate(".date_title", "mouseover", function () {
-        $(this).attr('title', 'Кликните дважды для редактирования даты');
-    });
-
-    $('div').delegate(".grade", "mouseover", function () {
-        data_st = $(this).attr('data-idStudent');
-        $('div [data-idStudent="' + data_st + '"]').addClass("illumination");
-    });
-
-    $('div').delegate(".grade", "mouseout", function () {
-        data_st = $(this).attr('data-idStudent');
-        $('div [data-idStudent="' + data_st + '"]').removeClass("illumination");
-    });
 
     $('div').delegate(".grade", "dblclick", function () {
         $("button#edit").removeAttr('disabled');
@@ -427,12 +498,15 @@ $(document).ready(function () {
     dateLesson = $("div.date_title:last").val();
     idLesson = "";
 
+    $.getScript('scripts/deleteGrade.js', function(){});
+
 });
 
 
 //Функция по вызову последующих функций редактирования даты занятия
 $(function () {
     var edit_date_dialog, edit_date_form;
+
     edit_date_dialog = $("#form-edit-date").dialog({
         resizable: false,
         autoOpen: false,
@@ -450,6 +524,7 @@ $(function () {
     edit_date_form = edit_date_dialog.find("form").on("submit", function (event) {
         event.preventDefault();
     });
+
 
     function editDate() {
         checkDate("edit-lesson-date");
@@ -502,6 +577,7 @@ $(function () {
         }
     }
 
+
     $('div').delegate(".date_title", "dblclick", function () {
         dat = $(this).parent().find('div.date_title').html();//Дата столбца
         // var datemass = dat.split(".");
@@ -530,9 +606,7 @@ $(function () {
 
     });
 
-    $('div').delegate(".close", "click", function () {
-        alert("Извините, функционал находится в стадии тестирования!");
-    });
+
 });
 
 //Функция дешифрирования оценок

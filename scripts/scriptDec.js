@@ -135,15 +135,6 @@ $(function () {
         event.preventDefault();
     });
 
-    $('div').delegate(".grade", "mouseover", function () {
-        data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').addClass("illumination");
-    });
-
-    $('div').delegate(".grade", "mouseout", function () {
-        data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').removeClass("illumination");
-    });
 
     $('div').delegate(".grade", "dblclick", function () {
         $("button#edit").removeAttr('disabled');

@@ -2,51 +2,106 @@
 @import url("style_desktop.css");
 
 input[type=text] {
-    border-radius: 4px;
+    border-radius: 3px;
     margin: 2px 2px 2px 2px;
+    border:solid #c5c5c5 1px;
 }
 
-.button {
-    height: 20%;
-    border-radius: 5px;
+input[type=text]:hover {
+    border-radius: 3px;
+    margin: 2px 2px 2px 2px;
+    border:solid #c5c5c5 1px;
+    text-shadow: 0 1px 2px #c5c5c5;
+}
+
+.hig-px{
+    margin-bottom: 13px;
+}
+
+.spase60px{
+    margin-left: 60px;
+}
+
+.button{
+    margin-right: 0.4em;
+}
+
+/*.attention{*/
+    /*margin-right: 0.1em;*/
+/*}*/
+
+.button, .attention {
+    float: right;
+    padding: .4em 1em;
+    display: inline-block;
+    position: relative;
+    line-height: normal;
+    cursor: pointer;
+    vertical-align: middle;
     text-align: center;
-    background: #6b8bad;
-    border: none;
-    color: #fff;
-    font-weight: normal;
-    cursor: pointer;
-    text-shadow: 0 1px 2px black;
-    background: -moz-linear-gradient(top, #6b8bad 0%, #39577f 48%, #254b72 52%, #102d4c 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6b8bad), color-stop(48%, #39577f), color-stop(52%, #254b72), color-stop(100%, #102d4c));
-    background: -webkit-linear-gradient(top, #6b8bad 0%, #39577f 48%, #254b72 52%, #102d4c 100%);
-    background: -o-linear-gradient(top, #6b8bad 0%, #39577f 48%, #254b72 52%, #102d4c 100%);
-    background: -ms-linear-gradient(top, #6b8bad 0%, #39577f 48%, #254b72 52%, #102d4c 100%);
-    background: linear-gradient(to bottom, #6b8bad 0%, #39577f 48%, #254b72 52%, #102d4c 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b8bad', endColorstr='#102d4c', GradientType=0);
-    align-items: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    /* Support: IE <= 11 */
+    overflow: visible;
+    /*border-radius: 3px;*/
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 1em;
+    text-decoration: none;
+    color: #454545;
+    background-color: #f6f6f6;
+    border:solid #c5c5c5 1px;
+    border-radius: 3px;
+    /*height: 20%;*/
+    /*border-radius: 3px;*/
+    /*text-align: center;*/
+    /*background: #6b8bad;*/
+    /*border: none;*/
+    /*color: #fff;*/
+    /*font-weight: normal;*/
+    /*cursor: pointer;*/
+    /*text-shadow: 0 1px 2px black;*/
+    /*background: -moz-linear-gradient(top, #6b8bad 0%, #39577f 48%, #254b72 52%, #102d4c 100%);*/
+    /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6b8bad), color-stop(48%, #39577f), color-stop(52%, #254b72), color-stop(100%, #102d4c));*/
+    /*background: -webkit-linear-gradient(top, #6b8bad 0%, #39577f 48%, #254b72 52%, #102d4c 100%);*/
+    /*background: -o-linear-gradient(top, #6b8bad 0%, #39577f 48%, #254b72 52%, #102d4c 100%);*/
+    /*background: -ms-linear-gradient(top, #6b8bad 0%, #39577f 48%, #254b72 52%, #102d4c 100%);*/
+    /*background: linear-gradient(to bottom, #6b8bad 0%, #39577f 48%, #254b72 52%, #102d4c 100%);*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6b8bad', endColorstr='#102d4c', GradientType=0);*/
+    /*align-items: center;*/
 }
-.button:hover {
-    background: #7290b0;
-    background: -moz-linear-gradient(top, #7290b0 0%, #3d5e89 48%, #29537d 52%, #133559 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7290b0), color-stop(48%, #3d5e89), color-stop(52%, #29537d), color-stop(100%, #133559));
-    background: -webkit-linear-gradient(top, #7290b0 0%, #3d5e89 48%, #29537d 52%, #133559 100%);
-    background: -o-linear-gradient(top, #7290b0 0%, #3d5e89 48%, #29537d 52%, #133559 100%);
-    background: -ms-linear-gradient(top, #7290b0 0%, #3d5e89 48%, #29537d 52%, #133559 100%);
-    background: linear-gradient(to bottom, #7290b0 0%, #3d5e89 48%, #29537d 52%, #133559 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7290b0', endColorstr='#133559', GradientType=0);
+.button:hover, .attention:hover {
+    float: right;
+    color: #2b2b2b;
+    background-color: #ededed;
+    border: solid #cccccc 1px;
+    border-radius: 3px;
+
+
+
+
+    /*background: #7290b0;*/
+    /*background: -moz-linear-gradient(top, #7290b0 0%, #3d5e89 48%, #29537d 52%, #133559 100%);*/
+    /*background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #7290b0), color-stop(48%, #3d5e89), color-stop(52%, #29537d), color-stop(100%, #133559));*/
+    /*background: -webkit-linear-gradient(top, #7290b0 0%, #3d5e89 48%, #29537d 52%, #133559 100%);*/
+    /*background: -o-linear-gradient(top, #7290b0 0%, #3d5e89 48%, #29537d 52%, #133559 100%);*/
+    /*background: -ms-linear-gradient(top, #7290b0 0%, #3d5e89 48%, #29537d 52%, #133559 100%);*/
+    /*background: linear-gradient(to bottom, #7290b0 0%, #3d5e89 48%, #29537d 52%, #133559 100%);*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7290b0', endColorstr='#133559', GradientType=0);*/
 }
 
-.attention {
-    height: 20%;
-    border-radius: 5px;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    text-shadow: 0 1px 2px #000000;
-    font-weight: normal;
-    background: radial-gradient(#ad7370, #890706);
-    align-items: center;
-}
+/*.attention {*/
+/*height: 20%;*/
+/*border-radius: 3px;*/
+/*border: none;*/
+/*color: #fff;*/
+/*cursor: pointer;*/
+/*text-shadow: 0 1px 2px #000000;*/
+/*font-weight: normal;*/
+/*background: radial-gradient(#ad7370, #890706);*/
+/*align-items: center;*/
+/*}*/
 
 
 .colloquium_theme {
@@ -70,13 +125,28 @@ input .edit_grade {
 }
 
 .date_title, .info_title{
-    font-weight: 600;
+    font-weight: 400;
     border: solid #000000 1px;
     text-align: center;
 }
 
 .date_title, .tool, .type_lesson, .add_grade,.pointer{
     cursor: pointer;
+}
+
+.add_grade{
+    cursor: pointer;
+    color: #454545;
+    background-color: #f6f6f6;
+    border: solid #c5c5c5 1px;
+    border-radius: 3px;
+}
+
+.add_grade:hover{
+    color: #2b2b2b;
+    background-color: #ededed;
+    border: solid #cccccc 1px;
+    border-radius: 3px;
 }
 
 .simple_cursor{
@@ -88,7 +158,12 @@ input .edit_grade {
 }
 
 .space{
-    border-left: solid #807f80 1px;
+    /*border-left: solid #807f80 1px;*/
+}
+
+.marg-line{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .fail{
@@ -122,20 +197,21 @@ div .hidden{
 }
 
 .popup {
-    width:auto;
+    width: auto;
     position:absolute;
 }
 
 .popup-content {
-    width:150px;
     height: auto;
-    padding:5px;
+    width: 270px;
+    padding:4px;
     color: #000000;
-    background-color: #c1c5c5;
-    border-radius:5px;
+    background-color: #e5e5e5;
+    border-radius:1px;
     box-shadow: 0 0 10px #000;
     position: absolute;
     z-index: 10;
+    border: solid #585858 1px;
 }
 
 .loading{
@@ -192,6 +268,7 @@ div .hidden{
 
 .grade {
     /*line-height: 0.99em;*/
+    font-weight: 600;
     border-bottom: solid #000000 1px;
     border-left: solid #000000 1px;
     border-right: solid #000000 1px;
@@ -214,6 +291,23 @@ div .hidden{
     float: left;
     display: inline-table;
 }
+
+/*удалить запись*/
+.close {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    width: 10px;
+    height: 10px;
+    float: right;
+    display: inline-table;
+}
+
+.kursiv{
+    font-size: 9pt;
+
+}
+
 
 .container{
     white-space: nowrap;  /* чтобы столбик стояли в одну линию, не переходя на другую строку */
@@ -256,9 +350,49 @@ div .hidden{
     display: inline-table;
 }
 
+b#delGr{
+    color: #8c0000;
+    font-size: 2em;
+}
+
+
+/*-----------------manager.php*/
+select {
+    height: 30px;
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.manager-list{
+    position: absolute;
+    left:20%;
+}
+
+#subjects{
+    position: absolute;
+    margin-top: 20px;
+}
+
+tr.sub:nth-child(odd){
+    background-color: #cccccc;
+}
+
+.del{
+    border-radius: 12px;
+    width: 23px;
+    height: 23px;
+}
 
 
 
+/*position: absolute;*/
+/*width: 0;*/
+/*height: 0;*/
+/*bottom:0;*/
+/*float: left;*/
+/*display: inline-table;*/
 
-
-
+/**/
+/*display: inline-table;*/

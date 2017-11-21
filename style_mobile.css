@@ -51,7 +51,7 @@
 
     .fio_student, .subject_student {
         height: 20px;
-        width: 200px;
+        width: 210px;
     }
 
     .result_box, .result_box_statistic {
@@ -86,7 +86,7 @@
         height: 20px;
     }
 
-    .triangle-topright {
+    .triangle-topright{
         left: 50px;
         border-bottom: 11px solid #000000;
         border-left: 11px solid transparent;

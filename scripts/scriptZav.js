@@ -1,4 +1,5 @@
 ﻿$(function () {
+
     $("div.average").each(function () {
         var sum = 0, countGrade = 0;
         var elem = $(this).attr('data-idStudent');
@@ -205,19 +206,6 @@ $(function () {
         edit_dialog.dialog("close");
     });
 
-    $('div').delegate(".date_title", "mouseover", function () {
-        $(this).attr('title', 'Кликните дважды для редактирования даты');
-    });
-
-    $('div').delegate(".grade", "mouseover", function () {
-        data_st = $(this).attr('data-idStudent');
-        $('div [data-idStudent="' + data_st + '"]').addClass("illumination");
-    });
-
-    $('div').delegate(".grade", "mouseout", function () {
-        data_st = $(this).attr('data-idStudent');
-        $('div [data-idStudent="' + data_st + '"]').removeClass("illumination");
-    });
 
     $('div').delegate(".grade", "dblclick", function () {
         $("button#edit").removeAttr('disabled');
@@ -427,12 +415,14 @@ $(document).ready(function () {
     dateLesson = $("div.date_title:last").val();
     idLesson = "";
 
+    $.getScript('scripts/deleteGrade.js', function(){});
 });
 
 
 //Функция по вызову последующих функций редактирования даты занятия
 $(function () {
     var edit_date_dialog, edit_date_form;
+
     edit_date_dialog = $("#form-edit-date").dialog({
         resizable: false,
         autoOpen: false,
@@ -450,6 +440,7 @@ $(function () {
     edit_date_form = edit_date_dialog.find("form").on("submit", function (event) {
         event.preventDefault();
     });
+
 
     function editDate() {
         checkDate("edit-lesson-date");
@@ -502,6 +493,7 @@ $(function () {
         }
     }
 
+
     $('div').delegate(".date_title", "dblclick", function () {
         dat = $(this).parent().find('div.date_title').html();//Дата столбца
         // var datemass = dat.split(".");
@@ -530,9 +522,7 @@ $(function () {
 
     });
 
-    $('div').delegate(".close", "click", function () {
-        alert("Извините, функционал находится в стадии тестирования!");
-    });
+
 });
 
 //Функция дешифрирования оценок
