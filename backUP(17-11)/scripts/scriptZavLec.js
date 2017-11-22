@@ -129,6 +129,7 @@
         if(cur_res!=""){
             coding = Encrypt(cur_res);
             elem.text(cur_res);
+            smallText(elem);
 
             if((cur_grade=="") && (cur_res!="")){
                 $.ajax({

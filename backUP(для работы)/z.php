@@ -476,6 +476,8 @@ function HeaderFooterGroup($content, $title, $vC = '', $vS = '')
         <script src="scripts/scriptZav.js<?php echo $vS; ?>"></script>
         <script src="scripts/online.js"></script>
         <script src="scripts/corporate.js<?php echo $vS; ?>"></script>
+        <script src="scripts/hammer.min.js<?php echo $vS; ?>"></script>
+
 
     </head>
     <body>
@@ -513,6 +515,7 @@ function HeaderFooterGroupL($content, $title, $vC = '', $vS = '')
         <script src="scripts/scriptZavLec.js<?php echo $vS; ?>"></script>
         <script src="scripts/online.js"></script>
         <script src="scripts/corporate.js<?php echo $vS; ?>"></script>
+
 
     </head>
     <body>

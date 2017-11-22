@@ -33,90 +33,6 @@ $(function () {
     var myStudentId = new Array();
     var myStudentZapis = new Array();
 
-    var lttimer;
-    var gr=document.querySelectorAll("div.grade");
-    gr.forEach(function (e) {
-
-        e.addEventListener('touchstart', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            lttimer=setTimeout(longTouch($(this)),1200);
-        }, false);
-        e.addEventListener('touchmove', function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            clearTimeout(lttimer);
-        }, false);
-        e.addEventListener('touchend', function(event) {
-            clearTimeout(lttimer);
-        }, false);
-
-    });
-    function longTouch(e){
-        $("button#edit").removeAttr('disabled');
-        $("button#close").removeAttr('disabled');
-        dat = e.parent().find('div.date_title').html();//Дата столбца
-        student_id = e.attr('data-idStudent');
-        id_Less = e.attr('data-idLes');
-        PKE = e.attr('data-PKE');
-        id_Zapis = e.attr('data-zapis');
-
-        edit_dialog.dialog("open");
-        edit_form[0].reset();
-        var data_studentID = e.attr('data-idStudent');
-        var fio_stud = $('div.fio_student[data-idStudent="' + data_studentID + '"]').text();
-        edit_dialog.dialog({title: fio_stud});
-        $("button#add_grade_input").removeAttr('disabled');
-        $("#inp_0").focus();
-        $('#inp_2').slideUp(1);
-        --countCell;
-        $('#inp_1').slideUp(1);
-        --countCell;
-        cur_grade = e.text();
-        elem = e;
-        grades = cur_grade.split("/");
-        for (var i = 0; i < grades.length; i++) {
-            $("div.panel").find('input#inp_' + i).slideDown(1);
-            $("div.panel").find('input#inp_' + i).val(grades[i]);
-        }
-        $('input#inp_0').focus();
-        $('input#inp_0').select();
-
-
-        $(".inp_cell:text").focus(function () {
-            inp_id = $(this).attr('id');
-
-            //При нажатии на кнопку с результатами текст выводится в поле ввода
-            $("b.tool, span.tool").click(function () {
-                var text = $(this).text();
-                $("#" + inp_id).val(text);
-                $("#" + inp_id).blur();
-            });
-
-            // //При нажатии на пропуск с количеством часов текст выводится в поле ввода
-            // $("span.tool").click(function () {
-            //     var text = $(this).text();
-            //     $("#"+inp_id).val(text);
-            // });
-        });
-        var countOpenCell = 0;
-        for (j = 0; j < 3; j++) {
-            if ($("#inp_" + j).val() != "") {
-                countOpenCell++;
-            }
-        }
-        if (countOpenCell == 3) {
-            $("button#add_grade_input").attr('disabled', true);
-        }
-
-        $(".inp_cell:text").keydown(function (event) {
-            if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
-                $(this).val("");
-            }
-        });
-
-    }
-
     function addLesson() {
         checkDate("lesson-date");
         if ($("#lesson-date").val() != "") {
@@ -307,9 +223,7 @@ $(function () {
         $("button#add_grade_input").removeAttr('disabled');
         $("#inp_0").focus();
         $('#inp_2').slideUp(1);
-        --countCell;
         $('#inp_1').slideUp(1);
-        --countCell;
         cur_grade = $(this).text();
         elem = $(this);
         grades = cur_grade.split("/");
@@ -364,6 +278,7 @@ $(function () {
             var cur_res = bit1 + bit2 + bit3;
             coding = Encrypt(cur_res);
             elem.text(cur_res);
+            smallText(elem);
             if ((cur_grade == "") && (cur_res != "")) {
                 $.ajax({
                     type: 'get',
@@ -469,13 +384,11 @@ $(function () {
     });
 
     $("#add_grade_input").click(function () {
-        if (countCell < 3) {
-            if (countCell <= 0)
-                countCell = 1;
-            if ($("#inp_" + (countCell - 1)).val() != "") {
-                $("#inp_" + countCell).slideDown(1);
-                $("#inp_" + countCell).focus();
-                ++countCell;
+        var count_cell=$(".inp_cell:visible").length;
+        if (count_cell < 3) {
+            if ($("#inp_" + (count_cell-1)).val() != "") {
+                $("#inp_" + count_cell).slideDown(1);
+                $("#inp_" + count_cell).focus();
             }
             else {
                 alert("Заполните, пожалуйста, доступное поле ввода оценки!");
@@ -491,16 +404,35 @@ $(function () {
 
 
 $(document).ready(function () {
-    countCell = 1;
     groupNumber = "";
     subject = "";
     teacher = "";
     dateLesson = $("div.date_title:last").val();
     idLesson = "";
-
     $.getScript('scripts/deleteGrade.js', function(){});
+    // $.getScript('scripts/hammer.min.js', function(){alert("loaded");});
 
-});
+    if (is_touch_device()) {
+
+    var shows=0;
+
+        alert("sensor");
+        $('div').delegate(".grade", "touchstart", function () {
+            shows=setTimeout(function () {
+               alert("2s");
+            },2000);
+
+        });
+
+
+        $('div').delegate(".grade","touchend", function () {
+            alert("1");
+            clearTimeout(shows);
+        });
+
+// проделать специальные действия для устройств с поддержкой касания
+    }
+ });
 
 
 //Функция по вызову последующих функций редактирования даты занятия
@@ -618,3 +550,7 @@ $(function () {
     });
 });
 
+function is_touch_device() {
+    return !!('ontouchstart' in window)
+        || !!('onmsgesturechange' in window);
+};

@@ -228,9 +228,7 @@ $(function () {
         $("button#add_grade_input").removeAttr('disabled');
         $("#inp_0").focus();
         $('#inp_2').slideUp(1);
-        --countCell;
         $('#inp_1').slideUp(1);
-        --countCell;
         cur_grade = $(this).text();
         elem = $(this);
         grades = cur_grade.split("/");
@@ -285,6 +283,7 @@ $(function () {
             var cur_res = bit1 + bit2 + bit3;
             coding = Encrypt(cur_res);
             elem.text(cur_res);
+            smallText(elem);
             if((cur_grade=="") && (cur_res!="")){
                 $.ajax({
                     type:'get',
@@ -390,13 +389,11 @@ $(function () {
     });
 
     $("#add_grade_input").click(function () {
-        if (countCell < 3) {
-            if (countCell <= 0)
-                countCell = 1;
-            if ($("#inp_" + (countCell - 1)).val() != "") {
-                $("#inp_" + countCell).slideDown(1);
-                $("#inp_" + countCell).focus();
-                ++countCell;
+        var count_cell=$(".inp_cell:visible").length;
+        if (count_cell < 3) {
+            if ($("#inp_" + (count_cell-1)).val() != "") {
+                $("#inp_" + count_cell).slideDown(1);
+                $("#inp_" + count_cell).focus();
             }
             else {
                 alert("Заполните, пожалуйста, доступное поле ввода оценки!");
@@ -412,7 +409,6 @@ $(function () {
 
 
 $(document).ready(function () {
-    countCell = 1;
     groupNumber="";
     subject="";
     teacher="";

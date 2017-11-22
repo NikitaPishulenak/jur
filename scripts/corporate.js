@@ -12,6 +12,7 @@ $(document).ready(function () {
     //Дорисовка треугольника
     $("div.grade").each(function () {
         if ($(this).text() != "") {
+            smallText($(this));
             $(this).append('<div class="triangle-topright"></div>');
             $("div.triangle-topright").hide();
             if (path == "z.php") {
@@ -475,4 +476,10 @@ function resize() {
     $("div.result_box").css("left",$fio_div_wid+20);
     $("div.result_box").css("width", $result_div);
     $("div.statistic").css("left",$left_div_stat-10);
+}
+
+function smallText(object) {
+    if(object.text().length>=10){
+        object.addClass("small-text");
+    }
 }

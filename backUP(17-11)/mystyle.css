@@ -125,13 +125,24 @@ input .edit_grade {
 }
 
 .date_title, .info_title{
+    /*padding-top: 0.3em;*/
+    /*padding-bottom: 0.25em;*/
+    vertical-align: middle;
     font-weight: 400;
     border: solid #000000 1px;
     text-align: center;
+    font-size: 0.85em;
 }
 
 .date_title, .tool, .type_lesson, .add_grade,.pointer{
     cursor: pointer;
+}
+
+span.tool, b.tool{
+    padding: 1px 4px 1px 4px;
+    border: solid 1px;
+    border-color: transparent;
+    border-radius: 3px;
 }
 
 .add_grade{
@@ -142,8 +153,9 @@ input .edit_grade {
     border-radius: 3px;
 }
 
-.add_grade:hover{
-    color: #2b2b2b;
+.add_grade:disabled{
+    color: #cccccc;
+    font-weight: bolder;
     background-color: #ededed;
     border: solid #cccccc 1px;
     border-radius: 3px;
@@ -155,6 +167,7 @@ input .edit_grade {
 
 .tool:hover{
     color: #0000ff;
+    border-color: #cccccc;
 }
 
 .space{
@@ -255,6 +268,7 @@ div .hidden{
 
 .result_box{
     border: 1px solid #ccc;
+    border-top: none;
 }
 
 .date_col {
@@ -268,10 +282,12 @@ div .hidden{
 
 .grade {
     /*line-height: 0.99em;*/
+    font-size: 1.01em;
     font-weight: 600;
     border-bottom: solid #000000 1px;
     border-left: solid #000000 1px;
     border-right: solid #000000 1px;
+    text-align: center;
     text-align: center;
     cursor: pointer;
     vertical-align: middle;
@@ -281,6 +297,10 @@ div .hidden{
     white-space: pre-wrap;
     float: left;
     position: relative;
+}
+
+.small-text{
+    font-size: 0.7em;
 }
 
 .triangle-topright {

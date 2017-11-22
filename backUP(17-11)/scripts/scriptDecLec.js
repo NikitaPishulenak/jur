@@ -141,6 +141,7 @@ $(function () {
         var cur_res = $("#inp_0").val();
         coding = Encrypt(cur_res);
         elem.text(cur_res);
+        smallText(elem);
 
         if(id_Zapis == 0 && myStudentZapis[id_Less+'Zapis'+student_id]==0){
             alert("�_�_�_из�_�_�>а �_�_и�+ка п�_и п���_���_а�+�� �_а�_�_�<�:");
