@@ -16,7 +16,7 @@ $(document).ready(function () {
             $(this).append('<div class="triangle-topright"></div>');
             $("div.triangle-topright").hide();
             if (path == "z.php") {
-                $(this).append('<img src="img/close.png" class="close" title="Удалить оценку из БД">');
+                $(this).append('<img src="img/close.png" class="close" title="Удалить оценку">');
                 $("img.close").hide();
             }
         }

@@ -34,7 +34,7 @@
             success: function (st) {
                 if ((st != "Access is denied!") && (st != "No access rights!")) {
                     delObj.html("");
-                    alert("Запись успешно удалена из БД!");
+                    alert("Запись успешно удалена!");
                 }
                 else {
                     if (st == "Access is denied!") {

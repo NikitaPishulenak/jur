@@ -414,23 +414,99 @@ $(document).ready(function () {
 
     if (is_touch_device()) {
 
-    var shows=0;
-
-        alert("sensor");
+        var flag = 0;
         $('div').delegate(".grade", "touchstart", function () {
-            shows=setTimeout(function () {
-               alert("2s");
-            },2000);
-
+            el=$(this);
+            flag = 1;
         });
-
 
         $('div').delegate(".grade","touchend", function () {
-            alert("1");
-            clearTimeout(shows);
+            flag = 0;
         });
 
-// проделать специальные действия для устройств с поддержкой касания
+        setInterval(function(){
+            if(flag == 1) {
+                console.log("+");
+                flag=0;
+                create_new_grade(el);
+
+
+            } else {
+
+            }
+        },2000);
+
+        var edit_dialog, edit_form;
+
+        //Редактирование отметки
+        edit_dialog = $("#form-edit").dialog({
+            resizable: false,
+            autoOpen: false,
+            height: 'auto',
+            width: 'auto',
+            modal: true
+
+        });
+        edit_form = edit_dialog.find("form").on("submit", function (event) {
+            event.preventDefault();
+        });
+
+        function create_new_grade(e) {
+            $("button#edit").removeAttr('disabled');
+            $("button#close").removeAttr('disabled');
+            dat = e.parent().find('div.date_title').html();//Дата столбца
+            student_id = e.attr('data-idStudent');
+            id_Less = e.attr('data-idLes');
+            PKE = e.attr('data-PKE');
+            id_Zapis = e.attr('data-zapis');
+
+            edit_dialog.dialog("open");
+            edit_form[0].reset();
+            var data_studentID = e.attr('data-idStudent');
+            var fio_stud = $('div.fio_student[data-idStudent="' + data_studentID + '"]').text();
+            edit_dialog.dialog({title: fio_stud});
+            $("button#add_grade_input").removeAttr('disabled');
+            $("#inp_0").blur();
+            $('#inp_2').slideUp(1);
+            $('#inp_1').slideUp(1);
+            cur_grade = e.text();
+            elem = e;
+            grades = cur_grade.split("/");
+            for (var i = 0; i < grades.length; i++) {
+                $("div.panel").find('input#inp_' + i).slideDown(1);
+                $("div.panel").find('input#inp_' + i).val(grades[i]);
+            }
+            // $('input#inp_0').select();
+            // $('input#inp_0').focus();
+
+            $(".inp_cell:text").focus(function () {
+                inp_id = $(this).attr('id');
+
+                //При нажатии на кнопку с результатами текст выводится в поле ввода
+                //$('b,span').delegate(".tool", "touchstart", function (){
+                $("b.tool, span.tool").click(function () {
+                    var text = $(this).text();
+                    $("#" + inp_id).val(text);
+                    $("#" + inp_id).blur();
+                });
+            });
+            var countOpenCell = 0;
+            for (j = 0; j < 3; j++) {
+                if ($("#inp_" + j).val() != "") {
+                    countOpenCell++;
+                }
+            }
+            if (countOpenCell == 3) {
+                $("button#add_grade_input").attr('disabled', true);
+            }
+
+            $(".inp_cell:text").keydown(function (event) {
+                if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
+                    $(this).val("");
+                }
+            });
+        }
+        // проделать специальные действия для устройств с поддержкой касания
     }
  });
 
