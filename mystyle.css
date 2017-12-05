@@ -411,15 +411,14 @@ tr.sub:nth-child(odd){
     width: 23px;
     height: 23px;
 }
+/*----*/
 
+input#number_theme, input#edit_number_theme{
+    width: 30px;
+}
 
-
-/*position: absolute;*/
-/*width: 0;*/
-/*height: 0;*/
-/*bottom:0;*/
-/*float: left;*/
-/*display: inline-table;*/
-
-/**/
-/*display: inline-table;*/
+div.number_theme{
+    position: absolute;
+    top: 15px;
+    margin-left: 140px;
+}

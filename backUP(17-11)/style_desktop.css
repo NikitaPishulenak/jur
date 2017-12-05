@@ -4,14 +4,14 @@
         font-size: 16px;
     }
     /*.button {*/
-        /*width: 115px;*/
-        /*margin-bottom: 40px;*/
+    /*width: 115px;*/
+    /*margin-bottom: 40px;*/
     /*}*/
 
     /*.attention {*/
-        /*width: 85px;*/
-        /*margin-bottom: 40px;*/
-        /*margin-left: 20px;*/
+    /*width: 85px;*/
+    /*margin-bottom: 40px;*/
+    /*margin-left: 20px;*/
     /*}*/
 
     .date_title{
@@ -42,7 +42,7 @@
     }
 
     /*.panel{*/
-        /*margin-bottom: -19px;*/
+    /*margin-bottom: -19px;*/
     /*}*/
 
     #create_lesson{
@@ -56,6 +56,10 @@
     .fio_student, .subject_student {
         height: 30px;
         width: 285px;
+    }
+
+    .fio{
+        margin-top: 17px;
     }
 
     .result_box, .result_box_statistic {
@@ -78,6 +82,7 @@
 
     .date_col {
         width: 80px;
+        margin-top: 16px;
     }
 
     .date_col_stat {
@@ -110,9 +115,14 @@
         width: 250px;
     }
 
+    .nLesson{
+        line-height: 1.5em;
+        top:-15px;
+        width: 25px;
+        height: 15px;
+        float: left;
+        margin-bottom: -15px;
 
-
-
-
+    }
 
 }

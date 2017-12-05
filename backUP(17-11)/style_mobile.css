@@ -54,6 +54,10 @@
         width: 210px;
     }
 
+    .fio{
+        margin-top: 10px;
+    }
+
     .result_box, .result_box_statistic {
         left:215px;
     }
@@ -73,6 +77,7 @@
     }
 
     .date_col {
+        margin-top: 11px;
         width: 60px;
     }
 
@@ -106,5 +111,13 @@
         width: 150px;
     }
 
+    .nLesson{
+        line-height: 1.2em;
+        top:-10px;
+        width: 16px;
+        height: 10px;
+        margin-bottom: -10px;
+        float: left;
+    }
 
 }

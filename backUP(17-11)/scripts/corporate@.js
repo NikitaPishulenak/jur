@@ -1,21 +1,30 @@
-﻿//document.__proto__.delegator = false;
-$(document).ready(function () {
+﻿$(document).ready(function () {
     hideHistory();
     resize();
     path = window.location.pathname.slice(1);
 
+
     if((path=="p.php") || (path=="z.php")){
         $('div').delegate(".date_title", "mouseover", function () {
+            var numbThemeLesson=$(this).attr('data-number_theme_lesson');
+
             $(this).attr('title', 'Кликните дважды для редактирования даты');
+            if(numbThemeLesson!=0){
+                $(this).attr('title', '№ темы: '+numbThemeLesson);
+            }
+            else{
+                $(this).attr('title', 'Кликните дважды для редактирования даты');
+            }
         });
     }
     //Дорисовка треугольника
     $("div.grade").each(function () {
         if ($(this).text() != "") {
+            smallText($(this));
             $(this).append('<div class="triangle-topright"></div>');
             $("div.triangle-topright").hide();
             if (path == "z.php") {
-                $(this).append('<img src="img/close.png" class="close" title="Удалить оценку из БД">');
+                $(this).append('<img src="img/close.png" class="close" title="Удалить оценку">');
                 $("img.close").hide();
             }
         }
@@ -38,9 +47,9 @@ $(document).ready(function () {
     $('div').delegate(".triangle-topright", "click", function (e) {
         log_object=$(this).parent();
         if($("#history").is(":visible")){
-                showTools(log_object);
-                log_object.append('<img src="img/tr.png" class="tr">');
-            }
+            showTools(log_object);
+            log_object.append('<img src="img/tr.png" class="tr">');
+        }
 
         var stud_id = $(this).parent().attr("data-idStudent");
         var zap_id = $(this).parent().attr("data-zapis");
@@ -208,6 +217,20 @@ function proverka(event, id) {
         return false;
     }
     else {
+        return false;
+    }
+}
+
+
+//Функция проверки правильности ввода номера темы занятия
+function checkNumberThemeLesson(event) {
+    if((event.keyCode==8)||(event.keyCode==27)){
+        return;
+    }
+    else if (((event.keyCode >= 48) && (event.keyCode <= 57)) || ((event.keyCode >= 96) && (event.keyCode <= 105))){
+        return true;
+    }
+    else{
         return false;
     }
 }
@@ -387,6 +410,7 @@ function MatchDecrypt(val) {
 
 }
 
+
 //Функция по обработке горячих клавиш и Enter
 document.addEventListener('keydown', function (e) {
     var val = parseInt(e.key);
@@ -474,4 +498,15 @@ function resize() {
     $("div.result_box").css("left",$fio_div_wid+20);
     $("div.result_box").css("width", $result_div);
     $("div.statistic").css("left",$left_div_stat-10);
+}
+
+function smallText(object) {
+    if(object.text().length>=10){
+        object.addClass("small-text");
+    }
+}
+
+//проверка сенсорное ли устройство
+function is_touch_device() {
+    return ('ontouchstart' in window) || ('onmsgesturechange' in window);
 }

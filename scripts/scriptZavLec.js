@@ -8,6 +8,7 @@
         if ($("#lesson-date").val() != ""){
             var dateLesson = $("#lesson-date").val();
             var cnt = $("div.container-list").find("div.fio_student").length;
+            var number_theme_lesson=$('input#number_theme').val();
             $('div.fio_student').each(function (index, element) { myStudentId[index]=$(element).attr('data-idStudent'); });
             $.ajax({
                 type:'get',
@@ -17,12 +18,13 @@
                     'idGroup': $("input#idGroup").val(),
                     'idLessons': $("input#idSubject").val(),
                     'PL':"1",
+                    'numberThemeLesson':number_theme_lesson,
                     'menuactiv': "addLesson",
                     'PKE': '0'
                 },
                 success:function (st) {
                     if ((st!="No")&&(st!="Access is denied!")&&(st!="No access rights!")){
-                        $("<div class='date_col'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+                        $("<div class='date_col'><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
                         for (var i = 0; i < cnt; i++) {
                             $("div.date_col:last").append("<div class='grade' data-idLes="+st+" data-idStudent="+myStudentId[i]+" data-zapis=0></div>");
                             myStudentZapis[st+'Zapis'+myStudentId[i]]=0;
@@ -57,6 +59,7 @@
         buttons: {
             "Создать": addLesson,
             "Отмена": function () {
+                $('input#number_theme').blur();
                 dialog.dialog("close");
             }
         }
@@ -78,6 +81,9 @@
     });
 
 
+    $('div').delegate(".grade", "tabhold", function () {
+        alert("А кто-то с планшетика или телефона скоро сможет пользоваться этой фиговиной!")
+    });
     $('div').delegate(".grade", "dblclick", function () {
         $("button#edit").removeAttr('disabled');
         $("button#close").removeAttr('disabled');
@@ -126,6 +132,7 @@
         if(cur_res!=""){
             coding = Encrypt(cur_res);
             elem.text(cur_res);
+            smallText(elem);
 
             if((cur_grade=="") && (cur_res!="")){
                 $.ajax({
@@ -277,8 +284,9 @@ $(function () {
         dat=(dat.length==9)? "0" + dat : dat;
         if($("#edit-lesson-date").val()!=""){
             var new_date=$("#edit-lesson-date").val();// дата после изменения
+            var new_number_theme_lesson=$('input#edit_number_theme').val();
 
-            if(dat!=new_date){
+            if((dat!=new_date) || (new_number_theme_lesson!=numb_theme_lesson)){
                 //Замена даты
                 $.ajax({
                     type:'get',
@@ -288,6 +296,7 @@ $(function () {
                         'PKE': "0",
                         'idGroup': $("input#idGroup").val(),
                         'idLesson': id_Lesson,
+                        'numberThemeLesson':new_number_theme_lesson,
                         'menuactiv': "editDate"
                     },
                     success:function (st) {
@@ -317,7 +326,7 @@ $(function () {
                 edit_date_dialog.dialog("close");
             }
             else{
-                alert("Для сохранения необходимо изменить дату! В противном случае нажмите кнопку 'Отмена'");
+                alert("Для сохранения необходимо изменить дату! В ином случае нажмите кнопку 'Отмена'");
             }
         }
     }
@@ -328,10 +337,13 @@ $(function () {
         // var datepickerDate=datemass[1]+'.'+datemass[0]+'.'+datemass[2];
         dat_col_object=$(this).parent().find('div.date_title');// объект которому принадлежит значение
         id_Lesson=$(this).attr('data-idLesson');
+        numb_theme_lesson=$(this).attr('data-number_theme_lesson');
         edit_date_dialog.dialog("open");
         edit_date_form[0].reset();
         edit_date_dialog.dialog({title: dat});
         $("#edit-lesson-date").val(dat);
+        numb_theme_lesson=(numb_theme_lesson===undefined) ? "0" : numb_theme_lesson;
+        $('input#edit_number_theme').val(numb_theme_lesson);
         $('.datepicker').datepicker("setDate", dat.toString());
 
     });

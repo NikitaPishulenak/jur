@@ -24,7 +24,7 @@ $(function () {
     }
     $("div .average:last").append("<div class='avg result_div' id='avg_avrige'></div>");
 
-   $("div.date_col_stat:last").after("<div class='date_col_stat'><div class='title'>% отв.</div><div class='answer'></div></div>");
+    $("div.date_col_stat:last").after("<div class='date_col_stat'><div class='title'>% отв.</div><div class='answer'></div></div>");
     for(var i=0; i<count; i++){
         data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
         $("div .answer:last").append("<div class='ans' data-idStudent='"+data_idS+"'></div>");
@@ -58,8 +58,8 @@ $(function () {
         var elem=$(this).attr('data-idStudent');
         $('div.grade[data-idStudent="'+elem+'"]').each(function () {
             var gr=$(this).text().split("/");
-                if(Number(gr[0])){
-                    countAnswer++
+            if(Number(gr[0])){
+                countAnswer++
             }
 
         });
@@ -135,7 +135,7 @@ $(function () {
         event.preventDefault();
     });
 
- 
+
     $('div').delegate(".grade", "dblclick", function () {
         $("button#edit").removeAttr('disabled');
         $("button#close").removeAttr('disabled');

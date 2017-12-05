@@ -38,6 +38,8 @@ $(function () {
         if ($("#lesson-date").val() != "") {
             var dateLesson = $("#lesson-date").val();
             var cnt = $("div.container-list").find("div.fio_student").length;
+            var number_theme_lesson=$('input#number_theme').val();
+            number_theme_lesson=(number_theme_lesson=="") ? 0 : $('input#number_theme').val();
             $('div.fio_student').each(function (index, element) {
                 myStudentId[index] = $(element).attr('data-idStudent');
             });
@@ -52,11 +54,15 @@ $(function () {
                         'idGroup': $("input#idGroup").val(),
                         'idLessons': $("input#idSubject").val(),
                         'PL': "0",
+                        'numberThemeLesson':number_theme_lesson,
                         'menuactiv': "addLesson"
                     },
                     success: function (st) {
                         if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
-                            $("<div class='date_col colloquium_theme'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+                            dateLesson=(dateLesson.charAt(0)=="0") ? dateLesson.slice(1) : dateLesson;
+                            (number_theme_lesson==0) ? $("<div class='date_col colloquium_theme'><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">"+ dateLesson + "</div></div>").insertAfter('div.date_col:last') :
+                                $("<div class='date_col colloquium_theme'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">"+ dateLesson + "</div></div>").insertAfter('div.date_col:last');
+
                             for (var i = 0; i < cnt; i++) {
                                 $("div.date_col:last").append("<div class='grade' data-idLes=" + st + " data-idStudent=" + myStudentId[i] + " data-PKE=1 data-zapis=0></div>");
                                 myStudentZapis[st + 'Zapis' + myStudentId[i]] = 0;
@@ -93,11 +99,16 @@ $(function () {
                         'idGroup': $("input#idGroup").val(),
                         'idLessons': $("input#idSubject").val(),
                         'PL': "0",
+                        'numberThemeLesson':number_theme_lesson,
                         'menuactiv': "addLesson"
                     },
                     success: function (st) {
                         if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
-                            $("<div class='date_col exam_theme'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+                            dateLesson=(dateLesson.charAt(0)=="0") ? dateLesson.slice(1) : dateLesson;
+
+                            (number_theme_lesson==0) ? $("<div class='date_col exam_theme'><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">"  + dateLesson + "</div></div>").insertAfter('div.date_col:last') :
+                                $("<div class='date_col exam_theme'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">"  + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+
                             for (var i = 0; i < cnt; i++) {
                                 $("div.date_col:last").append("<div class='grade' data-idLes=" + st + " data-idStudent=" + myStudentId[i] + " data-PKE=2 data-zapis=0></div>");
                                 myStudentZapis[st + 'Zapis' + myStudentId[i]] = 0;
@@ -134,11 +145,15 @@ $(function () {
                         'idGroup': $("input#idGroup").val(),
                         'idLessons': $("input#idSubject").val(),
                         'PL': "0",
+                        'numberThemeLesson':number_theme_lesson,
                         'menuactiv': "addLesson"
                     },
                     success: function (st) {
                         if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
-                            $("<div class='date_col'><div class='date_title'>" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+                            dateLesson=(dateLesson.charAt(0)=="0") ? dateLesson.slice(1) : dateLesson;
+                            (number_theme_lesson==0) ? $("<div class='date_col'><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last') :
+                                $("<div class='date_col'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+
                             for (var i = 0; i < cnt; i++) {
                                 $("div.date_col:last").append("<div class='grade' data-idLes=" + st + " data-idStudent=" + myStudentId[i] + " data-PKE=0 data-zapis=0></div>");
                                 myStudentZapis[st + 'Zapis' + myStudentId[i]] = 0;
@@ -175,7 +190,7 @@ $(function () {
         buttons: {
             "Создать": addLesson,
             Отмена: function () {
-                $(this).addClass("attention");
+                $('input#number_theme').blur();
                 dialog.dialog("close");
             }
         },
@@ -410,9 +425,10 @@ $(document).ready(function () {
     dateLesson = $("div.date_title:last").val();
     idLesson = "";
     $.getScript('scripts/deleteGrade.js', function(){});
-    // $.getScript('scripts/hammer.min.js', function(){alert("loaded");});
+
 
     if (is_touch_device()) {
+        preventSelection(document);
 
         var flag = 0;
         $('div').delegate(".grade", "touchstart", function () {
@@ -423,10 +439,12 @@ $(document).ready(function () {
         $('div').delegate(".grade","touchend", function () {
             flag = 0;
         });
+        $('div').delegate(".grade","touchmove", function () {
+            flag = 0;
+        });
 
         setInterval(function(){
             if(flag == 1) {
-                console.log("+");
                 flag=0;
                 create_new_grade(el);
 
@@ -434,7 +452,7 @@ $(document).ready(function () {
             } else {
 
             }
-        },2000);
+        },1000);
 
         var edit_dialog, edit_form;
 
@@ -452,6 +470,7 @@ $(document).ready(function () {
         });
 
         function create_new_grade(e) {
+            preventSelection(document);
             $("button#edit").removeAttr('disabled');
             $("button#close").removeAttr('disabled');
             dat = e.parent().find('div.date_title').html();//Дата столбца
@@ -508,7 +527,7 @@ $(document).ready(function () {
         }
         // проделать специальные действия для устройств с поддержкой касания
     }
- });
+});
 
 
 //Функция по вызову последующих функций редактирования даты занятия
@@ -540,9 +559,10 @@ $(function () {
         if ($("#edit-lesson-date").val() != "") {
             var new_date = $("#edit-lesson-date").val();// дата после изменения
             var newPKE = $("input.edit_type_lesson:checked").val();
+            var new_number_theme_lesson=$('input#edit_number_theme').val();
 
-            if ((dat != new_date) || (newPKE != pke_lesson)) {
-                //Замена даты
+            if ((dat != new_date) || (newPKE != pke_lesson) || (new_number_theme_lesson!=numb_theme_lesson)) {
+                //Замена даты, типа занятия или номера темы занятия
                 $.ajax({
                     type: 'get',
                     url: 'p.php',
@@ -551,6 +571,7 @@ $(function () {
                         'PKE': newPKE,
                         'idGroup': $("input#idGroup").val(),
                         'idLesson': id_Lesson,
+                        'numberThemeLesson':new_number_theme_lesson,
                         'menuactiv': "editDate"
                     },
                     success: function (st) {
@@ -580,7 +601,7 @@ $(function () {
                 edit_date_dialog.dialog("close");
             }
             else {
-                alert("Для сохранения необходимо изменить дату и/или тип занятия! В противном случае нажмите кнопку 'Отмена'");
+                alert("Для сохранения необходимо изменить дату и/или тип занятия! В ином случае нажмите кнопку 'Отмена'");
             }
         }
     }
@@ -593,10 +614,12 @@ $(function () {
         dat_col_object = $(this).parent().find('div.date_title');// объект которому принадлежит значение
         pke_lesson = $(this).parent().find("div.grade:first").attr('data-PKE');
         id_Lesson = $(this).attr('data-idLesson');
+        numb_theme_lesson=$(this).attr('data-number_theme_lesson');
         edit_date_dialog.dialog("open");
         edit_date_form[0].reset();
         edit_date_dialog.dialog({title: dat});
         $("#edit-lesson-date").val(dat);
+        (numb_theme_lesson=="0") ? $('input#edit_number_theme').val("") : $('input#edit_number_theme').val(numb_theme_lesson);
         //$('.datepicker').datepicker("setDate", new Date(datepickerDate) );
 
         $('.datepicker').datepicker("setDate", dat.toString());
@@ -627,6 +650,67 @@ $(function () {
 });
 
 function is_touch_device() {
-    return !!('ontouchstart' in window)
-        || !!('onmsgesturechange' in window);
-};
+    return ('ontouchstart' in window) || ('onmsgesturechange' in window);
+}
+
+function preventSelection(element){
+    var preventSelection = false;
+
+    function addHandler(element, event, handler){
+        if (element.attachEvent)
+            element.attachEvent('on' + event, handler);
+        else
+        if (element.addEventListener)
+            element.addEventListener(event, handler, false);
+    }
+    function removeSelection(){
+        if (window.getSelection) { window.getSelection().removeAllRanges(); }
+        else if (document.selection && document.selection.clear)
+            document.selection.clear();
+    }
+    function killCtrlA(event){
+        var event = event || window.event;
+        var sender = event.target || event.srcElement;
+
+        if (sender.tagName.match(/INPUT|TEXTAREA/i))
+            return;
+
+        var key = event.keyCode || event.which;
+        if (event.ctrlKey && key == 'A'.charCodeAt(0))  // 'A'.charCodeAt(0) можно заменить на 65
+        {
+            removeSelection();
+
+            if (event.preventDefault)
+                event.preventDefault();
+            else
+                event.returnValue = false;
+        }
+    }
+
+    // не даем выделять текст мышкой
+    addHandler(element, 'mousemove', function(){
+        if(preventSelection)
+            removeSelection();
+    });
+    addHandler(element, 'mousedown', function(event){
+        var event = event || window.event;
+        var sender = event.target || event.srcElement;
+        preventSelection = !sender.tagName.match(/INPUT|TEXTAREA/i);
+    });
+
+    // борем dblclick
+    // если вешать функцию не на событие dblclick, можно избежать
+    // временное выделение текста в некоторых браузерах
+    addHandler(element, 'mouseup', function(){
+        if (preventSelection)
+            removeSelection();
+        preventSelection = false;
+    });
+
+    // борем ctrl+A
+    // скорей всего это и не надо, к тому же есть подозрение
+    // что в случае все же такой необходимости функцию нужно
+    // вешать один раз и на document, а не на элемент
+    addHandler(element, 'keydown', killCtrlA);
+    addHandler(element, 'keyup', killCtrlA);
+}

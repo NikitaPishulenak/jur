@@ -1,6 +1,17 @@
 ﻿@import url("style_mobile.css");
 @import url("style_desktop.css");
 
+
+.nLesson{
+    position: relative;
+    border: solid #e5e5e5 1px;
+    border-bottom: none;
+    left:0;
+    text-align: center;
+    background-color: #e5e5e5;
+    font-size: 0.65em;
+}
+
 input[type=text] {
     border-radius: 3px;
     margin: 2px 2px 2px 2px;
@@ -27,7 +38,7 @@ input[type=text]:hover {
 }
 
 /*.attention{*/
-    /*margin-right: 0.1em;*/
+/*margin-right: 0.1em;*/
 /*}*/
 
 .button, .attention {
@@ -122,16 +133,20 @@ input .edit_grade {
     text-align: center;
     border: solid #000000 1px;
     overflow: hidden;
+    padding-bottom: 0.05em;
+    padding-top: 0.05em;
 }
 
 .date_title, .info_title{
-    /*padding-top: 0.3em;*/
-    /*padding-bottom: 0.25em;*/
+    clear: left;
+    position: relative;
+    padding-bottom: 0;
+    padding-top: 0.2em;
     vertical-align: middle;
     font-weight: 400;
     border: solid #000000 1px;
     text-align: center;
-    font-size: 0.85em;
+    font-size: 0.75em;
 }
 
 .date_title, .tool, .type_lesson, .add_grade,.pointer{
@@ -238,7 +253,7 @@ div .hidden{
 }
 
 .undef{
-    background-color: #d3d3d3;
+    background-color: #FD2121;
 }
 
 .fio, .subjects {
@@ -257,6 +272,7 @@ div .hidden{
 }
 
 .result_box, .result_box_statistic {
+    border-left: none;
     white-space: nowrap;  /* чтобы столбцы стояли в одну линию, не переходя на другую строку */
     word-wrap: normal;
     overflow-x: auto;
@@ -268,10 +284,12 @@ div .hidden{
 
 .result_box{
     border: 1px solid #ccc;
+    border-left: none;
     border-top: none;
 }
 
 .date_col {
+    position: relative;
     display: inline-table;
 }
 
@@ -411,15 +429,25 @@ tr.sub:nth-child(odd){
     width: 23px;
     height: 23px;
 }
+/*----*/
+
+input#number_theme, input#edit_number_theme{
+    width: 30px;
+}
+
+div.number_theme{
+    padding-left: 5px;
+    position: absolute;
+    top: 15px;
+    margin-left: 140px;
+}
 
 
+body{
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer */
+    -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+    -webkit-user-select: none; /* Chrome, Safari, and Opera */
+    -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
+}
 
-/*position: absolute;*/
-/*width: 0;*/
-/*height: 0;*/
-/*bottom:0;*/
-/*float: left;*/
-/*display: inline-table;*/
-
-/**/
-/*display: inline-table;*/

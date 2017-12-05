@@ -1,13 +1,19 @@
-﻿//document.__proto__.delegator = false;
-$(document).ready(function () {
+﻿$(document).ready(function () {
     hideHistory();
     resize();
     path = window.location.pathname.slice(1);
 
     if((path=="p.php") || (path=="z.php")){
         $('div').delegate(".date_title", "mouseover", function () {
-            $(this).attr('title', 'Кликните дважды для редактирования даты');
+            var numbThemeLesson=$(this).attr('data-number_theme_lesson');
+            if(numbThemeLesson!==undefined){
+                $(this).attr('title', '№ темы: '+numbThemeLesson);
+            }
+            else{
+                $(this).attr('title', 'Кликните дважды для редактирования даты');
+            }
         });
+
     }
     //Дорисовка треугольника
     $("div.grade").each(function () {
@@ -209,6 +215,20 @@ function proverka(event, id) {
         return false;
     }
     else {
+        return false;
+    }
+}
+
+
+//Функция проверки правильности ввода номера темы занятия
+function checkNumberThemeLesson(event) {
+    if((event.keyCode==8)||(event.keyCode==27)){
+        return;
+    }
+    else if (((event.keyCode >= 48) && (event.keyCode <= 57)) || ((event.keyCode >= 96) && (event.keyCode <= 105))){
+        return true;
+    }
+    else{
         return false;
     }
 }
