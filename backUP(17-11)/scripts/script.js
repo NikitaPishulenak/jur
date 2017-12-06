@@ -109,7 +109,7 @@ $(function () {
                             (number_theme_lesson==0) ? $("<div class='date_col exam_theme'><div class='date_title' data-idLesson="+st+"  data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last') :
                                 $("<div class='date_col exam_theme'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+"  data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
 
-                          for (var i = 0; i < cnt; i++) {
+                            for (var i = 0; i < cnt; i++) {
                                 $("div.date_col:last").append("<div class='grade' data-idLes="+st+" data-idStudent="+myStudentId[i]+" data-PKE=2 data-zapis=0></div>");
                                 myStudentZapis[st+'Zapis'+myStudentId[i]]=0;
                             }
@@ -154,7 +154,7 @@ $(function () {
                             (number_theme_lesson==0) ? $("<div class='date_col'><div class='date_title' data-idLesson="+st+"  data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last') :
                                 $("<div class='date_col'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+"  data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
 
-                          for (var i = 0; i < cnt; i++) {
+                            for (var i = 0; i < cnt; i++) {
                                 $("div.date_col:last").append("<div class='grade' data-idLes="+st+" data-idStudent="+myStudentId[i]+" data-PKE=0 data-zapis=0></div>");
                                 myStudentZapis[st+'Zapis'+myStudentId[i]]=0;
                             }
@@ -454,6 +454,7 @@ $(function () {
             var new_date=$("#edit-lesson-date").val();// дата после изменения
             var newPKE=$("input.edit_type_lesson:checked").val();
             var new_number_theme_lesson=$('input#edit_number_theme').val();
+            (new_number_theme_lesson=="") ? new_number_theme_lesson=0 : new_number_theme_lesson;
 
             if((dat!=new_date) || (newPKE!=pke_lesson) || (new_number_theme_lesson!=numb_theme_lesson)){
                 //Замена даты, типа занятия или номера темы занятия

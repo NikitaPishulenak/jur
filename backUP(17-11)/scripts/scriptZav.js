@@ -428,104 +428,7 @@ $(document).ready(function () {
 
 
     if (is_touch_device()) {
-        preventSelection(document);
-
-        var flag = 0;
-        $('div').delegate(".grade", "touchstart", function () {
-            el=$(this);
-            flag = 1;
-        });
-
-        $('div').delegate(".grade","touchend", function () {
-            flag = 0;
-        });
-        $('div').delegate(".grade","touchmove", function () {
-            flag = 0;
-        });
-
-        setInterval(function(){
-            if(flag == 1) {
-                flag=0;
-                create_new_grade(el);
-
-
-            } else {
-
-            }
-        },1000);
-
-        var edit_dialog, edit_form;
-
-        //Редактирование отметки
-        edit_dialog = $("#form-edit").dialog({
-            resizable: false,
-            autoOpen: false,
-            height: 'auto',
-            width: 'auto',
-            modal: true
-
-        });
-        edit_form = edit_dialog.find("form").on("submit", function (event) {
-            event.preventDefault();
-        });
-
-        function create_new_grade(e) {
-            preventSelection(document);
-            $("button#edit").removeAttr('disabled');
-            $("button#close").removeAttr('disabled');
-            dat = e.parent().find('div.date_title').html();//Дата столбца
-            student_id = e.attr('data-idStudent');
-            id_Less = e.attr('data-idLes');
-            PKE = e.attr('data-PKE');
-            id_Zapis = e.attr('data-zapis');
-
-            edit_dialog.dialog("open");
-            edit_form[0].reset();
-            var data_studentID = e.attr('data-idStudent');
-            var fio_stud = $('div.fio_student[data-idStudent="' + data_studentID + '"]').text();
-            edit_dialog.dialog({title: fio_stud});
-            $("button#add_grade_input").removeAttr('disabled');
-            $("#inp_0").blur();
-            $('#inp_2').slideUp(1);
-            $('#inp_1').slideUp(1);
-            cur_grade = e.text();
-            elem = e;
-            grades = cur_grade.split("/");
-            for (var i = 0; i < grades.length; i++) {
-                $("div.panel").find('input#inp_' + i).slideDown(1);
-                $("div.panel").find('input#inp_' + i).val(grades[i]);
-            }
-            // $('input#inp_0').select();
-            // $('input#inp_0').focus();
-
-            $(".inp_cell:text").focus(function () {
-                inp_id = $(this).attr('id');
-
-                //При нажатии на кнопку с результатами текст выводится в поле ввода
-                //$('b,span').delegate(".tool", "touchstart", function (){
-                $("b.tool, span.tool").click(function () {
-                    var text = $(this).text();
-                    $("#" + inp_id).val(text);
-                    $("#" + inp_id).blur();
-                });
-            });
-            var countOpenCell = 0;
-            for (j = 0; j < 3; j++) {
-                if ($("#inp_" + j).val() != "") {
-                    countOpenCell++;
-                }
-            }
-            if (countOpenCell == 3) {
-                $("button#add_grade_input").attr('disabled', true);
-            }
-
-            $(".inp_cell:text").keydown(function (event) {
-                if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
-                    $(this).val("");
-                }
-            });
-        }
-        // проделать специальные действия для устройств с поддержкой касания
+        $.getScript('scripts/mobile/mscriptZav.js', function(){});
     }
 });
 
@@ -560,6 +463,7 @@ $(function () {
             var new_date = $("#edit-lesson-date").val();// дата после изменения
             var newPKE = $("input.edit_type_lesson:checked").val();
             var new_number_theme_lesson=$('input#edit_number_theme').val();
+            (new_number_theme_lesson=="") ? new_number_theme_lesson=0 : new_number_theme_lesson;
 
             if ((dat != new_date) || (newPKE != pke_lesson) || (new_number_theme_lesson!=numb_theme_lesson)) {
                 //Замена даты, типа занятия или номера темы занятия
@@ -649,68 +553,3 @@ $(function () {
     });
 });
 
-function is_touch_device() {
-    return ('ontouchstart' in window) || ('onmsgesturechange' in window);
-}
-
-function preventSelection(element){
-    var preventSelection = false;
-
-    function addHandler(element, event, handler){
-        if (element.attachEvent)
-            element.attachEvent('on' + event, handler);
-        else
-        if (element.addEventListener)
-            element.addEventListener(event, handler, false);
-    }
-    function removeSelection(){
-        if (window.getSelection) { window.getSelection().removeAllRanges(); }
-        else if (document.selection && document.selection.clear)
-            document.selection.clear();
-    }
-    function killCtrlA(event){
-        var event = event || window.event;
-        var sender = event.target || event.srcElement;
-
-        if (sender.tagName.match(/INPUT|TEXTAREA/i))
-            return;
-
-        var key = event.keyCode || event.which;
-        if (event.ctrlKey && key == 'A'.charCodeAt(0))  // 'A'.charCodeAt(0) можно заменить на 65
-        {
-            removeSelection();
-
-            if (event.preventDefault)
-                event.preventDefault();
-            else
-                event.returnValue = false;
-        }
-    }
-
-    // не даем выделять текст мышкой
-    addHandler(element, 'mousemove', function(){
-        if(preventSelection)
-            removeSelection();
-    });
-    addHandler(element, 'mousedown', function(event){
-        var event = event || window.event;
-        var sender = event.target || event.srcElement;
-        preventSelection = !sender.tagName.match(/INPUT|TEXTAREA/i);
-    });
-
-    // борем dblclick
-    // если вешать функцию не на событие dblclick, можно избежать
-    // временное выделение текста в некоторых браузерах
-    addHandler(element, 'mouseup', function(){
-        if (preventSelection)
-            removeSelection();
-        preventSelection = false;
-    });
-
-    // борем ctrl+A
-    // скорей всего это и не надо, к тому же есть подозрение
-    // что в случае все же такой необходимости функцию нужно
-    // вешать один раз и на document, а не на элемент
-    addHandler(element, 'keydown', killCtrlA);
-    addHandler(element, 'keyup', killCtrlA);
-}

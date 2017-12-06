@@ -291,6 +291,7 @@ div .hidden{
 .date_col {
     position: relative;
     display: inline-table;
+    margin-bottom: 3px;
 }
 
 .date_col_stat {

@@ -67,6 +67,7 @@
     }
 
     .statistic {
+        margin-top: 17px;
         left: calc(60% + 260px);
         position: absolute;
         border: none;

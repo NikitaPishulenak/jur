@@ -286,6 +286,7 @@ $(function () {
         if($("#edit-lesson-date").val()!=""){
             var new_date=$("#edit-lesson-date").val();// дата после изменения
             var new_number_theme_lesson=$('input#edit_number_theme').val();
+            (new_number_theme_lesson=="") ? new_number_theme_lesson=0 : new_number_theme_lesson;
 
             if((dat!=new_date) || (new_number_theme_lesson!=numb_theme_lesson)){
                 //Замена даты
