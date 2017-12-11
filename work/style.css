@@ -42,5 +42,6 @@ A:focus{outline:none; }
     .DialogFakFak A { font-size:11px;line-height:15px;}
     .DialogFak {margin:10px; height:250px; width:250px; padding:5px;}
     .DialogFak A {font-size:11px;}
+    a{ font-size: 0.8em}
 
 }

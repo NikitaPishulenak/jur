@@ -35,7 +35,7 @@
             edit_dateTitle_flag==0;
             create_new_dateTitle(elDateTitle);
         }
-    },800);
+    },1000);
 
 
 
@@ -84,7 +84,7 @@
                 //Замена даты, типа занятия или номера темы занятия
                 $.ajax({
                     type: 'get',
-                    url: 'p.php',
+                    url: 'z.php',
                     data: {
                         'Date': new_date,
                         'PKE': newPKE,

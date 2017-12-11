@@ -90,6 +90,12 @@
         width: 60px;
     }
 
+    .add_grade{
+        width: auto;
+        height: 23px;
+        text-align: center;
+    }
+
     .grade {
         font-size: 0.83em;
         width: 80px;

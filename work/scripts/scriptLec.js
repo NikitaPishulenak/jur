@@ -10,10 +10,11 @@
             var cnt = $("div.container-list").find("div.fio_student").length;
             var number_theme_lesson=$('input#number_theme').val();
             number_theme_lesson=(number_theme_lesson=="") ? "0" : number_theme_lesson;
+            console.log("-"+number_theme_lesson);
             $('div.fio_student').each(function (index, element) { myStudentId[index]=$(element).attr('data-idStudent'); });
             $.ajax({
                 type:'get',
-                url:'z.php',
+                url:'p.php',
                 data:{
                     'dateLesson':dateLesson,
                     'idGroup': $("input#idGroup").val(),
@@ -26,9 +27,8 @@
                 success:function (st) {
                     if ((st!="No")&&(st!="Access is denied!")&&(st!="No access rights!")){
                         dateLesson=(dateLesson.charAt(0)=="0") ? dateLesson.slice(1) : dateLesson;
-
-                        (number_theme_lesson==0) ? $("<div class='date_col'><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">"+ dateLesson + "</div></div>").insertAfter('div.date_col:last') :
-                            $("<div class='date_col'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">"+ dateLesson + "</div></div>").insertAfter('div.date_col:last');
+                        (number_theme_lesson==0) ? $("<div class='date_col'><div class='date_title'  data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last') :
+                            $("<div class='date_col'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title'  data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
 
                         for (var i = 0; i < cnt; i++) {
                             $("div.date_col:last").append("<div class='grade' data-idLes="+st+" data-idStudent="+myStudentId[i]+" data-zapis=0></div>");
@@ -86,9 +86,6 @@
     });
 
 
-    $('div').delegate(".grade", "tabhold", function () {
-        alert("А кто-то с планшетика или телефона скоро сможет пользоваться этой фиговиной!")
-    });
     $('div').delegate(".grade", "dblclick", function () {
         $("button#edit").removeAttr('disabled');
         $("button#close").removeAttr('disabled');
@@ -137,12 +134,11 @@
         if(cur_res!=""){
             coding = Encrypt(cur_res);
             elem.text(cur_res);
-            smallText(elem);
 
             if((cur_grade=="") && (cur_res!="")){
                 $.ajax({
                     type:'get',
-                    url:'z.php',
+                    url:'p.php',
                     data:{
                         'dateLes': dat,
                         'idLessons': $("input#idSubject").val(),
@@ -191,7 +187,7 @@
                     if(id_Zapis == 0) id_Zapis = myStudentZapis[id_Less+'Zapis'+student_id];
                     $.ajax({
                         type:'get',
-                        url:'z.php',
+                        url:'p.php',
                         data:{
                             'id_Zapis': id_Zapis,
                             'dateLes': dat,
@@ -241,11 +237,12 @@
     $(".inp_cell:text").click(function () {
         $(this).select();
     });
+
     $("#create_lesson").button().on("click", function () {
         var cr_d=new Date();
+        $("#number_theme").val("");
         var cr_dStr=cr_d.getDate()+"."+Number(cr_d.getMonth()+1)+"."+cr_d.getFullYear();
         $('.datepicker').datepicker("setDate", cr_dStr.toString());
-        $("#number_theme").val("");
         dialog.dialog("open");
     });
 
@@ -259,8 +256,9 @@ $(document).ready(function () {
     teacher="";
     dateLesson=$("div.date_title:last").val();
     idLesson="";
-
-    $.getScript('scripts/deleteGrade.js', function(){});
+    if (is_touch_device()) {
+        $.getScript('scripts/mobile/mscriptLec.js', function(){});
+    }
 
 });
 
@@ -333,7 +331,7 @@ $(function () {
                 edit_date_dialog.dialog("close");
             }
             else{
-                alert("Для сохранения необходимо изменить дату! В ином случае нажмите кнопку 'Отмена'");
+                alert("Для сохранения необходимо изменить дату и/или номер темы занятия! В ином случае нажмите кнопку 'Отмена'");
             }
         }
     }
@@ -349,11 +347,10 @@ $(function () {
         edit_date_form[0].reset();
         edit_date_dialog.dialog({title: dat});
         $("#edit-lesson-date").val(dat);
-        (numb_theme_lesson=="0") ? $('input#edit_number_theme').val("") : $('input#edit_number_theme').val(numb_theme_lesson);
+        numb_theme_lesson=(numb_theme_lesson=="0") ? $('input#edit_number_theme').val("") : $('input#edit_number_theme').val(numb_theme_lesson);
         $('.datepicker').datepicker("setDate", dat.toString());
 
     });
-
 });
 
 //Функция дешифрирования оценок

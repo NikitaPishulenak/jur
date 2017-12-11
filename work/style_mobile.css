@@ -4,18 +4,6 @@
         font-size: 12px;
     }
 
-    /*.button {*/
-        /*width: 75px;*/
-        /*margin-bottom: 20px;*/
-        /*font-weight: 100;*/
-    /*}*/
-
-    /*.attention {*/
-        /*width: 55px;*/
-        /*margin-bottom: 20px;*/
-        /*margin-left: 15px;*/
-    /*}*/
-
     .date_title{
         width: 60px;
     }
@@ -28,7 +16,6 @@
         width: 37px;
     }
 
-
     .space {
         margin: 0 2px 0 1px;
     }
@@ -36,10 +23,6 @@
     .marg-left{
         margin-left: 36px;
     }
-
-    /*.panel{*/
-        /*margin-bottom: -10px;*/
-    /*}*/
 
     #create_lesson{
         margin-bottom: 20px;
@@ -49,7 +32,7 @@
         width: 70px;
     }
 
-    .fio_student, .subject_student {
+    .fio_student {
         height: 20px;
         width: 210px;
     }
@@ -86,6 +69,13 @@
         width: 35px;
     }
 
+
+    .add_grade{
+        width: auto;
+        height: 20px;
+        text-align: center;
+    }
+
     .grade {
         font-size: 0.8em;
         width: 60px;
@@ -119,6 +109,14 @@
         height: 10px;
         margin-bottom: -10px;
         float: left;
+    }
+
+    body{
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer */
+        -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+        -webkit-user-select: none; /* Chrome, Safari, and Opera */
+        -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
     }
 
 }

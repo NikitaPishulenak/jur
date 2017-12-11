@@ -1,31 +1,32 @@
 ﻿$(function () {
     $("div.average").each(function () {
-        var sum = 0, countGrade = 0;
-        var elem = $(this).attr('data-idStudent');
-        $('div.grade[data-idStudent="' + elem + '"]').each(function () {
-            var gr = $(this).text().split("/");
-            for (var i = 0; i < gr.length; i++) {
-                if (Number(gr[i])) {
-                    sum += Number(gr[i]);
+        var sum=0,countGrade=0;
+        var elem=$(this).attr('data-idStudent');
+        $('div.grade[data-idStudent="'+elem+'"]').each(function () {
+            var gr=$(this).text().split("/");
+            for (var i=0; i<gr.length; i++){
+                if(Number(gr[i])){
+                    sum+=Number(gr[i]);
                     countGrade++;
                 }
             }
         });
-        $('div.average[data-idStudent="' + elem + '"]').html(Math.round(10 * (sum / countGrade)) / 10);
+        $('div.average[data-idStudent="'+elem+'"]').html(Math.round(10*(sum/countGrade))/10);
     });
 
     $("div.answer").each(function () {
-        var countAnswer = 0;
-        var elem = $(this).attr('data-idStudent');
-        $('div.grade[data-idStudent="' + elem + '"]').each(function () {
-            var gr = $(this).text().split("/");
-            if (Number(gr[0])) {
+        var countAnswer=0;
+        var elem=$(this).attr('data-idStudent');
+        $('div.grade[data-idStudent="'+elem+'"]').each(function () {
+            var gr=$(this).text().split("/");
+            if(Number(gr[0])){
                 countAnswer++
             }
         });
-        $('div.answer[data-idStudent="' + elem + '"]').html(Math.round(100 * (countAnswer * 100 / $('div.grade[data-idStudent="' + elem + '"]').length)) / 100 + "%");
+        $('div.answer[data-idStudent="'+elem+'"]').html(Math.round(100*(countAnswer*100/$('div.grade[data-idStudent="'+elem+'"]').length))/100+"%");
     });
 });
+
 
 
 $(function () {
@@ -35,50 +36,50 @@ $(function () {
 
     function addLesson() {
         checkDate("lesson-date");
-        if ($("#lesson-date").val() != "") {
+        if ($("#lesson-date").val() != ""){
             var dateLesson = $("#lesson-date").val();
             var cnt = $("div.container-list").find("div.fio_student").length;
             var number_theme_lesson=$('input#number_theme').val();
             number_theme_lesson=(number_theme_lesson=="") ? 0 : $('input#number_theme').val();
             $('div.fio_student').each(function (index, element) {
-                myStudentId[index] = $(element).attr('data-idStudent');
+                myStudentId[index]=$(element).attr('data-idStudent');
             });
 
             if ($("#colloquium_rb").is(':checked')) {
                 $.ajax({
-                    type: 'get',
-                    url: 'p.php',
-                    data: {
-                        'dateLesson': dateLesson,
-                        'PKE': "1",
+                    type:'get',
+                    url:'p.php',
+                    data:{
+                        'dateLesson':dateLesson,
+                        'PKE':"1",
                         'idGroup': $("input#idGroup").val(),
                         'idLessons': $("input#idSubject").val(),
-                        'PL': "0",
+                        'PL':"0",
                         'numberThemeLesson':number_theme_lesson,
                         'menuactiv': "addLesson"
                     },
-                    success: function (st) {
-                        if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
+                    success:function (st) {
+                        if ((st!="No")&&(st!="Access is denied!")&&(st!="No access rights!")){
                             dateLesson=(dateLesson.charAt(0)=="0") ? dateLesson.slice(1) : dateLesson;
-                            (number_theme_lesson==0) ? $("<div class='date_col colloquium_theme'><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">"+ dateLesson + "</div></div>").insertAfter('div.date_col:last') :
-                                $("<div class='date_col colloquium_theme'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">"+ dateLesson + "</div></div>").insertAfter('div.date_col:last');
+                            (number_theme_lesson==0)  ? $("<div class='date_col colloquium_theme'><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">" +dateLesson + "</div></div>").insertAfter('div.date_col:last') :
+                                $("<div class='date_col colloquium_theme'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">" +dateLesson + "</div></div>").insertAfter('div.date_col:last');
 
                             for (var i = 0; i < cnt; i++) {
-                                $("div.date_col:last").append("<div class='grade' data-idLes=" + st + " data-idStudent=" + myStudentId[i] + " data-PKE=1 data-zapis=0></div>");
-                                myStudentZapis[st + 'Zapis' + myStudentId[i]] = 0;
+                                $("div.date_col:last").append("<div class='grade' data-idLes="+st+" data-idStudent="+myStudentId[i]+" data-PKE=1 data-zapis=0></div>");
+                                myStudentZapis[st+'Zapis'+myStudentId[i]]=0;
                             }
                         }
-                        else {
-                            if (st == "No") {
+                        else{
+                            if(st=="No"){
                                 alert("Колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
                             }
-                            else if (st == "Access is denied!") {
+                            else if (st=="Access is denied!"){
                                 alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
                             }
-                            else if (st == "No access rights!") {
+                            else if (st=="No access rights!"){
                                 alert("Не достаточно прав!");
                             }
-                            else {
+                            else{
                                 alert("Что-то пошло не так! ");
                             }
                         }
@@ -91,40 +92,39 @@ $(function () {
             }
             else if ($("#exam_rb").is(':checked')) {
                 $.ajax({
-                    type: 'get',
-                    url: 'p.php',
-                    data: {
-                        'dateLesson': dateLesson,
-                        'PKE': "2",
+                    type:'get',
+                    url:'p.php',
+                    data:{
+                        'dateLesson':dateLesson,
+                        'PKE':"2",
                         'idGroup': $("input#idGroup").val(),
                         'idLessons': $("input#idSubject").val(),
-                        'PL': "0",
+                        'PL':"0",
                         'numberThemeLesson':number_theme_lesson,
                         'menuactiv': "addLesson"
                     },
-                    success: function (st) {
-                        if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
+                    success:function (st) {
+                        if ((st!="No")&&(st!="Access is denied!")&&(st!="No access rights!")){
                             dateLesson=(dateLesson.charAt(0)=="0") ? dateLesson.slice(1) : dateLesson;
-
-                            (number_theme_lesson==0) ? $("<div class='date_col exam_theme'><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">"  + dateLesson + "</div></div>").insertAfter('div.date_col:last') :
-                                $("<div class='date_col exam_theme'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">"  + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+                            (number_theme_lesson==0) ? $("<div class='date_col exam_theme'><div class='date_title' data-idLesson="+st+"  data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last') :
+                                $("<div class='date_col exam_theme'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+"  data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
 
                             for (var i = 0; i < cnt; i++) {
-                                $("div.date_col:last").append("<div class='grade' data-idLes=" + st + " data-idStudent=" + myStudentId[i] + " data-PKE=2 data-zapis=0></div>");
-                                myStudentZapis[st + 'Zapis' + myStudentId[i]] = 0;
+                                $("div.date_col:last").append("<div class='grade' data-idLes="+st+" data-idStudent="+myStudentId[i]+" data-PKE=2 data-zapis=0></div>");
+                                myStudentZapis[st+'Zapis'+myStudentId[i]]=0;
                             }
                         }
-                        else {
-                            if (st == "No") {
+                        else{
+                            if(st=="No"){
                                 alert("Колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
                             }
-                            else if (st == "Access is denied!") {
+                            else if (st=="Access is denied!"){
                                 alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
                             }
-                            else if (st == "No access rights!") {
+                            else if (st=="No access rights!"){
                                 alert("Не достаточно прав!");
                             }
-                            else {
+                            else{
                                 alert("Что-то пошло не так! ");
                             }
                         }
@@ -137,39 +137,39 @@ $(function () {
             else {
 
                 $.ajax({
-                    type: 'get',
-                    url: 'p.php',
-                    data: {
-                        'dateLesson': dateLesson,
-                        'PKE': "0",
+                    type:'get',
+                    url:'p.php',
+                    data:{
+                        'dateLesson':dateLesson,
+                        'PKE':"0",
                         'idGroup': $("input#idGroup").val(),
                         'idLessons': $("input#idSubject").val(),
-                        'PL': "0",
+                        'PL':"0",
                         'numberThemeLesson':number_theme_lesson,
                         'menuactiv': "addLesson"
                     },
-                    success: function (st) {
-                        if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
+                    success:function (st) {
+                        if ((st!="No")&&(st!="Access is denied!")&&(st!="No access rights!")){
                             dateLesson=(dateLesson.charAt(0)=="0") ? dateLesson.slice(1) : dateLesson;
-                            (number_theme_lesson==0) ? $("<div class='date_col'><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last') :
-                                $("<div class='date_col'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+" data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
+                            (number_theme_lesson==0) ? $("<div class='date_col'><div class='date_title' data-idLesson="+st+"  data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last') :
+                                $("<div class='date_col'><div class='nLesson'>" +number_theme_lesson+"</div><div class='date_title' data-idLesson="+st+"  data-number_theme_lesson="+number_theme_lesson+">" + dateLesson + "</div></div>").insertAfter('div.date_col:last');
 
                             for (var i = 0; i < cnt; i++) {
-                                $("div.date_col:last").append("<div class='grade' data-idLes=" + st + " data-idStudent=" + myStudentId[i] + " data-PKE=0 data-zapis=0></div>");
-                                myStudentZapis[st + 'Zapis' + myStudentId[i]] = 0;
+                                $("div.date_col:last").append("<div class='grade' data-idLes="+st+" data-idStudent="+myStudentId[i]+" data-PKE=0 data-zapis=0></div>");
+                                myStudentZapis[st+'Zapis'+myStudentId[i]]=0;
                             }
                         }
-                        else {
-                            if (st == "No") {
+                        else{
+                            if(st=="No"){
                                 alert("Колонка с указанной датой уже была создана! Редактируйте существующую или создайте с новой датой!");
                             }
-                            else if (st == "Access is denied!") {
+                            else if (st=="Access is denied!"){
                                 alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
                             }
-                            else if (st == "No access rights!") {
+                            else if (st=="No access rights!"){
                                 alert("Не достаточно прав!");
                             }
-                            else {
+                            else{
                                 alert("Что-то пошло не так! ");
                             }
                         }
@@ -184,7 +184,7 @@ $(function () {
     }
 
     dialog = $("#form-lesson").dialog({
-        resizable: false,
+        resizable:false,
         autoOpen: false,
         modal: true,
         buttons: {
@@ -204,7 +204,7 @@ $(function () {
 
     //Редактирование отметки
     edit_dialog = $("#form-edit").dialog({
-        resizable: false,
+        resizable:false,
         autoOpen: false,
         height: 'auto',
         width: 'auto',
@@ -220,20 +220,19 @@ $(function () {
         edit_dialog.dialog("close");
     });
 
-
     $('div').delegate(".grade", "dblclick", function () {
         $("button#edit").removeAttr('disabled');
         $("button#close").removeAttr('disabled');
-        dat = $(this).parent().find('div.date_title').html();//Дата столбца
-        student_id = $(this).attr('data-idStudent');
-        id_Less = $(this).attr('data-idLes');
-        PKE = $(this).attr('data-PKE');
-        id_Zapis = $(this).attr('data-zapis');
+        dat=$(this).parent().find('div.date_title').html();//Дата столбца
+        student_id=$(this).attr('data-idStudent');
+        id_Less=$(this).attr('data-idLes');
+        PKE=$(this).attr('data-PKE');
+        id_Zapis=$(this).attr('data-zapis');
 
         edit_dialog.dialog("open");
         edit_form[0].reset();
-        var data_studentID = $(this).attr('data-idStudent');
-        var fio_stud = $('div.fio_student[data-idStudent="' + data_studentID + '"]').text();
+        var data_studentID=$(this).attr('data-idStudent');
+        var fio_stud=$('div.fio_student[data-idStudent="'+data_studentID+'"]').text();
         edit_dialog.dialog({title: fio_stud});
         $("button#add_grade_input").removeAttr('disabled');
         $("#inp_0").focus();
@@ -254,8 +253,8 @@ $(function () {
             //При нажатии на кнопку с результатами текст выводится в поле ввода
             $("b.tool, span.tool").click(function () {
                 var text = $(this).text();
-                $("#" + inp_id).val(text);
-                $("#" + inp_id).blur();
+                $("#"+inp_id).val(text);
+                $("#"+inp_id).blur();
             });
 
             // //При нажатии на пропуск с количеством часов текст выводится в поле ввода
@@ -286,7 +285,7 @@ $(function () {
         var bit1 = $("#inp_0").val();
         var bit2 = $("#inp_1").val();
         var bit3 = $("#inp_2").val();
-        if (bit1 != "") {
+        if (bit1!=""){
             bit1 = (bit1 == "") ? "" : bit1;
             bit2 = (bit2 == "") ? "" : "/" + bit2;
             bit3 = (bit3 == "") ? "" : "/" + bit3;
@@ -294,11 +293,11 @@ $(function () {
             coding = Encrypt(cur_res);
             elem.text(cur_res);
             smallText(elem);
-            if ((cur_grade == "") && (cur_res != "")) {
+            if((cur_grade=="") && (cur_res!="")){
                 $.ajax({
-                    type: 'get',
-                    url: 'p.php',
-                    data: {
+                    type:'get',
+                    url:'p.php',
+                    data:{
                         'dateLes': dat,
                         'idLessons': $("input#idSubject").val(),
                         'idStudent': student_id,
@@ -309,24 +308,24 @@ $(function () {
                         'menuactiv': "addLessonStudent",
                         'grades': coding
                     },
-                    success: function (st) {
-                        if ((st != "Access is denied!") && (st != "No access rights!")) {
-                            myStudentZapis[id_Less + 'Zapis' + student_id] = st;
-                        } else {
-                            if (st == "Access is denied!") {
+                    success:function (st) {
+                        if ((st!="Access is denied!")&&(st!="No access rights!")){
+                            myStudentZapis[id_Less+'Zapis'+student_id]=st;
+                        }else{
+                            if (st=="Access is denied!"){
                                 alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
                             }
-                            else if (st == "No access rights!") {
+                            else if (st=="No access rights!"){
                                 alert("Не достаточно прав!");
                             }
-                            else {
+                            else{
                                 alert("Что-то пошло не так! ");
                             }
 
                         }
                     },
-                    error: function (x, t) {
-                        if (t === 'timeout') {
+                    error: function (x,t) {
+                        if( t === 'timeout') {
                             alert("Не удалось получить ответ от сервера");
                             edit_dialog.dialog("close");
                             window.location.reload();
@@ -335,19 +334,19 @@ $(function () {
                             alert("Произошла ошибка при передаче данных");
                         }
                     },
-                    timeout: 30000
+                    timeout:30000
                 });
             }
 
-            else {
-                if (id_Zapis == 0 && myStudentZapis[id_Less + 'Zapis' + student_id] == 0) {
+            else{
+                if(id_Zapis == 0 && myStudentZapis[id_Less+'Zapis'+student_id]==0){
                     alert("�_�_�_из�_�_�>а �_�_и�+ка п�_и п���_���_а�+�� �_а�_�_�<�:");
-                } else {
-                    if (id_Zapis == 0) id_Zapis = myStudentZapis[id_Less + 'Zapis' + student_id];
+                }else{
+                    if(id_Zapis == 0) id_Zapis = myStudentZapis[id_Less+'Zapis'+student_id];
                     $.ajax({
-                        type: 'get',
-                        url: 'p.php',
-                        data: {
+                        type:'get',
+                        url:'p.php',
+                        data:{
                             'id_Zapis': id_Zapis,
                             'dateLes': dat,
                             'idStudent': student_id,
@@ -355,26 +354,26 @@ $(function () {
                             'menuactiv': "editLessonStudent",
                             'grades': coding
                         },
-                        success: function (st) {
-                            if (st == "Access is denied!") {
+                        success:function (st) {
+                            if (st=="Access is denied!"){
                                 alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
                             }
-                            else if (st == "No access rights!") {
+                            else if (st=="No access rights!"){
                                 alert("Не достаточно прав!");
                             }
                         },
-                        error: function (x, t) {
-                            if (t === 'timeout') {
+                        error: function (x,t) {
+                            if( t === 'timeout') {
                                 alert("Не удалось получить ответ от сервера");
                                 edit_dialog.dialog("close");
                                 window.location.reload();
 
                             }
-                            else {
+                            else{
                                 alert("Произошла ошибка при передаче данных");
                             }
                         },
-                        timeout: 30000
+                        timeout:30000
                     });
                 }
             }
@@ -382,7 +381,7 @@ $(function () {
             $("button#close").attr('disabled', true);
             edit_dialog.dialog("close");
         }
-        else {
+        else{
             alert("Для сохранения необходимо ввести хоть одну оценку!");
         }
     });
@@ -392,8 +391,8 @@ $(function () {
     });
 
     $("#create_lesson").button().on("click", function () {
-        var cr_d = new Date();
-        var cr_dStr = cr_d.getDate() + "." + Number(cr_d.getMonth() + 1) + "." + cr_d.getFullYear();
+        var cr_d=new Date();
+        var cr_dStr=cr_d.getDate()+"."+Number(cr_d.getMonth()+1)+"."+cr_d.getFullYear();
         $('.datepicker').datepicker("setDate", cr_dStr.toString());
         dialog.dialog("open");
     });
@@ -419,16 +418,13 @@ $(function () {
 
 
 $(document).ready(function () {
-    groupNumber = "";
-    subject = "";
-    teacher = "";
-    dateLesson = $("div.date_title:last").val();
-    idLesson = "";
-    $.getScript('scripts/deleteGrade.js', function(){});
-
-
+    groupNumber="";
+    subject="";
+    teacher="";
+    dateLesson=$("div.date_title:last").val();
+    idLesson="";
     if (is_touch_device()) {
-        $.getScript('scripts/mobile/mscriptZav.js', function(){});
+        $.getScript('scripts/mobile/mscript.js', function(){});
     }
 });
 
@@ -436,9 +432,8 @@ $(document).ready(function () {
 //Функция по вызову последующих функций редактирования даты занятия
 $(function () {
     var edit_date_dialog, edit_date_form;
-
     edit_date_dialog = $("#form-edit-date").dialog({
-        resizable: false,
+        resizable:false,
         autoOpen: false,
         modal: true,
         buttons: {
@@ -455,22 +450,21 @@ $(function () {
         event.preventDefault();
     });
 
-
     function editDate() {
         checkDate("edit-lesson-date");
-        dat = (dat.length == 9) ? "0" + dat : dat;
-        if ($("#edit-lesson-date").val() != "") {
-            var new_date = $("#edit-lesson-date").val();// дата после изменения
-            var newPKE = $("input.edit_type_lesson:checked").val();
+        dat=(dat.length==9)? "0" + dat : dat;
+        if($("#edit-lesson-date").val()!=""){
+            var new_date=$("#edit-lesson-date").val();// дата после изменения
+            var newPKE=$("input.edit_type_lesson:checked").val();
             var new_number_theme_lesson=$('input#edit_number_theme').val();
             (new_number_theme_lesson=="") ? new_number_theme_lesson=0 : new_number_theme_lesson;
 
-            if ((dat != new_date) || (newPKE != pke_lesson) || (new_number_theme_lesson!=numb_theme_lesson)) {
+            if((dat!=new_date) || (newPKE!=pke_lesson) || (new_number_theme_lesson!=numb_theme_lesson)){
                 //Замена даты, типа занятия или номера темы занятия
                 $.ajax({
-                    type: 'get',
-                    url: 'p.php',
-                    data: {
+                    type:'get',
+                    url:'p.php',
+                    data:{
                         'Date': new_date,
                         'PKE': newPKE,
                         'idGroup': $("input#idGroup").val(),
@@ -478,20 +472,20 @@ $(function () {
                         'numberThemeLesson':new_number_theme_lesson,
                         'menuactiv': "editDate"
                     },
-                    success: function (st) {
-                        if ((st != "Access is denied!") && (st != "No access rights!")) {
+                    success:function (st) {
+                        if ((st!="Access is denied!")&&(st!="No access rights!")){
                             dat_col_object.html(new_date);
                             // alert("Дата "+dat+" успешно заменена на "+new_date+"!");
                             window.location.reload();
                         }
-                        else {
-                            if (st == "Access is denied!") {
+                        else{
+                            if (st=="Access is denied!"){
                                 alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
                             }
-                            else if (st == "No access rights!") {
+                            else if (st=="No access rights!"){
                                 alert("Не достаточно прав!");
                             }
-                            else {
+                            else{
                                 alert("Что-то пошло не так! ");
                             }
 
@@ -504,30 +498,28 @@ $(function () {
 
                 edit_date_dialog.dialog("close");
             }
-            else {
-                alert("Для сохранения необходимо изменить дату и/или тип занятия! В ином случае нажмите кнопку 'Отмена'");
+            else{
+                alert("Для сохранения необходимо изменить дату и/или тип занятия и/или номер темы занятия! В ином случае нажмите кнопку 'Отмена'");
             }
         }
     }
 
-
     $('div').delegate(".date_title", "dblclick", function () {
-        dat = $(this).parent().find('div.date_title').html();//Дата столбца
-        // var datemass = dat.split(".");
-        // var datepickerDate=datemass[1]+'.'+datemass[0]+'.'+datemass[2];
-        dat_col_object = $(this).parent().find('div.date_title');// объект которому принадлежит значение
-        pke_lesson = $(this).parent().find("div.grade:first").attr('data-PKE');
-        id_Lesson = $(this).attr('data-idLesson');
+        dat=$(this).parent().find('div.date_title').html();//Дата столбца
+        dat_col_object=$(this).parent().find('div.date_title');// объект которому принадлежит значение
+        pke_lesson=$(this).parent().find("div.grade:first").attr('data-PKE');
+        id_Lesson=$(this).attr('data-idLesson');
         numb_theme_lesson=$(this).attr('data-number_theme_lesson');
         edit_date_dialog.dialog("open");
         edit_date_form[0].reset();
         edit_date_dialog.dialog({title: dat});
         $("#edit-lesson-date").val(dat);
         (numb_theme_lesson=="0") ? $('input#edit_number_theme').val("") : $('input#edit_number_theme').val(numb_theme_lesson);
+
         //$('.datepicker').datepicker("setDate", new Date(datepickerDate) );
 
         $('.datepicker').datepicker("setDate", dat.toString());
-        switch (pke_lesson) {
+        switch (pke_lesson){
             case '0':
                 $("#edit_simple_lesson_rb").prop("checked", true);
                 break;
@@ -540,14 +532,12 @@ $(function () {
         }
 
     });
-
-
 });
 
 //Функция дешифрирования оценок
 $(function () {
     $("div.grade").each(function () {
-        if ($(this).text() != "") {
+        if($(this).text()!=""){
             $(this).text(Decrypt($(this).text()));
         }
     });

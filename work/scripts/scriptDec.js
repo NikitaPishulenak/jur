@@ -277,4 +277,8 @@ $(document).ready(function () {
     dateLesson=$("div.date_title:last").val();
     idLesson="";
 
+    if (is_touch_device()) {
+        $.getScript('scripts/mobile/mscriptDec.js', function(){});
+    }
+
 });
