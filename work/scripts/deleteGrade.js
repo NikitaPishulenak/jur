@@ -57,7 +57,7 @@
     }
 
 
-    $('div').delegate(".close", "click, touchstart", function () {
+    $('div').delegate(".close", "click", function () {
         delObj=$(this).parent();
         id_st_name=delObj.attr("data-idStudent");
         idLes=delObj.attr('data-idLes');
