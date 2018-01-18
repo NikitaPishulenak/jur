@@ -1,0 +1,101 @@
+HTML {font-family: Arial; font-size:15px;}
+
+HR { height:1px; border-width:0; color:#c4c4c4; background-color:#c4c4c4; }
+
+H3 {font-size:14px;}
+
+P {line-height:19px}
+
+A { color:#004c99; font-family: Verdana; font-size:13px;}
+A:visited {color:#003399;}
+A:hover {color:#00264c; text-decoration:none;}
+A:focus{outline:none; }
+
+.Header {margin-top:40px;}
+.DialogP {margin-top:40px;}
+
+.DialogFakFak {color:#004c99; font-size:14px;}
+.DialogFakFak .shortText {text-decoration:underline;}
+.DialogFakFak:hover .shortText {text-decoration:none;}
+.DialogFakFak {cursor:pointer; float:left; position:relative; border:1px solid #c0c0c0; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
+.DialogFakFak .CO {position:absolute; color:#fff; text-align: center; background-color:#c10000;}
+.DialogFakFak .fullTextClose { float:right; display:none; color:#fff; text-align: center; background-color:#c10000;}
+
+.Not { color:#000; font-size:18px; }
+
+.titleO { color:#000;}
+.Oc { float:left; border:1px solid #c0c0c0; background-color:#e1e1e1; }
+.Oc .DataO {padding-top:2px; color:#fff; text-align: center; background-color:#c10000;  }
+.Oc .Otmetka { color:#000; text-align:center; word-wrap: break-word; font-weight:bold;}
+.Koll .DataO {background-color:#4e4e4e;}
+.Exm .DataO {background-color:#130076;}
+.clr {clear:both; height:30px;}
+
+.content_grade{background-color: #ffffff; padding: 15px; padding-left:5px; cursor: default;}
+.content_grade, .fullText{display: none;}
+
+.small-text{font-size: 0.8em;}
+
+
+.Exit {position:absolute; top:40px; right:40px; background-color:#fff; border:1px solid #c0c0c0; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+
+.Exit .Kvadrat {float:left; width:13px; height:13px; margin-right:5px; display:block;}
+.Exit .OO {background-color:#c10000;}
+.Exit .OK {background-color:#4e4e4e;}
+.Exit .OE {background-color:#130076;}
+.C {clear:both; height:3px;}
+
+
+@media only screen and (min-width: 700px){
+    .DialogFakFak {margin:10px; min-height:70px; width:180px; padding:8px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
+    .DialogFakFak .fullText {font-size:16px;}
+    .DialogFakFak .CO {right:-7px; top:-7px; width:22px; height:16px; padding-top:3px; font-size:9px;  -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+    .Exit {font-size:10px; padding:10px; width:180px;}
+    .titleO {font-size:18px; }
+    .Oc {margin:10px; height:65px; width:70px;}
+    .Oc .DataO {height:16px; font-size:10px; }
+    .Oc .Otmetka { padding:8px;}
+    /*.Koll .Otmetka {font-size:18px;}*/
+    /*.Exm .Otmetka {font-size:18px;}*/
+    .DialogFakFak .fullTextClose {width:22px; height:16px; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+    H2 {font-size:15px;}
+
+
+}
+
+@media only screen and (min-width: 401px) and (max-width: 699px) {
+    .DialogFakFak {margin:7px; min-height:60px; width:130px; padding:7px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; font-size:11px;}
+    .DialogFakFak .fullText {font-size:11px; line-height:0;}
+    .DialogFakFak .shortText{font-size:11px;  line-height:0;}
+    .DialogFakFak .CO {right:-6px; top:-6px; width:14px; height:12px; padding-top:2px; font-size:8px;  -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
+    .Exit {font-size:8px; padding:4px; width:135px;}
+    .titleO {font-size:17px; }
+    .Oc {margin:5px; height:45px; width:47px;}
+    .Oc .DataO {height:12px; font-size:8px; }
+    .Oc .Otmetka { padding:5px;}
+    /*.Koll .Otmetka {font-size:14px;}*/
+    /*.Exm .Otmetka {font-size:14px;}*/
+    .DialogFakFak .fullTextClose {width:16px; height:13px; padding-top:2px; font-size:8px; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
+    H2 {font-size:14px;}
+    p {font-size: 14px;}
+
+}
+
+@media only screen and (min-width: 10px) and (max-width: 400px) {
+    .DialogFakFak {margin:5px; min-height:60px; width:130px; padding:7px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; font-size:11px;}
+    .DialogFakFak .fullText {font-size:11px; line-height:0;}
+    .DialogFakFak .shortText{font-size:11px;  line-height:0;}
+    .DialogFakFak .CO {right:-6px; top:-6px; width:14px; height:12px; padding-top:2px; font-size:8px;  -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
+    .Exit {font-size:8px; padding:4px; width:135px;}
+    .titleO {font-size:15px; }
+    .Oc {margin:4px; height:45px; width:42px;}
+    .Oc .DataO {height:11px; font-size:8px; }
+    .Oc .Otmetka { padding:4px;}
+    /*.Koll .Otmetka {font-size:13px;}*/
+    /*.Exm .Otmetka {font-size:13px;}*/
+    .DialogFakFak .fullTextClose {width:16px; height:13px; padding-top:2px; font-size:8px; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
+    H2 {font-size:13px;}
+    p {font-size: 13px;}
+    .Exit {position: inherit}
+
+}

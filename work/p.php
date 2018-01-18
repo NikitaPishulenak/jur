@@ -66,7 +66,7 @@ function edtLess()
 {
     include_once 'configMain.php';
     $dt = explode(".", $_GET['Date']);
-    mysqli_query($dbMain, "UPDATE lesson SET LDate='".$dt[2]."-".$dt[1]."-".$dt[0]."', PKE=".$_GET['PKE']." WHERE id=".$_GET['idLesson']." AND idGroup=".$_GET['idGroup']);
+    mysqli_query($dbMain, "UPDATE lesson SET LDate='".$dt[2]."-".$dt[1]."-".$dt[0]."', PKE=".$_GET['PKE'].", nLesson=".$_GET['numberThemeLesson']." WHERE id=".$_GET['idLesson']." AND idGroup=".$_GET['idGroup']);
     mysqli_query($dbMain, "UPDATE rating SET DateO='".$dt[2]."-".$dt[1]."-".$dt[0]."', PKE=".$_GET['PKE']." WHERE del=0 AND idLesson=".$_GET['idLesson']);
 }
 
@@ -103,7 +103,7 @@ function addLess()
     include_once 'configMain.php';
     $dt = explode(".", $_GET['dateLesson']);
 
-    mysqli_query($dbMain, "INSERT INTO lesson (LDate,idGroup,idLessons,PL,PKE) VALUES ('" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "'," . $_GET['idGroup'] . "," . $_GET['idLessons'] . "," . $_GET['PL'] . "," . $_GET['PKE'] . ")");
+    mysqli_query($dbMain, "INSERT INTO lesson (LDate,idGroup,idLessons,PL,PKE,nLesson) VALUES ('" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "'," . $_GET['idGroup'] . "," . $_GET['idLessons'] . "," . $_GET['PL'] . "," . $_GET['PKE'] . ",".$_GET['numberThemeLesson'].")");
     echo mysqli_insert_id($dbMain);
 
     mysqli_free_result($result);
@@ -134,7 +134,7 @@ function GroupViewL()
     <input type='hidden' id='idPL' value='1'>";
 
     $result = mssql_query("SELECT IdStud, CONCAT(Name_F,' ',Name_I,' ',Name_O) FROM dbo.Student WHERE IdGroup=" . $_GET['idGroup'] . " AND IdStatus IS NULL ORDER BY Name_F", $dbStud);
-    $resultL = mysqli_query($dbMain, "SELECT id, LDate, PKE, DATE_FORMAT(LDate,'%e.%m.%Y') FROM lesson WHERE idGroup=" . $_GET['idGroup'] . " AND idLessons=" . $_GET['idPredmet'] . " AND PL=1 ORDER BY LDate,id");
+    $resultL = mysqli_query($dbMain, "SELECT id, LDate, PKE, DATE_FORMAT(LDate,'%e.%m.%Y'), nLesson FROM lesson WHERE idGroup=" . $_GET['idGroup'] . " AND idLessons=" . $_GET['idPredmet'] . " AND PL=1 ORDER BY LDate,id");
 
     if (mysqli_num_rows($resultL) >= 1) {
         $preStud = "";
@@ -160,13 +160,13 @@ function GroupViewL()
                     $prepreRating = "";
                     switch ($arr[2]) {
                         case 1:
-                            $prepreRating .= "<div class='date_col colloquium_theme'><div class='date_title' data-idLesson='" . $arr[0] . "'>" . $arr[3] . "</div>\n";
+                            $prepreRating .= "<div class='date_col colloquium_theme'>".($arr[4] ? "<div class='nLesson'>".$arr[4]."</div>" : "")."<div class='date_title' data-idLesson='".$arr[0]."' data-number_theme_lesson='".$arr[4]."'>".$arr[3]."</div>\n";
                             break;
                         case 2:
-                            $prepreRating .= "<div class='date_col exam_theme'><div class='date_title' data-idLesson='" . $arr[0] . "'>" . $arr[3] . "</div>\n";
+                            $prepreRating .= "<div class='date_col exam_theme'>".($arr[4] ? "<div class='nLesson'>".$arr[4]."</div>" : "")."<div class='date_title' data-idLesson='".$arr[0]."' data-number_theme_lesson='".$arr[4]."'>".$arr[3]."</div>\n";
                             break;
                         default:
-                            $prepreRating .= "<div class='date_col'><div class='date_title' data-idLesson='" . $arr[0] . "'>" . $arr[3] . "</div>\n";
+                            $prepreRating .= "<div class='date_col'>".($arr[4] ? "<div class='nLesson'>".$arr[4]."</div>" : "")."<div class='date_title' data-idLesson='".$arr[0]."' data-number_theme_lesson='".$arr[4]."'>".$arr[3]."</div>\n";
                             break;
                     }
                     $resultS = mysqli_query($dbMain, "SELECT id, idStud, RatingO FROM rating WHERE del=0 AND (" . $sqlStud . ") AND PKE=" . $arr[2] . " AND idLesson=" . $arr[0] . " AND idLessons=" . $_GET['idPredmet'] . " AND PL=1");
@@ -245,7 +245,7 @@ function GroupViewP()
     <input type='hidden' id='idPL' value='0'>";
 
     $result = mssql_query("SELECT IdStud, CONCAT(Name_F,' ',Name_I,' ',Name_O) FROM dbo.Student WHERE IdGroup=" . $_GET['idGroup'] . " AND IdStatus IS NULL ORDER BY Name_F", $dbStud);
-    $resultL = mysqli_query($dbMain, "SELECT id, LDate, PKE, DATE_FORMAT(LDate,'%e.%m.%Y') FROM lesson WHERE idGroup=" . $_GET['idGroup'] . " AND idLessons=" . $_GET['idPredmet'] . " AND PL=0 ORDER BY LDate,id");
+    $resultL = mysqli_query($dbMain, "SELECT id, LDate, PKE, DATE_FORMAT(LDate,'%e.%m.%Y'), nLesson FROM lesson WHERE idGroup=" . $_GET['idGroup'] . " AND idLessons=" . $_GET['idPredmet'] . " AND PL=0 ORDER BY LDate,id");
 
     if (mysqli_num_rows($resultL) >= 1) {
         $preStud = "";
@@ -271,13 +271,13 @@ function GroupViewP()
                     $prepreRating = "";
                     switch ($arr[2]) {
                         case 1:
-                            $prepreRating .= "<div class='date_col colloquium_theme'><div class='date_title' data-idLesson='" . $arr[0] . "'>" . $arr[3] . "</div>\n";
+                            $prepreRating .= "<div class='date_col colloquium_theme'>".($arr[4] ? "<div class='nLesson'>".$arr[4]."</div>" : "")."<div class='date_title' data-idLesson='".$arr[0]."' data-number_theme_lesson='".$arr[4]."'>".$arr[3]."</div>\n";
                             break;
                         case 2:
-                            $prepreRating .= "<div class='date_col exam_theme'><div class='date_title' data-idLesson='" . $arr[0] . "'>" . $arr[3] . "</div>\n";
+                            $prepreRating .= "<div class='date_col exam_theme'>".($arr[4] ? "<div class='nLesson'>".$arr[4]."</div>" : "")."<div class='date_title' data-idLesson='".$arr[0]."' data-number_theme_lesson='".$arr[4]."'>".$arr[3]."</div>\n";
                             break;
                         default:
-                            $prepreRating .= "<div class='date_col'><div class='date_title' data-idLesson='" . $arr[0] . "'>" . $arr[3] . "</div>\n";
+                            $prepreRating .= "<div class='date_col'>".($arr[4] ? "<div class='nLesson'>".$arr[4]."</div>" : "")."<div class='date_title' data-idLesson='".$arr[0]."' data-number_theme_lesson='".$arr[4]."'>".$arr[3]."</div>\n";
                             break;
                     }
                     $resultS = mysqli_query($dbMain, "SELECT id, idStud, RatingO FROM rating WHERE del=0 AND (" . $sqlStud . ") AND PKE=" . $arr[2] . " AND idLesson=" . $arr[0] . " AND idLessons=" . $_GET['idPredmet'] . " AND PL=0");
@@ -518,7 +518,7 @@ function MainF()
             $result = mssql_query("SELECT Name FROM dbo.Facultets WHERE IdF=" . $fak[$i] . "", $dbStud);
             if (mssql_num_rows($result) >= 1) {
                 list($idName) = mssql_fetch_row($result);
-                $retVal .= "<p><a href='p.php?menuactiv=goF&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Prepod'][2] . "&idPredmet=" . $_SESSION['SesVar']['Predmet'][$ii][0] . "&idF=" . $fak[$i] . "'>" . $idName . "</a></p>";
+                $retVal .= "<p><a href='p.php?menuactiv=goF&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idKaf=".$_SESSION['SesVar']['Prepod'][2]."&idPredmet=".$_SESSION['SesVar']['Predmet'][$ii][0]."&idF=". $fak[$i]."'>".$idName."</a></p>";
             }
         }
         $retVal .= "</div>";
@@ -542,6 +542,7 @@ function HeaderFooter($content, $title, $vC = '')
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
+        <link rel="stylesheet" href="mystyle.css<?php echo $vC; ?>">
         <title><?php echo $title; ?></title>
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/online.js"></script>
@@ -590,8 +591,11 @@ function HeaderFooterGroup($content, $title, $vC = '', $vS = '')
     <div class="Header">
         <H2><?php echo $_SESSION['SesVar']['FIO'][1]; ?></H2>
     </div>
-
     <?php echo $content; ?>
+    <div style="clear:both;">&nbsp;</div>
+    <div class="export" alt="Экспортировать в .CSV">
+        <a href="#" title="Экспортировать в .CSV"><img src="img/csv.png">Экспортировать в .CSV</a>
+    </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -627,8 +631,11 @@ function HeaderFooterGroupL($content, $title, $vC = '', $vS = '')
     <div class="Header">
         <H2><?php echo $_SESSION['SesVar']['FIO'][1]; ?></H2>
     </div>
-
     <?php echo $content; ?>
+    <div style="clear:both;">&nbsp;</div>
+    <div class="export">
+        <a href="#" title="Экспортировать в .CSV"><img src="img/csv.png">Экспортировать в .CSV</a>
+    </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -659,7 +666,7 @@ function StudentView($content, $contentO = '')
                 <br>
                 <label><input type='radio' class='type_lesson' id='simple_lesson_rb' name='type_lesson' value='sl' checked><b class='type_lesson'>Обычное занятие</b></label>
                 <br><br>
-                <label><input type='radio' class='type_lesson' id='colloquium_rb' name='type_lesson' value='col'><b class='type_lesson'>Коллоквиум</b></label>
+                <label><input type='radio' class='type_lesson' id='colloquium_rb' name='type_lesson' value='col'><b class='type_lesson'>Коллок. / Ист. болезни</b></label>
                 <br><br>
                 <label><input type='radio' class='type_lesson' id='exam_rb' name='type_lesson' value='exam'><b class='type_lesson'>Аттестация</b></label>
                 <br><br>
@@ -673,8 +680,9 @@ function StudentView($content, $contentO = '')
     <form id='form-edit'>
         <fieldset>
             <div class='panel'>
+                    <div id='item_grade'></div>
 
-                    <b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b>
+                    <!--<b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b>
                     <span class='space'></span>
                     <b id='11' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b>
                     <span class='space'></span>
@@ -683,6 +691,7 @@ function StudentView($content, $contentO = '')
                     <b id='3' class='tool' title='Не зачтено.'><b>Незач.</b></b>
                     <span class='space'></span>
                     <b id='4' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b>
+                    
 
                     <hr class='marg-line'>
                     
@@ -697,6 +706,7 @@ function StudentView($content, $contentO = '')
                     <span id='9' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span>
                     <span class='space'></span>
                     <span id='10' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span>
+                    -->
                     
                     <hr class='marg-line'>
                     
@@ -757,7 +767,7 @@ function StudentView($content, $contentO = '')
                 <br>
                 <label><input type='radio' class='edit_type_lesson' id='edit_simple_lesson_rb' name='type_lesson' value='0' checked><b class='type_lesson'>Обычное занятие</b></label>
                 <br><br>
-                <label><input type='radio' class='edit_type_lesson' id='edit_colloquium_rb' name='type_lesson' value='1'><b class='type_lesson'>Коллоквиум</b></label>
+                <label><input type='radio' class='edit_type_lesson' id='edit_colloquium_rb' name='type_lesson' value='1'><b class='type_lesson'>Коллок. / Ист. болезни</b></label>
                 <br><br>
                 <label><input type='radio' class='edit_type_lesson' id='edit_exam_rb' name='type_lesson' value='2'><b class='type_lesson'>Аттестация</b></label>
                 <br>

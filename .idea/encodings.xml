@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$USER_HOME$/Desktop/demo.html" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/../foreigns/csv.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/../foreigns/index.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/backUP(для работы)/config.php" charset="windows-1251" />
@@ -15,6 +16,7 @@
     <file url="file://$PROJECT_DIR$/work/config.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/configMain.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/configStudent.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/work/export.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/p.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/pre.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/z.php" charset="windows-1251" />

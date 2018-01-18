@@ -1,0 +1,135 @@
+@media only screen and (min-width: 781px)
+{
+    html{
+        font-size: 16px;
+    }
+    /*.button {*/
+    /*width: 115px;*/
+    /*margin-bottom: 40px;*/
+    /*}*/
+
+    /*.attention {*/
+    /*width: 85px;*/
+    /*margin-bottom: 40px;*/
+    /*margin-left: 20px;*/
+    /*}*/
+
+    .date_title{
+        height: 17px;
+        width: 80px;
+    }
+
+    .info_title{
+        width: 60px;
+    }
+
+    .inp_cell {
+        width: 60px;
+    }
+
+    .space {
+        margin: 0 5px 0 5px;
+    }
+
+    .marg-left{
+        margin-left: 48px;
+    }
+
+
+    .marg-line{
+        margin-top: 17px;
+        margin-bottom: 14px;
+    }
+
+    /*.panel{*/
+    /*margin-bottom: -19px;*/
+    /*}*/
+
+    #create_lesson{
+        margin-bottom: 30px;
+    }
+
+    .datepicker {
+        width: 100px;
+    }
+
+    .fio_student, .subject_student {
+        height: 30px;
+        width: 285px;
+    }
+
+    .fio{
+        margin-top: 17px;
+    }
+
+    .result_box, .result_box_statistic {
+        left:280px;
+    }
+
+    .statistic {
+        margin-top: 17px;
+        left: calc(60% + 260px);
+        position: absolute;
+        border: none;
+    }
+
+    .result_box{
+        width: 80%;
+    }
+
+    .result_box_statistic{
+        width: 50%;
+    }
+
+    .date_col {
+        width: 80px;
+        margin-top: 16px;
+    }
+
+    .date_col_stat {
+        width: 60px;
+    }
+
+    .add_grade{
+        width: auto;
+        height: 23px;
+        text-align: center;
+    }
+
+    .grade {
+        font-size: 0.83em;
+        width: 80px;
+        height: 30px;
+    }
+
+    .triangle-topright {
+        left: 70px;
+        border-bottom: 11px solid #000000;
+        border-left: 11px solid transparent;
+    }
+
+    .avg, .ans, .abs {
+        width: 80px;
+        height: 30px;
+    }
+
+    .average, .answer, .absenteeism {
+        width: 60px;
+        height: 30px;
+    }
+
+    .popup-content {
+        width: 250px;
+    }
+
+    .nLesson{
+        line-height: 1.5em;
+        top:-15px;
+        width: 25px;
+        height: 15px;
+        float: left;
+        margin-bottom: -15px;
+
+    }
+
+}

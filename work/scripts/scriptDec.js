@@ -256,6 +256,7 @@ $(function () {
         $("button#edit").attr('disabled', true);
         $("button#close").attr('disabled', true);
         edit_dialog.dialog("close");
+        ShowLogTools();
     });
 
     $("#close").click(function () {

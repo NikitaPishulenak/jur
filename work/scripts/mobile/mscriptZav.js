@@ -126,6 +126,19 @@ function editDate() {
 
 function create_new_grade(e) {
     edit_grade_flag = 0;
+
+    switch (e.attr("data-pke")){
+        case "2":
+            $("div#item_grade").html(items_grade[2]);
+            break;
+        case "1":
+            $("div#item_grade").html(items_grade[1]);
+            break;
+        case "0":
+            $("div#item_grade").html(items_grade[0]);
+            break;
+    }
+
     $("button#edit").removeAttr('disabled');
     $("button#close").removeAttr('disabled');
     dat = e.parent().find('div.date_title').html();//Дата столбца

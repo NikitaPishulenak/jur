@@ -17,18 +17,19 @@
             }
         });
     }
-    //Дорисовка треугольника
-    $("div.grade").each(function () {
-        if ($(this).text() != "") {
-            smallText($(this));
-            $(this).append('<div class="triangle-topright"></div>');
-            $("div.triangle-topright").hide();
-            if (path == "z.php") {
-                $(this).append('<img src="img/close.png" class="close" title="Удалить оценку">');
-                $("img.close").hide();
-            }
-        }
+
+    //Экспорт в csv
+    $(".export").click(function () {
+
+        id_group=$("input#idGroup").val();
+        Lessons=$("input#idSubject").val();
+        PL=$("input#idPL").val();
+
+        location.href='exel.php?id_group='+id_group+'&Lessons='+Lessons+'&PL='+PL;
     });
+
+    //Дорисовать треугольники и крестики красные
+    ShowLogTools();
 
     $('div').delegate(".grade", "mouseover", function (e) {
         data_st=$(this).attr('data-idStudent');
@@ -197,6 +198,45 @@ absenteeisms = new Array("Н", "Н1ч.", "Н2ч.", "Н3ч.", "Н4ч.", "Н5ч.",
 absenteeisms_with_cause = new Array("Ну", "Нб.у", "Нб.о.");
 other_symbols = new Array("Отр");
 
+//массив с первой строчкой кнопок (при выставлении оценок для роли препод и зав каф)
+items_grade = [
+    [//simple_lesson
+        "<b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b><span class='space'></span>",
+        "<b id='2' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b><span class='space'></span>",
+
+        "<hr class='marg-line'>",
+
+        "<span id='3' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1ч.</sub></span></span><span class='space'></span>",
+        "<span id='4' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span><span class='space'></span>",
+        "<span id='5' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span><span class='space'></span>",
+        "<span id='6' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span><span class='space'></span>",
+        "<span id='7' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span><span class='space'></span>",
+        "<span id='8' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span></span>"
+    ],
+    [//colloquium
+        "<b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b><span class='space'></span>",
+        "<b id='2' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b><span class='space'></span>",
+        "<b id='3' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b></span><span class='space'></span>",
+
+        "<hr class='marg-line'>",
+
+        "<span id='4' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1ч.</sub></span></span><span class='space'></span>",
+        "<span id='5' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span><span class='space'></span>",
+        "<span id='6' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span><span class='space'></span>",
+        "<span id='7' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span><span class='space'></span>",
+        "<span id='8' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span><span class='space'></span>",
+        "<span id='9' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span></span>"
+    ],
+    [//exam
+        "<b id='1' class='tool' title='Допуск к аттестации'><b>Доп.</b></b><span class='space'></span>",
+        "<b id='2' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b><span class='space'></span>",
+        "<b id='3' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b><span class='space'></span>",
+        "<b id='4' class='tool' title='Зачтено.'><b>Зач.</b></b><span class='space'></span></span><span class='space'></span>",
+        "<b id='5' class='tool' title='Не зачтено.'><b>Незач.</b></b><span class='space'></span></span>"
+    ]
+];
+
+
 //функция проверки введенных данных в поле оценка
 function proverka(event, id) {
 
@@ -335,6 +375,9 @@ function MatchEncrypt(val) {
             case 'Отр.':
                 return '27';
                 break;
+            case 'Доп.':
+                return '28';
+                break;
 
             case 'Н1ч.':
                 return '31';
@@ -389,6 +432,9 @@ function MatchDecrypt(val) {
                 break;
             case '27':
                 return 'Отр.';
+                break;
+            case '28':
+                return 'Доп.';
                 break;
 
             case '31':
@@ -514,4 +560,19 @@ function smallText(object) {
 //проверка сенсорное ли устройство
 function is_touch_device() {
     return ('ontouchstart' in window) || ('onmsgesturechange' in window);
+}
+
+function ShowLogTools() {
+    //Дорисовка треугольника
+    $("div.grade").each(function () {
+        if (($(this).text() != "") &&($(this).attr('data-zapis')!="0")) { //ид-запись=0 где нету оценок
+            smallText($(this));
+            $(this).append('<div class="triangle-topright"></div>');
+            $("div.triangle-topright").hide();
+            if (path == "z.php") {
+                $(this).append('<img src="img/close.png" class="close" title="Удалить оценку">');
+                $("img.close").hide();
+            }
+        }
+    });
 }

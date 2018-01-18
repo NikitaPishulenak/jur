@@ -1,0 +1,26 @@
+div.DialogFakFak{
+    position: relative;
+    float: left;
+    margin: 4px 8px 4px 0;
+    padding: 5px;
+    cursor: pointer;
+    border: solid #000 1px;
+    border-radius: 3px;
+    color: #00008b;
+    background-color: #ccc;
+    width: 180px;
+    min-height: 40px;
+}
+
+div.content_grade{
+    margin: 0 auto;
+    border: solid #000 1px;
+    border-radius: 3px;
+    width: 98%;
+    background-color: #ffffff;
+    padding: 2px;
+}
+
+.content_grade, .fullText{
+    display: none;
+}

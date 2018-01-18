@@ -176,6 +176,7 @@ $(function () {
         $("button#edit").attr('disabled', true);
         $("button#close").attr('disabled', true);
         edit_dialog.dialog("close");
+        ShowLogTools();
     });
     $(".inp_cell:text").click(function () {
         $(this).select();

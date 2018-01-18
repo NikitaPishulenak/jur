@@ -1,0 +1,48 @@
+HTML {font-family: Arial; font-size:15px;}
+
+HR { height:1px; border-width:0; color:#c4c4c4; background-color:#c4c4c4; }
+
+H2 {font-size:15px;}
+H3 {font-size:14px;}
+
+P {line-height:13px;}
+
+A { color:#004c99; font-family: Verdana; font-size:13px;}
+A:visited { color:#003399; }
+A:hover { color:#00264c; text-decoration:none;}
+A:focus{outline:none; }
+
+
+//.Exit {margin:20px; padding:10px; width:250px; float:right; display:block; border:1px solid #c0c0c0; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; clear:both;}
+.Exit {position:absolute; top:20px; right:40px; padding:10px; width:250px; float:right; background-color:#fff; border:1px solid #c0c0c0; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; clear:both;}
+.Exit P {margin:0; margin-bottom:7px; }
+.Exit P A {font-size:10px;}
+.C {clear:both;}
+.DialogV {position: relative; margin:0 auto; width:400px; padding:15px; border:1px solid #c0c0c0; line-height:15px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
+.DialogFak {float:left; margin:15px; height:200px; width:360px; padding:8px; border:1px solid #c0c0c0; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
+.DialogFak P {margin:7px; margin-left:0;}
+.DialogFakFak {float:left; margin:10px; height:70px; width:200px; padding:8px; border:1px solid #c0c0c0; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
+.DialogFakFak P {margin:6px; line-height:12px}
+.DialogFakFak A { font-size:12px;line-height:16px; display:block;}
+.DialogGr {position: relative; float:left; margin:3px; height:25px; width:120px; padding:5px; border:1px solid #c0c0c0; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px; display:table; }
+.DialogGr:hover { background-color:#dedede; }
+.DialogGr div {position: relative; margin:0 auto;}
+.DialogGr div a {position: relative; margin:0 auto;}
+.HRnext {clear:both; margin-bottom: 25px;}
+
+.inLog {margin-top:4px; margin-bottom:6px; margin-left:10px; font-size:11px;}
+.oLog {}
+.gLog {font-weight:bold; font-size:15px; }
+.fLog {font-style:italic;}
+
+
+@media only screen and (min-width: 10px) and (max-width: 445px) {
+    .DialogV {width:250px; padding:10px;}
+    .Exit {margin:10px; padding:8px; width:200px; float:right;}
+    .DialogFakFak {margin:5px; height:70px; width:150px; padding:5px;}
+    .DialogFakFak A { font-size:11px;line-height:15px;}
+    .DialogFak {margin:10px; height:250px; width:250px; padding:5px;}
+    .DialogFak A {font-size:11px;}
+    a{ font-size: 0.8em}
+
+}
