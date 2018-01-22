@@ -201,8 +201,21 @@ other_symbols = new Array("Отр");
 //массив с первой строчкой кнопок (при выставлении оценок для роли препод и зав каф)
 items_grade = [
     [//simple_lesson
-        "<b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b><span class='space'></span>",
-        "<b id='2' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b><span class='space'></span>",
+        "<b id='1' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b><span class='space'></span>",
+
+        "<hr class='marg-line'>",
+
+        "<span id='2' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1ч.</sub></span></span><span class='space'></span>",
+        "<span id='3' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span><span class='space'></span>",
+        "<span id='4' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span><span class='space'></span>",
+        "<span id='5' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span><span class='space'></span>",
+        "<span id='6' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span><span class='space'></span>",
+        "<span id='7' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span><span class='space'></span>",
+        "<span id='8' class='tool' title='Пропуск занятия на 7 часов.'><span>Н<sub>7ч.</sub></span></span>"
+    ],
+    [//colloquium
+        "<b id='1' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b><span class='space'></span>",
+        "<b id='2' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b></span><span class='space'></span>",
 
         "<hr class='marg-line'>",
 
@@ -211,28 +224,15 @@ items_grade = [
         "<span id='5' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span><span class='space'></span>",
         "<span id='6' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span><span class='space'></span>",
         "<span id='7' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span><span class='space'></span>",
-        "<span id='8' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span></span>"
-    ],
-    [//colloquium
-        "<b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b><span class='space'></span>",
-        "<b id='2' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b><span class='space'></span>",
-        "<b id='3' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b></span><span class='space'></span>",
-
-        "<hr class='marg-line'>",
-
-        "<span id='4' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1ч.</sub></span></span><span class='space'></span>",
-        "<span id='5' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span><span class='space'></span>",
-        "<span id='6' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span><span class='space'></span>",
-        "<span id='7' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span><span class='space'></span>",
-        "<span id='8' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span><span class='space'></span>",
-        "<span id='9' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span></span>"
+        "<span id='8' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span><span class='space'></span>",
+        "<span id='9' class='tool' title='Пропуск занятия на 7 часов.'><span>Н<sub>7ч.</sub></span></span>"
     ],
     [//exam
         "<b id='1' class='tool' title='Допуск к аттестации'><b>Доп.</b></b><span class='space'></span>",
         "<b id='2' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b><span class='space'></span>",
         "<b id='3' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b><span class='space'></span>",
         "<b id='4' class='tool' title='Зачтено.'><b>Зач.</b></b><span class='space'></span></span><span class='space'></span>",
-        "<b id='5' class='tool' title='Не зачтено.'><b>Незач.</b></b><span class='space'></span></span>"
+        "<b id='5' class='tool' title='Не зачтено.'><b>Незач.</b></b><span class='space'></span>"
     ]
 ];
 
@@ -397,6 +397,9 @@ function MatchEncrypt(val) {
             case 'Н6ч.':
                 return '36';
                 break;
+            case 'Н7ч.':
+                return '37';
+                break;
 
         }
     }
@@ -455,7 +458,9 @@ function MatchDecrypt(val) {
             case '36':
                 return 'Н6ч.';
                 break;
-
+            case '37':
+                return 'Н7ч.';
+                break;
         }
     }
 

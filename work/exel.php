@@ -181,6 +181,9 @@ function MatchDecrypt($val)
             case "36":
                 return "Н6ч.";
                 break;
+            case "37":
+                return "Н7ч.";
+                break;
         }
     }
 }

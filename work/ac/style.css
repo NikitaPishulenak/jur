@@ -25,24 +25,24 @@ A:focus{outline:none; }
 
 .titleO { color:#000;}
 .Oc { float:left; border:1px solid #c0c0c0; background-color:#e1e1e1; }
-.Oc .DataO {padding-top:2px; color:#fff; text-align: center; background-color:#c10000;  }
+.Oc .DataO {padding-top:2px; color:#fff; text-align: center; background-color:#707070;  }
 .Oc .Otmetka { color:#000; text-align:center; word-wrap: break-word; font-weight:bold;}
-.Koll .DataO {background-color:#4e4e4e;}
-.Exm .DataO {background-color:#130076;}
+.Koll .DataO {background-color:#130076;}
+.Exm .DataO {background-color:#c10000;}
 .clr {clear:both; height:30px;}
 
 .content_grade{background-color: #ffffff; padding: 15px; padding-left:5px; cursor: default;}
 .content_grade, .fullText{display: none;}
 
-.small-text{font-size: 0.8em;}
+.small-text{font-size: 0.83em; font-weight:bold;}
 
 
 .Exit {position:absolute; top:40px; right:40px; background-color:#fff; border:1px solid #c0c0c0; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
 
 .Exit .Kvadrat {float:left; width:13px; height:13px; margin-right:5px; display:block;}
-.Exit .OO {background-color:#c10000;}
-.Exit .OK {background-color:#4e4e4e;}
-.Exit .OE {background-color:#130076;}
+.Exit .OO {background-color:#4e4e4e;}
+.Exit .OK {background-color:#130076;}
+.Exit .OE {background-color:#c10000;}
 .C {clear:both; height:3px;}
 
 
@@ -55,8 +55,8 @@ A:focus{outline:none; }
     .Oc {margin:10px; height:65px; width:70px;}
     .Oc .DataO {height:16px; font-size:10px; }
     .Oc .Otmetka { padding:8px;}
-    /*.Koll .Otmetka {font-size:18px;}*/
-    /*.Exm .Otmetka {font-size:18px;}*/
+    .Koll .Otmetka {font-size:18px;}
+    .Exm .Otmetka {font-size:18px;}
     .DialogFakFak .fullTextClose {width:22px; height:16px; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
     H2 {font-size:15px;}
 
@@ -73,8 +73,8 @@ A:focus{outline:none; }
     .Oc {margin:5px; height:45px; width:47px;}
     .Oc .DataO {height:12px; font-size:8px; }
     .Oc .Otmetka { padding:5px;}
-    /*.Koll .Otmetka {font-size:14px;}*/
-    /*.Exm .Otmetka {font-size:14px;}*/
+    .Koll .Otmetka {font-size:14px;}
+    .Exm .Otmetka {font-size:14px;}
     .DialogFakFak .fullTextClose {width:16px; height:13px; padding-top:2px; font-size:8px; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
     H2 {font-size:14px;}
     p {font-size: 14px;}
@@ -91,8 +91,8 @@ A:focus{outline:none; }
     .Oc {margin:4px; height:45px; width:42px;}
     .Oc .DataO {height:11px; font-size:8px; }
     .Oc .Otmetka { padding:4px;}
-    /*.Koll .Otmetka {font-size:13px;}*/
-    /*.Exm .Otmetka {font-size:13px;}*/
+    .Koll .Otmetka {font-size:13px;}
+    .Exm .Otmetka {font-size:13px;}
     .DialogFakFak .fullTextClose {width:16px; height:13px; padding-top:2px; font-size:8px; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
     H2 {font-size:13px;}
     p {font-size: 13px;}
