@@ -55,7 +55,8 @@ $(function () {
                         'idLessons': $("input#idSubject").val(),
                         'PL': "0",
                         'numberThemeLesson': number_theme_lesson,
-                        'menuactiv': "addLesson"
+                        'menuactiv': "addLesson",
+                        'ajaxTrue':"1"
                     },
                     success: function (st) {
                         if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
@@ -67,6 +68,7 @@ $(function () {
                                 $("div.date_col:last").append("<div class='grade' data-idLes=" + st + " data-idStudent=" + myStudentId[i] + " data-PKE=1 data-zapis=0></div>");
                                 myStudentZapis[st + 'Zapis' + myStudentId[i]] = 0;
                             }
+                            $(".result_box").animate({scrollLeft: '10000px'}, 2500);
                         }
                         else {
                             if (st == "No") {
@@ -100,7 +102,8 @@ $(function () {
                         'idLessons': $("input#idSubject").val(),
                         'PL': "0",
                         'numberThemeLesson': number_theme_lesson,
-                        'menuactiv': "addLesson"
+                        'menuactiv': "addLesson",
+                        'ajaxTrue':"1"
                     },
                     success: function (st) {
                         if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
@@ -112,6 +115,7 @@ $(function () {
                                 $("div.date_col:last").append("<div class='grade' data-idLes=" + st + " data-idStudent=" + myStudentId[i] + " data-PKE=2 data-zapis=0></div>");
                                 myStudentZapis[st + 'Zapis' + myStudentId[i]] = 0;
                             }
+                            $(".result_box").animate({scrollLeft: '10000px'}, timeScroll);
                         }
                         else {
                             if (st == "No") {
@@ -145,7 +149,8 @@ $(function () {
                         'idLessons': $("input#idSubject").val(),
                         'PL': "0",
                         'numberThemeLesson': number_theme_lesson,
-                        'menuactiv': "addLesson"
+                        'menuactiv': "addLesson",
+                        'ajaxTrue':"1"
                     },
                     success: function (st) {
                         if ((st != "No") && (st != "Access is denied!") && (st != "No access rights!")) {
@@ -157,6 +162,7 @@ $(function () {
                                 $("div.date_col:last").append("<div class='grade' data-idLes=" + st + " data-idStudent=" + myStudentId[i] + " data-PKE=0 data-zapis=0></div>");
                                 myStudentZapis[st + 'Zapis' + myStudentId[i]] = 0;
                             }
+                            $(".result_box").animate({scrollLeft: '10000px'}, timeScroll);
                         }
                         else {
                             if (st == "No") {
@@ -317,7 +323,8 @@ $(function () {
                         'idPrepod': $("input#idPrepod").val(),
                         'idLess': id_Less,
                         'menuactiv': "addLessonStudent",
-                        'grades': coding
+                        'grades': coding,
+                        'ajaxTrue':"1"
                     },
                     success: function (st) {
                         if ((st != "Access is denied!") && (st != "No access rights!")) {
@@ -363,7 +370,8 @@ $(function () {
                             'idStudent': student_id,
                             'idPrepod': $("input#idPrepod").val(),
                             'menuactiv': "editLessonStudent",
-                            'grades': coding
+                            'grades': coding,
+                            'ajaxTrue':"1"
                         },
                         success: function (st) {
                             if (st == "Access is denied!") {
@@ -483,7 +491,8 @@ $(function () {
                         'idGroup': $("input#idGroup").val(),
                         'idLesson': id_Lesson,
                         'numberThemeLesson': new_number_theme_lesson,
-                        'menuactiv': "editDate"
+                        'menuactiv': "editDate",
+                        'ajaxTrue':"1"
                     },
                     success: function (st) {
                         if ((st != "Access is denied!") && (st != "No access rights!")) {

@@ -90,7 +90,8 @@ function editDate() {
                     'idGroup': $("input#idGroup").val(),
                     'idLesson': id_Lesson,
                     'numberThemeLesson':new_number_theme_lesson,
-                    'menuactiv': "editDate"
+                    'menuactiv': "editDate",
+                    'ajaxTrue':"1"
                 },
                 success:function (st) {
                     if ((st!="Access is denied!")&&(st!="No access rights!")){

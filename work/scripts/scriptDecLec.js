@@ -156,7 +156,8 @@ $(function () {
                     'idStudent': student_id,
                     'idPrepod': $("input#idPrepod").val(),
                     'menuactiv': "editLessonStudent",
-                    'grades': coding
+                    'grades': coding,
+                    'ajaxTrue':"1"
                 },
                 success:function (st) {
                     if (st=="Access is denied!"){

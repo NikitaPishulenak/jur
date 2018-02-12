@@ -29,7 +29,8 @@
             data: {
                 'idStud': id_st_name,
                 'idLesson': idLes,
-                'menuactiv': "deleteGrade"
+                'menuactiv': "deleteGrade",
+                'ajaxTrue':"1"
             },
             success: function (st) {
                 if ((st != "Access is denied!") && (st != "No access rights!")) {

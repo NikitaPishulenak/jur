@@ -68,44 +68,60 @@ if (isset($_GET['menuactiv'])) {
 
 function delLess()
 {
-    include_once 'configMain.php';
-    mysqli_query($dbMain, "UPDATE rating SET del=1 WHERE del=0 AND idLesson=".$_GET['idLesson']." AND idStud=".$_GET['idStud']);
+   include_once 'configMain.php';
+   if(is_numeric($_GET['idLesson']) && is_numeric($_GET['idStud'])){
+      mysqli_query($dbMain, "UPDATE rating SET del=1 WHERE del=0 AND idLesson=".$_GET['idLesson']." AND idStud=".$_GET['idStud']);
+   } else {
+      echo "No";
+   }
 }
+
 
 
 function edtLess()
 {
-    include_once 'configMain.php';
-    $dt = explode(".", $_GET['Date']);
+   include_once 'configMain.php';
+   $dt = explode(".", $_GET['Date']);
+   if(is_numeric($_GET['PKE']) && is_numeric($_GET['numberThemeLesson']) && is_numeric($_GET['idLesson']) && is_numeric($_GET['idGroup'])){
     mysqli_query($dbMain, "UPDATE lesson SET LDate='".$dt[2]."-".$dt[1]."-".$dt[0]."', PKE=".$_GET['PKE'].", nLesson=".$_GET['numberThemeLesson']." WHERE id=".$_GET['idLesson']." AND idGroup=".$_GET['idGroup']);
-    mysqli_query($dbMain, "UPDATE rating SET DateO='" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "', PKE=" . $_GET['PKE'] . " WHERE del=0 AND idLesson=" . $_GET['idLesson']);
+    mysqli_query($dbMain, "UPDATE rating SET DateO='".$dt[2]."-".$dt[1]."-".$dt[0]."', PKE=".$_GET['PKE']." WHERE del=0 AND idLesson=".$_GET['idLesson']);
+   } else {
+      echo "No";
+   }
 }
 
 
 function edtLessonStudent()
 {
     include_once 'configMain.php';
-    $resTime = mysqli_query($dbMain, "SELECT TIMESTAMPDIFF(MINUTE, CONCAT(DateO, ' ', TimeO), NOW()), idLessons, idLesson, DateO, TimeO, RatingO, idEmployess FROM rating WHERE del=0 AND id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
+   if(is_numeric($_GET['id_Zapis']) && is_numeric($_GET['idStudent']) && is_numeric($_GET['grades']) && is_numeric($_SESSION['SesVar']['FIO'][0])){   
+    $resTime = mysqli_query($dbMain, "SELECT TIMESTAMPDIFF(MINUTE, CONCAT(DateO, ' ', TimeO), NOW()), idLessons, idLesson, DateO, TimeO, RatingO, idEmployess FROM rating WHERE del=0 AND id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
     if (mysqli_num_rows($resTime) >= 1) {
         $arr = mysqli_fetch_row($resTime);
         if($arr[6]!=$_SESSION['SesVar']['FIO'][0] || $arr[0] > 10){
-            mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (" . $_GET['id_Zapis'] . "," . $arr[1] . "," . $arr[2] . "," . $_GET['idStudent'] . ",'" . $arr[3] . "','" . $arr[4] . "'," . $arr[5] . "," . $arr[6] . ")");
-            mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=" . $_GET['grades'] . ", idEmployess=" . $_SESSION['SesVar']['FIO'][0] . " WHERE del=0 AND id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
-        } else {
-            mysqli_query($dbMain, "UPDATE rating SET RatingO=" . $_GET['grades'] . ", idEmployess=" . $_SESSION['SesVar']['FIO'][0] . " WHERE del=0 AND id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
+            mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (".$_GET['id_Zapis'].",".$arr[1].",".$arr[2].",".$_GET['idStudent'].",'".$arr[3]."','".$arr[4]."',".$arr[5].",".$arr[6].")");
+            mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
+        }else{
+            mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
         }
         mysqli_free_result($resTime);
     }
+   } else {
+      echo "No";
+   }
 }
 
 
 function addLessonStudent()
 {
-    include_once 'configMain.php';
-    $dt = explode(".", $_GET['dateLes']);
-
-    mysqli_query($dbMain, "INSERT INTO rating (idLessons,idStud,PL,PKE,DateO,TimeO,RatingO,idEmployess,idLesson) VALUES (" . $_GET['idLessons'] . "," . $_GET['idStudent'] . "," . $_GET['PL'] . "," . $_GET['PKE'] . ",'" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "',CURTIME()," . $_GET['grades'] . "," . $_SESSION['SesVar']['FIO'][0] . "," . $_GET['idLess'] . ")");
-    echo mysqli_insert_id($dbMain);
+   include_once 'configMain.php';
+   $dt = explode(".", $_GET['dateLes']);
+   if(is_numeric($_GET['idLessons']) && is_numeric($_GET['idStudent']) && is_numeric($_GET['PL']) && is_numeric($_GET['PKE']) && is_numeric($_GET['grades']) && is_numeric($_SESSION['SesVar']['FIO'][0]) && is_numeric($_GET['idLess'])){
+      mysqli_query($dbMain, "INSERT INTO rating (idLessons,idStud,PL,PKE,DateO,TimeO,RatingO,idEmployess,idLesson) VALUES (".$_GET['idLessons'].",".$_GET['idStudent'].",".$_GET['PL'].",".$_GET['PKE'].",'".$dt[2]."-".$dt[1]."-".$dt[0]."',CURTIME(),".$_GET['grades'].",".$_SESSION['SesVar']['FIO'][0].",".$_GET['idLess'].")");
+      echo mysqli_insert_id($dbMain);
+   } else {
+      echo "No";
+   }
 }
 
 
@@ -113,11 +129,14 @@ function addLess()
 {
     include_once 'configMain.php';
     $dt = explode(".", $_GET['dateLesson']);
-    mysqli_query($dbMain, "INSERT INTO lesson (LDate,idGroup,idLessons,PL,PKE,nLesson) VALUES ('" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "'," . $_GET['idGroup'] . "," . $_GET['idLessons'] . "," . $_GET['PL'] . "," . $_GET['PKE'] . ",".$_GET['numberThemeLesson'].")");
-    echo mysqli_insert_id($dbMain);
-
-    mysqli_free_result($result);
+    if(is_numeric($_GET['idGroup']) && is_numeric($_GET['idLessons']) && is_numeric($_GET['PL']) && is_numeric($_GET['PKE']) && is_numeric($_GET['numberThemeLesson'])){
+       mysqli_query($dbMain, "INSERT INTO lesson (LDate,idGroup,idLessons,PL,PKE,nLesson) VALUES ('" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "'," . $_GET['idGroup'] . "," . $_GET['idLessons'] . "," . $_GET['PL'] . "," . $_GET['PKE'] . ",".$_GET['numberThemeLesson'].")");
+       echo mysqli_insert_id($dbMain);
+    } else {
+       echo "No";
+    }
 }
+
 
 
 //----------------------------------------------------------------------------------------------
@@ -540,13 +559,12 @@ function HeaderFooter($content, $title, $vC = '')
     <!doctype html>
     <html>
     <head>
+        <title><?php echo $title; ?></title>
         <meta charset="windows-1251">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="mystyle.css<?php echo $vC; ?>">
-        <title><?php echo $title; ?></title>
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/online.js"></script>
     </head>
@@ -560,6 +578,8 @@ function HeaderFooter($content, $title, $vC = '')
     </div>
 
     <?php echo $content; ?>
+    <div style="clear:both;">&nbsp;</div>
+    <div class="support">ѕо техническим вопросам работы электронного журнала обращатьс€: 277-22-74 (вн. 474)</div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -572,15 +592,13 @@ function HeaderFooterGroup($content, $title, $vC = '', $vS = '')
 
     <!doctype html>
     <head>
+        <title><?php echo $title; ?></title>
         <meta charset="windows-1251">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="mystyle.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="scripts/jquery-ui.css">
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <title><?php echo $title; ?></title>
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/jquery-ui.js"></script>
         <script src="scripts/jquery.mask.js"></script>
@@ -601,6 +619,7 @@ function HeaderFooterGroup($content, $title, $vC = '', $vS = '')
     <div class="export">
         <a href="#" title="Ёкспортировать в .CSV"><img src="img/csv.png">Ёкспортировать в .CSV</a>
     </div>
+    <div class="support">ѕо техническим вопросам работы электронного журнала обращатьс€: 277-22-74 (вн. 474)</div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -614,15 +633,13 @@ function HeaderFooterGroupL($content, $title, $vC = '', $vS = '')
 
     <!doctype html>
     <head>
+        <title><?php echo $title; ?></title>
         <meta charset="windows-1251">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="mystyle.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="scripts/jquery-ui.css">
-        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <title><?php echo $title; ?></title>
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/jquery-ui.js"></script>
         <script src="scripts/jquery.mask.js"></script>
@@ -642,6 +659,7 @@ function HeaderFooterGroupL($content, $title, $vC = '', $vS = '')
     <div class="export">
         <a href="#" title="Ёкспортировать в .CSV"><img src="img/csv.png">Ёкспортировать в .CSV</a>
     </div>
+    <div class="support">ѕо техническим вопросам работы электронного журнала обращатьс€: 277-22-74 (вн. 474)</div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>

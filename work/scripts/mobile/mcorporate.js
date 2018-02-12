@@ -24,7 +24,8 @@ $('div').delegate(".triangle-topright", "touchstart", function (e) {
         url: 'log.php',
         data: {
             'idStudent': stud_id,
-            'idZapis': zap_id
+            'idZapis': zap_id,
+            'ajaxTrue':"1"
         },
         success: function (st, event) {
 

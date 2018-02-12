@@ -1,132 +1,31 @@
 @media only screen and (min-width: 10px) and (max-width: 780px) {
-
-    html{
-        font-size: 12px;
-    }
-
-    .date_title{
-        width: 60px;
-    }
-
-    .info_title{
-        width: 40px;
-    }
-
-    .inp_cell {
-        width: 37px;
-    }
-
-    .space {
-        margin: 0 2px 0 1px;
-    }
-
-    .marg-left{
-        margin-left: 36px;
-    }
-
-    #create_lesson{
-        margin-bottom: 20px;
-    }
-
-    .datepicker {
-        width: 70px;
-    }
-
-    .fio_student {
-        height: 20px;
-        width: 210px;
-    }
-
-    .fio{
-        margin-top: 10px;
-    }
-
-    .result_box, .result_box_statistic {
-        left:215px;
-    }
-
-    .statistic {
-        margin-top: 10px;
-        left: calc(45% + 200px);
-        position: absolute;
-        border: none;
-    }
-
-    .result_box{
-        width: 60%;
-    }
-
-    .result_box_statistic{
-        width: 37%;
-    }
-
-    .date_col {
-        margin-top: 11px;
-        width: 60px;
-    }
-
-    .date_col_stat {
-        width: 35px;
-    }
-
-
-    .add_grade{
-        width: auto;
-        height: 20px;
-        text-align: center;
-    }
-
-    .grade {
-        font-size: 0.8em;
-        width: 60px;
-        height: 20px;
-    }
-
-    .triangle-topright{
-        left: 50px;
-        border-bottom: 11px solid #000000;
-        border-left: 11px solid transparent;
-    }
-
-    .avg, .ans, .abs {
-        width: 41px;
-        height: 20px;
-    }
-
-    .average, .answer, .absenteeism {
-        width: 40px;
-        height: 20px;
-    }
-
-    .popup-content {
-        width: 150px;
-    }
-
-    .nLesson{
-        line-height: 1.2em;
-        top:-10px;
-        width: 16px;
-        height: 10px;
-        margin-bottom: -10px;
-        float: left;
-    }
-
-    body{
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer */
-        -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
-        -webkit-user-select: none; /* Chrome, Safari, and Opera */
-        -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
-    }
-
-    div.Exit{
-        position: inherit;
-    }
-
+    html{ font-size: 12px; }
+    .date_title{ width: 60px; }
+    .info_title{ width: 40px; }
+    .inp_cell { width: 37px; }
+    .space { margin: 0 2px 0 1px; }
+    .marg-left{ margin-left: 36px; }
+    #create_lesson{ margin-bottom: 20px; }
+    .datepicker { width: 70px; }
+    .fio_student { height: 20px; width: 210px; }
+    .fio{ margin-top: 10px; }
+    .result_box, .result_box_statistic { left:215px; }
+    .statistic { margin-top: 10px; left: calc(45% + 200px); position: absolute; border: none; }
+    .result_box{ width: 60%; }
+    .result_box_statistic{ width: 37%; }
+    .date_col { margin-top: 11px; width: 60px; }
+    .date_col_stat { width: 35px; }
+    .add_grade{ width: auto; height: 20px; text-align: center; }
+    .grade { font-size: 0.8em; width: 60px; height: 20px; }
+    .triangle-topright{ left: 50px; border-bottom: 11px solid #000000; border-left: 11px solid transparent; }
+    .avg, .ans, .abs { width: 41px; height: 20px; }
+    .average, .answer, .absenteeism { width: 40px; height: 20px; }
+    .popup-content { width: 150px; }
+    .nLesson{line-height: 1.2em; top:-10px; width: 16px; height: 10px; margin-bottom: -10px; float: left; }
+    body{ -moz-user-select: none; -ms-user-select: none;  -khtml-user-select: none; -webkit-user-select: none;  -webkit-touch-callout: none; }
+    div.Exit{ position: inherit; }
 }
 
 @media only screen and (max-width: 500px){
-    div.export{
-        display: none;
-    }
+    div.export{ display: none;}
 }

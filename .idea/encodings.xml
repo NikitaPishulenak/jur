@@ -5,11 +5,15 @@
     <file url="file://$PROJECT_DIR$/../foreigns/index.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/ac/index.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/ac/view.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/work/cd/config.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/work/cd/configMain.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/work/cd/configStudent.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/cd/index.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/cd/view.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/config.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/configMain.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/configStudent.php" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/work/d.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/export.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/index.php" charset="windows-1251" />
     <file url="file://$PROJECT_DIR$/work/log.php" charset="windows-1251" />

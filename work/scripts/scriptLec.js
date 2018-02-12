@@ -22,7 +22,8 @@
                     'PL':"1",
                     'numberThemeLesson':number_theme_lesson,
                     'menuactiv': "addLesson",
-                    'PKE': '0'
+                    'PKE': '0',
+                    'ajaxTrue':"1"
                 },
                 success:function (st) {
                     if ((st!="No")&&(st!="Access is denied!")&&(st!="No access rights!")){
@@ -34,6 +35,7 @@
                             $("div.date_col:last").append("<div class='grade' data-idLes="+st+" data-idStudent="+myStudentId[i]+" data-zapis=0></div>");
                             myStudentZapis[st+'Zapis'+myStudentId[i]]=0;
                         }
+                        $(".result_box").animate({scrollLeft: '10000px'}, timeScroll);
                     }
                     else{
                         if(st=="No"){
@@ -148,7 +150,8 @@
                         'idLess': id_Less,
                         'menuactiv': "addLessonStudent",
                         'grades': coding,
-                        'PKE': '0'
+                        'PKE': '0',
+                        'ajaxTrue':"1"
                     },
                     success:function (st) {
                         if ((st!="Access is denied!")&&(st!="No access rights!")){
@@ -195,7 +198,8 @@
                             'idPrepod': $("input#idPrepod").val(),
                             'menuactiv': "editLessonStudent",
                             'grades': coding,
-                            'PKE': '0'
+                            'PKE': '0',
+                            'ajaxTrue':"1"
                         },
                         success:function (st) {
                             if (st=="Access is denied!"){
@@ -303,7 +307,8 @@ $(function () {
                         'idGroup': $("input#idGroup").val(),
                         'idLesson': id_Lesson,
                         'numberThemeLesson':new_number_theme_lesson,
-                        'menuactiv': "editDate"
+                        'menuactiv': "editDate",
+                        'ajaxTrue':"1"
                     },
                     success:function (st) {
                         if ((st!="Access is denied!")&&(st!="No access rights!")){

@@ -2,57 +2,61 @@
     hideHistory();
     resize();
     path = window.location.pathname.slice(1);
+    timeScroll=2000;
 
 
-    if((path=="p.php") || (path=="z.php")){
+    if ((path == "p.php") || (path == "z.php")) {
+        $(".result_box").animate({scrollLeft: '10000px'}, timeScroll);
         $('div').delegate(".date_title", "mouseover", function () {
-            var numbThemeLesson=$(this).attr('data-number_theme_lesson');
+            var numbThemeLesson = $(this).attr('data-number_theme_lesson');
 
             $(this).attr('title', 'Кликните дважды для редактирования даты');
-            if(numbThemeLesson!=0){
-                $(this).attr('title', '№ темы: '+numbThemeLesson);
+            if (numbThemeLesson != 0) {
+                $(this).attr('title', '№ темы: ' + numbThemeLesson);
             }
-            else{
+            else {
                 $(this).attr('title', 'Кликните дважды для редактирования даты');
             }
         });
+    }
+    else{
+        $(".result_box_statistic").animate({scrollLeft: '10000px'}, timeScroll);
     }
 
     //Экспорт в csv
     $(".export").click(function () {
 
-        id_group=$("input#idGroup").val();
-        Lessons=$("input#idSubject").val();
-        PL=$("input#idPL").val();
+        id_group = $("input#idGroup").val();
+        Lessons = $("input#idSubject").val();
+        PL = $("input#idPL").val();
 
-        location.href='exel.php?id_group='+id_group+'&Lessons='+Lessons+'&PL='+PL;
+        location.href = 'exel.php?id_group=' + id_group + '&Lessons=' + Lessons + '&PL=' + PL;
     });
 
     //Дорисовать треугольники и крестики красные
     ShowLogTools();
 
     $('div').delegate(".grade", "mouseover", function (e) {
-        data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').addClass("illumination");
+        data_st = $(this).attr('data-idStudent');
+        $('div [data-idStudent="' + data_st + '"]').addClass("illumination");
         showTools($(this));
     });
 
     $('div').delegate(".grade", "mouseout", function () {
-
-        data_st=$(this).attr('data-idStudent');
-        $('div [data-idStudent="'+data_st+'"]').removeClass("illumination");
+        data_st = $(this).attr('data-idStudent');
+        $('div [data-idStudent="' + data_st + '"]').removeClass("illumination");
         hideTools($(this));
     });
 
-
     if (is_touch_device()) {
-        $.getScript('scripts/mobile/mcorporate.js', function(){});
+        $.getScript('scripts/mobile/mcorporate.js', function () {
+        });
     }
 
     //Функция логирования
     $('div').delegate(".triangle-topright", "click", function (e) {
-        log_object=$(this).parent();
-        if($("#history").is(":visible")){
+        log_object = $(this).parent();
+        if ($("#history").is(":visible")) {
             showTools(log_object);
             log_object.append('<img src="img/tr.png" class="tr">');
         }
@@ -76,7 +80,8 @@
             url: 'log.php',
             data: {
                 'idStudent': stud_id,
-                'idZapis': zap_id
+                'idZapis': zap_id,
+                'ajaxTrue':"1"
             },
             success: function (st, event) {
 
@@ -250,7 +255,6 @@ function proverka(event, id) {
     if (((event.keyCode >= 48) && (event.keyCode <= 57)) || ((event.keyCode >= 96) && (event.keyCode <= 105))) {
 
         $(function () {
-
             if ((el.value > 10) || (el.value < 1)) {
                 el.value = "";
             }
@@ -269,13 +273,13 @@ function proverka(event, id) {
 
 //Функция проверки правильности ввода номера темы занятия
 function checkNumberThemeLesson(event) {
-    if((event.keyCode==8) || (event.keyCode==27) || (event.keyCode==46)){
+    if ((event.keyCode == 8) || (event.keyCode == 27) || (event.keyCode == 46)) {
         return;
     }
-    else if (((event.keyCode >= 48) && (event.keyCode <= 57)) || ((event.keyCode >= 96) && (event.keyCode <= 105))){
+    else if (((event.keyCode >= 48) && (event.keyCode <= 57)) || ((event.keyCode >= 96) && (event.keyCode <= 105))) {
         return true;
     }
-    else{
+    else {
         return false;
     }
 }
@@ -542,22 +546,22 @@ function hideTools(thisEl) {
 }
 
 function resize() {
-    $windows_wid=$("body").width();// ширина монитора
-    $fio_div_wid=$("div.fio_student").width();// ширина столбика с ФИО
-    $stat_div_wid=$("div.statistic").width();//ширина столбика статистики
+    $windows_wid = $("body").width();// ширина монитора
+    $fio_div_wid = $("div.fio_student").width();// ширина столбика с ФИО
+    $stat_div_wid = $("div.statistic").width();//ширина столбика статистики
 
-    $result_div=$windows_wid-$fio_div_wid-$stat_div_wid-45;//ширина блока с оценками
-    $left_div_stat=$windows_wid-$stat_div_wid;
+    $result_div = $windows_wid - $fio_div_wid - $stat_div_wid - 45;//ширина блока с оценками
+    $left_div_stat = $windows_wid - $stat_div_wid;
 
-    $("div.result_box_statistic").css("left",$fio_div_wid+20);
-    $("div.result_box_statistic").css("width", $result_div-5);
-    $("div.result_box").css("left",$fio_div_wid+20);
+    $("div.result_box_statistic").css("left", $fio_div_wid + 20);
+    $("div.result_box_statistic").css("width", $result_div - 5);
+    $("div.result_box").css("left", $fio_div_wid + 20);
     $("div.result_box").css("width", $result_div);
-    $("div.statistic").css("left",$left_div_stat-10);
+    $("div.statistic").css("left", $left_div_stat - 10);
 }
 
 function smallText(object) {
-    if(object.text().length>=10){
+    if (object.text().length >= 10) {
         object.addClass("small-text");
     }
 }
@@ -570,7 +574,7 @@ function is_touch_device() {
 function ShowLogTools() {
     //Дорисовка треугольника
     $("div.grade").each(function () {
-        if (($(this).text() != "") &&($(this).attr('data-zapis')!="0")) { //ид-запись=0 где нету оценок
+        if (($(this).text() != "") && ($(this).attr('data-zapis') != "0")) { //ид-запись=0 где нету оценок
             smallText($(this));
             $(this).append('<div class="triangle-topright"></div>');
             $("div.triangle-topright").hide();
