@@ -13,6 +13,7 @@ $(function () {
     });
 });
 
+
 //Функции вычисления статистики
 $(function () {
     $("div.statistic").append("<div class='date_col_stat'></div>");
@@ -21,26 +22,14 @@ $(function () {
     $("div.date_col_stat:last").after("<div class='date_col_stat'><div class='title'>Н(ув.)</div><div class='absenteeism'></div></div>");
     for(var i=0; i<count; i++){
         data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
-        $("div .absenteeism:last").append("<div class='abs' data-idStudent='"+data_idS+"'></div>");
+        $("div.absenteeism:last").append("<div class='abs' data-idStudent='"+data_idS+"'></div>");
     }
 });
 
 $(function () {
     $("div.abs").each(function () {
-        var countAbsenteesm=0, countAbsRespect=0;
-        var elem=$(this).attr('data-idStudent');
-        $('div.grade[data-idStudent="'+elem+'"]').each(function () {
-            var gr=$(this).text().split("/");
-            for(i=0; i<gr.length;i++){
-                if((absenteeisms.indexOf(gr[i])!=-1) || (absenteeisms_with_cause.indexOf(gr[i])!=-1) ){
-                    countAbsenteesm++;
-                    if(gr[i]=="Ну"){
-                        countAbsRespect++;
-                    }
-                }
-            }
-        });
-        $('div.abs[data-idStudent="'+elem+'"]').html(countAbsenteesm+"("+countAbsRespect+")");
+        var elem = $(this).attr('data-idStudent');
+        generateAbs(elem);
     });
 });
 
@@ -63,10 +52,11 @@ $(function () {
         event.preventDefault();
     });
 
-    
+
     $('div').delegate(".grade", "dblclick", function () {
         $("button#edit").removeAttr('disabled');
         $("button#close").removeAttr('disabled');
+        elem=0;
         elem = $(this);
 
         if(elem.text()!=""){
@@ -178,6 +168,8 @@ $(function () {
         $("button#close").attr('disabled', true);
         edit_dialog.dialog("close");
         ShowLogTools();
+        generateAbs(student_id);
+        illuminationAbs(elem);
     });
     $(".inp_cell:text").click(function () {
         $(this).select();

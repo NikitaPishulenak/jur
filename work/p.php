@@ -66,46 +66,46 @@ function edtLess()
 {
     include_once 'configMain.php';
     $dt = explode(".", $_GET['Date']);
-   if(is_numeric($_GET['PKE']) && is_numeric($_GET['numberThemeLesson']) && is_numeric($_GET['idLesson']) && is_numeric($_GET['idGroup'])){
-    mysqli_query($dbMain, "UPDATE lesson SET LDate='".$dt[2]."-".$dt[1]."-".$dt[0]."', PKE=".$_GET['PKE'].", nLesson=".$_GET['numberThemeLesson']." WHERE id=".$_GET['idLesson']." AND idGroup=".$_GET['idGroup']);
-    mysqli_query($dbMain, "UPDATE rating SET DateO='".$dt[2]."-".$dt[1]."-".$dt[0]."', PKE=".$_GET['PKE']." WHERE del=0 AND idLesson=".$_GET['idLesson']);
-   } else {
-      echo "No";
-   }
+    if(is_numeric($_GET['PKE']) && is_numeric($_GET['numberThemeLesson']) && is_numeric($_GET['idLesson']) && is_numeric($_GET['idGroup'])){
+        mysqli_query($dbMain, "UPDATE lesson SET LDate='".$dt[2]."-".$dt[1]."-".$dt[0]."', PKE=".$_GET['PKE'].", nLesson=".$_GET['numberThemeLesson']." WHERE id=".$_GET['idLesson']." AND idGroup=".$_GET['idGroup']);
+        mysqli_query($dbMain, "UPDATE rating SET DateO='".$dt[2]."-".$dt[1]."-".$dt[0]."', PKE=".$_GET['PKE']." WHERE del=0 AND idLesson=".$_GET['idLesson']);
+    } else {
+        echo "No";
+    }
 }
 
 
 function edtLessonStudent()
 {
     include_once 'configMain.php';
-   if(is_numeric($_GET['id_Zapis']) && is_numeric($_GET['idStudent']) && is_numeric($_GET['grades']) && is_numeric($_SESSION['SesVar']['FIO'][0])){   
-    $resTime = mysqli_query($dbMain, "SELECT TIMESTAMPDIFF(MINUTE, CONCAT(DateO, ' ', TimeO), NOW()), idLessons, idLesson, DateO, TimeO, RatingO, idEmployess FROM rating WHERE del=0 AND id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
-    if (mysqli_num_rows($resTime) >= 1) {
-        $arr = mysqli_fetch_row($resTime);
-        if($arr[6]!=$_SESSION['SesVar']['FIO'][0] || $arr[0] > 10){
-            mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (".$_GET['id_Zapis'].",".$arr[1].",".$arr[2].",".$_GET['idStudent'].",'".$arr[3]."','".$arr[4]."',".$arr[5].",".$arr[6].")");
-            mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
-        }else{
-            mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
+    if(is_numeric($_GET['id_Zapis']) && is_numeric($_GET['idStudent']) && is_numeric($_GET['grades']) && is_numeric($_SESSION['SesVar']['FIO'][0])){
+        $resTime = mysqli_query($dbMain, "SELECT TIMESTAMPDIFF(MINUTE, CONCAT(DateO, ' ', TimeO), NOW()), idLessons, idLesson, DateO, TimeO, RatingO, idEmployess FROM rating WHERE del=0 AND id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
+        if (mysqli_num_rows($resTime) >= 1) {
+            $arr = mysqli_fetch_row($resTime);
+            if($arr[6]!=$_SESSION['SesVar']['FIO'][0] || $arr[0] > 10){
+                mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (".$_GET['id_Zapis'].",".$arr[1].",".$arr[2].",".$_GET['idStudent'].",'".$arr[3]."','".$arr[4]."',".$arr[5].",".$arr[6].")");
+                mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
+            }else{
+                mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
+            }
+            mysqli_free_result($resTime);
         }
-        mysqli_free_result($resTime);
+    } else {
+        echo "No";
     }
-   } else {
-      echo "No";
-   }
 }
 
 
 function addLessonStudent()
 {
-   include_once 'configMain.php';
-   $dt = explode(".", $_GET['dateLes']);
-   if(is_numeric($_GET['idLessons']) && is_numeric($_GET['idStudent']) && is_numeric($_GET['PL']) && is_numeric($_GET['PKE']) && is_numeric($_GET['grades']) && is_numeric($_SESSION['SesVar']['FIO'][0]) && is_numeric($_GET['idLess'])){
-      mysqli_query($dbMain, "INSERT INTO rating (idLessons,idStud,PL,PKE,DateO,TimeO,RatingO,idEmployess,idLesson) VALUES (".$_GET['idLessons'].",".$_GET['idStudent'].",".$_GET['PL'].",".$_GET['PKE'].",'".$dt[2]."-".$dt[1]."-".$dt[0]."',CURTIME(),".$_GET['grades'].",".$_SESSION['SesVar']['FIO'][0].",".$_GET['idLess'].")");
-      echo mysqli_insert_id($dbMain);
-   } else {
-      echo "No";
-   }
+    include_once 'configMain.php';
+    $dt = explode(".", $_GET['dateLes']);
+    if(is_numeric($_GET['idLessons']) && is_numeric($_GET['idStudent']) && is_numeric($_GET['PL']) && is_numeric($_GET['PKE']) && is_numeric($_GET['grades']) && is_numeric($_SESSION['SesVar']['FIO'][0]) && is_numeric($_GET['idLess'])){
+        mysqli_query($dbMain, "INSERT INTO rating (idLessons,idStud,PL,PKE,DateO,TimeO,RatingO,idEmployess,idLesson) VALUES (".$_GET['idLessons'].",".$_GET['idStudent'].",".$_GET['PL'].",".$_GET['PKE'].",'".$dt[2]."-".$dt[1]."-".$dt[0]."',CURTIME(),".$_GET['grades'].",".$_SESSION['SesVar']['FIO'][0].",".$_GET['idLess'].")");
+        echo mysqli_insert_id($dbMain);
+    } else {
+        echo "No";
+    }
 }
 
 
@@ -114,10 +114,10 @@ function addLess()
     include_once 'configMain.php';
     $dt = explode(".", $_GET['dateLesson']);
     if(is_numeric($_GET['idGroup']) && is_numeric($_GET['idLessons']) && is_numeric($_GET['PL']) && is_numeric($_GET['PKE']) && is_numeric($_GET['numberThemeLesson'])){
-       mysqli_query($dbMain, "INSERT INTO lesson (LDate,idGroup,idLessons,PL,PKE,nLesson) VALUES ('" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "'," . $_GET['idGroup'] . "," . $_GET['idLessons'] . "," . $_GET['PL'] . "," . $_GET['PKE'] . ",".$_GET['numberThemeLesson'].")");
-       echo mysqli_insert_id($dbMain);
+        mysqli_query($dbMain, "INSERT INTO lesson (LDate,idGroup,idLessons,PL,PKE,nLesson) VALUES ('" . $dt[2] . "-" . $dt[1] . "-" . $dt[0] . "'," . $_GET['idGroup'] . "," . $_GET['idLessons'] . "," . $_GET['PL'] . "," . $_GET['PKE'] . ",".$_GET['numberThemeLesson'].")");
+        echo mysqli_insert_id($dbMain);
     } else {
-       echo "No";
+        echo "No";
     }
 }
 
@@ -481,13 +481,13 @@ function Fakultet()
       <div class='DialogP'>
       <div class='titleBox'><H2>Группы</H2></div>
       ";
-            $result = mssql_query("SELECT IdGroup, Name FROM dbo.Groups WHERE ".$sqlSO." ORDER BY Name", $dbStud);
+            $result = mssql_query("SELECT IdGroup, Name, IIF(IdF != ".$_GET['idF'].", 1, 0) FROM dbo.Groups WHERE ".$sqlSO." ORDER BY Name, IdF", $dbStud);
             if (mssql_num_rows($result) >= 1) {
                 $preChar = "";
                 while ($arr = mssql_fetch_row($result)) {
                     if ($preChar != substr($arr[1], 0, 2)) $retVal .= "<div class='HRnext'></div>";
                     $preChar = substr($arr[1], 0, 2);
-                    $retVal .= "<div class='DialogGr'><strong>" . $arr[1] . "</strong><div class='GroupPL'>";
+                    $retVal .= "<div class='DialogGr'><strong>" . $arr[1] . "</strong>".($arr[2] ? "<div class='Inostr' title='Группа иностранных учащихся'>и</div>" : "")."<div class='GroupPL'>";
                     $retVal .= "<a href='p.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Prepod'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $arr[0] . "&PL=0&nPredmet=" . $Pre . "&nF=" . $idName . "&nGroup=" . $arr[1] . "'>Практ.</a>&nbsp;&nbsp;&nbsp;";
                     $retVal .= "<a href='p.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Prepod'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $arr[0] . "&PL=1&nPredmet=" . $Pre . "&nF=" . $idName . "&nGroup=" . $arr[1] . "'>Лекция</a>";
                     $retVal .= "</div></div></div>\n";
@@ -531,11 +531,11 @@ function MainF()
             if (mssql_num_rows($result) >= 1) {
                 list($idName) = mssql_fetch_row($result);
                 $retVal .= "<p><a href='p.php?menuactiv=goF&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idKaf=".$_SESSION['SesVar']['Prepod'][2]."&idPredmet=".$_SESSION['SesVar']['Predmet'][$ii][0]."&idF=". $fak[$i]."'>".$idName."</a></p>";
+                mssql_free_result($result);
             }
         }
         $retVal .= "</div>";
     }
-    mssql_free_result($result);
     $retVal .= "</div>";
     echo HeaderFooter($retVal, $_SESSION['SesVar']['Prepod'][0] . " (" . $_SESSION['SesVar']['Prepod'][1] . ")", $verC);
 }
@@ -743,11 +743,11 @@ function StudentView($content, $contentO = '')
 
                 <br><br>
 
-                <input class='inp_cell' id='inp_0' type=text maxlength='6'
+                <input class='inp_cell' id='inp_0' type=text maxlength='6' autocomplete='off'
                        onkeydown='return proverka(event,0);' onblur='return proverka(event,0);'>
-                <input class='inp_cell' id='inp_1' type='text' maxlength='6'
+                <input class='inp_cell' id='inp_1' type='text' maxlength='6' autocomplete='off'
                        onkeydown='return proverka(event,1);' onblur='return proverka(event,1);'>
-                <input class='inp_cell' id='inp_2' type='text' maxlength='6'
+                <input class='inp_cell' id='inp_2' type='text' maxlength='6' autocomplete='off'
                        onkeydown='return proverka(event,2);' onblur='return proverka(event,2);'>
       <button id='add_grade_input' class='add_grade' title='Для добавления дополнительной оценки нажмите на кнопку!'>+</button>
 
@@ -868,7 +868,7 @@ function StudentViewL($content, $contentO = '')
                 <br><br>
 
                 <input class='inp_cell' id='inp_0' type=text maxlength='0'
-                       onkeydown='return proverka(event,0);' onblur='return proverka(event,0);'><br><br>
+                       onkeydown='return proverka(event,0);' onblur='return proverka(event,0);' autocomplete='off'><br><br>
         </fieldset>      
                 <hr class='marg-line'>
                 <button id='close' class='attention'>Отмена</button>

@@ -12,7 +12,7 @@
     .fio_student, .subject_student {height: 30px; width: 285px;}
     .fio{ margin-top: 17px; }
     .result_box, .result_box_statistic { left:280px; }
-    .statistic { margin-top: 17px; left: calc(60% + 260px); position: absolute; border: none; }
+    .statistic { margin-top: 17px; left: calc(60% + 260px); position: absolute; border: none; cursor: default;}
     .result_box{ width: 80%; }
     .result_box_statistic{ width: 50%; }
     .date_col { width: 80px; margin-top: 16px;}
@@ -24,4 +24,8 @@
     .average, .answer, .absenteeism { width: 60px; height: 30px;}
     .popup-content { width: 250px;}
     .nLesson{ line-height: 1.5em; top:-15px; width: 25px; height: 15px; float: left; margin-bottom: -15px;}
+    .average_small{width: 35px; height: 30px;}
+    .avg_small{width: 35px; height: 30px;}
+    .date_col_stat_small{ width: 35px; font-size: 14px; }
+    /*.statistic{margin-right: 70px;}*/
 }

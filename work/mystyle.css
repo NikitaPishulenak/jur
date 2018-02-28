@@ -10,7 +10,7 @@ input[type=text]:hover { border-radius: 3px; margin: 2px 2px 2px 2px; border:sol
 .colloquium_theme { background-color: #d7e8ed;}
 .exam_theme { background-color: #ded09f;}
 input .edit_grade { background-color: #8c0000;}
-.title { font-weight: 600; text-align: center; border: solid #000000 1px; overflow: hidden; padding-bottom: 0.05em; padding-top: 0.05em;}
+.title, .title_small { font-weight: 600; text-align: center; border: solid #000000 1px; overflow: hidden; padding-bottom: 0.05em; padding-top: 0.05em;}
 .date_title, .info_title{ clear: left; position: relative; padding-bottom: 0; padding-top: 0.2em; vertical-align: middle; font-weight: 400; border: solid #000000 1px; text-align: center; font-size: 0.75em;}
 .date_title, .tool, .type_lesson, .add_grade, .pointer{cursor: pointer;}
 span.tool, b.tool{ padding: 1px 4px 1px 4px; border: solid 1px; border-color: transparent;  border-radius: 3px;}
@@ -35,7 +35,7 @@ span.tool, b.tool{ padding: 1px 4px 1px 4px; border: solid 1px; border-color: tr
 .result_box, .result_box_statistic { border-left: none; white-space: nowrap; word-wrap: normal; overflow-x: auto; position: absolute; box-shadow: 8px 8px 10px 3px rgba(0, 0, 0, 0.2); border-top: none;}
 .result_box{ border: 1px solid #ccc; border-left: none; border-top: none;}
 .date_col { position: relative; display: inline-table; margin-bottom: 1px;}
-.date_col_stat { display: inline-table; border:none;}
+.date_col_stat, .date_col_stat_small { display: inline-table; border:none;}
 .grade { font-size: 1.01em; font-weight: 600; border-bottom: solid #000000 1px; border-left: solid #000000 1px; border-right: solid #000000 1px; text-align: center; cursor: pointer; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
 
 .small-text{ font-size: 0.7em;}
@@ -43,10 +43,13 @@ span.tool, b.tool{ padding: 1px 4px 1px 4px; border: solid 1px; border-color: tr
 .close { position: absolute; top: 1px; right: 1px; width: 10px; height: 10px; float: right; display: inline-table;}
 .tr { position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; float: right; display: inline-table;}
 .container{ white-space: nowrap; word-wrap: normal; float: left; width: auto; overflow: visible;}
-.statistic { position: absolute; border: none;}
+.statistic { position: absolute; border: none; cursor: default;}
 .result_div{ color: #000; background-color: #d3d3d3; font-size: 1.4em;}
-.avg, .ans, .abs { border-bottom: solid #000000 1px; text-align: center; cursor: pointer; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
+.result_div_small{ color: #000; background-color: #d3d3d3; font-weight: bolder;}
+.avg, .ans, .abs { border-bottom: solid #000000 1px; text-align: center; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
 .average, .answer, .absenteeism { border-left: solid #000000 1px; border-right: solid #000000 1px; border-top: none; text-align: center; vertical-align: middle; float: left; display: inline-table;}
+.avg_small { border-bottom: solid #000000 1px; text-align: center; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
+.average_small{ border-left: solid #000000 1px; border-right: solid #000000 1px; border-top: none; text-align: center; vertical-align: middle; float: left; display: inline-table;}
 .kursiv{ font-size: 9pt;}
 b#delGr{ font-size: 1.5em;}
 input#number_theme, input#edit_number_theme{ width: 30px;}
@@ -54,25 +57,4 @@ div.number_theme{ padding-left: 5px; position: absolute; top: 15px; margin-left:
 
 .export{ margin-top:30px; margin-left:10px; display:table;}
 .export img { border:0; vertical-align: middle; margin-right:10px;}
-
-/*.ripple {*/
-    /*width: 0;*/
-    /*height: 0;*/
-    /*border-radius: 50%;*/
-    /*background: rgba(0, 0, 0, 0.1);*/
-    /*transform: scale(0);*/
-    /*position: absolute;*/
-    /*opacity: 1;*/
-/*}*/
-/*.rippleEffect {*/
-    /*animation: rippleDrop 1.1s linear;*/
-/*}*/
-
-/*@keyframes rippleDrop {*/
-    /*100% {*/
-        /*transform: scale(2);*/
-        /*opacity: 0;*/
-    /*}*/
-/*}*/
-
 .sh{ box-shadow: inset 0 0 10px 5px rgba(0,0,0,0.2); transition: 1.0s;}

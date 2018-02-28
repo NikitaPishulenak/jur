@@ -1,34 +1,4 @@
 ﻿$(function () {
-    $("div.average").each(function () {
-        var sum = 0, countGrade = 0;
-        var elem = $(this).attr('data-idStudent');
-        $('div.grade[data-idStudent="' + elem + '"]').each(function () {
-            var gr = $(this).text().split("/");
-            for (var i = 0; i < gr.length; i++) {
-                if (Number(gr[i])) {
-                    sum += Number(gr[i]);
-                    countGrade++;
-                }
-            }
-        });
-        $('div.average[data-idStudent="' + elem + '"]').html(Math.round(10 * (sum / countGrade)) / 10);
-    });
-
-    $("div.answer").each(function () {
-        var countAnswer = 0;
-        var elem = $(this).attr('data-idStudent');
-        $('div.grade[data-idStudent="' + elem + '"]').each(function () {
-            var gr = $(this).text().split("/");
-            if (Number(gr[0])) {
-                countAnswer++
-            }
-        });
-        $('div.answer[data-idStudent="' + elem + '"]').html(Math.round(100 * (countAnswer * 100 / $('div.grade[data-idStudent="' + elem + '"]').length)) / 100 + "%");
-    });
-});
-
-
-$(function () {
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
@@ -400,6 +370,7 @@ $(function () {
             $("button#close").attr('disabled', true);
             edit_dialog.dialog("close");
             ShowLogTools(); //Дорисовать треугольники и крестики красные
+            updateAvg(student_id);
         }
         else {
             alert("Для сохранения необходимо ввести хоть одну оценку!");
@@ -443,10 +414,28 @@ $(document).ready(function () {
     teacher = "";
     dateLesson = $("div.date_title:last").val();
     idLesson = "";
+
+    //Функция вычисления статистики
+    $(function () {
+        $("div.statistic").append("<div class='date_col_stat_small'><div class='title_small'>Ср.</div><div class='average_small'></div></div>");
+        var count=$("div.fio_student").length;
+        for(var i=0; i<count; i++){
+            data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
+            $("div .average_small:last").append("<div class='avg_small' data-idStudent='"+data_idS+"'></div>");
+        }
+        $("div .average_small:last").append("<div class='avg_small result_div_small' id='avg_avrige'></div>");
+
+        $("div.avg_small").each(function () {
+            var elem = $(this).attr('data-idStudent');
+            updateAvg(elem);
+        });
+    });
+
     if (is_touch_device()) {
         $.getScript('scripts/mobile/mscript.js', function () {
         });
     }
+
 });
 
 

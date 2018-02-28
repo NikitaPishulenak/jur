@@ -3,7 +3,7 @@
 
     //форма удаления оценки
     dialog_confirm_delete = $("#confirm_delete").dialog({
-        resizable:false,
+        resizable: false,
         autoOpen: false,
         modal: true,
         width: '400',
@@ -30,12 +30,13 @@
                 'idStud': id_st_name,
                 'idLesson': idLes,
                 'menuactiv': "deleteGrade",
-                'ajaxTrue':"1"
+                'ajaxTrue': "1"
             },
             success: function (st) {
                 if ((st != "Access is denied!") && (st != "No access rights!")) {
                     delObj.html("");
                     alert("Запись успешно удалена!");
+                    updateAvg(id_st_name);
                 }
                 else {
                     if (st == "Access is denied!") {
@@ -59,17 +60,18 @@
 
 
     $('div').delegate(".close", "click", function () {
-        delObj=$(this).parent();
-        id_st_name=delObj.attr("data-idStudent");
-        idLes=delObj.attr('data-idLes');
+        delObj = $(this).parent();
+        id_st_name = delObj.attr("data-idStudent");
+        idLes = delObj.attr('data-idLes');
 
-        var st_name=$('div.fio_student[data-idStudent="'+id_st_name+'"]').html();
-        var datGr=$(this).parent().parent().find('div.date_title').html();
-        var gr=$(this).parent().text();
+        var st_name = $('div.fio_student[data-idStudent="' + id_st_name + '"]').html();
+        var datGr = $(this).parent().parent().find('div.date_title').html();
+        var gr = $(this).parent().text();
 
         $("#delSt").text(st_name.slice(3));
         $("#delDat").text(datGr);
         $("#delGr").text(gr);
         dialog_confirm_delete.dialog("open");
+
     });
 });

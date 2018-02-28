@@ -401,6 +401,7 @@ $(function () {
             $("button#close").attr('disabled', true);
             edit_dialog.dialog("close");
             ShowLogTools(); //Дорисовать треугольники и крестики красные
+            updateAvg(student_id);
         }
         else {
             alert("Для сохранения необходимо ввести хоть одну оценку!");
@@ -445,6 +446,22 @@ $(document).ready(function () {
     dateLesson = $("div.date_title:last").val();
     idLesson = "";
     $.getScript('scripts/deleteGrade.js', function(){});
+
+    //Функция вычисления статистики
+    $(function () {
+        $("div.statistic").append("<div class='date_col_stat_small'><div class='title_small'>Ср.</div><div class='average_small'></div></div>");
+        var count=$("div.fio_student").length;
+        for(var i=0; i<count; i++){
+            data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
+            $("div .average_small:last").append("<div class='avg_small' data-idStudent='"+data_idS+"'></div>");
+        }
+        $("div .average_small:last").append("<div class='avg_small result_div_small' id='avg_avrige'></div>");
+
+        $("div.avg_small").each(function () {
+            var elem = $(this).attr('data-idStudent');
+            updateAvg(elem);
+        });
+    });
 
 
     if (is_touch_device()) {

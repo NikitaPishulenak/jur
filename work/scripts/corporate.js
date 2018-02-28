@@ -2,7 +2,7 @@
     hideHistory();
     resize();
     path = window.location.pathname.slice(1);
-    timeScroll=2000;
+    timeScroll = 2000;
 
 
     if ((path == "p.php") || (path == "z.php")) {
@@ -19,7 +19,7 @@
             }
         });
     }
-    else{
+    else {
         $(".result_box_statistic").animate({scrollLeft: '10000px'}, timeScroll);
     }
 
@@ -81,7 +81,7 @@
             data: {
                 'idStudent': stud_id,
                 'idZapis': zap_id,
-                'ajaxTrue':"1"
+                'ajaxTrue': "1"
             },
             success: function (st, event) {
 
@@ -255,6 +255,7 @@ function proverka(event, id) {
     if (((event.keyCode >= 48) && (event.keyCode <= 57)) || ((event.keyCode >= 96) && (event.keyCode <= 105))) {
 
         $(function () {
+
             if ((el.value > 10) || (el.value < 1)) {
                 el.value = "";
             }
@@ -346,7 +347,6 @@ function Decrypt(value) {
     // alert(res);
     return res;
 }
-
 
 function MatchEncrypt(val) {
 
@@ -527,10 +527,19 @@ function showHistory() {
 }
 
 function showTools(thisEl) {
+    var awc = false;//флаг true-деканат выставил причину пропуска и крест не показывать
     if (thisEl.text() != "") {
         thisEl.find("div.triangle-topright").show();
         if (path == "z.php") {
-            thisEl.find("img.close").show();
+            var c_res = thisEl.text().split("/");
+            for (var i = 0; i < c_res.length; i++) {
+                if (absenteeisms_with_cause.indexOf(c_res[i]) != -1) {
+                    var awc = true;
+                }
+            }
+            if (awc === false) {
+                thisEl.find("img.close").show();
+            }
         }
     }
 }
@@ -547,17 +556,18 @@ function hideTools(thisEl) {
 
 function resize() {
     $windows_wid = $("body").width();// ширина монитора
-    $fio_div_wid = $("div.fio_student").width();// ширина столбика с ФИО
-    $stat_div_wid = $("div.statistic").width();//ширина столбика статистики
+    $fio_div_wid = $("div.fio_student").width() + 20;// ширина столбика с ФИО; 20-отступ справа
+    // $stat_div_wid = $("div.statistic").width() + 10;//ширина столбика статистики; 10-отступ справа
+    $stat_div_wid = $("div.statistic").width();//ширина столбика статистики; 10-отступ справа
 
     $result_div = $windows_wid - $fio_div_wid - $stat_div_wid - 45;//ширина блока с оценками
-    $left_div_stat = $windows_wid - $stat_div_wid;
+    $left_div_stat = $windows_wid - $stat_div_wid - 25; //левая граница блока статистики
 
-    $("div.result_box_statistic").css("left", $fio_div_wid + 20);
-    $("div.result_box_statistic").css("width", $result_div - 5);
-    $("div.result_box").css("left", $fio_div_wid + 20);
+    $("div.result_box_statistic").css("left", $fio_div_wid);
+    $("div.result_box_statistic").css("width", $result_div);
+    $("div.result_box").css("left", $fio_div_wid);
     $("div.result_box").css("width", $result_div);
-    $("div.statistic").css("left", $left_div_stat - 10);
+    $("div.statistic").css("left", $left_div_stat);
 }
 
 function smallText(object) {
@@ -584,4 +594,110 @@ function ShowLogTools() {
             }
         }
     });
+}
+
+//Функция вычисления ср балл для студентов для зав каф и препод
+function updateAvg(idStudent) {
+    var sum = 0, countGrade = 0, avg = 0;
+    $('div.grade[data-idStudent="' + idStudent + '"]').each(function () {
+        var gr = $(this).text().split("/");
+        for (var i = 0; i < gr.length; i++) {
+            if (Number(gr[i])) {
+                sum += Number(gr[i]);
+                countGrade++;
+            }
+        }
+    });
+    avg = (sum / countGrade).toFixed(1);
+    avg = (isNaN(avg)) ? "" : avg;
+    $('div.avg_small[data-idStudent="' + idStudent + '"]').html(avg);
+    updateAvgAvg();
+}
+
+function updateAvgAvg() {
+    var avg_sum = 0, avg_count = 0, avgResult = 0;
+    var count = $("div.avg_small").length;
+    for (var k = 0; k < count - 1; k++) {
+        var elem = $("div.avg_small:eq(" + k + ")").text();
+        if (elem != "") {
+            avg_sum += Number(elem);
+            avg_count++;
+        }
+    }
+    avgResult = (avg_sum / avg_count).toFixed(1);
+    avgResult = (isNaN(avgResult)) ? "" : avgResult;
+    $("div#avg_avrige").html(avgResult);
+}
+
+//Функция выделения красным цветом поля, где есть Н без причины
+function illuminationAbs(elem) {
+    if (elem.text() != "") {
+        var c_res = elem.text().split("/");
+        for (var i = 0; i < c_res.length; i++) {
+            (absenteeisms.indexOf(c_res[i]) != -1) ? elem.addClass("undef") : elem.removeClass("undef");
+        }
+    }
+}
+
+//Функция вычисления ср балл для студентов для зав каф и препод
+function generatetAvg(idStudent) {
+    var sum = 0, countGrade = 0, avg = 0;
+    $('div.grade[data-idStudent="' + idStudent + '"]').each(function () {
+        var gr = $(this).text().split("/");
+        for (var i = 0; i < gr.length; i++) {
+            if (Number(gr[i])) {
+                sum += Number(gr[i]);
+                countGrade++;
+            }
+        }
+    });
+    avg = (sum / countGrade).toFixed(1);
+    avg = (isNaN(avg)) ? "" : avg;
+    $('div.avg[data-idStudent="' + idStudent + '"]').html(avg);
+    generateAvgAvg();
+}
+
+function generateAvgAvg() {
+    var avg_sum = 0, avg_count = 0, avgResult = 0;
+    var count = $("div.avg_small").length;
+    for (var k = 0; k < count - 1; k++) {
+        var elem = $("div.avg:eq(" + k + ")").text();
+        if (elem != "") {
+            avg_sum += Number(elem);
+            avg_count++;
+        }
+    }
+    avgResult = (avg_sum / avg_count).toFixed(1);
+    $("div#avg_avrige").html(avgResult);
+}
+
+function generateAns(idStudent) {
+    var countAnswer = 0;
+    $('div.grade[data-idStudent="' + idStudent + '"]').each(function () {
+        var gr = $(this).text().split("/");
+        if (Number(gr[0])) {
+            countAnswer++
+        }
+    });
+    var res = (100 * countAnswer / $('div.grade[data-idStudent="' + idStudent + '"]').length).toFixed(2);
+    res = (isNaN(res) || res == 0) ? "" : res += "%";
+    $('div.ans[data-idStudent="' + idStudent + '"]').html(res);
+}
+
+function generateAbs(idStudent) {
+    var countAbsenteesm = 0, countAbsRespect = 0;
+    $('div.grade[data-idStudent="' + idStudent + '"]').each(function () {
+        var gr = $(this).text().split("/");
+        for (i = 0; i < gr.length; i++) {
+            if ((absenteeisms.indexOf(gr[i]) != -1) || (absenteeisms_with_cause.indexOf(gr[i]) != -1)) {
+                countAbsenteesm++;
+                if (gr[i] == "Ну") {
+                    countAbsRespect++;
+                }
+            }
+        }
+    });
+    var res = countAbsenteesm + "(" + countAbsRespect + ")";
+    res = (countAbsenteesm == 0 && countAbsRespect == 0) ? "" : res;
+    $('div.abs[data-idStudent="' + idStudent + '"]').html(res);
 }
