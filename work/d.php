@@ -34,7 +34,7 @@ if(isset($_GET['menuactiv'])){
             break;
 
         case "repAbsenteeisms":
-//            SearchStudent();
+            edtLessonStudentUP();
             break;
 
         case "SearchStudent":
@@ -72,6 +72,35 @@ if(isset($_GET['menuactiv'])){
 //----------------------------------------------------------------------------------------------
 
 
+
+function edtLessonStudentUP(){
+    include_once 'configMain.php';
+
+    if(is_numeric($_POST['idStudent'])){
+        $countSt = count($_POST['arrGrade']);
+        if($countSt>=1){
+            for($iS=0; $iS<=($countSt-1); $iS++){
+                $resTime = mysqli_query($dbMain, "SELECT TIMESTAMPDIFF(MINUTE, CONCAT(DateO, ' ', TimeO), NOW()), idLessons, idLesson, DateO, TimeO, RatingO, idEmployess FROM rating WHERE del=0 AND id=".$_POST['arrGrade'][$iS][0]." AND idStud=".$_POST['idStudent']);
+                if (mysqli_num_rows($resTime) >= 1) {
+                    $arr = mysqli_fetch_row($resTime);
+                    if($arr[6]!=$_SESSION['SesVar']['FIO'][0] || $arr[0] > 10){
+                        mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (".$_POST['arrGrade'][$iS][0].",".$arr[1].",".$arr[2].",".$_POST['idStudent'].",'".$arr[3]."','".$arr[4]."',".$arr[5].",".$arr[6].")");
+                        mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_POST['arrGrade'][$iS][1].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_POST['arrGrade'][$iS][0]." AND idStud=".$_POST['idStudent']);
+                    }else{
+                        mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_POST['arrGrade'][$iS][1].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_POST['arrGrade'][$iS][0]." AND idStud=".$_POST['idStudent']);
+                    }
+                    mysqli_free_result($resTime);
+                }
+            }
+        } else {
+            echo "No";
+        }
+    } else {
+        echo "No";
+    }
+}
+
+
 function SearchStudent(){
     include_once 'configStudent.php';
 
@@ -104,16 +133,6 @@ function SearchStudent(){
 
 function SearchGiveData()
 {
-    /*    $_SESSION['SesStud']['idS']=$arr[0]; // ид Студента
-          $_SESSION['SesStud']['nameS']=$arr[1]; // ФИО Студента
-          $_SESSION['SesStud']['idFakS']=$arr[2]; // ид факультета
-          $_SESSION['SesStud']['kursS']=$arr[3]; // номер курса
-          $_SESSION['SesStud']['idGroupS']=$arr[4]; // ид группы
-          $_SESSION['SesStud']['gnameS']=$arr[5]; // номер группы
-          $_SESSION['SesStud']['gfS']=$arr[6]; // первый номер из названия группы принадлежащий к номеру факультета (1 - лечфак, 2 - педфак...)
-          $_SESSION['SesStud']['fnameS']=$arr[7]; // название факультета
-    */
-
     include_once 'configMain.php';
     include_once 'config.php';
     include_once 'configStudent.php';
@@ -131,7 +150,6 @@ LEFT JOIN lessons B ON B.id=A.id_lesson WHERE A.course=".$_GET['kursSt']."
 AND A.id_faculty=".$_SESSION['SesVar']['Dekan'][2]." GROUP BY A.id_lesson ORDER BY B.name");
 
     $retVal="\n<input type='hidden' id='idStudent' value='".$_GET['idSt']."'>
-<input type='hidden' id='idPrepod' value='".$_SESSION['SesVar']['FIO'][0]."'>
 <hr><H2>".$_GET['nameSt']." (гр. ".$_GET['groupSt'].", ".$_GET['kursSt']."-й курс, № ".$_GET['nomzSt'].")</H2>";
 
     if (mysqli_num_rows($res)>=1) {
@@ -147,7 +165,6 @@ AND A.id_faculty=".$_SESSION['SesVar']['Dekan'][2]." GROUP BY A.id_lesson ORDER 
     $retVal.="</div>\n";
 
     echo HeaderFooterSearch($retVal, $_SESSION['SesVar']['Dekan'][0]." (".$_SESSION['SesVar']['Dekan'][1].")", $verC, $verS);
-//    echo HeaderFooter($retVal, $verC, $verS);
 
 }
 
@@ -160,16 +177,16 @@ function GroupVP($idSu, $idSt){
 
     $resultS = mysqli_query($dbMain, "SELECT DATE_FORMAT(B.LDate,'%e.%m.%Y'), A.RatingO, A.PL, A.PKE, A.id FROM rating A LEFT JOIN lesson B ON (B.id=A.idLesson) WHERE A.idStud=".$idSt." AND A.idLessons=".$idSu." AND A.del=0 ORDER BY A.PL,B.LDate");
     if(mysqli_num_rows($resultS)>=1){
-        $retVal="<div id='selAll' class='sel_tool'> Выделить все</div> <div id='canselSelAll' class='sel_tool'> Отменить выделение</div><div class='replaceAbs'>Заменить пропуски</div>";
+        $retVal="<div class='menuTools'><div id='selAll' class='sel_tool'>Выделить всё</div><div id='canselSelAll' class='sel_tool'>Отменить</div><div class='replaceAbs'>Заменить пропуски</div></div><div class='C'></div>";
         $trueP=0; $trueL=0;
         while($arrSS = mysqli_fetch_row($resultS)){
 
             if(!$arrSS[2] && !$trueP){
                 $trueP = 1;
-                $retVal.="<div class='titleO'>Практические</div>\n<input type='hidden' id='idPL' value='0'>";
+                $retVal.="<div class='titleO'>Практические</div>\n";
             } else if ($arrSS[2] && !$trueL){
                 $trueL = 1;
-                $retVal.="<div class='clr'></div><div class='titleO'>Лекции</div>\n<input type='hidden' id='idPL' value='1'>";
+                $retVal.="<div class='clr'></div><div class='titleO'>Лекции</div>\n";
             }
             switch($arrSS[3]){
                 case 1:
@@ -191,6 +208,8 @@ function GroupVP($idSu, $idSt){
         echo "<div class='Not'>По данной дисциплине отметок ещё нет!</div>";
     }
 }
+
+
 
 
 //----------------------------------------------------------------------------------------------

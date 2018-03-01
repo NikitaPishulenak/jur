@@ -3,8 +3,7 @@
     idStudent = $("input#idStudent").val();
     idSubject = "";
     var subjDivWidth = $("div.DialogFakFak").css('width');
-    grades=[];
-    // $("div.DialogFakFak > span").click(function () {
+    grades = [];
 
     $("div.DialogFakFak").click(function () {
         var obj_this_contentGrade = $(this).find(".content_grade");
@@ -31,7 +30,7 @@
             obj_this_contentGrade.show();
             $(this).animate({width: "95%"}, 400, function () {
                 $.ajax({
-                    type: 'get',
+                    // type: 'get',
                     url: 'd.php',
                     data: {
                         'idStudent': idStudent,
@@ -95,7 +94,12 @@
 
     //Кнопки выделить Все и отменить Все
     $('div').delegate("#selAll", "click", function () {
-        $(this).parents().children(".available_grade").addClass("selected");
+        $('div.available_grade').each(function () {
+            var curObj = $(this).find(".Otmetka").text();
+            var isSel=0;
+            isSel= AvailableAbs(curObj);
+            (isSel != 1) ? $(this).addClass("selected") : "";
+        });
     });
     $('div').delegate("#canselSelAll", "click", function () {
         $(this).parents().children(".available_grade").removeClass("selected");
@@ -103,11 +107,11 @@
 });
 
 $(function () {
-    var  edit_dialog, edit_form;
+    var edit_dialog, edit_form;
 
     //Форма замены оценок
     edit_dialog = $("#form-update").dialog({
-        resizable:false,
+        resizable: false,
         autoOpen: false,
         height: 'auto',
         width: 240,
@@ -119,33 +123,37 @@ $(function () {
 
 
     $("#updateAbs").click(function () {
-        var replace=$("#inp_0").val();
-        if(replace!=""){
-            grades.length=0;
+        var replace = $("#inp_0").val();
+        if (replace != "") {
+            grades.length = 0;
             $('div.selected').each(function () {
-                var elem=$(this).find('.Otmetka');
-                countAbs=grades.length+1;
-                grades.push({0 : elem.attr("data-zapis"), 1 : ReplaceAbs(String(elem.text()), replace)});
+                var elem = $(this).find('.Otmetka');
+                countAbs = grades.length + 1;
+                grades.push({0: elem.attr("data-zapis"), 1: ReplaceAbs(String(elem.text()), replace)});
+                console.log(grades);
             });
 
             $.ajax({
-                type:'get',
-                url:'d.php',
-                data:{
+                type: 'POST',
+                url: 'd.php',
+                data: {
                     'idStudent': idStudent,
                     'menuactiv': "repAbsenteeisms",
                     'arrGrade': grades,
                     'ajaxTrue': "1"
                 },
-                success:function (st) {
-                    if (st=="Access is denied!"){
+                success: function (st) {
+                    if (st == "Access is denied!") {
                         alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
                     }
-                    else if (st=="No access rights!"){
+                    else if (st == "No access rights!") {
                         alert("Не достаточно прав!");
                     }
-                    else{
-                        alert("Успешно произведена замена записей: \n       Дисциплина: "+lessonTitle+";\n       Количествео "+countAbs+";");
+                    else if (st == "No") {
+                        alert("Ой, что-то пошло не так!");
+                    }
+                    else {
+                        alert("Успешно произведена замена записей: \n       Дисциплина: " + lessonTitle + "\n       Количество " + countAbs);
                         window.location.reload();
                     }
                 },
@@ -156,7 +164,7 @@ $(function () {
             });
 
             edit_dialog.dialog("close");
-        }else {
+        } else {
             alert("Для продолжения необходимо заполнить поле ввода!");
         }
     });
@@ -177,13 +185,13 @@ $(function () {
     });
 
     $('div').delegate(".replaceAbs", "click", function () {
-        var countSelBlock=$("div.selected").length;
-        if(countSelBlock!=0){
+        var countSelBlock = $("div.selected").length;
+        if (countSelBlock != 0) {
             edit_dialog.dialog("open");
             edit_form[0].reset();
-            lessonTitle=$(this).parents().parents().children("span.shortText").html();
+            lessonTitle = $(this).parents().parents().children("span.shortText").html();
             edit_dialog.dialog({title: lessonTitle});
-        }else{
+        } else {
             alert("Вы не выбрали пропуски, которые желаете заменить!");
         }
     });
@@ -194,19 +202,28 @@ $(function () {
 function Available(grade) {
     var c_gr = grade.split("/");
     for (var i = 0; i < c_gr.length; i++) {
-        if ((absenteeisms.indexOf(c_gr[i]) != -1) || (absenteeisms_with_cause.indexOf(c_gr[i])!=-1)) {
+        if ((absenteeisms.indexOf(c_gr[i]) != -1) || (absenteeisms_with_cause.indexOf(c_gr[i]) != -1)) {
             return 1;
         }
     }
 }
 
-function ReplaceAbs(value,sub) {
+//функция сделать видимыми только где есть прогул
+function AvailableAbs(grade) {
+    var c_gr = grade.split("/");
+    for (var i = 0; i < c_gr.length; i++) {
+        if ((absenteeisms_with_cause.indexOf(c_gr[i]) != -1)) {
+            return 1;
+        }
+    }
+}
+
+function ReplaceAbs(value, sub) {
     var res = "";
     var mas = value.split("/");
     for (i = 0; i < mas.length; i++) {
-        if((absenteeisms.indexOf(mas[i])!=-1) || (absenteeisms_with_cause.indexOf(mas[i])!=-1)){
-            mas[i]=sub;
-            // console.log(mas[i]);
+        if ((absenteeisms.indexOf(mas[i]) != -1) || (absenteeisms_with_cause.indexOf(mas[i]) != -1)) {
+            mas[i] = sub;
         }
         res += MatchEncrypt(mas[i]);
     }
