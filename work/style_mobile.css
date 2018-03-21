@@ -3,8 +3,8 @@
     .date_title{ width: 60px; }
     .info_title{ width: 40px; }
     .inp_cell { width: 37px; }
-    .space { margin: 0 2px 0 1px; }
-    .marg-left{ margin-left: 36px; }
+    .marg-left{ margin-left: 36px;}
+    .space {margin-right: 5px;}
     #create_lesson{ margin-bottom: 20px; }
     .datepicker { width: 70px; }
     .fio_student { height: 20px; width: 210px; }

@@ -130,11 +130,11 @@ $(function () {
                 var elem = $(this).find('.Otmetka');
                 countAbs = grades.length + 1;
                 grades.push({0: elem.attr("data-zapis"), 1: ReplaceAbs(String(elem.text()), replace)});
-                console.log(grades);
+                // console.log(grades);
             });
 
             $.ajax({
-                type: 'POST',
+                type: 'get',
                 url: 'd.php',
                 data: {
                     'idStudent': idStudent,
@@ -153,7 +153,7 @@ $(function () {
                         alert("Ой, что-то пошло не так!");
                     }
                     else {
-                        alert("Успешно произведена замена записей: \n       Дисциплина: " + lessonTitle + "\n       Количество " + countAbs);
+                        alert("Успешно произведена замена записей: \n       Дисциплина: " + lessonTitle + "\n       Количество: " + countAbs);
                         window.location.reload();
                     }
                 },

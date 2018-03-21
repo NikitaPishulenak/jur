@@ -135,7 +135,8 @@
         var cur_res = $("#inp_0").val();
         if(cur_res!=""){
             coding = Encrypt(cur_res);
-            elem.text(cur_res);
+            elem.html(cur_res);
+            smallText(elem);
 
             if((cur_grade=="") && (cur_res!="")){
                 $.ajax({
@@ -363,7 +364,7 @@ $(function () {
 $(function () {
     $("div.grade").each(function () {
         if($(this).text()!=""){
-            $(this).text(Decrypt($(this).text()));
+            $(this).html(Decrypt($(this).text()));
         }
     });
 });

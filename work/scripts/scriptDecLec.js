@@ -2,7 +2,7 @@
 $(function () {
     $("div.grade").each(function () {
         if($(this).text()!=""){
-            $(this).text(Decrypt($(this).text()));
+            $(this).html(Decrypt($(this).text()));
         }
         var c_res=$(this).text().split("/");
         for (var i=0; i<c_res.length; i++) {
@@ -130,7 +130,7 @@ $(function () {
         var coding = "";
         var cur_res = $("#inp_0").val();
         coding = Encrypt(cur_res);
-        elem.text(cur_res);
+        elem.html(lowIndex(cur_res));
         smallText(elem);
 
         if(id_Zapis == 0 && myStudentZapis[id_Less+'Zapis'+student_id]==0){

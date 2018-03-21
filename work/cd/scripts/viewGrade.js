@@ -1,16 +1,15 @@
 ﻿$(document).ready(function () {
 
     idStudent = $("input#idStudent").val();
-    idPrepod=$("input#idPrepod").val();
     idSubject = "";
     var subjDivWidth = $("div.DialogFakFak").css('width');
-
-    var grades=[];
+    grades = [];
 
     $("div.DialogFakFak").click(function () {
         var obj_this_contentGrade = $(this).find(".content_grade");
-        obj_this_contentGrade.html("");
         if (obj_this_contentGrade.is(':hidden')) {
+            $(this).css("cursor", "default");
+            obj_this_contentGrade.html("");
 
             if ($(".content_grade").is(':visible')) {
                 $(".CO").not($(this).find(".CO")).show();
@@ -19,12 +18,12 @@
                 $(".shortText").not($(this).find(".shortText")).show();
                 $(".fullTextClose").not($(this)).css('display', 'none');
                 $(".DialogFakFak").animate({width: subjDivWidth}, 400);
+                $(".DialogFakFak").not($(this)).css("cursor", "pointer");
                 $("div.selected").each(function () { //удаляю выделенные Н в скрытых блоках(предмет)
                     $(this).removeClass("selected");
                 });
             }
             idSubject = $(this).attr('data-idSubject');
-
             $(this).find(".CO").hide();
             $(this).find(".shortText").hide();
             $(this).find(".fullText").show();
@@ -32,10 +31,12 @@
             $(this).animate({width: "95%"}, 400, function () {
                 $.ajax({
                     type: 'get',
-                    url: 'view.php',
+                    url: 'd.php',
                     data: {
                         'idStudent': idStudent,
-                        'idSubject': idSubject
+                        'idSubject': idSubject,
+                        'ajaxTrue': "1",
+                        'menuactiv': "OpenDetails"
                     },
                     success: function (response) {
                         obj_this_contentGrade.html(response);
@@ -44,12 +45,10 @@
                                 $(this).html(Decrypt($(this).html()));
                                 smallText($(this));
                                 var block = 0;
-                                block = Available($(this).html());
+                                block = Available($(this).text());
                                 (block == 1) ? $(this).parent(".Oc").addClass("available_grade") : "";
                             });
-
                         });
-
 
                     },
                     error: function () {
@@ -57,20 +56,25 @@
                     }
                 });
                 $(this).find(".fullTextClose").css('display', 'block');
-
-            });
-
-        }
-        else if (obj_this_contentGrade.is(':visible')) {
-            $(this).find(".fullTextClose").css('display', 'none');
-            obj_this_contentGrade.hide();
-            $(this).find(".fullText").hide();
-            $(this).find(".shortText").show();
-            $(this).animate({width: subjDivWidth}, 400, function () {
-                $(this).find(".CO").show();
             });
         }
 
+        // else if (obj_this_contentGrade.is(':visible')) { //если открыт блок и я там что-либо делаю
+        //
+        // }
+    });
+
+    $('div').delegate(".fullTextClose", "click", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        $(this).parent().find(".content_grade").hide();
+        $(this).hide();
+        $(this).parent().find(".fullText").hide();
+        $(this).parent().find(".shortText").show();
+        $(this).parent().animate({width: subjDivWidth}, 400);
+        $(this).parent().find(".CO").show();
+        $(this).parent().css("cursor", "pointer");
+        $(".available_grade").removeClass("selected");
     });
 
     $("div.content_grade").click(function (event) {
@@ -79,216 +83,158 @@
         return false;
     });
 
-    $(function () {
-        var  edit_dialog, edit_form;
-
-        //Форма замены оценок
-        edit_dialog = $("#form-edit").dialog({
-            resizable:false,
-            autoOpen: false,
-            height: 'auto',
-            width: 230,
-            modal: true
-        });
-        edit_form = edit_dialog.find("form").on("submit", function (event) {
-            event.preventDefault();
-        });
-
-        $('div').delegate(".replaceAbs", "click", function () {
-            var countSelBlock=$("div.selected").length;
-            if(countSelBlock!=0){
-                edit_dialog.dialog("open");
-                edit_form[0].reset();
-                lessonTitle=$(this).parents().parents().children("span.shortText").html();
-                edit_dialog.dialog({title: lessonTitle});
-            }else{
-                alert("Вы не выбрали прогулы, которые желаете заменить!");
-            }
-        });
-
-
-        $("#edit").click(function () {
-            var replace=$("#inp_0").val();
-            if(replace!=""){
-                grades.length=0;
-                $('div.selected').each(function () {
-                    var elem=$(this).find('.Otmetka');
-                    countAbs=grades.length+1;
-                    grades.push({idZapis : elem.attr("data-zapis"), newGrade : ReplaceAbs(String(elem.text()), replace), PL : $(this).parents().find("input#idPL").val()});
-                });
-
-                console.log(grades);
-                console.log("Студент: "+idStudent+" Преподаватель: "+idPrepod +" Предмет: "+idSubject);
-
-
-                $.ajax({
-                    type:'get',
-                    url:'d.php',
-                    data:{
-                        'idStudent': idStudent,
-                        'idPrepod':idPrepod,
-                        'idSubject':idSubject,
-                        'menuactiv': "repAbsenteeisms",
-                        'arrGrade': grades
-                    },
-                    success:function (st) {
-                        if (st=="Access is denied!"){
-                            alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
-                        }
-                        else if (st=="No access rights!"){
-                            alert("Не достаточно прав!");
-                        }
-                        else{
-                            alert("Успешно произведена замена записей: \n      -По дисциплине: "+lessonTitle+";\n      -В количестве: "+countAbs+";");
-                            window.location.reload();
-                        }
-                    },
-                    error: function () {
-                        alert("Произошла ошибка при передаче данных");
-
-                    }
-                });
-
-                edit_dialog.dialog("close");
-            }else {
-                alert("Для продолжения необходимо заполнить поле ввода!");
-            }
-        });
-
-        $("#close").click(function () {
-            edit_dialog.dialog("close");
-        });
-
-
-        //Если клик по выделенной ячейке отменить выделение и наоборот
-        $('div').delegate(".available_grade", "click", function () {
-            if ($(this).hasClass("selected")) {
-                $(this).removeClass("selected");
-                // grades.splice(0,1);
-            }
-            else {
-                $(this).addClass("selected");
-                // grades.push({id:8, val:'Нб.у.'});
-            }
-        });
-
-        //Кнопки выделить Все и отменить Все
-        $('div').delegate("#selAll", "click", function () {
-            $(this).parents().children(".available_grade").addClass("selected");
-        });
-        $('div').delegate("#canselSelAll", "click", function () {
-            $(this).parents().children(".available_grade").removeClass("selected");
-        });
-
-        $("b.tool").click(function () {
-            var text = $(this).text();
-            $("#inp_0").val(text);
-        });
-
-        $(".inp_cell:text").keydown(function (event) {
-            if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
-                $(this).val("");
-            }
-        });
-
-
+    //Если клик по выделенной ячейке отменить выделение и наоборот
+    $('div').delegate(".available_grade", "click", function () {
+        if ($(this).hasClass("selected")) {
+            $(this).removeClass("selected");
+        }
+        else {
+            $(this).addClass("selected");
+        }
     });
+
+});
+
+$(function () {
+    var edit_dialog, edit_form;
+
+    //Форма замены оценок
+    edit_dialog = $("#form-update").dialog({
+        resizable: false,
+        autoOpen: false,
+        height: 'auto',
+        width: 240,
+        modal: true
+    });
+    edit_form = edit_dialog.find("form").on("submit", function (event) {
+        event.preventDefault();
+    });
+
+
+    $("#updateAbs").click(function () {
+        var replace = $("#inp_0").val();
+        if (replace != "") {
+            grades.length = 0;
+            $('div.selected').each(function () {
+                var elem = $(this).find('.Otmetka');
+                countAbs = grades.length + 1;
+                grades.push({0: elem.attr("data-zapis"), 1: ReplaceAbs(String(elem.text()), replace)});
+            });
+            console.log(grades);
+
+            // $.ajax({
+            //     type: 'get',
+            //     url: 'd.php',
+            //     data: {
+            //         'idStudent': idStudent,
+            //         'menuactiv': "repAbsenteeisms",
+            //         'arrGrade': grades,
+            //         'ajaxTrue': "1"
+            //     },
+            //     success: function (st) {
+            //         if (st == "Access is denied!") {
+            //             alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
+            //         }
+            //         else if (st == "No access rights!") {
+            //             alert("Не достаточно прав!");
+            //         }
+            //         else if (st == "No") {
+            //             alert("Ой, что-то пошло не так!");
+            //         }
+            //         else {
+            //             alert("Успешно произведена замена записей: \n       Дисциплина: " + lessonTitle + "\n       Количество: " + countAbs);
+            //             window.location.reload();
+            //         }
+            //     },
+            //     error: function () {
+            //         alert("Произошла ошибка при передаче данных");
+            //
+            //     }
+            // });
+
+            edit_dialog.dialog("close");
+        } else {
+            alert("Для продолжения необходимо заполнить поле ввода!");
+        }
+    });
+
+    $("#close").click(function () {
+        edit_dialog.dialog("close");
+    });
+
+    //Кнопки выделить Все и отменить Все
+    $('div').delegate("#selAll", "click", function () {
+        $('div.available_grade').each(function () {
+            //alert($(this).parents().html());
+            var curObj = $(this).find(".Otmetka").text();
+            console.log(curObj);
+            var isSel=0;
+            isSel= AvailableAbs(curObj);
+            (isSel != 1) ? $(this).addClass("selected") : "";
+        });
+    });
+    $('div').delegate("#canselSelAll", "click", function () {
+        //$(this).parents().children(".available_grade").removeClass("selected");
+        $("div.available_grade").each(function () { //удаляю выделенные Н в скрытых блоках(предмет)
+            $(this).removeClass("selected");
+        });
+    });
+
+    $("b.tool").click(function () {
+        var text = $(this).text();
+        $("#inp_0").val(text);
+    });
+
+    $(".inp_cell:text").keydown(function (event) {
+        if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
+            $(this).val("");
+        }
+    });
+
+    $('div').delegate(".replaceAbs", "click", function () {
+        var countSelBlock = $("div.selected").length;
+        if (countSelBlock != 0) {
+            edit_dialog.dialog("open");
+            edit_form[0].reset();
+            lessonTitle = $(this).parents().parents().children("span.shortText").html();
+            edit_dialog.dialog({title: lessonTitle});
+        } else {
+            alert("Вы не выбрали пропуски, которые желаете заменить!");
+        }
+    });
+
 });
 
 //функция сделать видимыми только где есть прогул
 function Available(grade) {
     var c_gr = grade.split("/");
     for (var i = 0; i < c_gr.length; i++) {
-        if ((absenteeisms.indexOf(c_gr[i]) != -1) || (absenteeisms_with_cause.indexOf(c_gr[i])!=-1)) {
+        if ((absenteeisms.indexOf(c_gr[i]) != -1) || (absenteeisms_with_cause.indexOf(c_gr[i]) != -1)) {
             return 1;
         }
-        else {
-            return 0;
-        }
     }
-
 }
 
-function ReplaceAbs(value,sub) {
+//функция сделать видимыми только где есть прогул
+function AvailableAbs(grade) {
+    var c_gr = grade.split("/");
+    for (var i = 0; i < c_gr.length; i++) {
+        if ((absenteeisms_with_cause.indexOf(c_gr[i]) != -1)) {
+            return 1;
+        }
+    }
+}
+
+function ReplaceAbs(value, sub) {
     var res = "";
     var mas = value.split("/");
     for (i = 0; i < mas.length; i++) {
-        if((absenteeisms.indexOf(mas[i])!=-1) || (absenteeisms_with_cause.indexOf(mas[i])!=-1)){
-            mas[i]=sub;
-            // console.log(mas[i]);
+        if ((absenteeisms.indexOf(mas[i]) != -1) || (absenteeisms_with_cause.indexOf(mas[i]) != -1)) {
+            mas[i] = sub;
         }
         res += MatchEncrypt(mas[i]);
     }
     return res;
-}
-
-
-function Decrypt(value) {
-    var res = "";
-    var mas = value.match(/.{2}/g);
-    for (i = 0; i < mas.length; i++) {
-        mas[i] = MatchDecrypt(mas[i]);
-    }
-    res = mas.join('/');
-    return res;
-}
-
-
-function MatchDecrypt(val) {
-    if (val >= 10 && val < 20) {
-        return Number(val) - 9;
-    }
-    else {
-        switch (val) {
-            case '20':
-                return 'Ну';
-                break;
-            case '21':
-                return 'Нб.у';
-                break;
-            case '22':
-                return 'Нб.о.';
-                break;
-            case '23':
-                return 'Зач.';
-                break;
-            case '24':
-                return 'Незач.';
-                break;
-            case '25':
-                return 'Недоп';
-                break;
-            case '26':
-                return 'Н';
-                break;
-            case '27':
-                return 'Отр.';
-                break;
-            case '28':
-                return 'Доп.';
-                break;
-
-            case '31':
-                return 'Н1ч.';
-                break;
-            case '32':
-                return 'Н2ч.';
-                break;
-            case '33':
-                return 'Н3ч.';
-                break;
-            case '34':
-                return 'Н4ч.';
-                break;
-            case '35':
-                return 'Н5ч.';
-                break;
-            case '36':
-                return 'Н6ч.';
-                break;
-
-        }
-    }
 }
 
 

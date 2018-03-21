@@ -29,7 +29,8 @@
                     url: 'view.php',
                     data: {
                         'idStudent': idStudent,
-                        'idSubject': idSubject
+                        'idSubject': idSubject,
+                        'ajaxTrue':"1"
                     },
                     success: function (response) {
                         obj_this_contentGrade.html(response);

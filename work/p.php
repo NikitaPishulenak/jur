@@ -101,8 +101,13 @@ function addLessonStudent()
     include_once 'configMain.php';
     $dt = explode(".", $_GET['dateLes']);
     if(is_numeric($_GET['idLessons']) && is_numeric($_GET['idStudent']) && is_numeric($_GET['PL']) && is_numeric($_GET['PKE']) && is_numeric($_GET['grades']) && is_numeric($_SESSION['SesVar']['FIO'][0]) && is_numeric($_GET['idLess'])){
-        mysqli_query($dbMain, "INSERT INTO rating (idLessons,idStud,PL,PKE,DateO,TimeO,RatingO,idEmployess,idLesson) VALUES (".$_GET['idLessons'].",".$_GET['idStudent'].",".$_GET['PL'].",".$_GET['PKE'].",'".$dt[2]."-".$dt[1]."-".$dt[0]."',CURTIME(),".$_GET['grades'].",".$_SESSION['SesVar']['FIO'][0].",".$_GET['idLess'].")");
-        echo mysqli_insert_id($dbMain);
+        $res = mysqli_query($dbMain, "SELECT 1 FROM rating WHERE idLessons=".$_GET['idLessons']." AND idStud=".$_GET['idStudent']." AND PL=".$_GET['PL']." AND PKE=".$_GET['PL']." AND idLesson=".$_GET['idLess']);        
+        if (!mysqli_num_rows($res)) {
+           mysqli_query($dbMain, "INSERT INTO rating (idLessons,idStud,PL,PKE,DateO,TimeO,RatingO,idEmployess,idLesson) VALUES (".$_GET['idLessons'].",".$_GET['idStudent'].",".$_GET['PL'].",".$_GET['PKE'].",'".$dt[2]."-".$dt[1]."-".$dt[0]."',CURTIME(),".$_GET['grades'].",".$_SESSION['SesVar']['FIO'][0].",".$_GET['idLess'].")");
+           echo mysqli_insert_id($dbMain);
+        } else {
+           echo "No";
+        }
     } else {
         echo "No";
     }
@@ -136,7 +141,7 @@ function GroupViewL()
 
     $retVal .= "<h3><a href='p.php'>" . $_GET['nPredmet'] . "</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
     $retVal .= "<a href='p.php?menuactiv=goF&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idKaf=".$_SESSION['SesVar']['Prepod'][2]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."'>".$_GET['nF']."</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal .= "Группа № " . $_GET['nGroup'] . " (<a href='p.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Prepod'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $_GET['idGroup'] . "&PL=0&nPredmet=" . $_GET['nPredmet'] . "&nF=" . $_GET['nF'] . "&nGroup=" . $_GET['nGroup'] . "'>Практическое</a> / ЛЕКЦИЯ)</h3><hr>";
+    $retVal .= "Группа № ".$_GET['nGroup']." (<a href='p.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idKaf=".$_SESSION['SesVar']['Prepod'][2]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$_GET['idGroup']."&PL=0&nPredmet=".$_GET['nPredmet']."&nF=".$_GET['nF']."&nGroup=".$_GET['nGroup']."&IdCaptain=".$_GET['IdCaptain']."'>Практическое</a> / ЛЕКЦИЯ)</h3><hr>";
 
 
     $retVal .= "
@@ -156,7 +161,11 @@ function GroupViewL()
             $arrStud = Array();
             $i = 0;
             while ($arrS = mssql_fetch_row($result)) {
-                $preStud .= "<div class='fio_student' data-idStudent='" . $arrS[0] . "'>" . ($i + 1) . ". " . $arrS[1] . "</div>\n";
+                if($arrS[0] == $_GET['IdCaptain']){
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."' title='Капитан шлюпки'>".($i + 1).". <strong>".$arrS[1]."</strong></div>\n";
+                } else {
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."'>".($i + 1).". ". $arrS[1]."</div>\n";
+                }
                 $arrStud[$i] = $arrS[0];
                 if (!$i) {
                     $sqlStud = "idStud=" . $arrS[0] . "";
@@ -219,7 +228,11 @@ function GroupViewL()
             $preStud = "";
             $i = 1;
             while ($arrStud = mssql_fetch_row($result)) {
-                $preStud .= "<div class='fio_student' data-idStudent='" . $arrStud[0] . "'>" . $i . ". " . $arrStud[1] . "</div>\n";
+                if($arrStud[0] == $_GET['IdCaptain']){
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."' title='Капитан шлюпки'>".$i.". <strong>".$arrStud[1]."</strong></div>\n";
+                } else {
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."'>".$i.". ".$arrStud[1]."</div>\n";
+                }
                 $i++;
             }
             $retVal .= StudentViewL($preStud);
@@ -247,7 +260,7 @@ function GroupViewP()
 
     $retVal .= "<h3><a href='p.php'>".$_GET['nPredmet']."</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
     $retVal .= "<a href='p.php?menuactiv=goF&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idKaf=".$_SESSION['SesVar']['Prepod'][2]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."'>".$_GET['nF']."</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal .= "Группа № " . $_GET['nGroup'] . " (ПРАКТИЧЕСКОЕ / <a href='p.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Prepod'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $_GET['idGroup'] . "&PL=1&nPredmet=" . $_GET['nPredmet'] . "&nF=" . $_GET['nF'] . "&nGroup=" . $_GET['nGroup'] . "'>Лекция</a>)</h3><hr>";
+    $retVal .= "Группа № ".$_GET['nGroup']." (ПРАКТИЧЕСКОЕ / <a href='p.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idKaf=".$_SESSION['SesVar']['Prepod'][2]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$_GET['idGroup']."&PL=1&nPredmet=".$_GET['nPredmet']."&nF=".$_GET['nF']."&nGroup=".$_GET['nGroup']."&IdCaptain=".$_GET['IdCaptain']."'>Лекция</a>)</h3><hr>";
 
 
     $retVal .= "
@@ -267,12 +280,16 @@ function GroupViewP()
             $arrStud = Array();
             $i = 0;
             while ($arrS = mssql_fetch_row($result)) {
-                $preStud .= "<div class='fio_student' data-idStudent='" . $arrS[0] . "'>" . ($i + 1) . ". " . $arrS[1] . "</div>\n";
+                if($arrS[0] == $_GET['IdCaptain']){
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."' title='Капитан шлюпки'>".($i + 1).". <strong>".$arrS[1]."</strong></div>\n";
+                } else {
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."'>".($i + 1).". ".$arrS[1]."</div>\n";
+                }
                 $arrStud[$i] = $arrS[0];
                 if (!$i) {
-                    $sqlStud = "idStud=" . $arrS[0] . "";
+                    $sqlStud = "idStud=".$arrS[0]."";
                 } else {
-                    $sqlStud .= " OR idStud=" . $arrS[0] . "";
+                    $sqlStud .= " OR idStud=".$arrS[0]."";
                 }
                 $i++;
             }
@@ -330,7 +347,11 @@ function GroupViewP()
             $preStud = "";
             $i = 1;
             while ($arrStud = mssql_fetch_row($result)) {
-                $preStud .= "<div class='fio_student' data-idStudent='" . $arrStud[0] . "'>" . $i . ". " . $arrStud[1] . "</div>\n";
+                if($arrStud[0] == $_GET['IdCaptain']){
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."' title='Капитан шлюпки'>".$i.". <strong>".$arrStud[1]."</strong></div>\n";
+                } else {
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."'>".$i.". ".$arrStud[1]."</div>\n";
+                }
                 $i++;
             }
             $retVal .= StudentView($preStud);
@@ -481,15 +502,15 @@ function Fakultet()
       <div class='DialogP'>
       <div class='titleBox'><H2>Группы</H2></div>
       ";
-            $result = mssql_query("SELECT IdGroup, Name, IIF(IdF != ".$_GET['idF'].", 1, 0) FROM dbo.Groups WHERE ".$sqlSO." ORDER BY Name, IdF", $dbStud);
+            $result = mssql_query("SELECT IdGroup, Name, IIF(IdF != ".$_GET['idF'].", 1, 0), IIF(IdCaptain!=null, IdCaptain, 0) FROM dbo.Groups WHERE ".$sqlSO." ORDER BY Name, IdF", $dbStud);
             if (mssql_num_rows($result) >= 1) {
                 $preChar = "";
                 while ($arr = mssql_fetch_row($result)) {
                     if ($preChar != substr($arr[1], 0, 2)) $retVal .= "<div class='HRnext'></div>";
                     $preChar = substr($arr[1], 0, 2);
                     $retVal .= "<div class='DialogGr'><strong>" . $arr[1] . "</strong>".($arr[2] ? "<div class='Inostr' title='Группа иностранных учащихся'>и</div>" : "")."<div class='GroupPL'>";
-                    $retVal .= "<a href='p.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Prepod'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $arr[0] . "&PL=0&nPredmet=" . $Pre . "&nF=" . $idName . "&nGroup=" . $arr[1] . "'>Практ.</a>&nbsp;&nbsp;&nbsp;";
-                    $retVal .= "<a href='p.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Prepod'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $arr[0] . "&PL=1&nPredmet=" . $Pre . "&nF=" . $idName . "&nGroup=" . $arr[1] . "'>Лекция</a>";
+                    $retVal .= "<a href='p.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Prepod'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $arr[0] . "&PL=0&nPredmet=" . $Pre . "&nF=" . $idName . "&nGroup=" . $arr[1] . "&IdCaptain=".$arr[3]."'>Практ.</a>&nbsp;&nbsp;&nbsp;";
+                    $retVal .= "<a href='p.php?menuactiv=goG&idPrepod=" . $_SESSION['SesVar']['FIO'][0] . "&idKaf=" . $_SESSION['SesVar']['Prepod'][2] . "&idPredmet=" . $_GET['idPredmet'] . "&idF=" . $_GET['idF'] . "&idGroup=" . $arr[0] . "&PL=1&nPredmet=" . $Pre . "&nF=" . $idName . "&nGroup=" . $arr[1] . "&IdCaptain=".$arr[3]."'>Лекция</a>";
                     $retVal .= "</div></div></div>\n";
                 }
             }
@@ -553,8 +574,8 @@ function HeaderFooter($content, $title, $vC = '')
         <meta charset="windows-1251">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
-        <link rel="stylesheet" href="mystyle.css<?php echo $vC; ?>">
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/online.js"></script>
     </head>
@@ -586,8 +607,8 @@ function HeaderFooterGroup($content, $title, $vC = '', $vS = '')
         <meta charset="windows-1251">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
-        <link rel="stylesheet" href="mystyle.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="scripts/jquery-ui.css">
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/jquery-ui.js"></script>
@@ -625,8 +646,8 @@ function HeaderFooterGroupL($content, $title, $vC = '', $vS = '')
         <meta charset="windows-1251">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
-        <link rel="stylesheet" href="mystyle.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="scripts/jquery-ui.css">
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/jquery-ui.js"></script>

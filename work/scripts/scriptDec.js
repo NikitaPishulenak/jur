@@ -2,7 +2,7 @@
 $(function () {
     $("div.grade").each(function () {
         if ($(this).text() != "") {
-            $(this).text(Decrypt($(this).text()));
+            $(this).html(Decrypt($(this).text()));
         }
     });
 });
@@ -174,7 +174,7 @@ $(function () {
         bit3 = (bit3 == "") ? "" : "/" + bit3;
         var cur_res = bit1 + bit2 + bit3;
         coding = Encrypt(cur_res);
-        elem.text(cur_res);
+        elem.html(lowIndex(cur_res));
         smallText(elem);
 
         if (id_Zapis == 0 && myStudentZapis[id_Less + 'Zapis' + student_id] == 0) {

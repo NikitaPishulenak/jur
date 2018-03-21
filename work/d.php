@@ -76,18 +76,18 @@ if(isset($_GET['menuactiv'])){
 function edtLessonStudentUP(){
     include_once 'configMain.php';
 
-    if(is_numeric($_POST['idStudent'])){
-        $countSt = count($_POST['arrGrade']);
+    if(is_numeric($_GET['idStudent'])){
+        $countSt = count($_GET['arrGrade']);
         if($countSt>=1){
             for($iS=0; $iS<=($countSt-1); $iS++){
-                $resTime = mysqli_query($dbMain, "SELECT TIMESTAMPDIFF(MINUTE, CONCAT(DateO, ' ', TimeO), NOW()), idLessons, idLesson, DateO, TimeO, RatingO, idEmployess FROM rating WHERE del=0 AND id=".$_POST['arrGrade'][$iS][0]." AND idStud=".$_POST['idStudent']);
+                $resTime = mysqli_query($dbMain, "SELECT TIMESTAMPDIFF(MINUTE, CONCAT(DateO, ' ', TimeO), NOW()), idLessons, idLesson, DateO, TimeO, RatingO, idEmployess FROM rating WHERE del=0 AND id=".$_GET['arrGrade'][$iS][0]." AND idStud=".$_GET['idStudent']);
                 if (mysqli_num_rows($resTime) >= 1) {
                     $arr = mysqli_fetch_row($resTime);
                     if($arr[6]!=$_SESSION['SesVar']['FIO'][0] || $arr[0] > 10){
-                        mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (".$_POST['arrGrade'][$iS][0].",".$arr[1].",".$arr[2].",".$_POST['idStudent'].",'".$arr[3]."','".$arr[4]."',".$arr[5].",".$arr[6].")");
-                        mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_POST['arrGrade'][$iS][1].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_POST['arrGrade'][$iS][0]." AND idStud=".$_POST['idStudent']);
+                        mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (".$_GET['arrGrade'][$iS][0].",".$arr[1].",".$arr[2].",".$_GET['idStudent'].",'".$arr[3]."','".$arr[4]."',".$arr[5].",".$arr[6].")");
+                        mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_GET['arrGrade'][$iS][1].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_GET['arrGrade'][$iS][0]." AND idStud=".$_GET['idStudent']);
                     }else{
-                        mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_POST['arrGrade'][$iS][1].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_POST['arrGrade'][$iS][0]." AND idStud=".$_POST['idStudent']);
+                        mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_GET['arrGrade'][$iS][1].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_GET['arrGrade'][$iS][0]." AND idStud=".$_GET['idStudent']);
                     }
                     mysqli_free_result($resTime);
                 }
@@ -637,6 +637,7 @@ function HeaderFooterSearch($content,$title,$vC='',$vS=''){
         <meta charset="windows-1251">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="scripts/jquery-ui.css">
         <script src="scripts/jquery-3.2.1.min.js"></script>
@@ -662,9 +663,8 @@ function HeaderFooterSearch($content,$title,$vC='',$vS=''){
             <fieldset>
                 <div class='panel'>
                     <b id='1' class='tool'><b>Í<sub>ó</sub></b></b><span class='space'></span>
-                    <b id='2' class='tool'><b>Í<sub>á.ó</sub></b></b><span class='space'></span>
-                    <b id='3' class='tool'><b>Í<sub>á.î.</sub></b></b>
-
+                    <b id='3' class='tool'><b>Í<sub>á.î.</sub></b></b><span class='space'></span>
+                    <b id='2' class='tool'><b>Í<sub>á.ó</sub></b></b>
                     <br><br>
 
                     <input class='inp_cell' id='inp_0' type=text maxlength='0'
@@ -693,6 +693,7 @@ function HeaderFooter($content,$title,$vC='',$vS=''){
         <meta charset="windows-1251">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/online.js"></script>
@@ -721,6 +722,7 @@ function HeaderFooterGroup($content,$title,$vC='',$vS=''){
         <meta charset="windows-1251">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="scripts/jquery-ui.css">
         <script src="scripts/jquery-3.2.1.min.js"></script>
@@ -755,6 +757,7 @@ function HeaderFooterGroupL($content,$title,$vC='',$vS=''){
         <meta charset="windows-1251">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="scripts/jquery-ui.css">
         <script src="scripts/jquery-3.2.1.min.js"></script>
@@ -790,10 +793,9 @@ function StudentView($content,$contentO=''){
             <div class='panel'>
                     <b id='1' class='tool'><b>Í<sub>ó</sub></b></b>
                     <span class='space'></span>
-                    <b id='2' class='tool'><b>Í<sub>á.ó</sub></b></b>
-                    <span class='space'></span>
                     <b id='3' class='tool'><b>Í<sub>á.î.</sub></b></b>
-
+                    <span class='space'></span>
+                    <b id='2' class='tool'><b>Í<sub>á.ó</sub></b></b>
                 <br><br>
 
                 <input class='inp_cell' id=\"inp_0\" type=text maxlength='6' autocomplete='off'
@@ -844,10 +846,10 @@ function StudentViewL($content,$contentO=''){
             <div class='panel'>
                 <b id='1' class='tool'><b>Í<sub>ó</sub></b></b>
                 <span class='space'></span>
-                <b id='2' class='tool'><b>Í<sub>á.ó</sub></b></b>
-                <span class='space'></span>
                 <b id='3' class='tool'><b>Í<sub>á.î.</sub></b></b>
-
+                <span class='space'></span>
+                <b id='2' class='tool'><b>Í<sub>á.ó</sub></b></b>
+ 
                 <br><br>
 
 

@@ -5,55 +5,60 @@ session_start();
 ini_set("display_errors", 1);
 
 if (!isset($_SESSION['SesStud']['Auth']) || $_SESSION['SesStud']['Auth'] !== true) {
-   echo "<div class='Not'>Время просмотра истекло!</div>";
-   exit;
+    if(isset($_GET['ajaxTrue']) && $_GET['ajaxTrue']){
+        echo "<div class='Not'>Время просмотра истекло!</div>";
+        exit;
+    } else {
+        header('Location: index.php?closet=Время сессии истекло!');
+        exit;
+    }
 }
 
 
 if(isset($_GET['idSubject']) && is_numeric($_GET['idSubject']) && isset($_GET['idStudent']) && is_numeric($_GET['idStudent'])){
-   $_GET['idSubject'] = substr($_GET['idSubject'],0,4);
-   $_GET['idStudent'] = substr($_GET['idStudent'],0,6);
-   GroupViewP($_GET['idSubject'], $_GET['idStudent']);
+    $_GET['idSubject'] = substr($_GET['idSubject'],0,4);
+    $_GET['idStudent'] = substr($_GET['idStudent'],0,6);
+    GroupViewP($_GET['idSubject'], $_GET['idStudent']);
 }else{
-   MainF();
+    MainF();
 }
 
 
 function GroupViewP($idSu, $idSt){
-   include_once 'configMain.php';
+    include_once 'configMain.php';
 
-   $resultS = mysqli_query($dbMain, "SELECT DATE_FORMAT(B.LDate,'%e.%m.%Y'), A.RatingO, A.PL, A.PKE FROM rating A LEFT JOIN lesson B ON (B.id=A.idLesson) WHERE A.idStud=".$idSt." AND A.idLessons=".$idSu." AND A.del=0 ORDER BY A.PL,B.LDate");
-   if(mysqli_num_rows($resultS)>=1){
-      $retVal="";
-      $trueS=0;
-      while($arrSS = mysqli_fetch_row($resultS)){
+    $resultS = mysqli_query($dbMain, "SELECT DATE_FORMAT(B.LDate,'%e.%m.%Y'), A.RatingO, A.PL, A.PKE FROM rating A LEFT JOIN lesson B ON (B.id=A.idLesson) WHERE A.idStud=".$idSt." AND A.idLessons=".$idSu." AND A.del=0 ORDER BY A.PL,B.LDate");
+    if(mysqli_num_rows($resultS)>=1){
+        $retVal="";
+        $trueP=0; $trueL=0;
+        while($arrSS = mysqli_fetch_row($resultS)){
 
-         if(!$arrSS[2] && !$trueS){
-            $trueS = 1;
-            $retVal.="<div class='titleO'>Практические</div>\n";
-         } else if ($arrSS[2] && $trueS){
-            $trueS = 0;
-            $retVal.="<div class='clr'></div><div class='titleO'>Лекции</div>\n";
-         }
-         switch($arrSS[3]){
-            case 1:
-               $retVal.="<div class='Oc Koll' title='Коллоквиум / История болезни'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka'>".$arrSS[1]."</div></div>\n";   
-               break;
-            case 2:
-               $retVal.="<div class='Oc Exm' title='Аттестация'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka'>".$arrSS[1]."</div></div>\n";
-               break;
-            default:
-               $retVal.="<div class='Oc'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka'>".$arrSS[1]."</div></div>\n";
-               break;
-         }
- 
-      }
-      mysqli_free_result($resultS);
-      echo $retVal;
-      unset($retVal);
-   } else {
-      echo "<div class='Not'>По данной дисциплине отметок ещё нет!</div>";
-   }
+            if(!$arrSS[2] && !$trueP){
+                $trueP = 1;
+                $retVal.="<div class='titleO'>Практические</div>\n";
+            } else if ($arrSS[2] && !$trueL){
+                $trueL = 1;
+                $retVal.="<div class='clr'></div><div class='titleO'>Лекции</div>\n";
+            }
+            switch($arrSS[3]){
+                case 1:
+                    $retVal.="<div class='Oc Koll' title='Коллоквиум / История болезни'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka'>".$arrSS[1]."</div></div>\n";
+                    break;
+                case 2:
+                    $retVal.="<div class='Oc Exm' title='Аттестация'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka'>".$arrSS[1]."</div></div>\n";
+                    break;
+                default:
+                    $retVal.="<div class='Oc'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka'>".$arrSS[1]."</div></div>\n";
+                    break;
+            }
+
+        }
+        mysqli_free_result($resultS);
+        echo $retVal;
+        unset($retVal);
+    } else {
+        echo "<div class='Not'>По данной дисциплине отметок ещё нет!</div>";
+    }
 }
 
 
@@ -91,7 +96,6 @@ function HeaderFooter($content,$vC='',$vS=''){
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/demoscript.js<?php echo $vS; ?>"></script>
-        <script src="scripts/cellSelection.min.js"></script>
     </head>
     <body>
     <?php echo LevelView(); ?>
@@ -105,11 +109,12 @@ function HeaderFooter($content,$vC='',$vS=''){
 }
 
 function LevelView(){
-        return "
+    return "
 <div class='Exit'>
 <div class='Kvadrat OO'></div><div>Обычная отметка</div><div class='C'></div>
 <div class='Kvadrat OK'></div><div>Коллоквиум / История болезни</div><div class='C'></div>
 <div class='Kvadrat OE'></div><div>Аттестация (экзамен)</div><div class='C'></div>
+<a href='exit.php'><H2>Выход</H2></a>
 </div>
 <div class='C'></div>";
 }

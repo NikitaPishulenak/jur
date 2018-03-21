@@ -563,8 +563,8 @@ function HeaderFooter($content, $title, $vC = '')
         <meta charset="windows-1251">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
-        <link rel="stylesheet" href="mystyle.css<?php echo $vC; ?>">
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/online.js"></script>
     </head>
@@ -596,8 +596,8 @@ function HeaderFooterGroup($content, $title, $vC = '', $vS = '')
         <meta charset="windows-1251">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
-        <link rel="stylesheet" href="mystyle.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="scripts/jquery-ui.css">
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/jquery-ui.js"></script>
@@ -637,8 +637,8 @@ function HeaderFooterGroupL($content, $title, $vC = '', $vS = '')
         <meta charset="windows-1251">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
         <link rel="stylesheet" href="style.css<?php echo $vC; ?>">
-        <link rel="stylesheet" href="mystyle.css<?php echo $vC; ?>">
         <link rel="stylesheet" href="scripts/jquery-ui.css">
         <script src="scripts/jquery-3.2.1.min.js"></script>
         <script src="scripts/jquery-ui.js"></script>

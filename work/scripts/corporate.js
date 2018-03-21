@@ -5,6 +5,7 @@
     timeScroll = 2000;
 
 
+
     if ((path == "p.php") || (path == "z.php")) {
         $(".result_box").animate({scrollLeft: '10000px'}, timeScroll);
         $('div').delegate(".date_title", "mouseover", function () {
@@ -199,7 +200,7 @@ $(function (event) {
     }
 });
 
-absenteeisms = new Array("Н", "Н1ч.", "Н2ч.", "Н3ч.", "Н4ч.", "Н5ч.", "Н6ч.", "Н7ч.");
+absenteeisms = new Array("Н", "Н1", "Н2", "Н3", "Н4", "Н5", "Н6", "Н7", "Н1.5", "Н2.5", "Н3.5", "Н4.5", "Н5.5", "Н6.5");
 absenteeisms_with_cause = new Array("Ну", "Нб.у", "Нб.о.");
 other_symbols = new Array("Отр");
 
@@ -210,13 +211,20 @@ items_grade = [
 
         "<hr class='marg-line'>",
 
-        "<span id='2' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1ч.</sub></span></span><span class='space'></span>",
-        "<span id='3' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span><span class='space'></span>",
-        "<span id='4' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span><span class='space'></span>",
-        "<span id='5' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span><span class='space'></span>",
-        "<span id='6' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span><span class='space'></span>",
-        "<span id='7' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span><span class='space'></span>",
-        "<span id='8' class='tool' title='Пропуск занятия на 7 часов.'><span>Н<sub>7ч.</sub></span></span>"
+        "<span id='2' class='tool absent' title='Пропуск занятия на 1 час.'><span>Н<sub>1</sub></span></span><span class='space'></span>",
+        "<span id='3' class='tool absent' title='Пропуск занятия на 2 часа.'><span>Н<sub>2</sub></span></span><span class='space'></span>",
+        "<span id='4' class='tool absent' title='Пропуск занятия на 3 часа.'><span>Н<sub>3</sub></span></span><span class='space'></span>",
+        "<span id='5' class='tool absent' title='Пропуск занятия на 4 часа.'><span>Н<sub>4</sub></span></span><span class='space'></span>",
+        "<span id='6' class='tool absent' title='Пропуск занятия на 5 часов.'><span>Н<sub>5</sub></span></span><span class='space'></span>",
+        "<span id='7' class='tool absent' title='Пропуск занятия на 6 часов.'><span>Н<sub>6</sub></span></span><span class='space'></span>",
+        "<span id='8' class='tool absent' title='Пропуск занятия на 7 часов.'><span>Н<sub>7</sub></span></span>",
+        "<br><span class='space'></span><span class='space'></span><span class='space'></span>",
+        "<span id='9' class='tool absent' title='Пропуск занятия на 1,5 часа.'><span>Н<sub>1.5</sub></span></span><span class='space'></span>",
+        "<span id='10' class='tool absent' title='Пропуск занятия на 2,5 часа.'><span>Н<sub>2.5</sub></span></span><span class='space'></span>",
+        "<span id='11' class='tool absent' title='Пропуск занятия на 3,5 часа.'><span>Н<sub>3.5</sub></span></span><span class='space'></span>",
+        "<span id='12' class='tool absent' title='Пропуск занятия на 4,5 часа.'><span>Н<sub>4.5</sub></span></span><span class='space'></span>",
+        "<span id='13' class='tool absent' title='Пропуск занятия на 5,5 часов.'><span>Н<sub>5.5</sub></span></span><span class='space'></span>",
+        "<span id='14' class='tool absent' title='Пропуск занятия на 6,5 часов.'><span>Н<sub>6.5</sub></span></span><span class='space'></span>"
     ],
     [//colloquium
         "<b id='1' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b><span class='space'></span>",
@@ -224,13 +232,13 @@ items_grade = [
 
         "<hr class='marg-line'>",
 
-        "<span id='3' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1ч.</sub></span></span><span class='space'></span>",
-        "<span id='4' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span><span class='space'></span>",
-        "<span id='5' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span><span class='space'></span>",
-        "<span id='6' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span><span class='space'></span>",
-        "<span id='7' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span><span class='space'></span>",
-        "<span id='8' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span><span class='space'></span>",
-        "<span id='9' class='tool' title='Пропуск занятия на 7 часов.'><span>Н<sub>7ч.</sub></span></span>"
+        "<span id='3' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1</sub></span></span><span class='space'></span>",
+        "<span id='4' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2</sub></span></span><span class='space'></span>",
+        "<span id='5' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3</sub></span></span><span class='space'></span>",
+        "<span id='6' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4</sub></span></span><span class='space'></span>",
+        "<span id='7' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5</sub></span></span><span class='space'></span>",
+        "<span id='8' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6</sub></span></span><span class='space'></span>",
+        "<span id='9' class='tool' title='Пропуск занятия на 7 часов.'><span>Н<sub>7</sub></span></span>"
     ],
     [//exam
         "<b id='1' class='tool' title='Допуск к аттестации'><b>Доп.</b></b><span class='space'></span>",
@@ -348,6 +356,7 @@ function Decrypt(value) {
     return res;
 }
 
+
 function MatchEncrypt(val) {
 
     if (val >= 1 && val <= 10) {
@@ -383,26 +392,45 @@ function MatchEncrypt(val) {
                 return '28';
                 break;
 
-            case 'Н1ч.':
+            case 'Н1':
                 return '31';
                 break;
-            case 'Н2ч.':
+            case 'Н2':
                 return '32';
                 break;
-            case 'Н3ч.':
+            case 'Н3':
                 return '33';
                 break;
-            case 'Н4ч.':
+            case 'Н4':
                 return '34';
                 break;
-            case 'Н5ч.':
+            case 'Н5':
                 return '35';
                 break;
-            case 'Н6ч.':
+            case 'Н6':
                 return '36';
                 break;
-            case 'Н7ч.':
+            case 'Н7':
                 return '37';
+                break;
+
+            case 'Н1.5':
+                return '40';
+                break;
+            case 'Н2.5':
+                return '41';
+                break;
+            case 'Н3.5':
+                return '42';
+                break;
+            case 'Н4.5':
+                return '43';
+                break;
+            case 'Н5.5':
+                return '44';
+                break;
+            case 'Н6.5':
+                return '45';
                 break;
 
         }
@@ -417,53 +445,72 @@ function MatchDecrypt(val) {
     else {
         switch (val) {
             case '20':
-                return 'Ну';
+                return "Н<sub>у</sub>";
                 break;
             case '21':
-                return 'Нб.у';
+                return "Н<sub>б.у</sub>";
                 break;
             case '22':
-                return 'Нб.о.';
+                return "Н<sub>б.о.</sub>";
                 break;
             case '23':
-                return 'Зач.';
+                return "Зач.";
                 break;
             case '24':
-                return 'Незач.';
+                return "Незач.";
                 break;
             case '25':
-                return 'Недоп';
+                return "Недоп";
                 break;
             case '26':
-                return 'Н';
+                return "Н";
                 break;
             case '27':
-                return 'Отр.';
+                return "Отр.";
                 break;
             case '28':
-                return 'Доп.';
+                return "Доп.";
                 break;
 
             case '31':
-                return 'Н1ч.';
+                return "Н<sub>1</sub>";
                 break;
             case '32':
-                return 'Н2ч.';
+                return "Н<sub>2</sub>";
                 break;
             case '33':
-                return 'Н3ч.';
+                return "Н<sub>3</sub>";
                 break;
             case '34':
-                return 'Н4ч.';
+                return "Н<sub>4</sub>";
                 break;
             case '35':
-                return 'Н5ч.';
+                return "Н<sub>5</sub>";
                 break;
             case '36':
-                return 'Н6ч.';
+                return "Н<sub>6</sub>";
                 break;
             case '37':
-                return 'Н7ч.';
+                return "Н<sub>7</sub>";
+                break;
+
+            case '40':
+                return "Н<sub>1.5</sub>";
+                break;
+            case '41':
+                return "Н<sub>2.5</sub>";
+                break;
+            case '42':
+                return "Н<sub>3.5</sub>";
+                break;
+            case '43':
+                return "Н<sub>4.5</sub>";
+                break;
+            case '44':
+                return "Н<sub>5.5</sub>";
+                break;
+            case '45':
+                return "Н<sub>6.5</sub>";
                 break;
         }
     }
@@ -700,4 +747,21 @@ function generateAbs(idStudent) {
     var res = countAbsenteesm + "(" + countAbsRespect + ")";
     res = (countAbsenteesm == 0 && countAbsRespect == 0) ? "" : res;
     $('div.abs[data-idStudent="' + idStudent + '"]').html(res);
+}
+
+//функция преобразования записи к индексированному виду
+function lowIndex(str) {
+    var gr = str.split("/");
+    var res="";
+    for (i = 0; i < gr.length; i++) {
+        if ((absenteeisms.indexOf(gr[i]) != -1) || (absenteeisms_with_cause.indexOf(gr[i]) != -1)) {
+             var head=gr[i].substr(0,1);
+             var index=gr[i].slice(1);
+             gr[i]=head+"<sub>"+index+"</sub>";
+             console.log(gr[i]);
+        }
+    }
+    res = gr.join('/');
+    return res;
+
 }

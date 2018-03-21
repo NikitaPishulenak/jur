@@ -150,6 +150,7 @@ function create_new_grade(e) {
 
     edit_dialog.dialog("open");
     edit_form[0].reset();
+    $("div.more").hide(1);
     var data_studentID = e.attr('data-idStudent');
     var fio_stud = $('div.fio_student[data-idStudent="' + data_studentID + '"]').text();
     edit_dialog.dialog({title: fio_stud});
@@ -166,6 +167,10 @@ function create_new_grade(e) {
     }
     // $('input#inp_0').select();
     // $('input#inp_0').focus();
+
+    $("span.moreBtn").click(function () {
+        $("div.more").toggle(600);
+    });
 
     $(".inp_cell:text").focus(function () {
         inp_id = $(this).attr('id');
