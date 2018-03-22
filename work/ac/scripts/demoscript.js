@@ -91,55 +91,73 @@ function MatchDecrypt(val) {
     else {
         switch (val) {
             case '20':
-                return 'Ну';
+                return "Н<sub>у</sub>";
                 break;
             case '21':
-                return 'Нб.у';
+                return "Н<sub>б.у</sub>";
                 break;
             case '22':
-                return 'Нб.о.';
+                return "Н<sub>б.о.</sub>";
                 break;
             case '23':
-                return 'Зач.';
+                return "Зач.";
                 break;
             case '24':
-                return 'Незач.';
+                return "Незач.";
                 break;
             case '25':
-                return 'Недоп';
+                return "Недоп";
                 break;
             case '26':
-                return 'Н';
+                return "Н";
                 break;
             case '27':
-                return 'Отр.';
+                return "Отр.";
                 break;
             case '28':
-                return 'Доп.';
+                return "Доп.";
                 break;
 
             case '31':
-                return 'Н1ч.';
+                return "Н<sub>1</sub>";
                 break;
             case '32':
-                return 'Н2ч.';
+                return "Н<sub>2</sub>";
                 break;
             case '33':
-                return 'Н3ч.';
+                return "Н<sub>3</sub>";
                 break;
             case '34':
-                return 'Н4ч.';
+                return "Н<sub>4</sub>";
                 break;
             case '35':
-                return 'Н5ч.';
+                return "Н<sub>5</sub>";
                 break;
             case '36':
-                return 'Н6ч.';
+                return "Н<sub>6</sub>";
                 break;
             case '37':
-                return 'Н7ч.';
+                return "Н<sub>7</sub>";
                 break;
 
+            case '40':
+                return "Н<sub>1.5</sub>";
+                break;
+            case '41':
+                return "Н<sub>2.5</sub>";
+                break;
+            case '42':
+                return "Н<sub>3.5</sub>";
+                break;
+            case '43':
+                return "Н<sub>4.5</sub>";
+                break;
+            case '44':
+                return "Н<sub>5.5</sub>";
+                break;
+            case '45':
+                return "Н<sub>6.5</sub>";
+                break;
         }
     }
 }

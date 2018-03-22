@@ -5,9 +5,10 @@ session_start();
 ini_set("display_errors", 1);
 
 if(!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth']!==true){
-    echo "Access is denied!";
+    header('Location: index.php?closet=Время сессии истекло!');
     exit;
 }
+
 include_once 'configStudent.php';
 include_once 'configMain.php';
 
@@ -164,25 +165,44 @@ function MatchDecrypt($val)
                 break;
 
             case "31":
-                return "Н1ч.";
+                return "Н1";
                 break;
             case "32":
-                return "Н2ч.";
+                return "Н2";
                 break;
             case "33":
-                return "Н3ч.";
+                return "Н3";
                 break;
             case "34":
-                return "Н4ч.";
+                return "Н4";
                 break;
             case "35":
-                return "Н5ч.";
+                return "Н5";
                 break;
             case "36":
-                return "Н6ч.";
+                return "Н6";
                 break;
             case "37":
-                return "Н7ч.";
+                return "Н7";
+                break;
+
+            case "40":
+                return "Н1.5";
+                break;
+            case "41":
+                return "Н2.5";
+                break;
+            case "42":
+                return "Н3.5";
+                break;
+            case "43":
+                return "Н4.5";
+                break;
+            case "44":
+                return "Н5.5";
+                break;
+            case "45":
+                return "Н6.5";
                 break;
         }
     }

@@ -8,10 +8,12 @@
     $("div.DialogFakFak").click(function () {
         var obj_this_contentGrade = $(this).find(".content_grade");
         if (obj_this_contentGrade.is(':hidden')) {
+            grades = [];
             $(this).css("cursor", "default");
             obj_this_contentGrade.html("");
 
             if ($(".content_grade").is(':visible')) {
+                grades = [];
                 $(".CO").not($(this).find(".CO")).show();
                 $(".content_grade").not(obj_this_contentGrade).hide();
                 $(".fullText").not($(this).find(".fullText")).hide();
@@ -117,40 +119,40 @@ $(function () {
             grades.length = 0;
             $('div.selected').each(function () {
                 var elem = $(this).find('.Otmetka');
-                countAbs = grades.length + 1;
                 grades.push({0: elem.attr("data-zapis"), 1: ReplaceAbs(String(elem.text()), replace)});
             });
-            console.log(grades);
+            countAbs = grades.length;
+            //console.log(grades);
 
-            // $.ajax({
-            //     type: 'get',
-            //     url: 'd.php',
-            //     data: {
-            //         'idStudent': idStudent,
-            //         'menuactiv': "repAbsenteeisms",
-            //         'arrGrade': grades,
-            //         'ajaxTrue': "1"
-            //     },
-            //     success: function (st) {
-            //         if (st == "Access is denied!") {
-            //             alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
-            //         }
-            //         else if (st == "No access rights!") {
-            //             alert("Не достаточно прав!");
-            //         }
-            //         else if (st == "No") {
-            //             alert("Ой, что-то пошло не так!");
-            //         }
-            //         else {
-            //             alert("Успешно произведена замена записей: \n       Дисциплина: " + lessonTitle + "\n       Количество: " + countAbs);
-            //             window.location.reload();
-            //         }
-            //     },
-            //     error: function () {
-            //         alert("Произошла ошибка при передаче данных");
-            //
-            //     }
-            // });
+            $.ajax({
+                type: 'get',
+                url: 'd.php',
+                data: {
+                    'idStudent': idStudent,
+                    'menuactiv': "repAbsenteeisms",
+                    'arrGrade': grades,
+                    'ajaxTrue': "1"
+                },
+                success: function (st) {
+                    if (st == "Access is denied!") {
+                        alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
+                    }
+                    else if (st == "No access rights!") {
+                        alert("Не достаточно прав!");
+                    }
+                    else if (st == "No") {
+                        alert("Ой, что-то пошло не так!");
+                    }
+                    else {
+                        alert("Успешно произведена замена записей: \n       Дисциплина: " + lessonTitle + "\n       Количество: " + countAbs);
+                        window.location.reload();
+                    }
+                },
+                error: function () {
+                    alert("Произошла ошибка при передаче данных");
+
+                }
+            });
 
             edit_dialog.dialog("close");
         } else {
@@ -164,20 +166,18 @@ $(function () {
 
     //Кнопки выделить Все и отменить Все
     $('div').delegate("#selAll", "click", function () {
+        $(".content_grade").not($(this).parent().parent()).html("");
         $('div.available_grade').each(function () {
-            //alert($(this).parents().html());
-            var curObj = $(this).find(".Otmetka").text();
-            console.log(curObj);
+            var curObj=0;
+            curObj = $(this).find(".Otmetka").text();
             var isSel=0;
             isSel= AvailableAbs(curObj);
             (isSel != 1) ? $(this).addClass("selected") : "";
         });
     });
+
     $('div').delegate("#canselSelAll", "click", function () {
-        //$(this).parents().children(".available_grade").removeClass("selected");
-        $("div.available_grade").each(function () { //удаляю выделенные Н в скрытых блоках(предмет)
-            $(this).removeClass("selected");
-        });
+        $(this).parents().children(".available_grade").removeClass("selected");
     });
 
     $("b.tool").click(function () {
@@ -215,7 +215,7 @@ function Available(grade) {
     }
 }
 
-//функция сделать видимыми только где есть прогул
+//функция сделать видимыми только где есть прогул. Выделяет все Н, кроме Ну....
 function AvailableAbs(grade) {
     var c_gr = grade.split("/");
     for (var i = 0; i < c_gr.length; i++) {
