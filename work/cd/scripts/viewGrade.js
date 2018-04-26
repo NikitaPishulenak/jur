@@ -40,6 +40,9 @@
                         'ajaxTrue': "1",
                         'menuactiv': "OpenDetails"
                     },
+                    beforeSend:function () {
+                        obj_this_contentGrade.html("Загрузка...");
+                    },
                     success: function (response) {
                         obj_this_contentGrade.html(response);
                         $(function () {
@@ -146,6 +149,7 @@ $(function () {
                     else {
                         alert("Успешно произведена замена записей: \n       Дисциплина: " + lessonTitle + "\n       Количество: " + countAbs);
                         window.location.reload();
+                        $('body').addClass("loading");
                     }
                 },
                 error: function () {

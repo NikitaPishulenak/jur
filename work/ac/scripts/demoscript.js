@@ -32,6 +32,9 @@
                         'idSubject': idSubject,
                         'ajaxTrue':"1"
                     },
+                    beforeSend:function () {
+                        obj_this_contentGrade.html("Загрузка...");
+                    },
                     success: function (response) {
                         obj_this_contentGrade.html(response);
                         $(function () {

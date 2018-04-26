@@ -127,9 +127,10 @@ function editDate() {
 
 function create_new_grade(e) {
     edit_grade_flag = 0;
+    var curStatus=e.attr("data-Status");
     $("button#edit").removeAttr('disabled');
     $("button#close").removeAttr('disabled');
-    dat=$(this).parent().find('div.date_title').html();
+    dat=e.parent().find('div.date_title').html();
     student_id=e.attr('data-idStudent');
     id_Less=e.attr('data-idLes');
     id_Zapis=e.attr('data-zapis');
@@ -143,12 +144,30 @@ function create_new_grade(e) {
     cur_grade = e.text();
     elem = e;
     grades = cur_grade.split("/");
-    for (var i = 0; i < grades.length; i++) {
-        $("div.panel").find('input#inp_' + i).slideDown(1);
-        $("div.panel").find('input#inp_' + i).val(grades[i]);
+    switch (curStatus) {
+            case "0":
+                for (var i = 0; i < grades.length; i++) {
+                    $("#inp_" + i).removeAttr('disabled');
+                    $("div.panel").find('input#inp_' + i).slideDown(1);
+                    $("div.panel").find('input#inp_' + i).val(grades[i]);
+                }
+            break;
+
+            case "1":
+                for (var i = 0; i < grades.length; i++) {
+                    $("#inp_" + i).removeAttr('disabled');
+                    $("div.panel").find('input#inp_' + i).slideDown(1);
+                    $("div.panel").find('input#inp_' + i).val(grades[i]);
+                    if (absenteeisms_with_cause.indexOf(grades[i]) != -1) 
+                    {
+                        $("#inp_" + i).attr('disabled', 'disabled');
+                        $("#inp_" + i).blur();
+                    }
+                }
+            break;
     }
     $('input#inp_0').focus();
-    $('input#inp_0').select();
+    // $('input#inp_0').select();
     $(".inp_cell:text").focus(function () {
         inp_id = $(this).attr('id');
 
@@ -156,7 +175,7 @@ function create_new_grade(e) {
         $("b.tool, span.tool").on("touchstart", function (){
             //$("b.tool, span.tool").click(function () {
             var text = $(this).text();
-            $("#" + inp_id).val(text);
+            $("#" + inp_id+":enabled").val(text);
             $("#" + inp_id).blur();
         });
     });

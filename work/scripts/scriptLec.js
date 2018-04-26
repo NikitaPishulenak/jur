@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
@@ -89,6 +89,8 @@
 
 
     $('div').delegate(".grade", "dblclick", function () {
+        var curStatus=$(this).attr("data-Status");
+
         $("button#edit").removeAttr('disabled');
         $("button#close").removeAttr('disabled');
         dat=$(this).parent().find('div.date_title').html();
@@ -105,18 +107,38 @@
         cur_grade = $(this).text();
         elem = $(this);
         grades = cur_grade.split("/");
-        for (var i = 0; i < grades.length; i++) {
-            $("div.panel").find('input#inp_' + i).slideDown(1);
-            $("div.panel").find('input#inp_' + i).val(grades[i]);
-        }
+        
         $('input#inp_0').focus();
-        $('input#inp_0').select();
+        //$('input#inp_0').select();
+        //
+        switch (curStatus) {
+            case "0":
+                for (var i = 0; i < grades.length; i++) {
+                    $("#inp_" + i).removeAttr('disabled');
+                    $("div.panel").find('input#inp_' + i).slideDown(1);
+                    $("div.panel").find('input#inp_' + i).val(grades[i]);
+                }
+            break;
+
+            case "1":
+                for (var i = 0; i < grades.length; i++) {
+                    $("#inp_" + i).removeAttr('disabled');
+                    $("div.panel").find('input#inp_' + i).slideDown(1);
+                    $("div.panel").find('input#inp_' + i).val(grades[i]);
+                    if (absenteeisms_with_cause.indexOf(grades[i]) != -1) 
+                    {
+                        $("#inp_" + i).attr('disabled', 'disabled');
+                        $("#inp_" + i).blur();
+                    }
+                }
+            break;
+        }
         $(".inp_cell:text").focus(function () {
             inp_id = $(this).attr('id');
 
             $("b.tool, span.tool").click(function () {
                 var text = $(this).text();
-                $("#"+inp_id).val(text);
+                $("#"+inp_id+":enabled").val(text);
                 $("#"+inp_id).blur();
             });
         });

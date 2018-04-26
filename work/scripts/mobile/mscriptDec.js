@@ -40,6 +40,7 @@ edit_form = edit_dialog.find("form").on("submit", function (event) {
 
 function create_new_grade(e) {
     edit_grade_flag = 0;
+    var curStatus=e.attr("data-Status");
     $("button#edit").removeAttr('disabled');
     $("button#close").removeAttr('disabled');
     elem = e;
@@ -69,17 +70,28 @@ function create_new_grade(e) {
                 cur_grade = e.text();
 
                 grades = cur_grade.split("/");
-                for (var i = 0; i < grades.length; i++) {
-                    $("div.panel").find('input#inp_' + i).slideDown(1);
-                    $("div.panel").find('input#inp_' + i).val(grades[i]);
-                }
+                switch (curStatus) {
+                        case "0":
+                            for (var i = 0; i < grades.length; i++) {
+                                $("div.panel").find('input#inp_' + i).slideDown(1);
+                                $("div.panel").find('input#inp_' + i).val(grades[i]);
+                            }
+                        break;
+                        case "1": //тоже самое
+                            for (var i = 0; i < grades.length; i++) {
+                                $("div.panel").find('input#inp_' + i).slideDown(1);
+                                $("div.panel").find('input#inp_' + i).val(grades[i]);
+                            }
+                        break;
+                        
+                    }
                 inp_id=-1;
                 $(".inp_cell:text").focus(function () {
                     inp_id = $(this).attr('id');
 
                     $("b.tool").on("touchstart", function (){
                         var text = $(this).text();
-                        $("#"+inp_id).val(text);
+                        $("#"+inp_id+":enabled").val(text);
                         $("#"+inp_id).blur();
                     });
                 });

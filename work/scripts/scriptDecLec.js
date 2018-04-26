@@ -1,4 +1,4 @@
-﻿//Функция выделения серым цветом поля, где есть Н без причины
+//Функция выделения серым цветом поля, где есть Н без причины
 $(function () {
     $("div.grade").each(function () {
         if($(this).text()!=""){
@@ -54,6 +54,7 @@ $(function () {
 
 
     $('div').delegate(".grade", "dblclick", function () {
+        var curStatus=$(this).attr("data-Status");
         $("button#edit").removeAttr('disabled');
         $("button#close").removeAttr('disabled');
         elem=0;
@@ -84,17 +85,29 @@ $(function () {
                     cur_grade = $(this).text();
 
                     grades = cur_grade.split("/");
-                    for (var i = 0; i < grades.length; i++) {
-                        $("div.panel").find('input#inp_' + i).slideDown(1);
-                        $("div.panel").find('input#inp_' + i).val(grades[i]);
+                    switch (curStatus) {
+                        case "0":
+                            for (var i = 0; i < grades.length; i++) {
+                                $("div.panel").find('input#inp_' + i).slideDown(1);
+                                $("div.panel").find('input#inp_' + i).val(grades[i]);
+                            }
+                        break;
+
+                        case "1": //тоже самое
+                            for (var i = 0; i < grades.length; i++) {
+                                $("div.panel").find('input#inp_' + i).slideDown(1);
+                                $("div.panel").find('input#inp_' + i).val(grades[i]);
+                            }
+                        break;
                     }
+                    
                     inp_id=-1;
                     $(".inp_cell:text").focus(function () {
                         inp_id = $(this).attr('id');
 
                         $("b.tool").click(function () {
                             var text = $(this).text();
-                            $("#"+inp_id).val(text);
+                            $("#"+inp_id+":enabled").val(text);
                             $("#"+inp_id).blur();
                         });
                     });

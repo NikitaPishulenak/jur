@@ -203,6 +203,7 @@ $(function (event) {
 absenteeisms = new Array("Н", "Н1", "Н2", "Н3", "Н4", "Н5", "Н6", "Н7", "Н1.5", "Н2.5", "Н3.5", "Н4.5", "Н5.5", "Н6.5");
 absenteeisms_with_cause = new Array("Ну", "Нб.у", "Нб.о.");
 other_symbols = new Array("Отр");
+grades = new Array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
 //массив с первой строчкой кнопок (при выставлении оценок для роли препод и зав каф)
 items_grade = [
@@ -211,20 +212,20 @@ items_grade = [
 
         "<hr class='marg-line'>",
 
-        "<span id='2' class='tool absent' title='Пропуск занятия на 1 час.'><span>Н<sub>1</sub></span></span><span class='space'></span>",
-        "<span id='3' class='tool absent' title='Пропуск занятия на 2 часа.'><span>Н<sub>2</sub></span></span><span class='space'></span>",
-        "<span id='4' class='tool absent' title='Пропуск занятия на 3 часа.'><span>Н<sub>3</sub></span></span><span class='space'></span>",
-        "<span id='5' class='tool absent' title='Пропуск занятия на 4 часа.'><span>Н<sub>4</sub></span></span><span class='space'></span>",
-        "<span id='6' class='tool absent' title='Пропуск занятия на 5 часов.'><span>Н<sub>5</sub></span></span><span class='space'></span>",
-        "<span id='7' class='tool absent' title='Пропуск занятия на 6 часов.'><span>Н<sub>6</sub></span></span><span class='space'></span>",
-        "<span id='8' class='tool absent' title='Пропуск занятия на 7 часов.'><span>Н<sub>7</sub></span></span>",
+        "<span id='2' class='tool absent' title='Пропуск занятия 1 час.'><span>Н<sub>1</sub></span></span><span class='space'></span>",
+        "<span id='3' class='tool absent' title='Пропуск занятия 2 часа.'><span>Н<sub>2</sub></span></span><span class='space'></span>",
+        "<span id='4' class='tool absent' title='Пропуск занятия 3 часа.'><span>Н<sub>3</sub></span></span><span class='space'></span>",
+        "<span id='5' class='tool absent' title='Пропуск занятия 4 часа.'><span>Н<sub>4</sub></span></span><span class='space'></span>",
+        "<span id='6' class='tool absent' title='Пропуск занятия 5 часов.'><span>Н<sub>5</sub></span></span><span class='space'></span>",
+        "<span id='7' class='tool absent' title='Пропуск занятия 6 часов.'><span>Н<sub>6</sub></span></span><span class='space'></span>",
+        "<span id='8' class='tool absent' title='Пропуск занятия 7 часов.'><span>Н<sub>7</sub></span></span>",
         "<br><span class='space'></span><span class='space'></span><span class='space'></span>",
-        "<span id='9' class='tool absent' title='Пропуск занятия на 1,5 часа.'><span>Н<sub>1.5</sub></span></span><span class='space'></span>",
-        "<span id='10' class='tool absent' title='Пропуск занятия на 2,5 часа.'><span>Н<sub>2.5</sub></span></span><span class='space'></span>",
-        "<span id='11' class='tool absent' title='Пропуск занятия на 3,5 часа.'><span>Н<sub>3.5</sub></span></span><span class='space'></span>",
-        "<span id='12' class='tool absent' title='Пропуск занятия на 4,5 часа.'><span>Н<sub>4.5</sub></span></span><span class='space'></span>",
-        "<span id='13' class='tool absent' title='Пропуск занятия на 5,5 часов.'><span>Н<sub>5.5</sub></span></span><span class='space'></span>",
-        "<span id='14' class='tool absent' title='Пропуск занятия на 6,5 часов.'><span>Н<sub>6.5</sub></span></span><span class='space'></span>"
+        "<span id='9' class='tool absent' title='Пропуск занятия 1.5 часа.'><span>Н<sub>1.5</sub></span></span><span class='space'></span>",
+        "<span id='10' class='tool absent' title='Пропуск занятия 2.5 часа.'><span>Н<sub>2.5</sub></span></span><span class='space'></span>",
+        "<span id='11' class='tool absent' title='Пропуск занятия 3.5 часа.'><span>Н<sub>3.5</sub></span></span><span class='space'></span>",
+        "<span id='12' class='tool absent' title='Пропуск занятия 4.5 часа.'><span>Н<sub>4.5</sub></span></span><span class='space'></span>",
+        "<span id='13' class='tool absent' title='Пропуск занятия 5.5 часов.'><span>Н<sub>5.5</sub></span></span><span class='space'></span>",
+        "<span id='14' class='tool absent' title='Пропуск занятия 6.5 часов.'><span>Н<sub>6.5</sub></span></span><span class='space'></span>"
     ],
     [//colloquium
         "<b id='1' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b><span class='space'></span>",
@@ -232,13 +233,13 @@ items_grade = [
 
         "<hr class='marg-line'>",
 
-        "<span id='3' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1</sub></span></span><span class='space'></span>",
-        "<span id='4' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2</sub></span></span><span class='space'></span>",
-        "<span id='5' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3</sub></span></span><span class='space'></span>",
-        "<span id='6' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4</sub></span></span><span class='space'></span>",
-        "<span id='7' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5</sub></span></span><span class='space'></span>",
-        "<span id='8' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6</sub></span></span><span class='space'></span>",
-        "<span id='9' class='tool' title='Пропуск занятия на 7 часов.'><span>Н<sub>7</sub></span></span>"
+        "<span id='3' class='tool' title='Пропуск занятия 1 час.'><span>Н<sub>1</sub></span></span><span class='space'></span>",
+        "<span id='4' class='tool' title='Пропуск занятия 2 часа.'><span>Н<sub>2</sub></span></span><span class='space'></span>",
+        "<span id='5' class='tool' title='Пропуск занятия 3 часа.'><span>Н<sub>3</sub></span></span><span class='space'></span>",
+        "<span id='6' class='tool' title='Пропуск занятия 4 часа.'><span>Н<sub>4</sub></span></span><span class='space'></span>",
+        "<span id='7' class='tool' title='Пропуск занятия 5 часов.'><span>Н<sub>5</sub></span></span><span class='space'></span>",
+        "<span id='8' class='tool' title='Пропуск занятия 6 часов.'><span>Н<sub>6</sub></span></span><span class='space'></span>",
+        "<span id='9' class='tool' title='Пропуск занятия 7 часов.'><span>Н<sub>7</sub></span></span>"
     ],
     [//exam
         "<b id='1' class='tool' title='Допуск к аттестации'><b>Доп.</b></b><span class='space'></span>",
@@ -679,11 +680,30 @@ function updateAvgAvg() {
 //Функция выделения красным цветом поля, где есть Н без причины
 function illuminationAbs(elem) {
     if (elem.text() != "") {
-        var c_res = elem.text().split("/");
-        for (var i = 0; i < c_res.length; i++) {
-            (absenteeisms.indexOf(c_res[i]) != -1) ? elem.addClass("undef") : elem.removeClass("undef");
+        var block=isAbs(elem);
+        (block==1)? elem.addClass("undef"):"";
+    }
+}
+
+function isAbs(elem) {
+    var c_res = elem.text().split("/");
+    for (var i = 0; i < c_res.length; i++) {
+        if(absenteeisms.indexOf(c_res[i]) != -1){
+            return 1;
         }
     }
+}
+
+//Функция проверки есть ли в сочетанной оценке что-то кроме Н
+function isGrade(elem) {
+    var c_res = elem.text().split("/");
+    var retRes=0;
+    for (var i = 0; i < c_res.length; i++) {
+        if(absenteeisms_with_cause.indexOf(c_res[i]) == -1){
+            retRes=1;
+        }
+    }
+    return retRes;
 }
 
 //Функция вычисления ср балл для студентов для зав каф и препод
@@ -763,5 +783,16 @@ function lowIndex(str) {
     }
     res = gr.join('/');
     return res;
+}
 
+//Функция возвращает 1 если в записи есть Ну или Нб.о
+function typeAbs(str){
+    var gr = str.split("/");
+    var res="0";
+    for (i = 0; i < gr.length; i++) {
+        if ((absenteeisms_with_cause[0].indexOf(gr[i]) != -1) || (absenteeisms_with_cause[2].indexOf(gr[i]) != -1)) {
+             res="1";
+        }
+    }
+    return res;
 }

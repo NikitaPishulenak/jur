@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
 
     idStudent = $("input#idStudent").val();
     idSubject = "";
@@ -8,10 +8,12 @@
     $("div.DialogFakFak").click(function () {
         var obj_this_contentGrade = $(this).find(".content_grade");
         if (obj_this_contentGrade.is(':hidden')) {
+            grades = [];
             $(this).css("cursor", "default");
             obj_this_contentGrade.html("");
 
             if ($(".content_grade").is(':visible')) {
+                grades = [];
                 $(".CO").not($(this).find(".CO")).show();
                 $(".content_grade").not(obj_this_contentGrade).hide();
                 $(".fullText").not($(this).find(".fullText")).hide();
@@ -30,13 +32,16 @@
             obj_this_contentGrade.show();
             $(this).animate({width: "95%"}, 400, function () {
                 $.ajax({
-                    // type: 'get',
+                    type: 'get',
                     url: 'd.php',
                     data: {
                         'idStudent': idStudent,
                         'idSubject': idSubject,
                         'ajaxTrue': "1",
                         'menuactiv': "OpenDetails"
+                    },
+                    beforeSend:function () {
+                        obj_this_contentGrade.html("Загрузка...");
                     },
                     success: function (response) {
                         obj_this_contentGrade.html(response);
@@ -45,7 +50,7 @@
                                 $(this).html(Decrypt($(this).html()));
                                 smallText($(this));
                                 var block = 0;
-                                block = Available($(this).html());
+                                block = Available($(this));
                                 (block == 1) ? $(this).parent(".Oc").addClass("available_grade") : "";
                             });
                         });
@@ -74,6 +79,7 @@
         $(this).parent().animate({width: subjDivWidth}, 400);
         $(this).parent().find(".CO").show();
         $(this).parent().css("cursor", "pointer");
+        $(".available_grade").removeClass("selected");
     });
 
     $("div.content_grade").click(function (event) {
@@ -92,18 +98,6 @@
         }
     });
 
-    //Кнопки выделить Все и отменить Все
-    $('div').delegate("#selAll", "click", function () {
-        $('div.available_grade').each(function () {
-            var curObj = $(this).find(".Otmetka").text();
-            var isSel=0;
-            isSel= AvailableAbs(curObj);
-            (isSel != 1) ? $(this).addClass("selected") : "";
-        });
-    });
-    $('div').delegate("#canselSelAll", "click", function () {
-        $(this).parents().children(".available_grade").removeClass("selected");
-    });
 });
 
 $(function () {
@@ -128,10 +122,10 @@ $(function () {
             grades.length = 0;
             $('div.selected').each(function () {
                 var elem = $(this).find('.Otmetka');
-                countAbs = grades.length + 1;
                 grades.push({0: elem.attr("data-zapis"), 1: ReplaceAbs(String(elem.text()), replace)});
-                // console.log(grades);
             });
+            countAbs = grades.length;
+            //console.log(grades);
 
             $.ajax({
                 type: 'get',
@@ -155,6 +149,8 @@ $(function () {
                     else {
                         alert("Успешно произведена замена записей: \n       Дисциплина: " + lessonTitle + "\n       Количество: " + countAbs);
                         window.location.reload();
+                        $('body').append("<div class='modal'><img src='img/loading1.gif' class='loading_img'></div>");
+                        //$('body').addClass("loading");
                     }
                 },
                 error: function () {
@@ -171,6 +167,21 @@ $(function () {
 
     $("#close").click(function () {
         edit_dialog.dialog("close");
+    });
+
+    //Кнопки выделить Все и отменить Все
+    $('div').delegate("#selAll", "click", function () {
+        $(".content_grade").not($(this).parent().parent()).html("");
+        $('div.available_grade').each(function () {
+            var curObj=0;
+            curObj = $(this).find(".Otmetka").text();
+            var tAbs=typeAbs(curObj);
+            (tAbs==0) ? $(this).addClass("selected") : "";
+        });
+    });
+
+    $('div').delegate("#canselSelAll", "click", function () {
+        $(this).parents().children(".available_grade").removeClass("selected");
     });
 
     $("b.tool").click(function () {
@@ -200,23 +211,15 @@ $(function () {
 
 //функция сделать видимыми только где есть прогул
 function Available(grade) {
-    var c_gr = grade.split("/");
+    var curStatus=grade.attr("data-Status");
+    var c_gr = grade.text().split("/");
     for (var i = 0; i < c_gr.length; i++) {
-        if ((absenteeisms.indexOf(c_gr[i]) != -1) || (absenteeisms_with_cause.indexOf(c_gr[i]) != -1)) {
+        if (((absenteeisms.indexOf(c_gr[i]) != -1) || (absenteeisms_with_cause.indexOf(c_gr[i]) != -1)) && (curStatus==0)) {
             return 1;
         }
     }
 }
 
-//функция сделать видимыми только где есть прогул
-function AvailableAbs(grade) {
-    var c_gr = grade.split("/");
-    for (var i = 0; i < c_gr.length; i++) {
-        if ((absenteeisms_with_cause.indexOf(c_gr[i]) != -1)) {
-            return 1;
-        }
-    }
-}
 
 function ReplaceAbs(value, sub) {
     var res = "";

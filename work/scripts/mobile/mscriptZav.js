@@ -1,4 +1,4 @@
-﻿var edit_dialog, edit_form, edit_date_dialog, edit_date_form;
+var edit_dialog, edit_form, edit_date_dialog, edit_date_form;
 var edit_grade_flag = 0, edit_dateTitle_flag = 0;
 
 // Долгое нажатие для выставления оценки
@@ -127,6 +127,7 @@ function editDate() {
 
 function create_new_grade(e) {
     edit_grade_flag = 0;
+    var curStatus=e.attr("data-Status");
 
     switch (e.attr("data-pke")){
         case "2":
@@ -161,12 +162,28 @@ function create_new_grade(e) {
     cur_grade = e.text();
     elem = e;
     grades = cur_grade.split("/");
-    for (var i = 0; i < grades.length; i++) {
-        $("div.panel").find('input#inp_' + i).slideDown(1);
-        $("div.panel").find('input#inp_' + i).val(grades[i]);
-    }
-    // $('input#inp_0').select();
-    // $('input#inp_0').focus();
+    switch (curStatus) {
+            case "0":
+                for (var i = 0; i < grades.length; i++) {
+                    $("#inp_" + i).removeAttr('disabled');
+                    $("div.panel").find('input#inp_' + i).slideDown(1);
+                    $("div.panel").find('input#inp_' + i).val(grades[i]);
+                }
+            break;
+            case "1":
+                for (var i = 0; i < grades.length; i++) {
+                    $("#inp_" + i).removeAttr('disabled');
+                    $("button#add_grade_input").attr('disabled', true); //для любителей которые любят видеть что было раньше и сейчас
+                    $("div.panel").find('input#inp_' + i).slideDown(1);
+                    $("div.panel").find('input#inp_' + i).val(grades[i]);
+                    if (absenteeisms_with_cause.indexOf(grades[i]) != -1) 
+                    {
+                        $("#inp_" + i).attr('disabled', 'disabled');
+                        $("#inp_" + i).blur();
+                    }
+                }
+            break;
+   }
 
     $("span.moreBtn").click(function () {
         $("div.more").toggle(600);
@@ -179,7 +196,7 @@ function create_new_grade(e) {
         $("b.tool, span.tool").on("touchstart", function () {
             //$("b.tool, span.tool").click(function () {
             var text = $(this).text();
-            $("#" + inp_id).val(text);
+            $("#" + inp_id+":enabled").val(text);
             $("#" + inp_id).blur();
         });
     });

@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
@@ -196,7 +196,9 @@
     });
 
     $('div').delegate(".grade", "dblclick", function () {
-        switch ($(this).attr("data-pke")){
+    	var curStatus=$(this).attr("data-Status");
+
+    		switch ($(this).attr("data-pke")){
             case "2":
                 $("div#item_grade").html(items_grade[2]);
                 break;
@@ -222,33 +224,48 @@
         var fio_stud = $('div.fio_student[data-idStudent="' + data_studentID + '"]').text();
         edit_dialog.dialog({title: fio_stud});
         $("button#add_grade_input").removeAttr('disabled');
-        $("#inp_0").focus();
         $('#inp_2').slideUp(1);
         $('#inp_1').slideUp(1);
         cur_grade = $(this).text();
         elem = $(this);
         grades = cur_grade.split("/");
-        for (var i = 0; i < grades.length; i++) {
-            $("div.panel").find('input#inp_' + i).slideDown(1);
-            $("div.panel").find('input#inp_' + i).val(grades[i]);
-        }
         $('input#inp_0').focus();
-        $('input#inp_0').select();
+        // $('input#inp_0').select();
+
+        switch (curStatus) {
+        	case "0":
+        		for (var i = 0; i < grades.length; i++) {
+        			$("#inp_" + i).removeAttr('disabled');
+		            $("div.panel").find('input#inp_' + i).slideDown(1);
+		            $("div.panel").find('input#inp_' + i).val(grades[i]);
+		        }
+        		break;
+        	case "1":
+        		for (var i = 0; i < grades.length; i++) {
+		        	$("#inp_" + i).removeAttr('disabled');
+		        	$("button#add_grade_input").attr('disabled', true); //для любителей которые любят видеть что было раньше и сейчас
+		            $("div.panel").find('input#inp_' + i).slideDown(1);
+		            $("div.panel").find('input#inp_' + i).val(grades[i]);
+		            if (absenteeisms_with_cause.indexOf(grades[i]) != -1) 
+		            {
+	                	$("#inp_" + i).attr('disabled', 'disabled');
+	                	$("#inp_" + i).blur();
+            		}
+        		}
+        		break;
+        }
+
+    
         $(".inp_cell:text").focus(function () {
             inp_id = $(this).attr('id');
 
             //При нажатии на кнопку с результатами текст выводится в поле ввода
             $("b.tool, span.tool").click(function () {
                 var text = $(this).text();
-                $("#" + inp_id).val(text);
+                $("#" + inp_id+":enabled").val(text);
                 $("#" + inp_id).blur();
             });
 
-            // //При нажатии на пропуск с количеством часов текст выводится в поле ввода
-            // $("span.tool").click(function () {
-            //     var text = $(this).text();
-            //     $("#"+inp_id).val(text);
-            // });
         });
         var countOpenCell = 0;
         for (j = 0; j < 3; j++) {
@@ -265,6 +282,8 @@
                 $(this).val("");
             }
         });
+    	//}
+        
     });
 
     $("#edit").click(function () {
@@ -393,6 +412,7 @@
         if (count_cell < 3) {
             if ($("#inp_" + (count_cell - 1)).val() != "") {
                 $("#inp_" + count_cell).slideDown(1);
+                $("#inp_" + count_cell).removeAttr('disabled');
                 $("#inp_" + count_cell).focus();
             }
             else {

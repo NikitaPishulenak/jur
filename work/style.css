@@ -211,3 +211,6 @@ div.number_theme{ padding-left: 5px; position: absolute; top: 15px; margin-left:
 /*a{ font-size: 0.8em}*/
 .DialogP {margin-top:40px;}
 /*.Header {margin-top:40px;}*/
+
+.modal{position: fixed; z-index: 100; top: 0; left: 0; width: 100%; height: 100%; background: rgba(220,220,220,0.6);}
+.loading_img {position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);}

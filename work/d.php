@@ -5,8 +5,13 @@ session_start();
 ini_set("display_errors", 1);
 
 if(!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth']!==true){
+   if(isset($_GET['ajaxTrue']) && $_GET['ajaxTrue']){
     echo "Access is denied!";
     exit;
+   } else {
+      header('Location: index.php?closet=Время сессии истекло!');
+      exit;
+   }
 }
 
 $Nepuschu=0;
@@ -16,13 +21,18 @@ for($ii=0; $ii<=($countLev-1); $ii++){
 }
 
 if(!$Nepuschu){
-    echo "Запрещённый уровень доступа! Досвидос.";
+    header('Location: index.php?closet=Запрещённый уровень доступа! Досвидос.');
     exit;
 }
 
 
 if(isset($_GET['menuactiv'])){
     switch($_GET['menuactiv']) {
+
+        case "Kurs":
+            Kurs();
+            break;
+
         case "OpenDetails":
             if(isset($_GET['idSubject']) && is_numeric($_GET['idSubject']) && isset($_GET['idStudent']) && is_numeric($_GET['idStudent'])){
                 $_GET['idSubject'] = substr($_GET['idSubject'],0,4);
@@ -70,6 +80,7 @@ if(isset($_GET['menuactiv'])){
 }
 
 //----------------------------------------------------------------------------------------------
+
 
 
 
@@ -143,11 +154,7 @@ function SearchGiveData()
     LEFT JOIN lessons B ON B.id=A.id_lesson WHERE (A.course=".$_GET['kursSt']."
     AND A.id_faculty=".$_SESSION['SesVar']['Dekan'][2].") OR (A.course=".$_GET['kursSt']." AND A.id_faculty=".$fac[$_GET['gfnS']].") GROUP BY A.id_lesson ORDER BY B.name");
     */
-    $res = mysqli_query($dbMain, "SELECT A.id_lesson, B.name, IF(CHAR_LENGTH(B.name)>70,CONCAT(LEFT(B.name, 67),'...'),B.name),
-(SELECT COUNT(C.id) FROM rating C WHERE (C.idLessons=A.id_lesson AND C.idStud=".$_GET['idSt']." AND C.del=0)
- AND (C.RatingO LIKE '3%' OR C.RatingO LIKE '__3%' OR C.RatingO LIKE '____3%' OR C.RatingO LIKE '26%' OR C.RatingO LIKE '__26%' OR C.RatingO LIKE '____26')) FROM schedule A 
-LEFT JOIN lessons B ON B.id=A.id_lesson WHERE A.course=".$_GET['kursSt']." 
-AND A.id_faculty=".$_SESSION['SesVar']['Dekan'][2]." GROUP BY A.id_lesson ORDER BY B.name");
+    $res = mysqli_query($dbMain, "SELECT A.id_lesson, B.name, IF(CHAR_LENGTH(B.name)>70,CONCAT(LEFT(B.name, 67),'...'),B.name) FROM schedule A LEFT JOIN lessons B ON B.id=A.id_lesson WHERE A.course=".$_GET['kursSt']." AND A.id_faculty=".$_SESSION['SesVar']['Dekan'][2]." GROUP BY A.id_lesson ORDER BY B.name");
 
     $retVal="\n<input type='hidden' id='idStudent' value='".$_GET['idSt']."'>
 <hr><H2>".$_GET['nameSt']." (гр. ".$_GET['groupSt'].", ".$_GET['kursSt']."-й курс, № ".$_GET['nomzSt'].")</H2>";
@@ -156,10 +163,13 @@ AND A.id_faculty=".$_SESSION['SesVar']['Dekan'][2]." GROUP BY A.id_lesson ORDER 
         $retVal.="\n<div class='DialogP'><div class='titleBox'><H2>Дисциплина</H2></div>\n";
 
         while ($arr = mysqli_fetch_row($res)) {
-            $retVal.="<div class='DialogFakFak' data-idSubject='".$arr[0]."'>\n<span class='shortText'>".$arr[2]."</span>\n<span class='fullText'>".$arr[1]."</span>&nbsp;<span class='fullTextClose' title='Закрыть'>X</span>\n<div class='content_grade'></div>\n".($arr[3] ? "<div class='CO' title='Количество пропусков: ".$arr[3]."'>".$arr[3]."</div>\n" : "")."\n</div>\n";
+            $ress = mysqli_query($dbMain, "SELECT COUNT(id) FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '3%' OR RatingO LIKE '__3%' OR RatingO LIKE '____3%' OR RatingO LIKE '4%' OR RatingO LIKE '__4%' OR RatingO LIKE '____4%' OR RatingO LIKE '26%' OR RatingO LIKE '__26%' OR RatingO LIKE '____26')");
+            list($cntOc) = mysqli_fetch_row($ress);
+            $retVal.="<div class='DialogFakFak' data-idSubject='".$arr[0]."'>\n<span class='shortText'>".$arr[2]."</span>\n<span class='fullText'>".$arr[1]."</span>&nbsp;<span class='fullTextClose' title='Закрыть'>X</span>\n<div class='content_grade'></div>\n".($cntOc ? "<div class='CO' title='Количество пропусков: ".$cntOc."'>".$cntOc."</div>\n" : "")."\n</div>\n";
         }
-        unset($arr);
+        unset($arr,$cntOc);
         mysqli_free_result($res);
+        mysqli_free_result($ress);
 
     }
     $retVal.="</div>\n";
@@ -167,7 +177,6 @@ AND A.id_faculty=".$_SESSION['SesVar']['Dekan'][2]." GROUP BY A.id_lesson ORDER 
     echo HeaderFooterSearch($retVal, $_SESSION['SesVar']['Dekan'][0]." (".$_SESSION['SesVar']['Dekan'][1].")", $verC, $verS);
 
 }
-
 
 
 
@@ -249,7 +258,7 @@ function GroupViewL(){
 
     $retVal .= "<h3><a href='d.php'>" . $_GET['nPredmet'] . "</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
     $retVal .= "<a href='d.php?menuactiv=goF&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."'>".$_GET['nF']."</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal.="Группа № ".$_GET['nGroup']." (<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$_GET['idGroup']."&PL=0&nPredmet=".$_GET['nPredmet']."&nF=".$_GET['nF']."&nGroup=".$_GET['nGroup']."'>Практическое</a> / ЛЕКЦИЯ)</h3><hr>";
+    $retVal.="Группа № ".$_GET['nGroup']." (<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$_GET['idGroup']."&PL=0&nPredmet=".$_GET['nPredmet']."&nF=".$_GET['nF']."&nGroup=".$_GET['nGroup']."&IdCaptain=".$_GET['IdCaptain']."'>Практическое</a> / ЛЕКЦИЯ)</h3><hr>";
 
 
     $retVal.="
@@ -269,7 +278,11 @@ function GroupViewL(){
             $arrStud = Array();
             $i=0;
             while($arrS = mssql_fetch_row($result)){
-                $preStud.="<div class='fio_student' data-idStudent='".$arrS[0]."'>".($i+1).". ".$arrS[1]."</div>\n";
+                if($arrS[0] == $_GET['IdCaptain']){
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."' title='Капитан шлюпки'>".($i + 1).". <strong>".$arrS[1]."</strong></div>\n";
+                } else {
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."'>".($i + 1).". ".$arrS[1]."</div>\n";
+                }
                 $arrStud[$i]=$arrS[0];
                 if(!$i){ $sqlStud="idStud=".$arrS[0].""; }else{ $sqlStud.=" OR idStud=".$arrS[0].""; }
                 $i++;
@@ -326,7 +339,11 @@ function GroupViewL(){
             $preStud = "";
             $i=1;
             while($arrStud = mssql_fetch_row($result)){
-                $preStud.="<div class='fio_student' data-idStudent='".$arrStud[0]."'>".$i.". ".$arrStud[1]."</div>\n";
+                if($arrStud[0] == $_GET['IdCaptain']){
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."' title='Капитан шлюпки'>".$i.". <strong>".$arrStud[1]."</strong></div>\n";
+                } else {
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."'>".$i.". ".$arrStud[1]."</div>\n";
+                }
                 $i++;
             }
             $retVal.=StudentViewL($preStud);
@@ -352,7 +369,7 @@ function GroupViewP(){
 
     $retVal .= "<h3><a href='d.php'>" . $_GET['nPredmet'] . "</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
     $retVal .= "<a href='d.php?menuactiv=goF&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."'>".$_GET['nF']."</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal.="Группа № ".$_GET['nGroup']." (ПРАКТИЧЕСКОЕ / <a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$_GET['idGroup']."&PL=1&nPredmet=".$_GET['nPredmet']."&nF=".$_GET['nF']."&nGroup=".$_GET['nGroup']."'>Лекция</a>)</h3><hr>";
+    $retVal.="Группа № ".$_GET['nGroup']." (ПРАКТИЧЕСКОЕ / <a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$_GET['idGroup']."&PL=1&nPredmet=".$_GET['nPredmet']."&nF=".$_GET['nF']."&nGroup=".$_GET['nGroup']."&IdCaptain=".$_GET['IdCaptain']."'>Лекция</a>)</h3><hr>";
 
 
     $retVal.="
@@ -372,7 +389,11 @@ function GroupViewP(){
             $arrStud = Array();
             $i=0;
             while($arrS = mssql_fetch_row($result)){
-                $preStud.="<div class='fio_student' data-idStudent='".$arrS[0]."'>".($i+1).". ".$arrS[1]."</div>\n";
+                if($arrS[0] == $_GET['IdCaptain']){
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."' title='Капитан шлюпки'>".($i + 1).". <strong>".$arrS[1]."</strong></div>\n";
+                } else {
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."'>".($i + 1).". ".$arrS[1]."</div>\n";
+                }
                 $arrStud[$i]=$arrS[0];
                 if(!$i){ $sqlStud="idStud=".$arrS[0].""; }else{ $sqlStud.=" OR idStud=".$arrS[0].""; }
                 $i++;
@@ -429,7 +450,11 @@ function GroupViewP(){
             $preStud = "";
             $i=1;
             while($arrStud = mssql_fetch_row($result)){
-                $preStud.="<div class='fio_student' data-idStudent='".$arrStud[0]."'>".$i.". ".$arrStud[1]."</div>\n";
+                if($arrStud[0] == $_GET['IdCaptain']){
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."' title='Капитан шлюпки'>".$i.". <strong>".$arrStud[1]."</strong></div>\n";
+                } else {
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."'>".$i.". ".$arrStud[1]."</div>\n";
+                }
                 $i++;
             }
             $retVal.=StudentView($preStud);
@@ -528,15 +553,15 @@ function Fakultet()
       <div class='DialogP'>
       <div class='titleBox'><H2>Группы</H2></div>
       ";
-            $result = mssql_query("SELECT IdGroup, Name FROM dbo.Groups WHERE ".$sqlSO." ORDER BY Name", $dbStud);
+            $result = mssql_query("SELECT IdGroup, Name, IIF(IdCaptain!=null, IdCaptain, 0) FROM dbo.Groups WHERE ".$sqlSO." ORDER BY Name", $dbStud);
             if (mssql_num_rows($result) >= 1) {
                 $preChar = "";
                 while ($arr = mssql_fetch_row($result)) {
                     if ($preChar != substr($arr[1], 0, 2)) $retVal .= "<div class='HRnext'></div>";
                     $preChar = substr($arr[1], 0, 2);
                     $retVal .= "<div class='DialogGr'><strong>" . $arr[1] . "</strong><div class='GroupPL'>";
-                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=0&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."'>Практ.</a>&nbsp;&nbsp;&nbsp;";
-                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=1&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."'>Лекция</a>";
+                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=0&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."&IdCaptain=".$arr[2]."'>Практ.</a>&nbsp;&nbsp;&nbsp;";
+                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=1&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."&IdCaptain=".$arr[2]."'>Лекция</a>";
                     $retVal .= "</div></div></div>\n";
                 }
             }
@@ -655,7 +680,7 @@ function HeaderFooterSearch($content,$title,$vC='',$vS=''){
     <p><?php echo $title; ?></p><a href='d.php'>&larr; вернуться</a><?php echo FormSearch(); ?>
     <?php echo $content; ?>
     <div style="clear:both;">&nbsp;</div>
-    <div class="support">По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474)</div>
+    <div class="support"><a href="help/index.html">Руководство пользователя "Эл. журнала"</a> <br> По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474) </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
 
     <div id='form-update' title='Заменить пропуски'>
@@ -706,7 +731,7 @@ function HeaderFooter($content,$title,$vC='',$vS=''){
     <div class="Header"><H2><?php echo $_SESSION['SesVar']['FIO'][1]; ?></H2></div>
     <?php echo $content; ?>
     <div style="clear:both;">&nbsp;</div>
-    <div class="support">По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474)</div>
+    <div class="support"><a href="help/index.html">Руководство пользователя "Эл. журнала"</a> <br> По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474) </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -717,6 +742,7 @@ function HeaderFooterGroup($content,$title,$vC='',$vS=''){
     ?>
 
     <!doctype html>
+    <html>
     <head>
         <title><?php echo $title; ?></title>
         <meta charset="windows-1251">
@@ -740,7 +766,7 @@ function HeaderFooterGroup($content,$title,$vC='',$vS=''){
     <div class="export">
         <a href="#" title="Экспортировать в .CSV"><img src="img/csv.png">Экспортировать в .CSV</a>
     </div>
-    <div class="support">По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474)</div>
+    <div class="support"><a href="help/index.html">Руководство пользователя "Эл. журнала"</a> <br> По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474) </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -775,7 +801,7 @@ function HeaderFooterGroupL($content,$title,$vC='',$vS=''){
     <div class="export">
         <a href="#" title="Экспортировать в .CSV"><img src="img/csv.png">Экспортировать в .CSV</a>
     </div>
-    <div class="support">По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474)</div>
+    <div class="support"><a href="help/index.html">Руководство пользователя "Эл. журнала"</a> <br> По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474) </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -889,8 +915,8 @@ function StudentViewL($content,$contentO=''){
 
 function LevelView(){
     $countLev=count($_SESSION['SesVar']['Level']);
+    $preDiv='';
     if($countLev>=2){
-        $preDiv='';
         for($ii=0; $ii<=($countLev-1); $ii++){
             switch($_SESSION['SesVar']['Level'][$ii]){
                 case 1:
@@ -904,8 +930,8 @@ function LevelView(){
                     break;
             }
         }
-        return "<div class='Exit'>".$preDiv."</div><div class='C'></div>";
     }
+    return "<div class='Exit'>".$preDiv."<a href='exit.php'><H2>Выход</H2></a></div><div class='C'></div>";
 }
 
 function FormSearch($wrd=''){

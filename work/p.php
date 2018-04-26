@@ -2,9 +2,14 @@
 unset($_SESSION['SesVar']);
 session_start();
 
-if (!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth'] !== true) {
+if(!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth']!==true){
+   if(isset($_GET['ajaxTrue']) && $_GET['ajaxTrue']){
     echo "Access is denied!";
     exit;
+   } else {
+      header('Location: index.php?closet=Время сессии истекло!');
+      exit;
+   }
 }
 
 $Nepuschu = 0;
@@ -14,7 +19,7 @@ for ($ii = 0; $ii <= ($countLev - 1); $ii++) {
 }
 
 if (!$Nepuschu) {
-    echo "Запрещённый уровень доступа! Досвидос.";
+    header('Location: index.php?closet=Запрещённый уровень доступа! Досвидос.');
     exit;
 }
 
@@ -101,7 +106,7 @@ function addLessonStudent()
     include_once 'configMain.php';
     $dt = explode(".", $_GET['dateLes']);
     if(is_numeric($_GET['idLessons']) && is_numeric($_GET['idStudent']) && is_numeric($_GET['PL']) && is_numeric($_GET['PKE']) && is_numeric($_GET['grades']) && is_numeric($_SESSION['SesVar']['FIO'][0]) && is_numeric($_GET['idLess'])){
-        $res = mysqli_query($dbMain, "SELECT 1 FROM rating WHERE idLessons=".$_GET['idLessons']." AND idStud=".$_GET['idStudent']." AND PL=".$_GET['PL']." AND PKE=".$_GET['PL']." AND idLesson=".$_GET['idLess']);        
+        $res = mysqli_query($dbMain, "SELECT 1 FROM rating WHERE idLessons=".$_GET['idLessons']." AND idStud=".$_GET['idStudent']." AND PL=".$_GET['PL']." AND PKE=".$_GET['PKE']." AND idLesson=".$_GET['idLess']." AND del=0");        
         if (!mysqli_num_rows($res)) {
            mysqli_query($dbMain, "INSERT INTO rating (idLessons,idStud,PL,PKE,DateO,TimeO,RatingO,idEmployess,idLesson) VALUES (".$_GET['idLessons'].",".$_GET['idStudent'].",".$_GET['PL'].",".$_GET['PKE'].",'".$dt[2]."-".$dt[1]."-".$dt[0]."',CURTIME(),".$_GET['grades'].",".$_SESSION['SesVar']['FIO'][0].",".$_GET['idLess'].")");
            echo mysqli_insert_id($dbMain);
@@ -590,7 +595,7 @@ function HeaderFooter($content, $title, $vC = '')
 
     <?php echo $content; ?>
     <div style="clear:both;">&nbsp;</div>
-    <div class="support">По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474)</div>
+    <div class="support"><a href="help/index.html">Руководство пользователя "Эл. журнала"</a> <br> По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474) </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -602,6 +607,7 @@ function HeaderFooterGroup($content, $title, $vC = '', $vS = '')
     ?>
 
     <!doctype html>
+    <html>
     <head>
         <title><?php echo $title; ?></title>
         <meta charset="windows-1251">
@@ -628,7 +634,7 @@ function HeaderFooterGroup($content, $title, $vC = '', $vS = '')
     <div class="export" alt="Экспортировать в .CSV">
         <a href="#" title="Экспортировать в .CSV"><img src="img/csv.png">Экспортировать в .CSV</a>
     </div>
-    <div class="support">По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474)</div>
+    <div class="support"><a href="help/index.html">Руководство пользователя "Эл. журнала"</a> <br> По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474) </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -641,6 +647,7 @@ function HeaderFooterGroupL($content, $title, $vC = '', $vS = '')
     ?>
 
     <!doctype html>
+    <html>
     <head>
         <title><?php echo $title; ?></title>
         <meta charset="windows-1251">
@@ -667,7 +674,7 @@ function HeaderFooterGroupL($content, $title, $vC = '', $vS = '')
     <div class="export">
         <a href="#" title="Экспортировать в .CSV"><img src="img/csv.png">Экспортировать в .CSV</a>
     </div>
-    <div class="support">По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474)</div>
+    <div class="support"><a href="help/index.html">Руководство пользователя "Эл. журнала"</a> <br> По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474) </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -872,20 +879,7 @@ function StudentViewL($content, $contentO = '')
                     <span class='space'></span>
                     <b id='11' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b>
                     
-                    <hr class='marg-line'>
                     
-                    <span id='5' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1ч.</sub></span></span>
-                    <span class='space'></span>
-                    <span id='6' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span>
-                    <span class='space'></span>
-                    <span id='7' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span>
-                    <span class='space'></span>
-                    <span id='8' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span>
-                    <span class='space'></span>
-                    <span id='9' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span>
-                    <span class='space'></span>
-                    <span id='10' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span>                   
-
                 <br><br>
 
                 <input class='inp_cell' id='inp_0' type=text maxlength='0'
@@ -945,8 +939,8 @@ function StudentViewL($content, $contentO = '')
 function LevelView()
 {
     $countLev = count($_SESSION['SesVar']['Level']);
+    $preDiv = '';
     if ($countLev >= 2) {
-        $preDiv = '';
         for ($ii = 0; $ii <= ($countLev - 1); $ii++) {
             switch ($_SESSION['SesVar']['Level'][$ii]) {
                 case 1:
@@ -964,8 +958,8 @@ function LevelView()
                     break;
             }
         }
-        return "<div class='Exit'>" . $preDiv . "</div><div class='C'></div>";
     }
+    return "<div class='Exit'>".$preDiv."<a href='exit.php'><H2>Выход</H2></a></div><div class='C'></div>";
 }
 
 ?>

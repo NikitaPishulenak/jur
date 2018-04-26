@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     $("div.average").each(function () {
         var sum = 0, countGrade = 0;
         var elem = $(this).attr('data-idStudent');
@@ -228,6 +228,7 @@ $(function () {
 
 
     $('div').delegate(".grade", "dblclick", function () {
+        var curStatus=$(this).attr("data-Status");
         switch ($(this).attr("data-pke")){
             case "2":
                 $("div#item_grade").html(items_grade[2]);
@@ -259,19 +260,39 @@ $(function () {
         cur_grade = $(this).text();
         elem = $(this);
         grades = cur_grade.split("/");
-        for (var i = 0; i < grades.length; i++) {
-            $("div.panel").find('input#inp_' + i).slideDown(1);
-            $("div.panel").find('input#inp_' + i).val(grades[i]);
-        }
         $('input#inp_0').focus();
-        $('input#inp_0').select();
+       // $('input#inp_0').select();
+        
+        switch (curStatus) {
+            case "0":
+                for (var i = 0; i < grades.length; i++) {
+                    $("#inp_" + i).removeAttr('disabled');
+                    $("div.panel").find('input#inp_' + i).slideDown(1);
+                    $("div.panel").find('input#inp_' + i).val(grades[i]);
+                }
+                break;
+            case "1":
+                for (var i = 0; i < grades.length; i++) {
+                    $("#inp_" + i).removeAttr('disabled');
+                    $("button#add_grade_input").attr('disabled', true); //для любителей которые любят видеть что было раньше и сейчас
+                    $("div.panel").find('input#inp_' + i).slideDown(1);
+                    $("div.panel").find('input#inp_' + i).val(grades[i]);
+                    if (absenteeisms_with_cause.indexOf(grades[i]) != -1) 
+                    {
+                        $("#inp_" + i).attr('disabled', 'disabled');
+                        $("#inp_" + i).blur();
+                    }
+                }
+                break;
+        }
+
         $(".inp_cell:text").focus(function () {
             inp_id = $(this).attr('id');
 
             //При нажатии на кнопку с результатами текст выводится в поле ввода
             $("b.tool, span.tool").click(function () {
                 var text = $(this).text();
-                $("#" + inp_id).val(text);
+                $("#" + inp_id+":enabled").val(text);
                 $("#" + inp_id).blur();
             });
 
@@ -311,6 +332,7 @@ $(function () {
             coding = Encrypt(cur_res);
             elem.html(lowIndex(cur_res));
             smallText(elem);
+            //lowIndex(elem.text());
             if ((cur_grade == "") && (cur_res != "")) {
                 $.ajax({
                     type: 'get',
