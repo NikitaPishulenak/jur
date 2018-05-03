@@ -748,7 +748,7 @@ function generateAns(idStudent) {
             countAnswer++
         }
     });
-    var res = (100 * countAnswer / $('div.grade[data-idStudent="' + idStudent + '"]').length).toFixed(0);
+    var res = (100 * countAnswer / $('div.grade[data-idStudent="' + idStudent + '"]').length).toFixed(2);
     res = (isNaN(res) || res == 0) ? "" : res += "%";
     $('div.ans[data-idStudent="' + idStudent + '"]').html(res);
 }

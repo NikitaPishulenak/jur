@@ -1,6 +1,5 @@
 @media only screen and (min-width: 10px) and (max-width: 780px) {
     html{ font-size: 12px; }
-    .title{font-size: 0.75em;}
     .date_title{ width: 60px; }
     .info_title{ width: 40px; }
     .inp_cell { width: 37px; }
@@ -17,7 +16,7 @@
     .date_col { margin-top: 11px; width: 60px; }
     .date_col_stat { width: 35px; }
     .add_grade{ width: auto; height: 20px; text-align: center; }
-    .grade { font-size: 12px; width: 60px; height: 20px; }
+    .grade { font-size: 0.8em; width: 60px; height: 20px; }
     .triangle-topright{ left: 50px; border-bottom: 11px solid #000000; border-left: 11px solid transparent; }
     .avg, .ans, .abs { width: 41px; height: 20px; }
     .average, .answer, .absenteeism { width: 40px; height: 20px; }
@@ -26,7 +25,7 @@
     body{ -moz-user-select: none; -ms-user-select: none;  -khtml-user-select: none; -webkit-user-select: none;  -webkit-touch-callout: none; }
     div.Exit{ position: inherit; }
     .average_small{width: 30px; height: 20px;}
-    .avg_small, .ans_small{width: 30px; height: 20px;}
+    .avg_small{width: 30px; height: 20px;}
     .date_col_stat_small{ width: 30px; font-size: 12px; }
 }
 

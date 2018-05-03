@@ -81,6 +81,9 @@ if(isset($_GET['menuactiv'])){
 
 //----------------------------------------------------------------------------------------------
 
+
+
+
 function edtLessonStudentUP(){
     include_once 'configMain.php';
 
@@ -692,8 +695,8 @@ function HeaderFooterSearch($content,$title,$vC='',$vS=''){
 
                     <input class='inp_cell' id='inp_0' type=text maxlength='0'
                            onkeydown='return proverka(event,0);' onblur='return proverka(event,0);'>
+
                     <br><br>
-                </div>
             </fieldset>
             <hr class='marg-line'>
             <button id='close' class='attention'>Отмена</button>
@@ -830,11 +833,13 @@ function StudentView($content,$contentO=''){
                        onkeydown=\"return proverka(event,2);\">
 
                 <br><br>
-            </div>
         </fieldset>
-        <hr class='marg-line'>
-        <button id='close' class='attention'>Отмена</button>
-        <button id='edit' class='button'>Сохранить</button>        
+                <hr class='marg-line'>
+                <button id='close' class='attention'>Отмена</button>
+                <button id='edit' class='button'>Сохранить</button>
+              
+            </div>
+        
     </form>
 </div>
 
@@ -871,16 +876,21 @@ function StudentViewL($content,$contentO=''){
                 <b id='3' class='tool'><b>Н<sub>б.о.</sub></b></b>
                 <span class='space'></span>
                 <b id='2' class='tool'><b>Н<sub>б.у</sub></b></b>
+ 
                 <br><br>
+
+
                 <input class='inp_cell' id=\"inp_0\" type=text maxlength='6' autocomplete='off'
                        onkeydown=\"return proverka(event,0);\">
 
                 <br><br>
-            </div>
         </fieldset>
-        <hr class='marg-line'>
-        <button id='close' class='attention'>Отмена</button>
-        <button id='edit' class='button'>Сохранить</button>
+                <hr class='marg-line'>
+                <button id='close' class='attention'>Отмена</button>
+                <button id='edit' class='button'>Сохранить</button>
+               
+            </div>
+
     </form>
 </div>
 
@@ -889,6 +899,7 @@ function StudentViewL($content,$contentO=''){
 </div>
 
 <div class='container-list'>
+
     <div class='container'>
         <div class='fio'>
             <div class='title'>ФИО</div>\n".$content."

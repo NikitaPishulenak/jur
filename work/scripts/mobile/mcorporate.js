@@ -18,6 +18,7 @@
         $("#history").css("left", Number($(this).offset().left - 280)); //250- ширина окна логов + 10 в резерв
     }
 
+
     $.ajax({
         type: 'get',
         url: 'log.php',
@@ -31,6 +32,7 @@
             if (st == "Access is denied!") {
                 hideHistory();
                 alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
+
             }
             else {
                 $("#log_text").html(st);
@@ -39,12 +41,14 @@
                     $(this).html(Decrypt(c_g));
                 });
             }
+
         },
         error: function () {
             alert("Не удалось просмотреть историю изменений!");
         }
     });
     showHistory();
+
     $(function () {
         $(document).on("touchstart", function (){
             //Если кликаешь по всплывающему окну ничего не пропадет
@@ -54,17 +58,4 @@
             }
         });
     });
-}
-
-// $(document).ready(function () {
-//     alert("1");
-//     $("div.grade").each(function () {
-//         console.log($(this));
-//         //smallText($(this));
-//     });
-// });
-
-// function smallText(object) {
-// if (object.text().length >= 5) {
-//     object.addClass("small-text");
-// }
+});

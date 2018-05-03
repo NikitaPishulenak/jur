@@ -256,7 +256,11 @@
                 }
                 break;
         }
+
+
+
   
+        
        
         $(".inp_cell:text").focus(function () {
             inp_id = $(this).attr('id');
@@ -268,6 +272,11 @@
                 $("#" + inp_id).blur();
             });
 
+            // //При нажатии на пропуск с количеством часов текст выводится в поле ввода
+            // $("span.tool").click(function () {
+            //     var text = $(this).text();
+            //     $("#"+inp_id).val(text);
+            // });
         });
         var countOpenCell = 0;
         for (j = 0; j < 3; j++) {
@@ -284,6 +293,7 @@
                 $(this).val("");
             }
         });
+        //}
         
     });
 
@@ -427,6 +437,7 @@
             $("button#add_grade_input").attr('disabled', true);
         }
     });
+
 });
 
 
@@ -445,22 +456,11 @@ $(document).ready(function () {
             data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
             $("div .average_small:last").append("<div class='avg_small' data-idStudent='"+data_idS+"'></div>");
         }
-        $("div.average_small:last").append("<div class='avg_small result_div_small' id='avg_avrige'></div>");
-
-        $("div.date_col_stat_small").after("<div class='date_col_stat_small'><div class='title_small'>%</div><div class='answer_small'></div></div>");
-        for (var i = 0; i < count; i++) {
-            data_idS = $(".grade:eq(" + i + ")").attr('data-idStudent');
-            $("div.answer_small:last").append("<div class='ans_small' data-idStudent='" + data_idS + "'></div>");
-        }
+        $("div .average_small:last").append("<div class='avg_small result_div_small' id='avg_avrige'></div>");
 
         $("div.avg_small").each(function () {
             var elem = $(this).attr('data-idStudent');
             updateAvg(elem);
-        });
-
-        $("div.ans_small").each(function () {
-            var elem = $(this).attr('data-idStudent');
-            //updateAvg(elem);
         });
     });
 
