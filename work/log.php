@@ -4,7 +4,6 @@ session_start();
 
 if (!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth'] !== true) {
    echo "Access is denied!";
-//   echo "Ку-ку, блядь нахуй.";
    exit;
 }
 

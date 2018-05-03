@@ -1,15 +1,1 @@
-AuthType basic
-AuthName "BSMU login and password"
-AuthBasicProvider ldap
-AuthLDAPURL ldap://172.20.0.71:3268/dc=bsmu,dc=by?sAMAccountName?sub?(objectClass=*)
-AuthLDAPBindDN BSMU\\webapps
-AuthLDAPBindPassword "!QAZ2wsx"
-require group OU=Users,DC=bsmu,DC=by
-Require valid-user
-Order allow,deny
-Satisfy any
-
-#AddDefaultCharset UTF-8
-
 AddDefaultCharset windows-1251
-php_value session.gc_maxlifetime 21600

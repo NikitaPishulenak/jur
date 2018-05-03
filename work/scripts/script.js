@@ -1,4 +1,4 @@
-$(function () {
+﻿$(function () {
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
@@ -196,9 +196,10 @@ $(function () {
     });
 
     $('div').delegate(".grade", "dblclick", function () {
-    	var curStatus=$(this).attr("data-Status");
+        var curStatus=$(this).attr("data-Status");
+        var isGr=isGrade($(this));
 
-    		switch ($(this).attr("data-pke")){
+            switch ($(this).attr("data-pke")){
             case "2":
                 $("div#item_grade").html(items_grade[2]);
                 break;
@@ -233,29 +234,30 @@ $(function () {
         // $('input#inp_0').select();
 
         switch (curStatus) {
-        	case "0":
-        		for (var i = 0; i < grades.length; i++) {
-        			$("#inp_" + i).removeAttr('disabled');
-		            $("div.panel").find('input#inp_' + i).slideDown(1);
-		            $("div.panel").find('input#inp_' + i).val(grades[i]);
-		        }
-        		break;
-        	case "1":
-        		for (var i = 0; i < grades.length; i++) {
-		        	$("#inp_" + i).removeAttr('disabled');
-		        	$("button#add_grade_input").attr('disabled', true); //для любителей которые любят видеть что было раньше и сейчас
-		            $("div.panel").find('input#inp_' + i).slideDown(1);
-		            $("div.panel").find('input#inp_' + i).val(grades[i]);
-		            if (absenteeisms_with_cause.indexOf(grades[i]) != -1) 
-		            {
-	                	$("#inp_" + i).attr('disabled', 'disabled');
-	                	$("#inp_" + i).blur();
-            		}
-        		}
-        		break;
-        }
+            case "0":
+                for (var i = 0; i < grades.length; i++) {
+                    $("#inp_" + i).removeAttr('disabled');
+                    $("div.panel").find('input#inp_' + i).slideDown(1);
+                    $("div.panel").find('input#inp_' + i).val(grades[i]);
+                }
+                break;
+            case "1":
+                for (var i = 0; i < grades.length; i++) {
+                    $("#inp_" + i).removeAttr('disabled');
+                    $("button#add_grade_input").attr('disabled', true); //для любителей которые любят видеть что было раньше и сейчас
+                    $("div.panel").find('input#inp_' + i).slideDown(1);
+                    $("div.panel").find('input#inp_' + i).val(grades[i]);
+                    if (absenteeisms_with_cause.indexOf(grades[i]) != -1) 
+                    {
+                        $("#inp_" + i).attr('disabled', 'disabled');
+                        $("#inp_" + i).blur();
+                    }
 
-    
+                }
+                break;
+        }
+  
+       
         $(".inp_cell:text").focus(function () {
             inp_id = $(this).attr('id');
 
@@ -282,7 +284,6 @@ $(function () {
                 $(this).val("");
             }
         });
-    	//}
         
     });
 
@@ -305,6 +306,7 @@ $(function () {
                     url: 'p.php',
                     data: {
                         'dateLes': dat,
+                        'nGroup': $("input#nGroup").val(),
                         'idLessons': $("input#idSubject").val(),
                         'idStudent': student_id,
                         'PL': $("input#idPL").val(),
@@ -355,6 +357,7 @@ $(function () {
                         url: 'p.php',
                         data: {
                             'id_Zapis': id_Zapis,
+                            'nGroup': $("input#nGroup").val(),
                             'dateLes': dat,
                             'idStudent': student_id,
                             'idPrepod': $("input#idPrepod").val(),
@@ -424,7 +427,6 @@ $(function () {
             $("button#add_grade_input").attr('disabled', true);
         }
     });
-
 });
 
 
@@ -443,11 +445,22 @@ $(document).ready(function () {
             data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
             $("div .average_small:last").append("<div class='avg_small' data-idStudent='"+data_idS+"'></div>");
         }
-        $("div .average_small:last").append("<div class='avg_small result_div_small' id='avg_avrige'></div>");
+        $("div.average_small:last").append("<div class='avg_small result_div_small' id='avg_avrige'></div>");
+
+        $("div.date_col_stat_small").after("<div class='date_col_stat_small'><div class='title_small'>%</div><div class='answer_small'></div></div>");
+        for (var i = 0; i < count; i++) {
+            data_idS = $(".grade:eq(" + i + ")").attr('data-idStudent');
+            $("div.answer_small:last").append("<div class='ans_small' data-idStudent='" + data_idS + "'></div>");
+        }
 
         $("div.avg_small").each(function () {
             var elem = $(this).attr('data-idStudent');
             updateAvg(elem);
+        });
+
+        $("div.ans_small").each(function () {
+            var elem = $(this).attr('data-idStudent');
+            //updateAvg(elem);
         });
     });
 

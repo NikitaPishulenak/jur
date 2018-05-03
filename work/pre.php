@@ -4,7 +4,7 @@ unset($_SESSION['SesVar']);
 session_start();
 
 if(!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth']!==true){
-    echo "Access is denied!";
+    header('Location: index.php?closet=Время сессии истекло!');
     exit;
 }
 
@@ -39,6 +39,7 @@ if(!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth']!==true){
 ?>
 
 <!doctype html>
+<html>
 <head>
     <title>Куда идём?</title>
     <meta charset="windows-1251">
@@ -96,6 +97,7 @@ if(!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth']!==true){
         }
     }
     ?>
+<br><a href="exit.php"><H1>Выход</H1></a>
 </div>
 </body>
 </html>

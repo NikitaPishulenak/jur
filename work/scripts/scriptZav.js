@@ -1,4 +1,4 @@
-$(function () {
+﻿$(function () {
     $("div.average").each(function () {
         var sum = 0, countGrade = 0;
         var elem = $(this).attr('data-idStudent');
@@ -339,6 +339,7 @@ $(function () {
                     url: 'z.php',
                     data: {
                         'dateLes': dat,
+                        'nGroup': $("input#nGroup").val(),
                         'idLessons': $("input#idSubject").val(),
                         'idStudent': student_id,
                         'PL': $("input#idPL").val(),
@@ -389,6 +390,7 @@ $(function () {
                         url: 'z.php',
                         data: {
                             'id_Zapis': id_Zapis,
+                            'nGroup': $("input#nGroup").val(),
                             'dateLes': dat,
                             'idStudent': student_id,
                             'idPrepod': $("input#idPrepod").val(),
@@ -598,9 +600,7 @@ $(function () {
                 $("#edit_exam_rb").prop("checked", true);
                 break;
         }
-
     });
-
 
 });
 
@@ -612,4 +612,3 @@ $(function () {
         }
     });
 });
-

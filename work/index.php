@@ -1,128 +1,144 @@
 <?php
 unset($_SESSION['SesVar']);
-session_unset();
-session_destroy();
-ini_set("display_errors", 1);
 session_start();
+//session_unset();
+//session_destroy();
+ini_set("display_errors", 1);
 
-$_SESSION['SesVar']['Auth']=false;
-
-
-/*
-if(isset($_GET['go']) && $_GET['go']=='exit'){
-   ExitFromSystem();
-}
-*/
-
+//$_SESSION['SesVar']['Auth']=false;                  
 
 // $dbStud - указатель на соединения с БД Студенты (mssql)
 // $dbMain - указатель на соединения с БД Главной (mysqli)
 
+if(!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth']!==true) {
+   if(isset($_POST['lgn']) && isset($_POST['pwd'])){
 
-if(isset($_SERVER['REMOTE_USER']) && strlen($_SERVER['REMOTE_USER'])>=3){
-    $validUser = GetLU($_SERVER['REMOTE_USER']);
-    if(!$validUser){
-        echo "Не найден пользователь в LDAP или проблемы с данными!";
-        exit;
-    } else {
-        include_once 'configMain.php';
-        include_once 'configStudent.php';
-        $LdapBDUser = GetMainBD($validUser,$dbMain,$dbStud);
-    }
+      $loginUs=trim($_POST['lgn']);
+      $passUs=trim($_POST['pwd']);
+
+      if(!empty($loginUs) && !empty($passUs)){
+//         if(preg_match("/[^(\w)|(\x7F-\xFF)|(\s)]/", $loginUs)) {                    // логин не вписывается в формат
+//            logn($loginUs,"Проблемы с логином пользователя!");
+//            exit;
+//         } else {
+
+            $validUser = GetLU($loginUs,$passUs);
+            if(!$validUser){
+               logn($loginUs,"Проблемы с логином или паролем!");
+               exit;
+            } else {
+               include_once 'configMain.php';
+               include_once 'configStudent.php'; 
+               $LdapBDUser = GetMainBD($validUser,$dbMain,$dbStud,$loginUs);
+            }
+            unset($validUser);
+
+//         }
+      } else {
+         logn($loginUs,"Проблемы с логином или паролем пользователя!");
+         exit;
+      }
+   } else {
+      if(isset($_GET['closet']) && $_GET['closet']){
+         logn('',$_GET['closet']);
+         exit; 
+      } else {
+         logn();
+         exit; 
+      }
+   }
 } else {
-    echo "Проблемы с логином пользователя!";
-    exit;
+  ReGo();
 }
 
-
-
-
 function GetStudentBD($namekaf,$dbStud){
-    $result = mssql_query("SELECT IdF FROM dbo.Facultets WHERE Name='".$namekaf."'",$dbStud) or die ("Ошибка: не могу отправить запрос на сервер Студенты со стороны преподавателя");
-    if(mssql_num_rows($result)>=1){
-        list($idKaf)=mssql_fetch_row($result);
-        return $idKaf;
-    } else {
-        return false;
-    }
+   $result = mssql_query("SELECT IdF FROM dbo.Facultets WHERE Name='".$namekaf."'",$dbStud) or die ("Ошибка: не могу отправить запрос на сервер Студенты со стороны преподавателя");
+   if(mssql_num_rows($result)>=1){
+      list($idKaf)=mssql_fetch_row($result);
+      return $idKaf;      
+   } else {
+      return false;
+   }
 
-    mssql_free_result($result);
+   mssql_free_result($result);
 }
 
 
 function GetStudentBDDekan($namekaf,$dbStud){
-    $result = mssql_query("SELECT IdF FROM dbo.Facultets WHERE From1C='".$namekaf."'",$dbStud) or die ("Ошибка: не могу отправить запрос на сервер Студенты со стороны декана");
-    if(mssql_num_rows($result)>=1){
-        list($idKaf)=mssql_fetch_row($result);
-        return $idKaf;
-    } else {
-        return false;
-    }
+   $result = mssql_query("SELECT IdF FROM dbo.Facultets WHERE From1C='".$namekaf."'",$dbStud) or die ("Ошибка: не могу отправить запрос на сервер Студенты со стороны декана");
+   if(mssql_num_rows($result)>=1){
+      list($idKaf)=mssql_fetch_row($result);
+      return $idKaf;      
+   } else {
+      return false;
+   }
 
-    mssql_free_result($result);
+   mssql_free_result($result);
 }
 
 function GetStudentBDRector($namekaf,$dbStud){
-    $result = mssql_query("SELECT IdF FROM dbo.Facultets WHERE From1C='".$namekaf."'",$dbStud) or die ("Ошибка: не могу отправить запрос на сервер Студенты со стороны декана");
-    if(mssql_num_rows($result)>=1){
-        list($idKaf)=mssql_fetch_row($result);
-        return $idKaf;
-    } else {
-        return false;
-    }
+   $result = mssql_query("SELECT IdF FROM dbo.Facultets WHERE From1C='".$namekaf."'",$dbStud) or die ("Ошибка: не могу отправить запрос на сервер Студенты со стороны декана");
+   if(mssql_num_rows($result)>=1){
+      list($idKaf)=mssql_fetch_row($result);
+      return $idKaf;      
+   } else {
+      return false;
+   }
 
-    mssql_free_result($result);
+   mssql_free_result($result);
 }
 
 
-function GetMainBD($vser,$dbMain,$dbStud){
-    include_once 'configMain.php';
-    $resM = mysqli_query($dbMain, "SELECT id, fio, department, favor FROM employees2 WHERE valid='$vser'");
-    if(mysqli_num_rows($resM)>=1){
-        list($id, $fio, $department, $favor)=mysqli_fetch_row($resM);
-        $_SESSION['SesVar']['FIO']=Array($id,$fio,$favor);
-        $department = explode("#",$department);
-        $countdep=count($department);
-        $Indepartment = array();
-        $lev = 0;
-        $levTrue = 1;
+function GetMainBD($vser,$dbMain,$dbStud,$loginS=''){
+   include_once 'configMain.php';   
+   $resM = mysqli_query($dbMain, "SELECT id, fio, department, favor FROM employees2 WHERE valid='$vser'");
+   if(mysqli_num_rows($resM)>=1){
+      list($id, $fio, $department, $favor)=mysqli_fetch_row($resM);
+      $_SESSION['SesVar']['FIO']=Array($id,$fio,$favor);
+      $department = explode("#",$department);
+      $countdep=count($department);
+      $Indepartment = array();  
+      $lev = 0;
+      $levIndex = 0;
+      $levTrue = 1;
+      
+      for($i=0; $i<=($countdep-1); $i++){
+         $Indepartment[$i] = explode("=",$department[$i]);
+         $resM = mysqli_query($dbMain, "SELECT level FROM postoffice WHERE name='".$Indepartment[$i][0]."'");
+         if(mysqli_num_rows($resM)>=1){
+            list($lev)=mysqli_fetch_row($resM);
 
-        for($i=0; $i<=($countdep-1); $i++){
-            $Indepartment[$i] = explode("=",$department[$i]);
-            $resM = mysqli_query($dbMain, "SELECT level FROM postoffice WHERE name='".$Indepartment[$i][0]."'");
-            if(mysqli_num_rows($resM)>=1){
-                list($lev)=mysqli_fetch_row($resM);
-
-                if($lev == 3 && $levTrue){
-                    $_SESSION['SesVar']['Level'][$i] = $lev;
-                    $idKaf=GetStudentBD($Indepartment[$i][1],$dbStud);
-                    if($idKaf){
-                        $resPredmet = mysqli_query($dbMain, "SELECT id, IF(CHAR_LENGTH(name)>88,CONCAT(LEFT(name, 85),'...'),name), f1, f2, f3, f4, f5, f6, f7, f8, f9, f10 FROM lessons WHERE k1=$idKaf or k2=$idKaf or k3=$idKaf or k4=$idKaf or k5=$idKaf or k6=$idKaf or k7=$idKaf or k8=$idKaf ORDER BY name");
-                        if(mysqli_num_rows($resPredmet)>=1){
-                            $iPredmet = 0;
-                            while($arr = mysqli_fetch_row($resPredmet)){
-                                $fak='';
-                                if($arr[2]>0){
-                                    $fak=$arr[2];
-                                    if($arr[3]>0) $fak.="%".$arr[3];
-                                    if($arr[4]>0) $fak.="%".$arr[4];
-                                    if($arr[5]>0) $fak.="%".$arr[5];
-                                    if($arr[6]>0) $fak.="%".$arr[6];
-                                    if($arr[7]>0) $fak.="%".$arr[7];
-                                    if($arr[8]>0) $fak.="%".$arr[8];
-                                    if($arr[9]>0) $fak.="%".$arr[9];
-                                    if($arr[10]>0) $fak.="%".$arr[10];
-                                    if($arr[11]>0) $fak.="%".$arr[11];
-                                }
-                                $_SESSION['SesVar']['Predmet'][$iPredmet]=Array($arr[0],$arr[1],$fak);
-                                $iPredmet++;
-                            }
-                        }
-                        mysqli_free_result($resPredmet);
-                        $_SESSION['SesVar']['Prepod']=Array($Indepartment[$i][0],$Indepartment[$i][1],$idKaf);
-                        $_SESSION['SesVar']['Auth']=true;
-                        $levTrue = 0;
-                    }
+            if($lev == 3 && $levTrue){
+               $_SESSION['SesVar']['Level'][$levIndex] = $lev;
+               $levIndex++;
+               $idKaf=GetStudentBD($Indepartment[$i][1],$dbStud);
+               if($idKaf){
+                  $resPredmet = mysqli_query($dbMain, "SELECT id, IF(CHAR_LENGTH(name)>70,CONCAT(LEFT(name, 67),'...'),name), f1, f2, f3, f4, f5, f6, f7, f8, f9, f10 FROM lessons WHERE k1=$idKaf or k2=$idKaf or k3=$idKaf or k4=$idKaf or k5=$idKaf or k6=$idKaf or k7=$idKaf or k8=$idKaf ORDER BY name");
+                  if(mysqli_num_rows($resPredmet)>=1){
+                     $iPredmet = 0;
+                     while($arr = mysqli_fetch_row($resPredmet)){
+                        $fak='';
+                        if($arr[2]>0){
+                           $fak=$arr[2];
+                           if($arr[3]>0) $fak.="%".$arr[3]; 
+                           if($arr[4]>0) $fak.="%".$arr[4]; 
+                           if($arr[5]>0) $fak.="%".$arr[5]; 
+                           if($arr[6]>0) $fak.="%".$arr[6]; 
+                           if($arr[7]>0) $fak.="%".$arr[7]; 
+                           if($arr[8]>0) $fak.="%".$arr[8]; 
+                           if($arr[9]>0) $fak.="%".$arr[9]; 
+                           if($arr[10]>0) $fak.="%".$arr[10]; 
+                           if($arr[11]>0) $fak.="%".$arr[11]; 
+                        }                     
+                        $_SESSION['SesVar']['Predmet'][$iPredmet]=Array($arr[0],$arr[1],$fak);
+                        $iPredmet++;
+                     }
+                  }
+                  mysqli_free_result($resPredmet);
+                  $_SESSION['SesVar']['Prepod']=Array($Indepartment[$i][0],$Indepartment[$i][1],$idKaf);
+                  $_SESSION['SesVar']['Auth']=true;                  
+                  $levTrue = 0;
+               }
 
 //               echo $_SESSION['SesVar']['Auth']."<br>";                  
 //               echo $_SESSION['SesVar']['FIO'][0]." ".$_SESSION['SesVar']['FIO'][1]."<br>";                  
@@ -134,22 +150,23 @@ function GetMainBD($vser,$dbMain,$dbStud){
 //               }
 
 
-                } else if($lev == 2) {
-                    $_SESSION['SesVar']['Level'][$i] = $lev;
-                    $idDek=GetStudentBDDekan($Indepartment[$i][1],$dbStud);
-                    if($idDek){
-                        $resPredmet = mysqli_query($dbMain, "SELECT id, IF(CHAR_LENGTH(name)>88,CONCAT(LEFT(name, 85),'...'),name) FROM lessons WHERE f1=$idDek or f2=$idDek or f3=$idDek or f4=$idDek or f5=$idDek or f6=$idDek or f7=$idDek or f8=$idDek or f9=$idDek or f10=$idDek ORDER BY name");
-                        if(mysqli_num_rows($resPredmet)>=1){
-                            $iPredmet = 0;
-                            while($arr = mysqli_fetch_row($resPredmet)){
-                                $_SESSION['SesVar']['PredmetDekan'][$iPredmet]=Array($arr[0],$arr[1]);
-                                $iPredmet++;
-                            }
-                        }
-                        mysqli_free_result($resPredmet);
-                        $_SESSION['SesVar']['Dekan']=Array($Indepartment[$i][0],$Indepartment[$i][1],$idDek);
-                        $_SESSION['SesVar']['Auth']=true;
-                    }
+            } else if($lev == 2) {
+               $_SESSION['SesVar']['Level'][$levIndex] = $lev;
+               $levIndex++;
+               $idDek=GetStudentBDDekan($Indepartment[$i][1],$dbStud);
+               if($idDek){
+                  $resPredmet = mysqli_query($dbMain, "SELECT id, IF(CHAR_LENGTH(name)>70,CONCAT(LEFT(name, 67),'...'),name) FROM lessons WHERE f1=$idDek or f2=$idDek or f3=$idDek or f4=$idDek or f5=$idDek or f6=$idDek or f7=$idDek or f8=$idDek or f9=$idDek or f10=$idDek ORDER BY name");
+                  if(mysqli_num_rows($resPredmet)>=1){
+                     $iPredmet = 0;
+                     while($arr = mysqli_fetch_row($resPredmet)){
+                        $_SESSION['SesVar']['PredmetDekan'][$iPredmet]=Array($arr[0],$arr[1]);
+                        $iPredmet++;
+                     }
+                  }
+                  mysqli_free_result($resPredmet);
+                  $_SESSION['SesVar']['Dekan']=Array($Indepartment[$i][0],$Indepartment[$i][1],$idDek);
+                  $_SESSION['SesVar']['Auth']=true;                  
+               }
 
 //               echo "<br><br>".$_SESSION['SesVar']['Auth']."<br>";                  
 //               echo $_SESSION['SesVar']['FIO'][0]." ".$_SESSION['SesVar']['FIO'][1]."<br>";                  
@@ -160,115 +177,164 @@ function GetMainBD($vser,$dbMain,$dbStud){
 //                  echo $_SESSION['SesVar']['PredmetDekan'][$ii][0]." ".$_SESSION['SesVar']['PredmetDekan'][$ii][1]."<br>";                  
 //               }
 
-                } else if($lev == 4){
-                    $_SESSION['SesVar']['Level'][$i] = $lev;
-                    $idKaf=GetStudentBD($Indepartment[$i][1],$dbStud);
-                    if($idKaf){
-                        $resPredmet = mysqli_query($dbMain, "SELECT id, IF(CHAR_LENGTH(name)>88,CONCAT(LEFT(name, 85),'...'),name), f1, f2, f3, f4, f5, f6, f7, f8, f9, f10 FROM lessons WHERE k1=$idKaf or k2=$idKaf or k3=$idKaf or k4=$idKaf or k5=$idKaf or k6=$idKaf or k7=$idKaf or k8=$idKaf ORDER BY name");
-                        if(mysqli_num_rows($resPredmet)>=1){
-                            $iPredmet = 0;
-                            while($arr = mysqli_fetch_row($resPredmet)){
-                                $fak='';
-                                if($arr[2]>0){
-                                    $fak=$arr[2];
-                                    if($arr[3]>0) $fak.="%".$arr[3];
-                                    if($arr[4]>0) $fak.="%".$arr[4];
-                                    if($arr[5]>0) $fak.="%".$arr[5];
-                                    if($arr[6]>0) $fak.="%".$arr[6];
-                                    if($arr[7]>0) $fak.="%".$arr[7];
-                                    if($arr[8]>0) $fak.="%".$arr[8];
-                                    if($arr[9]>0) $fak.="%".$arr[9];
-                                    if($arr[10]>0) $fak.="%".$arr[10];
-                                    if($arr[11]>0) $fak.="%".$arr[11];
-                                }
-                                $_SESSION['SesVar']['PredmetZav'][$iPredmet]=Array($arr[0],$arr[1],$fak);
-                                $iPredmet++;
-                            }
-                        }
-                        mysqli_free_result($resPredmet);
-                        $_SESSION['SesVar']['Zav']=Array($Indepartment[$i][0],$Indepartment[$i][1],$idKaf);
-                        $_SESSION['SesVar']['Auth']=true;
-                    }
+            } else if($lev == 4){
+               $_SESSION['SesVar']['Level'][$levIndex] = $lev;
+               $levIndex++;
+               $idKaf=GetStudentBD($Indepartment[$i][1],$dbStud);
+               if($idKaf){
+                  $resPredmet = mysqli_query($dbMain, "SELECT id, IF(CHAR_LENGTH(name)>70,CONCAT(LEFT(name, 67),'...'),name), f1, f2, f3, f4, f5, f6, f7, f8, f9, f10 FROM lessons WHERE k1=$idKaf or k2=$idKaf or k3=$idKaf or k4=$idKaf or k5=$idKaf or k6=$idKaf or k7=$idKaf or k8=$idKaf ORDER BY name");
+                  if(mysqli_num_rows($resPredmet)>=1){
+                     $iPredmet = 0;
+                     while($arr = mysqli_fetch_row($resPredmet)){
+                        $fak='';
+                        if($arr[2]>0){
+                           $fak=$arr[2];
+                           if($arr[3]>0) $fak.="%".$arr[3]; 
+                           if($arr[4]>0) $fak.="%".$arr[4]; 
+                           if($arr[5]>0) $fak.="%".$arr[5]; 
+                           if($arr[6]>0) $fak.="%".$arr[6]; 
+                           if($arr[7]>0) $fak.="%".$arr[7]; 
+                           if($arr[8]>0) $fak.="%".$arr[8]; 
+                           if($arr[9]>0) $fak.="%".$arr[9]; 
+                           if($arr[10]>0) $fak.="%".$arr[10]; 
+                           if($arr[11]>0) $fak.="%".$arr[11]; 
+                        }                     
+                        $_SESSION['SesVar']['PredmetZav'][$iPredmet]=Array($arr[0],$arr[1],$fak);
+                        $iPredmet++;
+                     }
+                  }
+                  mysqli_free_result($resPredmet);
+                  $_SESSION['SesVar']['Zav']=Array($Indepartment[$i][0],$Indepartment[$i][1],$idKaf);
+                  $_SESSION['SesVar']['Auth']=true;                  
+               }
 
-                } else if($lev == 1) {
-                    $_SESSION['SesVar']['Level'][$i] = $lev;
-                    $_SESSION['SesVar']['Auth']=true;
-                    $_SESSION['SesVar']['Rector']=Array($Indepartment[$i][0],$Indepartment[$i][1]);
+            } else if($lev == 1) {
+               $_SESSION['SesVar']['Level'][$levIndex] = $lev;
+               $levIndex++;
+               $_SESSION['SesVar']['Auth']=true;
+               $_SESSION['SesVar']['Rector']=Array($Indepartment[$i][0],$Indepartment[$i][1]);                  
 
-                }
-            }
-            mysqli_free_result($resM);
-        }
+            }            
+         }
+         mysqli_free_result($resM);
+      }
+      
+      if($lev == 0){
+         logn($loginS,"Нет доступа по категориям сотрудников!");
+         exit;
+      } else {
+         ReGo();
+      }
 
-        if($lev == 0){
-            echo "Нет доступа по категориям сотрудников!";
-            exit;
-        }
-
-        $conutLev = count($_SESSION['SesVar']['Level']);
-        if($conutLev>=2){
-            header("location: pre.php"); return;
-        } else {
-            switch($_SESSION['SesVar']['Level'][0]){
-                case 1:
-                    header("location: r.php"); return;
-                    break;
-                case 2:
-                    header("location: d.php"); return;
-                    break;
-                case 3:
-                    header("location: p.php"); return;
-                    break;
-                case 4:
-                    header("location: z.php"); return;
-                    break;
-            }
-        }
-
-
-    } else {
-        echo "Не найден пользователь в главной БД!";
-        exit;
-    }
+   } else {
+      logn($loginS,"Не найден пользователь в главной БД!");
+      exit;
+   }
 }
 
-function GetLU($user){
-    include_once 'configLdap.php';
-    $ad = ldap_connect($opLdap['host'],$opLdap['port']);
-    @ldap_bind($ad,$opLdap['login'],$opLdap['password']) or die("Couldn't connect to AD!");
-    $filter = "(&(objectClass=User)(samaccountname={$user}))";
-    $sr=ldap_list($ad, $opLdap['dn'], $filter);
-    if(!$sr){
-        return false;
-    } else {
-        $info = ldap_get_entries($ad, $sr);
-        if(!$info){
-            return false;
-        } else {
-            if(empty($info[0]["employeeid"][0])){
-                return false;
+function ReGo(){
+      $conutLev = count($_SESSION['SesVar']['Level']);
+
+      if($conutLev>=2){
+         header("location: pre.php"); return;
+      } else {
+         switch($_SESSION['SesVar']['Level'][0]){
+            case 1:
+               header("location: r.php"); return;
+               break;
+            case 2:
+               header("location: d.php"); return;
+               break;
+            case 3:
+               header("location: p.php"); return;
+               break;
+            case 4:
+               header("location: z.php"); return;
+               break;
+         }
+      }
+}
+
+function GetLU($user,$pass){
+   include_once 'configLdap.php';
+   $ad = ldap_connect($opLdap['host'],$opLdap['port']);
+   ldap_set_option($ad, LDAP_OPT_PROTOCOL_VERSION, 3);
+   ldap_set_option($ad, LDAP_OPT_REFERRALS, 0);
+
+   if($ad){
+      $bd=@ldap_bind($ad,$user.$opLdap['dom'],$pass);
+      if($bd){
+         $filter = "(&(objectClass=User)(samaccountname={$user}))";
+         $sr=ldap_list($ad, $opLdap['dn'], $filter);
+         if(!$sr){
+           return false;
+         } else {
+            $info = ldap_get_entries($ad, $sr);
+            if(!$info){
+              return false;         
             } else {
-                return $info[0]["employeeid"][0];
-            }
-        }
-    }
-    ldap_close($ad);
+               if(empty($info[0]["employeeid"][0])){
+                  return false;         
+               } else {
+                  return $info[0]["employeeid"][0];
+               }
+            }                                
+         }
+      } else {
+         return false;         
+      }
+   } else {
+      return false;         
+   }
+   ldap_close($ad);
 }
 
-/*
-function ExitFromSystem(){
+/* ---------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-$_SESSION['SesVar']['Auth']=false;                  
-unset($_SESSION['SesVar']);
-session_unset();
-session_destroy();
-unset($_SERVER['REMOTE_USER'], $_SERVER['PHP_AUTH_PW'],  $_SERVER['PHP_AUTH_USER']);
-header('Refresh: 0;URL=');
-//header('WWW-Authenticate: Basic realm="Auth"');
-//header('HTTP/1.0 401 Unauthorized');
-echo "До встречи.";
-exit;
+
+function logn($lgn='',$msg=''){
+?>
+
+    <!doctype html>
+    <html>
+    <head>
+        <TITLE>Эл. журнал</TITLE>
+        <meta charset="windows-1251">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="style.css">
+<script>
+<!--
+function sbmt(){
+   if(!flgn.lgn.value || !flgn.pwd.value) {
+      alert("Не введены все данные!      ");
+   } else {
+      document.flgn.submit();
+   }
 }
-*/
+//-->
+</script>
+    </head>
+<BODY>
+<div class='LogF'>
+<div class='LogForm'><h1>Эл. журнал</h1>
+<div class='LogFormMsg'><?php echo $msg; ?></div>
+
+<form method="post" name="flgn" action="index.php" onsubmit="sbmt(); return false;">
+<div class='Login'>Имя пользователя<br></div>
+<input type=text name="lgn" size="40" value="<?php echo $lgn; ?>">                     
+<div class='Password'>Пароль<br></div>
+<input type=password name="pwd" size="40"><br><br>
+<input type=submit value="Войти" class="but">
+</form>
+
+</div>
+</div>
+</BODY>
+</HTML>
+<?php
+
+}
 
 ?>

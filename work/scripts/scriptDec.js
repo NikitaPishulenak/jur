@@ -1,4 +1,4 @@
-//Функция выделения серым цветом поля, где есть Н без причины
+﻿//Функция выделения серым цветом поля, где есть Н без причины
 $(function () {
     $("div.grade").each(function () {
         if ($(this).text() != "") {
@@ -70,7 +70,7 @@ $(function () {
             avg_count++;
         }
     }
-    $("div#avg_avrige").html(Math.round(100 * (avg_sum / avg_count)) / 100);
+    $("div#avg_avrige").html(Math.round(avg_sum / avg_count));
 });
 
 $(function () {

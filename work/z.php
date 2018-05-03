@@ -75,7 +75,7 @@ function delLess()
 {
     include_once 'configMain.php';
     if(is_numeric($_GET['idLesson']) && is_numeric($_GET['idStud'])){
-        mysqli_query($dbMain, "UPDATE rating SET del=1 WHERE del=0 AND idLesson=".$_GET['idLesson']." AND idStud=".$_GET['idStud']);
+        mysqli_query($dbMain, "UPDATE rating SET del=1 WHERE del=0 AND pStatus=0 AND idLesson=".$_GET['idLesson']." AND idStud=".$_GET['idStud']);
     } else {
         echo "No";
     }
@@ -105,9 +105,9 @@ function edtLessonStudent()
             $arr = mysqli_fetch_row($resTime);
             if($arr[6]!=$_SESSION['SesVar']['FIO'][0] || $arr[0] > 10){
                 mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (".$_GET['id_Zapis'].",".$arr[1].",".$arr[2].",".$_GET['idStudent'].",'".$arr[3]."','".$arr[4]."',".$arr[5].",".$arr[6].")");
-                mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
+                mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND pStatus=0 AND id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
             }else{
-                mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
+                mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND pStatus=0 AND id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
             }
             mysqli_free_result($resTime);
         }
@@ -121,10 +121,11 @@ function addLessonStudent()
 {
     include_once 'configMain.php';
     $dt = explode(".", $_GET['dateLes']);
+    if(isset($_GET['nGroup']) && $_GET['nGroup']){ $nGr=trim(substr($_GET['nGroup'],0,6)); } else { $nGr=""; }
     if(is_numeric($_GET['idLessons']) && is_numeric($_GET['idStudent']) && is_numeric($_GET['PL']) && is_numeric($_GET['PKE']) && is_numeric($_GET['grades']) && is_numeric($_SESSION['SesVar']['FIO'][0]) && is_numeric($_GET['idLess'])){
         $res = mysqli_query($dbMain, "SELECT 1 FROM rating WHERE idLessons=".$_GET['idLessons']." AND idStud=".$_GET['idStudent']." AND PL=".$_GET['PL']." AND PKE=".$_GET['PKE']." AND idLesson=".$_GET['idLess']." AND del=0");        
         if (!mysqli_num_rows($res)) {
-           mysqli_query($dbMain, "INSERT INTO rating (idLessons,idStud,PL,PKE,DateO,TimeO,RatingO,idEmployess,idLesson) VALUES (".$_GET['idLessons'].",".$_GET['idStudent'].",".$_GET['PL'].",".$_GET['PKE'].",'".$dt[2]."-".$dt[1]."-".$dt[0]."',CURTIME(),".$_GET['grades'].",".$_SESSION['SesVar']['FIO'][0].",".$_GET['idLess'].")");
+           mysqli_query($dbMain, "INSERT INTO rating (idLessons,idStud,PL,PKE,DateO,TimeO,RatingO,idEmployess,idLesson,nGroup) VALUES (".$_GET['idLessons'].",".$_GET['idStudent'].",".$_GET['PL'].",".$_GET['PKE'].",'".$dt[2]."-".$dt[1]."-".$dt[0]."',CURTIME(),".$_GET['grades'].",".$_SESSION['SesVar']['FIO'][0].",".$_GET['idLess'].",'".$nGr."')");
            echo mysqli_insert_id($dbMain);
         } else {
            echo "No";
@@ -170,6 +171,7 @@ function GroupViewL()
     <input type='hidden' id='idSubject' value='" . $_GET['idPredmet'] . "'>
     <input type='hidden' id='idPrepod' value='" . $_GET['idPrepod'] . "'>
     <input type='hidden' id='idGroup' value='" . $_GET['idGroup'] . "'>
+    <input type='hidden' id='nGroup' value='".$_GET['nGroup']."'>
     <input type='hidden' id='idPL' value='1'>";
 
     $result = mssql_query("SELECT IdStud, CONCAT(Name_F,' ',Name_I,' ',Name_O) FROM dbo.Student WHERE IdGroup=" . $_GET['idGroup'] . " AND IdStatus IS NULL ORDER BY Name_F", $dbStud);
@@ -212,12 +214,12 @@ function GroupViewL()
                             $prepreRating .= "<div class='date_col'>".($arr[4] ? "<div class='nLesson'>".$arr[4]."</div>" : "")."<div class='date_title' data-idLesson='".$arr[0]."' data-number_theme_lesson='".$arr[4]."'>".$arr[3]."</div>\n";
                             break;
                     }
-                    $resultS = mysqli_query($dbMain, "SELECT id, idStud, RatingO FROM rating WHERE del=0 AND (" . $sqlStud . ") AND PKE=" . $arr[2] . " AND idLesson=" . $arr[0] . " AND idLessons=" . $_GET['idPredmet'] . " AND PL=1");
+                    $resultS = mysqli_query($dbMain, "SELECT id, idStud, RatingO, pStatus FROM rating WHERE del=0 AND (" . $sqlStud . ") AND PKE=" . $arr[2] . " AND idLesson=" . $arr[0] . " AND idLessons=" . $_GET['idPredmet'] . " AND PL=1");
                     $arrSStud = Array();
                     if (mysqli_num_rows($resultS) >= 1) {
                         $ii = 0;
                         while ($arrSS = mysqli_fetch_row($resultS)) {
-                            $arrSStud[$ii] = array($arrSS[0], $arrSS[1], $arrSS[2]);
+                            $arrSStud[$ii] = array($arrSS[0], $arrSS[1], $arrSS[2], $arrSS[3]);
                             $ii++;
                         }
                     }
@@ -228,12 +230,12 @@ function GroupViewL()
                         $trueS = 0;
                         for ($iSS = 0; $iSS <= ($countSStud - 1); $iSS++) {
                             if ($arrStud[$iS] == $arrSStud[$iSS][1]) {
-                                $prepreRating .= "<div class='grade' data-idLes=" . $arr[0] . " data-idStudent=" . $arrStud[$iS] . " data-PKE=" . $arr[2] . " data-zapis=" . $arrSStud[$iSS][0] . ">" . $arrSStud[$iSS][2] . "</div>\n";
+                                $prepreRating .= "<div class='grade' data-idLes=" . $arr[0] . " data-idStudent=" . $arrStud[$iS] . " data-PKE=" . $arr[2] . " data-zapis=".$arrSStud[$iSS][0]." data-Status=".$arrSStud[$iSS][3].">" . $arrSStud[$iSS][2] . "</div>\n";
                                 $trueS = 1;
                             }
                         }
                         if (!$trueS) {
-                            $prepreRating .= "<div class='grade' data-idLes=" . $arr[0] . " data-idStudent=" . $arrStud[$iS] . " data-PKE=" . $arr[2] . " data-zapis=0></div>\n";
+                            $prepreRating .= "<div class='grade' data-idLes=".$arr[0]." data-idStudent=".$arrStud[$iS]." data-PKE=".$arr[2]." data-zapis=0 data-Status=0></div>\n";
                         }
                     }
 
@@ -287,6 +289,7 @@ function GroupViewP()
     <input type='hidden' id='idSubject' value='" . $_GET['idPredmet'] . "'>
     <input type='hidden' id='idPrepod' value='" . $_GET['idPrepod'] . "'>
     <input type='hidden' id='idGroup' value='" . $_GET['idGroup'] . "'>
+    <input type='hidden' id='nGroup' value='".$_GET['nGroup']."'>
     <input type='hidden' id='idPL' value='0'>";
 
     $result = mssql_query("SELECT IdStud, CONCAT(Name_F,' ',Name_I,' ',Name_O) FROM dbo.Student WHERE IdGroup=" . $_GET['idGroup'] . " AND IdStatus IS NULL ORDER BY Name_F", $dbStud);
@@ -329,12 +332,12 @@ function GroupViewP()
                             $prepreRating .= "<div class='date_col'>".($arr[4] ? "<div class='nLesson'>".$arr[4]."</div>" : "")."<div class='date_title' data-idLesson='".$arr[0]."' data-number_theme_lesson='".$arr[4]."'>".$arr[3]."</div>\n";
                             break;
                     }
-                    $resultS = mysqli_query($dbMain, "SELECT id, idStud, RatingO FROM rating WHERE del=0 AND (" . $sqlStud . ") AND PKE=" . $arr[2] . " AND idLesson=" . $arr[0] . " AND idLessons=" . $_GET['idPredmet'] . " AND PL=0");
+                    $resultS = mysqli_query($dbMain, "SELECT id, idStud, RatingO, pStatus FROM rating WHERE del=0 AND (" . $sqlStud . ") AND PKE=" . $arr[2] . " AND idLesson=" . $arr[0] . " AND idLessons=" . $_GET['idPredmet'] . " AND PL=0");
                     $arrSStud = Array();
                     if (mysqli_num_rows($resultS) >= 1) {
                         $ii = 0;
                         while ($arrSS = mysqli_fetch_row($resultS)) {
-                            $arrSStud[$ii] = array($arrSS[0], $arrSS[1], $arrSS[2]);
+                            $arrSStud[$ii] = array($arrSS[0], $arrSS[1], $arrSS[2], $arrSS[3]);
                             $ii++;
                         }
                     }
@@ -345,12 +348,12 @@ function GroupViewP()
                         $trueS = 0;
                         for ($iSS = 0; $iSS <= ($countSStud - 1); $iSS++) {
                             if ($arrStud[$iS] == $arrSStud[$iSS][1]) {
-                                $prepreRating .= "<div class='grade' data-idLes=" . $arr[0] . " data-idStudent=" . $arrStud[$iS] . " data-PKE=" . $arr[2] . " data-zapis=" . $arrSStud[$iSS][0] . ">" . $arrSStud[$iSS][2] . "</div>\n";
+                                $prepreRating .= "<div class='grade' data-idLes=" . $arr[0] . " data-idStudent=" . $arrStud[$iS] . " data-PKE=" . $arr[2] . " data-zapis=".$arrSStud[$iSS][0]." data-Status=".$arrSStud[$iSS][3].">".$arrSStud[$iSS][2]."</div>\n";
                                 $trueS = 1;
                             }
                         }
                         if (!$trueS) {
-                            $prepreRating .= "<div class='grade' data-idLes=" . $arr[0] . " data-idStudent=" . $arrStud[$iS] . " data-PKE=" . $arr[2] . " data-zapis=0></div>\n";
+                            $prepreRating .= "<div class='grade' data-idLes=".$arr[0]." data-idStudent=".$arrStud[$iS]." data-PKE=".$arr[2]." data-zapis=0 data-Status=0></div>\n";
                         }
                     }
 
@@ -704,17 +707,17 @@ function StudentView($content, $contentO = '')
     <form>
         <fieldset>
             <div class='box'>
-            <div class='dat'>
-                <b align='center'>Дата занятия</b>
-                <div id='date_col'>
-                    <input type='text' id='lesson-date' required class='datepicker' value='" . date('d.m.Y') . "' placeholder='дд.мм.гггг'>
+                <div class='dat'>
+                    <b align='center'>Дата занятия</b>
+                    <div id='date_col'>
+                        <input type='text' id='lesson-date' required class='datepicker' value='" . date('d.m.Y') . "' placeholder='дд.мм.гггг'>
+                    </div>
                 </div>
-            </div>
-            <div class='number_theme'>
-                <b align='center'>№ темы</b><br>
-                <input type='text' id='number_theme' maxlength='2' onkeydown='return checkNumberThemeLesson(event);' onkeyup=\"this.value=this.value.replace(/[^0-9]/,'');\">
-            </div>
-                
+                <div class='number_theme'>
+                    <b align='center'>№ темы</b><br>
+                    <input type='text' id='number_theme' maxlength='2' onkeydown='return checkNumberThemeLesson(event);' onkeyup=\"this.value=this.value.replace(/[^0-9]/,'');\">
+                </div>
+                    
                 <br>
                 <label><input type='radio' class='type_lesson' id='simple_lesson_rb' name='type_lesson' value='sl' checked><b class='type_lesson'>Обычное занятие</b></label>
                 <br><br>
@@ -734,31 +737,6 @@ function StudentView($content, $contentO = '')
             <div class='panel'>
                     <div id='item_grade'></div>
 
-                    <!--<b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b>
-                    <span class='space'></span>
-                    <b id='11' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b>
-                    <span class='space'></span>
-                    <b id='2' class='tool' title='Зачтено.'><b>Зач.</b></b>
-                    <span class='space'></span>
-                    <b id='3' class='tool' title='Не зачтено.'><b>Незач.</b></b>
-                    <span class='space'></span>
-                    <b id='4' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b>
-
-                    <hr class='marg-line'>
-
-                    <span id='5' class='tool' title='Пропуск занятия на 1 час.'><span>Н<sub>1ч.</sub></span></span>
-                    <span class='space'></span>
-                    <span id='6' class='tool' title='Пропуск занятия на 2 часа.'><span>Н<sub>2ч.</sub></span></span>
-                    <span class='space'></span>
-                    <span id='7' class='tool' title='Пропуск занятия на 3 часа.'><span>Н<sub>3ч.</sub></span></span>
-                    <span class='space'></span>
-                    <span id='8' class='tool' title='Пропуск занятия на 4 часа.'><span>Н<sub>4ч.</sub></span></span>
-                    <span class='space'></span>
-                    <span id='9' class='tool' title='Пропуск занятия на 5 часов.'><span>Н<sub>5ч.</sub></span></span>
-                    <span class='space'></span>
-                    <span id='10' class='tool' title='Пропуск занятия на 6 часов.'><span>Н<sub>6ч.</sub></span></span>
-                    -->
-                    
                     <hr class='marg-line'>
                     <span class='tool' title='Отметка: один'>1</span>
                     <span class='space'></span>
@@ -788,16 +766,13 @@ function StudentView($content, $contentO = '')
                        onkeydown='return proverka(event,1);' onblur='return proverka(event,1);'>
                 <input class='inp_cell' id='inp_2' type='text' maxlength='6' autocomplete='off'
                        onkeydown='return proverka(event,2);' onblur='return proverka(event,2);'>
-      <button id='add_grade_input' class='add_grade' title='Для добавления дополнительной оценки нажмите на кнопку!'>+</button>
-      <br><br>
-      
+                <button id='add_grade_input' class='add_grade' title='Для добавления дополнительной оценки нажмите на кнопку!'>+</button>
+                <br><br>
+            </div>    
         </fieldset>
-                <hr class='marg-line'>
-                <button id='close' class='attention'>Отмена</button>
-                <button id='edit' class='button'>Сохранить</button>
-                
-            </div>
-
+        <hr class='marg-line'>
+        <button id='close' class='attention'>Отмена</button>
+        <button id='edit' class='button'>Сохранить</button>
     </form>
 </div>
 
@@ -875,18 +850,18 @@ function StudentViewL($content, $contentO = '')
     <form>
         <fieldset>
             <div class='box'>
-            <div class='dat'>
-                <b align='center'>Дата занятия</b><br>
-                <div id='date_col'>
-                    <input type='text' id='lesson-date' required class='datepicker' value='" . date('d.m.Y') . "'>
+                <div class='dat'>
+                    <b align='center'>Дата занятия</b><br>
+                    <div id='date_col'>
+                        <input type='text' id='lesson-date' required class='datepicker' value='" . date('d.m.Y') . "'>
+                    </div>
                 </div>
-            </div>
-            <div class='number_theme'>
-                <b align='center'>№ темы</b><br>
-                <input type='text' id='number_theme' maxlength='2' onkeydown='return checkNumberThemeLesson(event);' onkeyup=\"this.value=this.value.replace(/[^0-9]/,'');\">
-            </div>
-              
-            <br>
+                <div class='number_theme'>
+                    <b align='center'>№ темы</b><br>
+                    <input type='text' id='number_theme' maxlength='2' onkeydown='return checkNumberThemeLesson(event);' onkeyup=\"this.value=this.value.replace(/[^0-9]/,'');\">
+                </div>
+                  
+                <br>
             </div>
         </fieldset>
     </form>
@@ -905,19 +880,13 @@ function StudentViewL($content, $contentO = '')
                    
                     <br><br>               
                  
-
-
                     <input class='inp_cell' id='inp_0' type=text maxlength='0' autocomplete='off'
                        onkeydown='return proverka(event,0);' onblur='return proverka(event,0);'><br><br>
-        </fieldset>      
-                <hr class='marg-line'>
-                <button id='close' class='attention'>Отмена</button>
-                <button id='edit' class='button'>Сохранить</button>
-                
-
-                
             </div>
-        
+        </fieldset>      
+        <hr class='marg-line'>
+        <button id='close' class='attention'>Отмена</button>
+        <button id='edit' class='button'>Сохранить</button>  
     </form>
 </div>
 
@@ -925,16 +894,16 @@ function StudentViewL($content, $contentO = '')
     <form>
         <fieldset>
             <div class=\"box\">
-            <div class='dat'>
-                <b align='center'>Дата занятия</b><br>
-                <input type='text' id='edit-lesson-date' required class='datepicker' value='" . date('d.m.Y') . "' placeholder='дд.мм.гггг'>
-            </div>
-            <div class='number_theme'>
-                <b align='center'>№ темы</b><br>
-                <input type='text' id='edit_number_theme' maxlength='2' onkeydown='return checkNumberThemeLesson(event);' onkeyup=\"this.value=this.value.replace(/[^0-9]/,'');\">
-            </div>
-                
-            <br>
+                <div class='dat'>
+                    <b align='center'>Дата занятия</b><br>
+                    <input type='text' id='edit-lesson-date' required class='datepicker' value='" . date('d.m.Y') . "' placeholder='дд.мм.гггг'>
+                </div>
+                <div class='number_theme'>
+                    <b align='center'>№ темы</b><br>
+                    <input type='text' id='edit_number_theme' maxlength='2' onkeydown='return checkNumberThemeLesson(event);' onkeyup=\"this.value=this.value.replace(/[^0-9]/,'');\">
+                </div>
+                    
+                <br>
             </div>
         </fieldset>
     </form>

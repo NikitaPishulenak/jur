@@ -1,4 +1,4 @@
-var edit_dialog, edit_form;
+﻿var edit_dialog, edit_form;
 var edit_grade_flag = 0;
 
 // Долгое нажатие для выставления оценки

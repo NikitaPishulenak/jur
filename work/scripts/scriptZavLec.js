@@ -1,4 +1,4 @@
-$(function () {
+﻿$(function () {
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
@@ -164,6 +164,7 @@ $(function () {
                     url:'z.php',
                     data:{
                         'dateLes': dat,
+                        'nGroup': $("input#nGroup").val(),
                         'idLessons': $("input#idSubject").val(),
                         'idStudent': student_id,
                         'PL': $("input#idPL").val(),
@@ -214,6 +215,7 @@ $(function () {
                         url:'z.php',
                         data:{
                             'id_Zapis': id_Zapis,
+                            'nGroup': $("input#nGroup").val(),
                             'dateLes': dat,
                             'idStudent': student_id,
                             'idPrepod': $("input#idPrepod").val(),
@@ -274,7 +276,6 @@ $(function () {
 });
 
 $(document).ready(function () {
-
     countCell = 1;
     groupNumber="";
     subject="";
@@ -286,7 +287,6 @@ $(document).ready(function () {
     if (is_touch_device()) {
         $.getScript('scripts/mobile/mscriptZavLec.js', function(){});
     }
-
 });
 
 //Функция по вызову последующих функций редактирования даты занятия

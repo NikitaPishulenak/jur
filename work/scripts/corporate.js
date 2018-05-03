@@ -3,6 +3,8 @@
     resize();
     path = window.location.pathname.slice(1);
     timeScroll = 2000;
+    var countStudents = $("div.fio_student").length;
+    (countStudents==0) ? $("div.export").hide() : "";
 
 
 
@@ -746,7 +748,7 @@ function generateAns(idStudent) {
             countAnswer++
         }
     });
-    var res = (100 * countAnswer / $('div.grade[data-idStudent="' + idStudent + '"]').length).toFixed(2);
+    var res = (100 * countAnswer / $('div.grade[data-idStudent="' + idStudent + '"]').length).toFixed(0);
     res = (isNaN(res) || res == 0) ? "" : res += "%";
     $('div.ans[data-idStudent="' + idStudent + '"]').html(res);
 }

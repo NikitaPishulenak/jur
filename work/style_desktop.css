@@ -24,7 +24,7 @@
     .popup-content { width: 250px;}
     .nLesson{ line-height: 1.5em; top:-15px; width: 25px; height: 15px; float: left; margin-bottom: -15px;}
     .average_small{width: 35px; height: 30px;}
-    .avg_small{width: 35px; height: 30px;}
+    .avg_small, .ans_small{width: 35px; height: 30px;}
     .date_col_stat_small{ width: 35px; font-size: 14px; }
     /*.statistic{margin-right: 70px;}*/
 }

@@ -81,9 +81,6 @@ if(isset($_GET['menuactiv'])){
 
 //----------------------------------------------------------------------------------------------
 
-
-
-
 function edtLessonStudentUP(){
     include_once 'configMain.php';
 
@@ -96,9 +93,9 @@ function edtLessonStudentUP(){
                     $arr = mysqli_fetch_row($resTime);
                     if($arr[6]!=$_SESSION['SesVar']['FIO'][0] || $arr[0] > 10){
                         mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (".$_GET['arrGrade'][$iS][0].",".$arr[1].",".$arr[2].",".$_GET['idStudent'].",'".$arr[3]."','".$arr[4]."',".$arr[5].",".$arr[6].")");
-                        mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_GET['arrGrade'][$iS][1].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_GET['arrGrade'][$iS][0]." AND idStud=".$_GET['idStudent']);
+                        mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_GET['arrGrade'][$iS][1].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND pStatus=0 AND id=".$_GET['arrGrade'][$iS][0]." AND idStud=".$_GET['idStudent']);
                     }else{
-                        mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_GET['arrGrade'][$iS][1].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_GET['arrGrade'][$iS][0]." AND idStud=".$_GET['idStudent']);
+                        mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_GET['arrGrade'][$iS][1].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND pStatus=0 AND id=".$_GET['arrGrade'][$iS][0]." AND idStud=".$_GET['idStudent']);
                     }
                     mysqli_free_result($resTime);
                 }
@@ -163,7 +160,8 @@ function SearchGiveData()
         $retVal.="\n<div class='DialogP'><div class='titleBox'><H2>Дисциплина</H2></div>\n";
 
         while ($arr = mysqli_fetch_row($res)) {
-            $ress = mysqli_query($dbMain, "SELECT COUNT(id) FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '3%' OR RatingO LIKE '__3%' OR RatingO LIKE '____3%' OR RatingO LIKE '4%' OR RatingO LIKE '__4%' OR RatingO LIKE '____4%' OR RatingO LIKE '26%' OR RatingO LIKE '__26%' OR RatingO LIKE '____26')");
+            $ress = mysqli_query($dbMain, "SELECT COUNT(id) FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '3%' OR RatingO LIKE '__3%' OR RatingO LIKE '____3%' OR RatingO LIKE '4%' OR RatingO LIKE '__4%' OR RatingO LIKE '____4%' OR RatingO LIKE '26%' OR RatingO LIKE '__26%' OR RatingO LIKE '____26' OR RatingO LIKE '21%' OR RatingO LIKE '__21%' OR RatingO LIKE '____21')");
+//            $ress = mysqli_query($dbMain, "SELECT COUNT(id) FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '3%' OR RatingO LIKE '__3%' OR RatingO LIKE '____3%' OR RatingO LIKE '4%' OR RatingO LIKE '__4%' OR RatingO LIKE '____4%' OR RatingO LIKE '26%' OR RatingO LIKE '__26%' OR RatingO LIKE '____26' OR RatingO LIKE '20%' OR RatingO LIKE '__20%' OR RatingO LIKE '____20' OR RatingO LIKE '21%' OR RatingO LIKE '__21%' OR RatingO LIKE '____21' OR RatingO LIKE '22%' OR RatingO LIKE '__22%' OR RatingO LIKE '____22')");
             list($cntOc) = mysqli_fetch_row($ress);
             $retVal.="<div class='DialogFakFak' data-idSubject='".$arr[0]."'>\n<span class='shortText'>".$arr[2]."</span>\n<span class='fullText'>".$arr[1]."</span>&nbsp;<span class='fullTextClose' title='Закрыть'>X</span>\n<div class='content_grade'></div>\n".($cntOc ? "<div class='CO' title='Количество пропусков: ".$cntOc."'>".$cntOc."</div>\n" : "")."\n</div>\n";
         }
@@ -184,7 +182,7 @@ function GroupVP($idSu, $idSt){
 
     include_once 'configMain.php';
 
-    $resultS = mysqli_query($dbMain, "SELECT DATE_FORMAT(B.LDate,'%e.%m.%Y'), A.RatingO, A.PL, A.PKE, A.id FROM rating A LEFT JOIN lesson B ON (B.id=A.idLesson) WHERE A.idStud=".$idSt." AND A.idLessons=".$idSu." AND A.del=0 ORDER BY A.PL,B.LDate");
+    $resultS = mysqli_query($dbMain, "SELECT DATE_FORMAT(B.LDate,'%e.%m.%Y'), A.RatingO, A.PL, A.PKE, A.id, A.pStatus FROM rating A LEFT JOIN lesson B ON (B.id=A.idLesson) WHERE A.idStud=".$idSt." AND A.idLessons=".$idSu." AND A.del=0 ORDER BY A.PL,B.LDate");
     if(mysqli_num_rows($resultS)>=1){
         $retVal="<div class='menuTools'><div id='selAll' class='sel_tool'>Выделить всё</div><div id='canselSelAll' class='sel_tool'>Отменить</div><div class='replaceAbs'>Заменить пропуски</div></div><div class='C'></div>";
         $trueP=0; $trueL=0;
@@ -199,13 +197,13 @@ function GroupVP($idSu, $idSt){
             }
             switch($arrSS[3]){
                 case 1:
-                    $retVal.="<div class='Oc Koll' title='Коллоквиум / История болезни'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4].">".$arrSS[1]."</div></div>\n";
+                    $retVal.="<div class='Oc Koll' title='Коллоквиум / История болезни'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4]." data-Status=".$arrSS[5].">".$arrSS[1]."</div></div>\n";
                     break;
                 case 2:
-                    $retVal.="<div class='Oc Exm' title='Аттестация'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4].">".$arrSS[1]."</div></div>\n";
+                    $retVal.="<div class='Oc Exm' title='Аттестация'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4]." data-Status=".$arrSS[5].">".$arrSS[1]."</div></div>\n";
                     break;
                 default:
-                    $retVal.="<div class='Oc'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4].">".$arrSS[1]."</div></div>\n";
+                    $retVal.="<div class='Oc'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4]." data-Status=".$arrSS[5].">".$arrSS[1]."</div></div>\n";
                     break;
             }
 
@@ -233,9 +231,9 @@ function edtLessonStudent(){
             $arr = mysqli_fetch_row($resTime);
             if($arr[6]!=$_SESSION['SesVar']['FIO'][0] || $arr[0] > 10){
                 mysqli_query($dbMain, "INSERT INTO logi (idRating,idLessons,idLesson,idStud,DateO,TimeO,RatingO,idEmployess) VALUES (".$_GET['id_Zapis'].",".$arr[1].",".$arr[2].",".$_GET['idStudent'].",'".$arr[3]."','".$arr[4]."',".$arr[5].",".$arr[6].")");
-                mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
+                mysqli_query($dbMain, "UPDATE rating SET DateO=CURDATE(), TimeO=CURTIME(), RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND pStatus=0 AND id=" . $_GET['id_Zapis'] . " AND idStud=" . $_GET['idStudent']);
             }else{
-                mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
+                mysqli_query($dbMain, "UPDATE rating SET RatingO=".$_GET['grades'].", idEmployess=".$_SESSION['SesVar']['FIO'][0]." WHERE del=0 AND pStatus=0 AND id=".$_GET['id_Zapis']." AND idStud=".$_GET['idStudent']);
             }
             mysqli_free_result($resTime);
         }
@@ -303,12 +301,12 @@ function GroupViewL(){
                             $prepreRating.="<div class='date_col'>".($arr[4] ? "<div class='nLesson'>".$arr[4]."</div>" : "")."<div class='date_title' data-idLesson='".$arr[0]."'>".$arr[3]."</div>\n";
                             break;
                     }
-                    $resultS = mysqli_query($dbMain, "SELECT id, idStud, RatingO FROM rating WHERE del=0 AND (".$sqlStud.") AND PKE=".$arr[2]." AND idLesson=".$arr[0]." AND idLessons=".$_GET['idPredmet']." AND PL=1");
+                    $resultS = mysqli_query($dbMain, "SELECT id, idStud, RatingO, pStatus FROM rating WHERE del=0 AND (".$sqlStud.") AND PKE=".$arr[2]." AND idLesson=".$arr[0]." AND idLessons=".$_GET['idPredmet']." AND PL=1");
                     $arrSStud = Array();
                     if(mysqli_num_rows($resultS)>=1){
                         $ii=0;
                         while($arrSS = mysqli_fetch_row($resultS)){
-                            $arrSStud[$ii]=array($arrSS[0],$arrSS[1],$arrSS[2]);
+                            $arrSStud[$ii]=array($arrSS[0],$arrSS[1],$arrSS[2], $arrSS[3]);
                             $ii++;
                         }
                     }
@@ -319,11 +317,11 @@ function GroupViewL(){
                         $trueS=0;
                         for($iSS=0; $iSS<=($countSStud-1); $iSS++){
                             if($arrStud[$iS]==$arrSStud[$iSS][1]){
-                                $prepreRating.="<div class='grade' data-idLes=".$arr[0]." data-idStudent=".$arrStud[$iS]." data-PKE=".$arr[2]." data-zapis=".$arrSStud[$iSS][0].">".$arrSStud[$iSS][2]."</div>\n";
+                                $prepreRating.="<div class='grade' data-idLes=".$arr[0]." data-idStudent=".$arrStud[$iS]." data-PKE=".$arr[2]." data-zapis=".$arrSStud[$iSS][0]." data-Status=".$arrSStud[$iSS][3].">".$arrSStud[$iSS][2]."</div>\n";
                                 $trueS=1;
                             }
                         }
-                        if(!$trueS){ $prepreRating.="<div class='grade' data-idLes=".$arr[0]." data-idStudent=".$arrStud[$iS]." data-PKE=".$arr[2]." data-zapis=0></div>\n"; }
+                        if(!$trueS){ $prepreRating.="<div class='grade' data-idLes=".$arr[0]." data-idStudent=".$arrStud[$iS]." data-PKE=".$arr[2]." data-zapis=0 data-Status=0></div>\n"; }
                     }
 
                     $preRating.=$prepreRating."</div>\n";
@@ -414,12 +412,12 @@ function GroupViewP(){
                             $prepreRating.="<div class='date_col'>".($arr[4] ? "<div class='nLesson'>".$arr[4]."</div>" : "")."<div class='date_title' data-idLesson='".$arr[0]."'>".$arr[3]."</div>\n";
                             break;
                     }
-                    $resultS = mysqli_query($dbMain, "SELECT id, idStud, RatingO FROM rating WHERE del=0 AND (".$sqlStud.") AND PKE=".$arr[2]." AND idLesson=".$arr[0]." AND idLessons=".$_GET['idPredmet']." AND PL=0");
+                    $resultS = mysqli_query($dbMain, "SELECT id, idStud, RatingO, pStatus FROM rating WHERE del=0 AND (".$sqlStud.") AND PKE=".$arr[2]." AND idLesson=".$arr[0]." AND idLessons=".$_GET['idPredmet']." AND PL=0");
                     $arrSStud = Array();
                     if(mysqli_num_rows($resultS)>=1){
                         $ii=0;
                         while($arrSS = mysqli_fetch_row($resultS)){
-                            $arrSStud[$ii]=array($arrSS[0],$arrSS[1],$arrSS[2]);
+                            $arrSStud[$ii]=array($arrSS[0],$arrSS[1],$arrSS[2], $arrSS[3]);
                             $ii++;
                         }
                     }
@@ -430,11 +428,11 @@ function GroupViewP(){
                         $trueS=0;
                         for($iSS=0; $iSS<=($countSStud-1); $iSS++){
                             if($arrStud[$iS]==$arrSStud[$iSS][1]){
-                                $prepreRating.="<div class='grade' data-idLes=".$arr[0]." data-idStudent=".$arrStud[$iS]." data-PKE=".$arr[2]." data-zapis=".$arrSStud[$iSS][0].">".$arrSStud[$iSS][2]."</div>\n";
+                                $prepreRating.="<div class='grade' data-idLes=".$arr[0]." data-idStudent=".$arrStud[$iS]." data-PKE=".$arr[2]." data-zapis=".$arrSStud[$iSS][0]." data-Status=".$arrSStud[$iSS][3].">".$arrSStud[$iSS][2]."</div>\n";
                                 $trueS=1;
                             }
                         }
-                        if(!$trueS){ $prepreRating.="<div class='grade' data-idLes=".$arr[0]." data-idStudent=".$arrStud[$iS]." data-PKE=".$arr[2]." data-zapis=0></div>\n"; }
+                        if(!$trueS){ $prepreRating.="<div class='grade' data-idLes=".$arr[0]." data-idStudent=".$arrStud[$iS]." data-PKE=".$arr[2]." data-zapis=0 data-Status=0></div>\n"; }
                     }
 
                     $preRating.=$prepreRating."</div>\n";
@@ -694,8 +692,8 @@ function HeaderFooterSearch($content,$title,$vC='',$vS=''){
 
                     <input class='inp_cell' id='inp_0' type=text maxlength='0'
                            onkeydown='return proverka(event,0);' onblur='return proverka(event,0);'>
-
                     <br><br>
+                </div>
             </fieldset>
             <hr class='marg-line'>
             <button id='close' class='attention'>Отмена</button>
@@ -832,13 +830,11 @@ function StudentView($content,$contentO=''){
                        onkeydown=\"return proverka(event,2);\">
 
                 <br><br>
-        </fieldset>
-                <hr class='marg-line'>
-                <button id='close' class='attention'>Отмена</button>
-                <button id='edit' class='button'>Сохранить</button>
-              
             </div>
-        
+        </fieldset>
+        <hr class='marg-line'>
+        <button id='close' class='attention'>Отмена</button>
+        <button id='edit' class='button'>Сохранить</button>        
     </form>
 </div>
 
@@ -875,21 +871,16 @@ function StudentViewL($content,$contentO=''){
                 <b id='3' class='tool'><b>Н<sub>б.о.</sub></b></b>
                 <span class='space'></span>
                 <b id='2' class='tool'><b>Н<sub>б.у</sub></b></b>
- 
                 <br><br>
-
-
                 <input class='inp_cell' id=\"inp_0\" type=text maxlength='6' autocomplete='off'
                        onkeydown=\"return proverka(event,0);\">
 
                 <br><br>
-        </fieldset>
-                <hr class='marg-line'>
-                <button id='close' class='attention'>Отмена</button>
-                <button id='edit' class='button'>Сохранить</button>
-               
             </div>
-
+        </fieldset>
+        <hr class='marg-line'>
+        <button id='close' class='attention'>Отмена</button>
+        <button id='edit' class='button'>Сохранить</button>
     </form>
 </div>
 
@@ -898,7 +889,6 @@ function StudentViewL($content,$contentO=''){
 </div>
 
 <div class='container-list'>
-
     <div class='container'>
         <div class='fio'>
             <div class='title'>ФИО</div>\n".$content."
@@ -939,7 +929,7 @@ function FormSearch($wrd=''){
     return "<div class='SearchForm'><form action='d.php'>
 <input type=hidden name='menuactiv' value='SearchStudent'>
 <div>Поиск студента по фамилии или номеру зачётки</div>
-<input name='Swords' type='search' class='SearchWords' maxlength=100 value='".$wrd."'><input type='submit' value='Найти!'>
+<input name='Swords' type='search' class='SearchWords' maxlength=100 value='".$wrd."'><input type='submit' value='Найти'>
 </form></div>";
 
 }

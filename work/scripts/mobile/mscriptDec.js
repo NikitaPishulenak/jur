@@ -1,4 +1,4 @@
-var edit_dialog, edit_form, edit_grade_flag = 0;
+﻿var edit_dialog, edit_form, edit_grade_flag = 0;
 
 // Долгое нажатие для выставления оценки
 $('div').delegate(".grade", "touchstart", function () {

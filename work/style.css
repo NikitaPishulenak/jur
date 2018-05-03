@@ -1,4 +1,4 @@
-@import url("style_mobile.css");
+﻿@import url("style_mobile.css");
 @import url("style_desktop.css");
 
 HTML {font-family: Arial; font-size:15px;}
@@ -106,7 +106,7 @@ span.absent { width: 30px; text-align: center; display: inline-block;}
 .result_box{ border: 1px solid #ccc; border-left: none; border-top: none;}
 .date_col { position: relative; display: inline-table; margin-bottom: 1px;}
 .date_col_stat, .date_col_stat_small { display: inline-table; border:none;}
-.grade { font-size: 1.01em; font-weight: 600; border-bottom: solid #000 1px; border-left: solid #000 1px; border-right: solid #000 1px; text-align: center; cursor: pointer; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
+.grade { font-weight: 600; border-bottom: solid #000 1px; border-left: solid #000 1px; border-right: solid #000 1px; text-align: center; cursor: pointer; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
 
 .small-text{ font-size: 0.7em;}
 .triangle-topright { position: absolute; width: 0; height: 0; bottom:0; float: left; display: inline-table;}
@@ -118,8 +118,8 @@ span.absent { width: 30px; text-align: center; display: inline-block;}
 .result_div_small{ color: #000; background-color: #d3d3d3; font-weight: bolder;}
 .avg, .ans, .abs { border-bottom: solid #000 1px; text-align: center; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
 .average, .answer, .absenteeism { border-left: solid #000 1px; border-right: solid #000 1px; border-top: none; text-align: center; vertical-align: middle; float: left; display: inline-table;}
-.avg_small { border-bottom: solid #000 1px; text-align: center; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
-.average_small{ border-left: solid #000 1px; border-right: solid #000 1px; border-top: none; text-align: center; vertical-align: middle; float: left; display: inline-table;}
+.avg_small, .ans_small { border-bottom: solid #000 1px; text-align: center; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
+.average_small, .answer_small{ border-left: solid #000 1px; border-right: solid #000 1px; border-top: none; text-align: center; vertical-align: middle; float: left; display: inline-table;}
 .kursiv{ font-size: 9pt;}
 b#delGr{ font-size: 1.5em;}
 input#number_theme, input#edit_number_theme{ width: 30px;}
@@ -165,6 +165,7 @@ div.number_theme{ padding-left: 5px; position: absolute; top: 15px; margin-left:
     .Exm .Otmetka {font-size:17px;}
     .DialogFakFak .fullTextClose {width:22px; height:16px; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
     H2 {font-size:15px;}
+    .grade{font-size: 15px;}
 
 }
 
@@ -184,6 +185,7 @@ div.number_theme{ padding-left: 5px; position: absolute; top: 15px; margin-left:
     H2 {font-size:14px;}
     p {font-size: 14px;}
     .SearchWords {width:70%;}
+    .grade{font-size: 13px;}
 }
 
 
@@ -206,6 +208,7 @@ div.number_theme{ padding-left: 5px; position: absolute; top: 15px; margin-left:
     H2 {font-size:13px;}
     p {font-size: 13px;}
     .SearchWords {width:70%;}
+    .grade{font-size: 10px;}
 }
 
 /*a{ font-size: 0.8em}*/
