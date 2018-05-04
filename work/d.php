@@ -9,7 +9,7 @@ if(!isset($_SESSION['SesVar']['Auth']) || $_SESSION['SesVar']['Auth']!==true){
     echo "Access is denied!";
     exit;
    } else {
-      header('Location: index.php?closet=Время сессии истекло!');
+      header('Location: index.php?closet=Р’СЂРµРјСЏ СЃРµСЃСЃРёРё РёСЃС‚РµРєР»Рѕ!');
       exit;
    }
 }
@@ -21,7 +21,7 @@ for($ii=0; $ii<=($countLev-1); $ii++){
 }
 
 if(!$Nepuschu){
-    header('Location: index.php?closet=Запрещённый уровень доступа! Досвидос.');
+    header('Location: index.php?closet=Р—Р°РїСЂРµС‰С‘РЅРЅС‹Р№ СѓСЂРѕРІРµРЅСЊ РґРѕСЃС‚СѓРїР°! Р”РѕСЃРІРёРґРѕСЃ.');
     exit;
 }
 
@@ -39,7 +39,7 @@ if(isset($_GET['menuactiv'])){
                 $_GET['idStudent'] = substr($_GET['idStudent'],0,6);
                 GroupVP($_GET['idSubject'], $_GET['idStudent']);
             } else {
-                echo "<div class='Not'>Что-то пошло не так!</div>";
+                echo "<div class='Not'>Р§С‚Рѕ-С‚Рѕ РїРѕС€Р»Рѕ РЅРµ С‚Р°Рє!</div>";
             }
             break;
 
@@ -82,6 +82,9 @@ if(isset($_GET['menuactiv'])){
 //----------------------------------------------------------------------------------------------
 
 
+function KursView(){
+
+}
 
 
 function edtLessonStudentUP(){
@@ -116,7 +119,7 @@ function SearchStudent(){
     include_once 'configStudent.php';
 
     $_GET['Swords'] = trim(htmlspecialchars(substr($_GET['Swords'],0,100)));
-    $retVal="<p>".$_SESSION['SesVar']['Dekan'][0]." (".$_SESSION['SesVar']['Dekan'][1].")</p><a href='d.php'>&larr; вернуться</a><hr>".FormSearch($_GET['Swords']);
+    $retVal="<p>".$_SESSION['SesVar']['Dekan'][0]." (".$_SESSION['SesVar']['Dekan'][1].")</p><a href='d.php'>&larr; РІРµСЂРЅСѓС‚СЊСЃСЏ</a><hr>".FormSearch($_GET['Swords']);
     if($_GET['Swords']!=""){
         if(is_numeric($_GET['Swords']) && strlen($_GET['Swords'])===7){
             $preSQL = "A.NomZ='".$_GET['Swords']."' AND";
@@ -127,15 +130,15 @@ function SearchStudent(){
         if(mssql_num_rows($result)>=1){
             $i = 1;
             while ($arr = mssql_fetch_row($result)) {
-                $retVal.="<div class='StudentNaVibor'>".$i.". <a href='d.php?menuactiv=SearchStudentGo&idSt=".$arr[0]."&kursSt=".$arr[2]."&idgroupSt=".$arr[5]."&groupSt=".$arr[3]."&gfnS=".$arr[6]."&nomzSt=".$arr[4]."&nameSt=".trim($arr[1])."'>".trim($arr[1])."</a> (гр. ".$arr[3].", ".$arr[2]."-й курс, № <strong>".$arr[4]."</strong>)</div>\n";
+                $retVal.="<div class='StudentNaVibor'>".$i.". <a href='d.php?menuactiv=SearchStudentGo&idSt=".$arr[0]."&kursSt=".$arr[2]."&idgroupSt=".$arr[5]."&groupSt=".$arr[3]."&gfnS=".$arr[6]."&nomzSt=".$arr[4]."&nameSt=".trim($arr[1])."'>".trim($arr[1])."</a> (РіСЂ. ".$arr[3].", ".$arr[2]."-Р№ РєСѓСЂСЃ, в„– <strong>".$arr[4]."</strong>)</div>\n";
                 $i++;
             }
             mssql_free_result($result);
         } else {
-            $retVal.="<H1>Извините, студент не найден!</H1>";
+            $retVal.="<H1>РР·РІРёРЅРёС‚Рµ, СЃС‚СѓРґРµРЅС‚ РЅРµ РЅР°Р№РґРµРЅ!</H1>";
         }
     } else {
-        $retVal.="<H1>Извините, студент не найден!</H1>";
+        $retVal.="<H1>РР·РІРёРЅРёС‚Рµ, СЃС‚СѓРґРµРЅС‚ РЅРµ РЅР°Р№РґРµРЅ!</H1>";
     }
     unset($result, $preSQL);
     echo HeaderFooter($retVal, $_SESSION['SesVar']['Dekan'][0]." (".$_SESSION['SesVar']['Dekan'][1].")", $verC);
@@ -157,16 +160,16 @@ function SearchGiveData()
     $res = mysqli_query($dbMain, "SELECT A.id_lesson, B.name, IF(CHAR_LENGTH(B.name)>70,CONCAT(LEFT(B.name, 67),'...'),B.name) FROM schedule A LEFT JOIN lessons B ON B.id=A.id_lesson WHERE A.course=".$_GET['kursSt']." AND A.id_faculty=".$_SESSION['SesVar']['Dekan'][2]." GROUP BY A.id_lesson ORDER BY B.name");
 
     $retVal="\n<input type='hidden' id='idStudent' value='".$_GET['idSt']."'>
-<hr><H2>".$_GET['nameSt']." (гр. ".$_GET['groupSt'].", ".$_GET['kursSt']."-й курс, № ".$_GET['nomzSt'].")</H2>";
+<hr><H2>".$_GET['nameSt']." (РіСЂ. ".$_GET['groupSt'].", ".$_GET['kursSt']."-Р№ РєСѓСЂСЃ, в„– ".$_GET['nomzSt'].")</H2>";
 
     if (mysqli_num_rows($res)>=1) {
-        $retVal.="\n<div class='DialogP'><div class='titleBox'><H2>Дисциплина</H2></div>\n";
+        $retVal.="\n<div class='DialogP'><div class='titleBox'><H2>Р”РёСЃС†РёРїР»РёРЅР°</H2></div>\n";
 
         while ($arr = mysqli_fetch_row($res)) {
             $ress = mysqli_query($dbMain, "SELECT COUNT(id) FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '3%' OR RatingO LIKE '__3%' OR RatingO LIKE '____3%' OR RatingO LIKE '4%' OR RatingO LIKE '__4%' OR RatingO LIKE '____4%' OR RatingO LIKE '26%' OR RatingO LIKE '__26%' OR RatingO LIKE '____26' OR RatingO LIKE '21%' OR RatingO LIKE '__21%' OR RatingO LIKE '____21')");
 //            $ress = mysqli_query($dbMain, "SELECT COUNT(id) FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '3%' OR RatingO LIKE '__3%' OR RatingO LIKE '____3%' OR RatingO LIKE '4%' OR RatingO LIKE '__4%' OR RatingO LIKE '____4%' OR RatingO LIKE '26%' OR RatingO LIKE '__26%' OR RatingO LIKE '____26' OR RatingO LIKE '20%' OR RatingO LIKE '__20%' OR RatingO LIKE '____20' OR RatingO LIKE '21%' OR RatingO LIKE '__21%' OR RatingO LIKE '____21' OR RatingO LIKE '22%' OR RatingO LIKE '__22%' OR RatingO LIKE '____22')");
             list($cntOc) = mysqli_fetch_row($ress);
-            $retVal.="<div class='DialogFakFak' data-idSubject='".$arr[0]."'>\n<span class='shortText'>".$arr[2]."</span>\n<span class='fullText'>".$arr[1]."</span>&nbsp;<span class='fullTextClose' title='Закрыть'>X</span>\n<div class='content_grade'></div>\n".($cntOc ? "<div class='CO' title='Количество пропусков: ".$cntOc."'>".$cntOc."</div>\n" : "")."\n</div>\n";
+            $retVal.="<div class='DialogFakFak' data-idSubject='".$arr[0]."'>\n<span class='shortText'>".$arr[2]."</span>\n<span class='fullText'>".$arr[1]."</span>&nbsp;<span class='fullTextClose' title='Р—Р°РєСЂС‹С‚СЊ'>X</span>\n<div class='content_grade'></div>\n".($cntOc ? "<div class='CO' title='РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕРїСѓСЃРєРѕРІ: ".$cntOc."'>".$cntOc."</div>\n" : "")."\n</div>\n";
         }
         unset($arr,$cntOc);
         mysqli_free_result($res);
@@ -187,26 +190,26 @@ function GroupVP($idSu, $idSt){
 
     $resultS = mysqli_query($dbMain, "SELECT DATE_FORMAT(B.LDate,'%e.%m.%Y'), A.RatingO, A.PL, A.PKE, A.id, A.pStatus FROM rating A LEFT JOIN lesson B ON (B.id=A.idLesson) WHERE A.idStud=".$idSt." AND A.idLessons=".$idSu." AND A.del=0 ORDER BY A.PL,B.LDate");
     if(mysqli_num_rows($resultS)>=1){
-        $retVal="<div class='menuTools'><div id='selAll' class='sel_tool'>Выделить всё</div><div id='canselSelAll' class='sel_tool'>Отменить</div><div class='replaceAbs'>Заменить пропуски</div></div><div class='C'></div>";
+        $retVal="<div class='menuTools'><div id='selAll' class='sel_tool'>Р’С‹РґРµР»РёС‚СЊ РІСЃС‘</div><div id='canselSelAll' class='sel_tool'>РћС‚РјРµРЅРёС‚СЊ</div><div class='replaceAbs'>Р—Р°РјРµРЅРёС‚СЊ РїСЂРѕРїСѓСЃРєРё</div></div><div class='C'></div>";
         $trueP=0; $trueL=0;
         while($arrSS = mysqli_fetch_row($resultS)){
 
             if(!$arrSS[2] && !$trueP){
                 $trueP = 1;
-                $retVal.="<div class='titleO'>Практические</div>\n";
+                $retVal.="<div class='titleO'>РџСЂР°РєС‚РёС‡РµСЃРєРёРµ</div>\n";
             } else if ($arrSS[2] && !$trueL){
                 $trueL = 1;
-                $retVal.="<div class='clr'></div><div class='titleO'>Лекции</div>\n";
+                $retVal.="<div class='clr'></div><div class='titleO'>Р›РµРєС†РёРё</div>\n";
             }
             switch($arrSS[3]){
                 case 1:
-                    $retVal.="<div class='Oc Koll' title='Коллоквиум / История болезни'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4]." data-Status=".$arrSS[5].">".$arrSS[1]."</div></div>\n";
+                    $retVal.="<div class='Oc Koll' title='РљРѕР»Р»РѕРєРІРёСѓРј / РСЃС‚РѕСЂРёСЏ Р±РѕР»РµР·РЅРё'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4]." data-Status=".$arrSS[5].">".$arrSS[1]."</div><img src='img/tr.png' class='tr'></div>\n";
                     break;
                 case 2:
-                    $retVal.="<div class='Oc Exm' title='Аттестация'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4]." data-Status=".$arrSS[5].">".$arrSS[1]."</div></div>\n";
+                    $retVal.="<div class='Oc Exm' title='РђС‚С‚РµСЃС‚Р°С†РёСЏ'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4]." data-Status=".$arrSS[5].">".$arrSS[1]."</div><img src='img/tr.png' class='tr'></div>\n";
                     break;
                 default:
-                    $retVal.="<div class='Oc'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4]." data-Status=".$arrSS[5].">".$arrSS[1]."</div></div>\n";
+                    $retVal.="<div class='Oc'><div class='DataO'>".$arrSS[0]."</div><div class='Otmetka' data-zapis=".$arrSS[4]." data-Status=".$arrSS[5].">".$arrSS[1]."</div><img src='img/tr.png' class='tr'></div>\n";
                     break;
             }
 
@@ -215,7 +218,7 @@ function GroupVP($idSu, $idSt){
         echo $retVal;
         unset($retVal);
     } else {
-        echo "<div class='Not'>По данной дисциплине отметок ещё нет!</div>";
+        echo "<div class='Not'>РџРѕ РґР°РЅРЅРѕР№ РґРёСЃС†РёРїР»РёРЅРµ РѕС‚РјРµС‚РѕРє РµС‰С‘ РЅРµС‚!</div>";
     }
 }
 
@@ -259,7 +262,7 @@ function GroupViewL(){
 
     $retVal .= "<h3><a href='d.php'>" . $_GET['nPredmet'] . "</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
     $retVal .= "<a href='d.php?menuactiv=goF&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."'>".$_GET['nF']."</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal.="Группа № ".$_GET['nGroup']." (<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$_GET['idGroup']."&PL=0&nPredmet=".$_GET['nPredmet']."&nF=".$_GET['nF']."&nGroup=".$_GET['nGroup']."&IdCaptain=".$_GET['IdCaptain']."'>Практическое</a> / ЛЕКЦИЯ)</h3><hr>";
+    $retVal.="Р“СЂСѓРїРїР° в„– ".$_GET['nGroup']." (<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$_GET['idGroup']."&PL=0&nPredmet=".$_GET['nPredmet']."&nF=".$_GET['nF']."&nGroup=".$_GET['nGroup']."&IdCaptain=".$_GET['IdCaptain']."'>РџСЂР°РєС‚РёС‡РµСЃРєРѕРµ</a> / Р›Р•РљР¦РРЇ)</h3><hr>";
 
 
     $retVal.="
@@ -280,7 +283,7 @@ function GroupViewL(){
             $i=0;
             while($arrS = mssql_fetch_row($result)){
                 if($arrS[0] == $_GET['IdCaptain']){
-                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."' title='Капитан шлюпки'>".($i + 1).". <strong>".$arrS[1]."</strong></div>\n";
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."' title='РљР°РїРёС‚Р°РЅ С€Р»СЋРїРєРё'>".($i + 1).". <strong>".$arrS[1]."</strong></div>\n";
                 } else {
                    $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."'>".($i + 1).". ".$arrS[1]."</div>\n";
                 }
@@ -341,7 +344,7 @@ function GroupViewL(){
             $i=1;
             while($arrStud = mssql_fetch_row($result)){
                 if($arrStud[0] == $_GET['IdCaptain']){
-                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."' title='Капитан шлюпки'>".$i.". <strong>".$arrStud[1]."</strong></div>\n";
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."' title='РљР°РїРёС‚Р°РЅ С€Р»СЋРїРєРё'>".$i.". <strong>".$arrStud[1]."</strong></div>\n";
                 } else {
                    $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."'>".$i.". ".$arrStud[1]."</div>\n";
                 }
@@ -355,7 +358,7 @@ function GroupViewL(){
     mysqli_free_result($resultL);
 
 
-    echo HeaderFooterGroupL($retVal, "№ ".$_GET['nGroup'], $verC, $verS);
+    echo HeaderFooterGroupL($retVal, "в„– ".$_GET['nGroup'], $verC, $verS);
 
 
 
@@ -370,7 +373,7 @@ function GroupViewP(){
 
     $retVal .= "<h3><a href='d.php'>" . $_GET['nPredmet'] . "</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
     $retVal .= "<a href='d.php?menuactiv=goF&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."'>".$_GET['nF']."</a><br>&nbsp;<font color='#ff0000'>&darr;</font><br>";
-    $retVal.="Группа № ".$_GET['nGroup']." (ПРАКТИЧЕСКОЕ / <a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$_GET['idGroup']."&PL=1&nPredmet=".$_GET['nPredmet']."&nF=".$_GET['nF']."&nGroup=".$_GET['nGroup']."&IdCaptain=".$_GET['IdCaptain']."'>Лекция</a>)</h3><hr>";
+    $retVal.="Р“СЂСѓРїРїР° в„– ".$_GET['nGroup']." (РџР РђРљРўРР§Р•РЎРљРћР• / <a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$_GET['idGroup']."&PL=1&nPredmet=".$_GET['nPredmet']."&nF=".$_GET['nF']."&nGroup=".$_GET['nGroup']."&IdCaptain=".$_GET['IdCaptain']."'>Р›РµРєС†РёСЏ</a>)</h3><hr>";
 
 
     $retVal.="
@@ -391,7 +394,7 @@ function GroupViewP(){
             $i=0;
             while($arrS = mssql_fetch_row($result)){
                 if($arrS[0] == $_GET['IdCaptain']){
-                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."' title='Капитан шлюпки'>".($i + 1).". <strong>".$arrS[1]."</strong></div>\n";
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."' title='РљР°РїРёС‚Р°РЅ С€Р»СЋРїРєРё'>".($i + 1).". <strong>".$arrS[1]."</strong></div>\n";
                 } else {
                    $preStud .= "<div class='fio_student' data-idStudent='".$arrS[0]."'>".($i + 1).". ".$arrS[1]."</div>\n";
                 }
@@ -452,7 +455,7 @@ function GroupViewP(){
             $i=1;
             while($arrStud = mssql_fetch_row($result)){
                 if($arrStud[0] == $_GET['IdCaptain']){
-                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."' title='Капитан шлюпки'>".$i.". <strong>".$arrStud[1]."</strong></div>\n";
+                   $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."' title='РљР°РїРёС‚Р°РЅ С€Р»СЋРїРєРё'>".$i.". <strong>".$arrStud[1]."</strong></div>\n";
                 } else {
                    $preStud .= "<div class='fio_student' data-idStudent='".$arrStud[0]."'>".$i.". ".$arrStud[1]."</div>\n";
                 }
@@ -466,7 +469,7 @@ function GroupViewP(){
     mysqli_free_result($resultL);
 
 
-    echo HeaderFooterGroup($retVal, "№ ".$_GET['nGroup'], $verC, $verS);
+    echo HeaderFooterGroup($retVal, "в„– ".$_GET['nGroup'], $verC, $verS);
 
 }
 
@@ -552,7 +555,7 @@ function Fakultet()
 
             $retVal .= "
       <div class='DialogP'>
-      <div class='titleBox'><H2>Группы</H2></div>
+      <div class='titleBox'><H2>Р“СЂСѓРїРїС‹</H2></div>
       ";
             $result = mssql_query("SELECT IdGroup, Name, IIF(IdCaptain!=null, IdCaptain, 0) FROM dbo.Groups WHERE ".$sqlSO." ORDER BY Name", $dbStud);
             if (mssql_num_rows($result) >= 1) {
@@ -561,8 +564,8 @@ function Fakultet()
                     if ($preChar != substr($arr[1], 0, 2)) $retVal .= "<div class='HRnext'></div>";
                     $preChar = substr($arr[1], 0, 2);
                     $retVal .= "<div class='DialogGr'><strong>" . $arr[1] . "</strong><div class='GroupPL'>";
-                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=0&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."&IdCaptain=".$arr[2]."'>Практ.</a>&nbsp;&nbsp;&nbsp;";
-                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=1&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."&IdCaptain=".$arr[2]."'>Лекция</a>";
+                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=0&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."&IdCaptain=".$arr[2]."'>РџСЂР°РєС‚.</a>&nbsp;&nbsp;&nbsp;";
+                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=1&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."&IdCaptain=".$arr[2]."'>Р›РµРєС†РёСЏ</a>";
                     $retVal .= "</div></div></div>\n";
                 }
             }
@@ -600,7 +603,7 @@ function Fakultet(){
 
             $retVal.="
       <div class='DialogP'>
-      <div class='titleBox'><H2>Группы</H2></div>
+      <div class='titleBox'><H2>Р“СЂСѓРїРїС‹</H2></div>
       ";
             if($_GET['idF']==283){
                 $result = mssql_query("SELECT IdGroup, Name FROM dbo.Groups WHERE ((IdF=".$_GET['idF']." AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<".$fac[$_GET['idF']][1]." AND LEN(Name)>=4) OR (LEFT(Name,1)='".$fac[$_GET['idF']][0]."' AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<=".$fac[$_GET['idF']][1]." AND LEN(Name)>=4)) OR ((IdF=".$_GET['idF']." AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<".$fac[$_GET['idF']][3]." AND LEN(Name)>=4) OR (LEFT(Name,1)='".$fac[$_GET['idF']][2]."' AND DATEDIFF(month,CONCAT(Year,'0101'),GETDATE())<=".$fac[$_GET['idF']][3]." AND LEN(Name)>=4)) ORDER BY Name",$dbStud);
@@ -612,8 +615,8 @@ function Fakultet(){
                 while($arr = mssql_fetch_row($result)){
                     if($preChar!=substr($arr[1], 0, 2)) $retVal.="<div class='HRnext'></div>"; $preChar = substr($arr[1], 0, 2);
                     $retVal.="<div class='DialogGr'><strong>".$arr[1]."</strong><div class='GroupPL'>";
-                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=0&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."'>Практ.</a>&nbsp;&nbsp;&nbsp;";
-                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=1&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."'>Лекция</a>";
+                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=0&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."'>РџСЂР°РєС‚.</a>&nbsp;&nbsp;&nbsp;";
+                    $retVal.="<a href='d.php?menuactiv=goG&idPrepod=".$_SESSION['SesVar']['FIO'][0]."&idPredmet=".$_GET['idPredmet']."&idF=".$_GET['idF']."&idGroup=".$arr[0]."&PL=1&nPredmet=".$Pre."&nF=".$idName."&nGroup=".$arr[1]."'>Р›РµРєС†РёСЏ</a>";
                     $retVal.="</div></div></div>\n";
                 }
             }
@@ -638,7 +641,7 @@ function MainF(){
     $countPredmet=count($_SESSION['SesVar']['PredmetDekan']);
     $retVal.="
       <div class='DialogP'>
-      <div class='titleBox'><H2>Дисциплина</H2></div>
+      <div class='titleBox'><H2>Р”РёСЃС†РёРїР»РёРЅР°</H2></div>
    ";
 
     include_once 'configStudent.php';
@@ -674,23 +677,23 @@ function HeaderFooterSearch($content,$title,$vC='',$vS=''){
     </head>
     <body>
     <?
-    //<div class="Exit"><a href="index.php?go=exit" title="Выхожу">Выхожу</a></div>
+    //<div class="Exit"><a href="index.php?go=exit" title="Р’С‹С…РѕР¶Сѓ">Р’С‹С…РѕР¶Сѓ</a></div>
     echo LevelView();
     ?>
     <div class="Header"><H2><?php echo $_SESSION['SesVar']['FIO'][1]; ?></H2></div>
-    <p><?php echo $title; ?></p><a href='d.php'>&larr; вернуться</a><?php echo FormSearch(); ?>
+    <p><?php echo $title; ?></p><a href='d.php'>&larr; РІРµСЂРЅСѓС‚СЊСЃСЏ</a><?php echo FormSearch(); ?>
     <?php echo $content; ?>
     <div style="clear:both;">&nbsp;</div>
-    <div class="support"><a href="help/index.html">Руководство пользователя "Эл. журнала"</a> <br> По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474) </div>
+    <div class="support"><a href="help/index.html">Р СѓРєРѕРІРѕРґСЃС‚РІРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ "Р­Р». Р¶СѓСЂРЅР°Р»Р°"</a> <br> РџРѕ С‚РµС…РЅРёС‡РµСЃРєРёРј РІРѕРїСЂРѕСЃР°Рј СЂР°Р±РѕС‚С‹ СЌР»РµРєС‚СЂРѕРЅРЅРѕРіРѕ Р¶СѓСЂРЅР°Р»Р° РѕР±СЂР°С‰Р°С‚СЊСЃСЏ: 277-22-74 (РІРЅ. 474) </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
 
-    <div id='form-update' title='Заменить пропуски'>
+    <div id='form-update' title='Р—Р°РјРµРЅРёС‚СЊ РїСЂРѕРїСѓСЃРєРё'>
         <form>
             <fieldset>
                 <div class='panel'>
-                    <b id='1' class='tool'><b>Н<sub>у</sub></b></b><span class='space'></span>
-                    <b id='3' class='tool'><b>Н<sub>б.о.</sub></b></b><span class='space'></span>
-                    <b id='2' class='tool'><b>Н<sub>б.у</sub></b></b>
+                    <b id='1' class='tool' title='РџСЂРѕРїСѓСЃРє РїРѕ СѓРІР°Р¶РёС‚РµР»СЊРЅРѕР№ РїСЂРёС‡РёРЅРµ'><b>Рќ<sub>Сѓ</sub></b></b><span class='space'></span>
+                    <b id='3' class='tool' title='РџСЂРѕРїСѓСЃРє Р±РµР· РѕС‚СЂР°Р±РѕС‚РєРё Р·Р°РЅСЏС‚РёСЏ'><b>Рќ<sub>Р±.Рѕ.</sub></b></b><span class='space'></span>
+                    <b id='2' class='tool' title='РџСЂРѕРїСѓСЃРє РїРѕ РЅРµСѓРІР°Р¶РёС‚РµР»СЊРЅРѕР№ РїСЂРёС‡РёРЅРµ'><b>Рќ<sub>РЅ</sub></b></b>
                     <br><br>
 
                     <input class='inp_cell' id='inp_0' type=text maxlength='0'
@@ -699,8 +702,8 @@ function HeaderFooterSearch($content,$title,$vC='',$vS=''){
                     <br><br>
             </fieldset>
             <hr class='marg-line'>
-            <button id='close' class='attention'>Отмена</button>
-            <button id='updateAbs' class='button'>Заменить</button>
+            <button id='close' class='attention'>РћС‚РјРµРЅР°</button>
+            <button id='updateAbs' class='button'>Р—Р°РјРµРЅРёС‚СЊ</button>
         </form>
     </div>
 
@@ -726,13 +729,13 @@ function HeaderFooter($content,$title,$vC='',$vS=''){
     </head>
     <body>
     <?
-    //<div class="Exit"><a href="index.php?go=exit" title="Выхожу">Выхожу</a></div>
+    //<div class="Exit"><a href="index.php?go=exit" title="Р’С‹С…РѕР¶Сѓ">Р’С‹С…РѕР¶Сѓ</a></div>
     echo LevelView();
     ?>
     <div class="Header"><H2><?php echo $_SESSION['SesVar']['FIO'][1]; ?></H2></div>
     <?php echo $content; ?>
     <div style="clear:both;">&nbsp;</div>
-    <div class="support"><a href="help/index.html">Руководство пользователя "Эл. журнала"</a> <br> По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474) </div>
+    <div class="support"><a href="help/index.html">Р СѓРєРѕРІРѕРґСЃС‚РІРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ "Р­Р». Р¶СѓСЂРЅР°Р»Р°"</a> <br> РџРѕ С‚РµС…РЅРёС‡РµСЃРєРёРј РІРѕРїСЂРѕСЃР°Рј СЂР°Р±РѕС‚С‹ СЌР»РµРєС‚СЂРѕРЅРЅРѕРіРѕ Р¶СѓСЂРЅР°Р»Р° РѕР±СЂР°С‰Р°С‚СЊСЃСЏ: 277-22-74 (РІРЅ. 474) </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -765,9 +768,9 @@ function HeaderFooterGroup($content,$title,$vC='',$vS=''){
     <?php echo $content; ?>
     <div style="clear:both;">&nbsp;</div>
     <div class="export">
-        <a href="#" title="Экспортировать в .CSV"><img src="img/csv.png">Экспортировать в .CSV</a>
+        <a href="#" title="Р­РєСЃРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ РІ .CSV"><img src="img/csv.png">Р­РєСЃРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ РІ .CSV</a>
     </div>
-    <div class="support"><a href="help/index.html">Руководство пользователя "Эл. журнала"</a> <br> По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474) </div>
+    <div class="support"><a href="help/index.html">Р СѓРєРѕРІРѕРґСЃС‚РІРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ "Р­Р». Р¶СѓСЂРЅР°Р»Р°"</a> <br> РџРѕ С‚РµС…РЅРёС‡РµСЃРєРёРј РІРѕРїСЂРѕСЃР°Рј СЂР°Р±РѕС‚С‹ СЌР»РµРєС‚СЂРѕРЅРЅРѕРіРѕ Р¶СѓСЂРЅР°Р»Р° РѕР±СЂР°С‰Р°С‚СЊСЃСЏ: 277-22-74 (РІРЅ. 474) </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -800,9 +803,9 @@ function HeaderFooterGroupL($content,$title,$vC='',$vS=''){
     <?php echo $content; ?>
     <div style="clear:both;">&nbsp;</div>
     <div class="export">
-        <a href="#" title="Экспортировать в .CSV"><img src="img/csv.png">Экспортировать в .CSV</a>
+        <a href="#" title="Р­РєСЃРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ РІ .CSV"><img src="img/csv.png">Р­РєСЃРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ РІ .CSV</a>
     </div>
-    <div class="support"><a href="help/index.html">Руководство пользователя "Эл. журнала"</a> <br> По техническим вопросам работы электронного журнала обращаться: 277-22-74 (вн. 474) </div>
+    <div class="support"><a href="help/index.html">Р СѓРєРѕРІРѕРґСЃС‚РІРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ "Р­Р». Р¶СѓСЂРЅР°Р»Р°"</a> <br> РџРѕ С‚РµС…РЅРёС‡РµСЃРєРёРј РІРѕРїСЂРѕСЃР°Рј СЂР°Р±РѕС‚С‹ СЌР»РµРєС‚СЂРѕРЅРЅРѕРіРѕ Р¶СѓСЂРЅР°Р»Р° РѕР±СЂР°С‰Р°С‚СЊСЃСЏ: 277-22-74 (РІРЅ. 474) </div>
     <div style="clear:both; margin-bottom:100px;">&nbsp;</div>
     </body>
     </html>
@@ -814,15 +817,15 @@ function HeaderFooterGroupL($content,$title,$vC='',$vS=''){
 //----------------------------------------------------------------------------------------------
 
 function StudentView($content,$contentO=''){
-    $ret="<div id='form-edit' title='Редактировать отметку'>
+    $ret="<div id='form-edit' title='Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РѕС‚РјРµС‚РєСѓ'>
     <form id='form-edit'>
         <fieldset>
             <div class='panel'>
-                    <b id='1' class='tool'><b>Н<sub>у</sub></b></b>
+                    <b id='1' class='tool'  title='РџСЂРѕРїСѓСЃРє РїРѕ СѓРІР°Р¶РёС‚РµР»СЊРЅРѕР№ РїСЂРёС‡РёРЅРµ'><b>Рќ<sub>Сѓ</sub></b></b>
                     <span class='space'></span>
-                    <b id='3' class='tool'><b>Н<sub>б.о.</sub></b></b>
+                    <b id='3' class='tool'  title='РџСЂРѕРїСѓСЃРє Р±РµР· РѕС‚СЂР°Р±РѕС‚РєРё Р·Р°РЅСЏС‚РёСЏ'><b>Рќ<sub>Р±.Рѕ.</sub></b></b>
                     <span class='space'></span>
-                    <b id='2' class='tool'><b>Н<sub>б.у</sub></b></b>
+                    <b id='2' class='tool'  title='РџСЂРѕРїСѓСЃРє РїРѕ РЅРµСѓРІР°Р¶РёС‚РµР»СЊРЅРѕР№ РїСЂРёС‡РёРЅРµ'><b>Рќ<sub>РЅ</sub></b></b>
                 <br><br>
 
                 <input class='inp_cell' id=\"inp_0\" type=text maxlength='6' autocomplete='off'
@@ -835,8 +838,8 @@ function StudentView($content,$contentO=''){
                 <br><br>
         </fieldset>
                 <hr class='marg-line'>
-                <button id='close' class='attention'>Отмена</button>
-                <button id='edit' class='button'>Сохранить</button>
+                <button id='close' class='attention'>РћС‚РјРµРЅР°</button>
+                <button id='edit' class='button'>РЎРѕС…СЂР°РЅРёС‚СЊ</button>
               
             </div>
         
@@ -850,7 +853,7 @@ function StudentView($content,$contentO=''){
 <div class='container-list'>
     <div class='container'>
         <div class='fio'>
-            <div class='title'>ФИО</div>\n".$content."
+            <div class='title'>Р¤РРћ</div>\n".$content."
         </div>
 
         <div class='result_box_statistic'><div class='date_col hidden'></div>".$contentO."</div><div class='statistic'></div>
@@ -867,15 +870,15 @@ function StudentView($content,$contentO=''){
 
 
 function StudentViewL($content,$contentO=''){
-    $ret="<div id='form-edit' title='Редактирование отметки'>
+    $ret="<div id='form-edit' title='Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РѕС‚РјРµС‚РєРё'>
     <form id='form-edit'>
         <fieldset>
             <div class='panel'>
-                <b id='1' class='tool'><b>Н<sub>у</sub></b></b>
+                <b id='1' class='tool' title='РџСЂРѕРїСѓСЃРє РїРѕ СѓРІР°Р¶РёС‚РµР»СЊРЅРѕР№ РїСЂРёС‡РёРЅРµ'><b>Рќ<sub>Сѓ</sub></b></b>
                 <span class='space'></span>
-                <b id='3' class='tool'><b>Н<sub>б.о.</sub></b></b>
+                <b id='3' class='tool' РџСЂРѕРїСѓСЃРє Р±РµР· РѕС‚СЂР°Р±РѕС‚РєРё Р·Р°РЅСЏС‚РёСЏ><b>Рќ<sub>Р±.Рѕ.</sub></b></b>
                 <span class='space'></span>
-                <b id='2' class='tool'><b>Н<sub>б.у</sub></b></b>
+                <b id='2' class='tool' title='РџСЂРѕРїСѓСЃРє РїРѕ РЅРµСѓРІР°Р¶РёС‚РµР»СЊРЅРѕР№ РїСЂРёС‡РёРЅРµ'><b>Рќ<sub>РЅ</sub></b></b>
  
                 <br><br>
 
@@ -886,8 +889,8 @@ function StudentViewL($content,$contentO=''){
                 <br><br>
         </fieldset>
                 <hr class='marg-line'>
-                <button id='close' class='attention'>Отмена</button>
-                <button id='edit' class='button'>Сохранить</button>
+                <button id='close' class='attention'>РћС‚РјРµРЅР°</button>
+                <button id='edit' class='button'>РЎРѕС…СЂР°РЅРёС‚СЊ</button>
                
             </div>
 
@@ -902,7 +905,7 @@ function StudentViewL($content,$contentO=''){
 
     <div class='container'>
         <div class='fio'>
-            <div class='title'>ФИО</div>\n".$content."
+            <div class='title'>Р¤РРћ</div>\n".$content."
         </div>
 
         <div class='result_box_statistic'><div class='date_col hidden'></div>".$contentO."
@@ -932,15 +935,15 @@ function LevelView(){
             }
         }
     }
-    return "<div class='Exit'>".$preDiv."<a href='exit.php'><H2>Выход</H2></a></div><div class='C'></div>";
+    return "<div class='Exit'>".$preDiv."<a href='exit.php'><H2>Р’С‹С…РѕРґ</H2></a></div><div class='C'></div>";
 }
 
 function FormSearch($wrd=''){
 
     return "<div class='SearchForm'><form action='d.php'>
 <input type=hidden name='menuactiv' value='SearchStudent'>
-<div>Поиск студента по фамилии или номеру зачётки</div>
-<input name='Swords' type='search' class='SearchWords' maxlength=100 value='".$wrd."'><input type='submit' value='Найти'>
+<div>РџРѕРёСЃРє СЃС‚СѓРґРµРЅС‚Р° РїРѕ С„Р°РјРёР»РёРё РёР»Рё РЅРѕРјРµСЂСѓ Р·Р°С‡С‘С‚РєРё</div>
+<input name='Swords' type='search' class='SearchWords' maxlength=100 value='".$wrd."'><input type='submit' value='РќР°Р№С‚Рё'>
 </form></div>";
 
 }
