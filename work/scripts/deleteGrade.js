@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     var dialog_confirm_delete, form_confirm_delete;
 
     //форма удаления оценки
@@ -56,6 +56,8 @@
             }
         });
         dialog_confirm_delete.dialog("close");
+        updateAvg(id_st_name, "avg_small");
+        updateAns(id_st_name, "ans_small");
     }
 
 

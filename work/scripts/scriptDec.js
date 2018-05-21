@@ -1,4 +1,4 @@
-﻿//Функция выделения серым цветом поля, где есть Н без причины
+//Функция выделения серым цветом поля, где есть Н без причины
 $(function () {
     $("div.grade").each(function () {
         if ($(this).text() != "") {
@@ -34,30 +34,23 @@ $(function () {
 $(function () {
     $("div.avg").each(function () {
         var elem = $(this).attr('data-idStudent');
-        generatetAvg(elem);
-        generateAns(elem);
-        generateAbs(elem);
+        updateAvg(elem, "avg");
+        updateAns(elem, "ans");
+        updateAbs(elem, "abs");
     });
 });
 
 
-//Выделение красным отрицательных оценок
-$(function () {
-    $("div.avg").each(function () {
-        if (Number($(this).text()) < 4) {
-            $(this).addClass("fail");
-        }
-    });
-});
 
-//Выделение красным плохой активности
-$(function () {
-    $("div.ans").each(function () {
-        if (Number($(this).text().substr(0, $(this).text().length - 1)) < 50) {
-            $(this).addClass("fail");
-        }
-    });
-});
+
+// //Выделение красным плохой активности
+// $(function () {
+//     $("div.ans").each(function () {
+//         if (Number($(this).text().substr(0, $(this).text().length - 1)) < 50) {
+//             $(this).addClass("fail");
+//         }
+//     });
+// });
 
 
 //Функция расчета среднего балла группы
@@ -226,7 +219,7 @@ $(function () {
         $("button#close").attr('disabled', true);
         edit_dialog.dialog("close");
         ShowLogTools();
-        generateAbs(student_id);
+        updateAbs(student_id, "abs");
         illuminationAbs(elem);
     });
 

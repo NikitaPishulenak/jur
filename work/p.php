@@ -854,7 +854,7 @@ function StudentViewL($content, $contentO = '')
             <div class='panel'>
                  <b id='1' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b>
                     <span class='space'></span>
-                    <b id='11' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b>
+                    <b id='11' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр</b></b>
                     
                     
                 <br><br>

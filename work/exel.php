@@ -143,13 +143,13 @@ function MatchDecrypt($val)
                 return "Нн";
                 break;
             case "22":
-                return "Нб.о.";
+                return "Нб.о";
                 break;
             case "23":
-                return "Зач.";
+                return "Зач";
                 break;
             case "24":
-                return "Незач.";
+                return "Незач";
                 break;
             case "25":
                 return "Недоп";
@@ -158,10 +158,10 @@ function MatchDecrypt($val)
                 return "Н";
                 break;
             case "27":
-                return "Отр.";
+                return "Отр";
                 break;
             case "28":
-                return "Доп.";
+                return "Доп";
                 break;
 
             case "31":

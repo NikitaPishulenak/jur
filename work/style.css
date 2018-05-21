@@ -1,7 +1,7 @@
-﻿@import url("style_mobile.css");
+@import url("style_mobile.css");
 @import url("style_desktop.css");
 
-HTML {font-family: Arial; font-size:15px;}
+HTML {font-family: Arial;}
 HR { height:1px; border-width:0; color:#c4c4c4; background-color:#c4c4c4; }
 H2 {font-size:15px;}
 H3 {font-size:14px;}
@@ -31,13 +31,15 @@ A:focus{outline:none; }
 .DialogFakFak .shortText {text-decoration:underline;}
 .DialogFakFak:hover .shortText {text-decoration:none;}
 .DialogFakFak {float:left; position:relative; border:1px solid #c0c0c0; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
-.DialogFakFak .CO {position:absolute; color:#fff; text-align: center; background-color:#c10000;}
+.DialogFakFak .CO, .DialogFakFak .COOpen {position:absolute; color:#fff; text-align: center; background-color:#c10000;}
+.DialogFakFak .COD, .DialogFakFak .CODOpen  {position:absolute; color:#fff; text-align: center; background-color:#cc0195;}
 .DialogFakFak .fullTextClose { float:right; display:none; color:#fff; text-align: center; background-color:#c10000;}
+.DialogFakFak .fullText{margin-top: 20px;}
 
 .Not { color:#000; font-size:18px; }
 
 .titleO { color:#000;}
-.Oc {float:left; border:1px solid #c0c0c0; background-color:#e1e1e1; opacity: 0.4; border: solid #fff 3px;}
+.Oc { position: relative; float:left; border:1px solid #c0c0c0; background-color:#e1e1e1; opacity: 0.4; border: solid #fff 3px;}
 .Oc .DataO {padding-top:2px; color:#fff; text-align: center; background-color:#707070;  }
 .Oc .Otmetka { color:#000; text-align:center; word-wrap: break-word; font-weight:bold;}
 .Koll .DataO {background-color:#130076;}
@@ -112,14 +114,17 @@ span.absent { width: 30px; text-align: center; display: inline-block;}
 .triangle-topright { position: absolute; width: 0; height: 0; bottom:0; float: left; display: inline-table;}
 .close { position: absolute; top: 1px; right: 1px; width: 10px; height: 10px; float: right; display: inline-table;}
 .tr { position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; float: right; display: inline-table;}
+.triangle{position: absolute; right: 0; bottom: 0;}
+.Oc .tr { position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; float: right; display: inline-table;}
+.tr:hover, .triangle:hover, .triangle-topright:hover {cursor: pointer;}
 .container{ white-space: nowrap; word-wrap: normal; float: left; width: auto; overflow: visible;}
 .statistic { position: absolute; border: none; cursor: default;}
 .result_div{ color: #000; background-color: #d3d3d3; font-size: 1.4em;}
 .result_div_small{ color: #000; background-color: #d3d3d3; font-weight: bolder;}
 .avg, .ans, .abs { border-bottom: solid #000 1px; text-align: center; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
 .average, .answer, .absenteeism { border-left: solid #000 1px; border-right: solid #000 1px; border-top: none; text-align: center; vertical-align: middle; float: left; display: inline-table;}
-.avg_small { border-bottom: solid #000 1px; text-align: center; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
-.average_small{ border-left: solid #000 1px; border-right: solid #000 1px; border-top: none; text-align: center; vertical-align: middle; float: left; display: inline-table;}
+.avg_small, .ans_small { border-bottom: solid #000 1px; text-align: center; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
+.average_small, .answer_small{ border-left: solid #000 1px; border-right: solid #000 1px; border-top: none; text-align: center; vertical-align: middle; float: left; display: inline-table;}
 .kursiv{ font-size: 9pt;}
 b#delGr{ font-size: 1.5em;}
 input#number_theme, input#edit_number_theme{ width: 30px;}
@@ -145,20 +150,17 @@ div.number_theme{ padding-left: 5px; position: absolute; top: 15px; margin-left:
 .LogFormMsg {height:30px;font-weight:bold;color:#a10000;font-size:11px;}
 .Login {font-style:italic;}
 .Password {font-style:italic;margin-top:5px;}
-.but {}
-
-
-
-
-
 
 @media only screen and (min-width: 700px){
     .DialogFakFak {margin:10px; width:200px; padding:8px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px;}
     .DialogFakFak .fullText {font-size:16px;}
-    .DialogFakFak .CO {right:-7px; top:-7px; width:22px; height:16px; padding-top:3px; font-size:9px;  -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+    .DialogFakFak .CO {right:17px; top:-7px; width:22px; height:16px; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+    .DialogFakFak .COD {right:-7px; top:-7px; width:22px; height:16px; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+    .DialogFakFak .COOpen {left:17px; top:-7px; width:22px; height:16px; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+    .DialogFakFak .CODOpen {left:-8px; top:-7px; width:22px; height:16px; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
     .Exit {font-size:10px; padding:10px; width:250px;}
     .titleO {font-size:18px; }
-    .Oc {margin:7px; height:65px; width:70px;}
+    .Oc { margin:7px; height:65px; width:70px;}
     .Oc .DataO {height:16px; font-size:10px; }
     .Oc .Otmetka {padding:8px; font-size:17px;}
     .Koll .Otmetka {font-size:17px;}
@@ -169,10 +171,13 @@ div.number_theme{ padding-left: 5px; position: absolute; top: 15px; margin-left:
 }
 
 @media only screen and (min-width: 10px) and (max-width: 699px) {
-    .DialogFakFak {margin:7px; width:170px; padding:7px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; font-size:11px;}
-    .DialogFakFak .fullText {font-size:11px; line-height:0;}
-    .DialogFakFak .shortText{font-size:10px;  line-height:0;}
-    .DialogFakFak .CO {right:-6px; top:-6px; width:14px; height:12px; padding-top:2px; font-size:8px;  -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
+    .DialogFakFak {margin:7px; width:160px; padding:7px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; font-size:13px;}
+    .DialogFakFak .fullText {font-size:13px; line-height:0;}
+    .DialogFakFak .shortText{font-size:13px;  line-height:0;}
+    .DialogFakFak .CO {right:10px; top:-6px; width:14px; height:12px; padding-top:2px; font-size:8px; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
+    .DialogFakFak .COD {right:-6px; top:-6px; width:14px; height:12px; padding-top:2px; font-size:8px; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
+    .DialogFakFak .COOpen {left:10px;}
+    .DialogFakFak .CODOpen {left:-6px;}
     .Exit {font-size:8px; padding:4px; width:185px;}
     .titleO {font-size:17px; }
     .Oc {margin:4px; height:45px; width:47px;}
@@ -184,17 +189,17 @@ div.number_theme{ padding-left: 5px; position: absolute; top: 15px; margin-left:
     H2 {font-size:14px;}
     p {font-size: 14px;}
     .SearchWords {width:70%;}
+    .title{font-size: 10px;}
 }
 
 
 @media only screen and (min-width: 10px) and (max-width: 400px) {
     .DialogV {width:250px; padding:10px;}
-    .DialogFak {margin:10px; height:250px; width:250px; padding:5px;}
+    .DialogFak {margin:10px; height:250px; width:150px; padding:5px;}
     .DialogFak A {font-size:11px;}
-    .DialogFakFak {margin:5px; width:150px; padding:7px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; font-size:9px;}
+    .DialogFakFak {margin:5px; width:160px; padding:7px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; font-size:9px;}
     .DialogFakFak .fullText {font-size:11px; line-height:0;}
     .DialogFakFak .shortText{font-size:11px;  line-height:0;}
-    .DialogFakFak .CO {right:-6px; top:-6px; width:14px; height:12px; padding-top:2px; font-size:8px;  -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
     .Exit {font-size:8px; padding:4px; width:155px; position: inherit; margin:10px;}
     .titleO {font-size:15px; }
     .Oc {margin:3px; height:45px; width:42px;}

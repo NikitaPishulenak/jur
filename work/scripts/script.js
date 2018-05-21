@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();
@@ -256,11 +256,7 @@
                 }
                 break;
         }
-
-
-
-  
-        
+     
        
         $(".inp_cell:text").focus(function () {
             inp_id = $(this).attr('id');
@@ -272,11 +268,6 @@
                 $("#" + inp_id).blur();
             });
 
-            // //При нажатии на пропуск с количеством часов текст выводится в поле ввода
-            // $("span.tool").click(function () {
-            //     var text = $(this).text();
-            //     $("#"+inp_id).val(text);
-            // });
         });
         var countOpenCell = 0;
         for (j = 0; j < 3; j++) {
@@ -292,9 +283,7 @@
             if (event.keyCode == 8 || event.keyCode == 46) {   //если это удаление
                 $(this).val("");
             }
-        });
-        //}
-        
+        });      
     });
 
     $("#edit").click(function () {
@@ -402,7 +391,8 @@
             $("button#close").attr('disabled', true);
             edit_dialog.dialog("close");
             ShowLogTools(); //Дорисовать треугольники и крестики красные
-            updateAvg(student_id);
+            updateAvg(student_id, "avg_small");
+            updateAns(student_id, "ans_small");
         }
         else {
             alert("Для сохранения необходимо ввести хоть одну оценку!");
@@ -437,7 +427,6 @@
             $("button#add_grade_input").attr('disabled', true);
         }
     });
-
 });
 
 
@@ -458,9 +447,17 @@ $(document).ready(function () {
         }
         $("div .average_small:last").append("<div class='avg_small result_div_small' id='avg_avrige'></div>");
 
+        $("div.statistic").append("<div class='date_col_stat_small'><div class='title_small'>%</div><div class='answer_small'></div></div>");
+        for(var i=0; i<count; i++){
+            data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
+            $("div .answer_small:last").append("<div class='ans_small' data-idStudent='"+data_idS+"'></div>");
+        }
+
+
         $("div.avg_small").each(function () {
             var elem = $(this).attr('data-idStudent');
-            updateAvg(elem);
+            updateAvg(elem, "avg_small");
+            updateAns(elem, "ans_small");
         });
     });
 

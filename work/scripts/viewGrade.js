@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
 
     idStudent = $("input#idStudent").val();
     idSubject = "";
@@ -7,14 +7,19 @@
 
     $("div.DialogFakFak").click(function () {
         var obj_this_contentGrade = $(this).find(".content_grade");
+        var windows_wid = $(window).width();
+        $("div#history").hide();
         if (obj_this_contentGrade.is(':hidden')) {
             grades = [];
             $(this).css("cursor", "default");
             obj_this_contentGrade.html("");
 
             if ($(".content_grade").is(':visible')) {
+                $("#history").remove();
                 grades = [];
-                $(".CO").not($(this).find(".CO")).show();
+                $(".COOpen").not($(this).find(".COOpen")).toggleClass("COOpen CO");
+                $(".CODOpen").not($(this).find(".CODOpen")).toggleClass("CODOpen COD");
+                $(".COOpen").addClass(".CO");
                 $(".content_grade").not(obj_this_contentGrade).hide();
                 $(".fullText").not($(this).find(".fullText")).hide();
                 $(".shortText").not($(this).find(".shortText")).show();
@@ -26,7 +31,8 @@
                 });
             }
             idSubject = $(this).attr('data-idSubject');
-            $(this).find(".CO").hide();
+            $(this).find(".CO").toggleClass("CO COOpen");
+            $(this).find(".COD").toggleClass("COD CODOpen");
             $(this).find(".shortText").hide();
             $(this).find(".fullText").show();
             obj_this_contentGrade.show();
@@ -45,6 +51,8 @@
                     },
                     success: function (response) {
                         obj_this_contentGrade.html(response);
+                        console.log($("div#history").length);
+                        $("div#history").hide();
                         $(function () {
                             obj_this_contentGrade.find('div.Otmetka').each(function () {
                                 $(this).html(Decrypt($(this).html()));
@@ -52,9 +60,65 @@
                                 var block = 0;
                                 block = Available($(this));
                                 (block == 1) ? $(this).parent(".Oc").addClass("available_grade") : "";
+                                $(this).parent().find('img.tr').hide();
                             });
                         });
 
+                        $('img.tr').click(function (e) {
+                            e.stopPropagation();
+                            log_object=$(this).parent();
+                            $("img.triangle").hide();
+
+                            var block_y=$(this).parents("div.DialogFakFak").offset().top;
+                            var stud_id = $("input#idStudent").val();
+                            var zap_id = log_object.find('.Otmetka').attr("data-zapis");
+                            var offset_tr=0;//отступ от треугольника для логов по х
+
+                            (windows_wid < 700) ? offset_tr=6 : offset_tr=10;
+
+                            var cur_x=$(this).offset().left;
+                            var cur_y=$(this).offset().top;
+
+                            $("#history").show();
+                            if ($("#history").is(":visible")) {
+                                log_object.append('<img src="img/tr.png" class="triangle">');
+                            }
+
+                            $("#history").css("top", cur_y-block_y+9);
+                            var remainder = Number(windows_wid - e.pageX);
+                            if (remainder > 290) {
+                                $("#history").css("left", cur_x-offset_tr);
+                            }
+                            else {
+                                $("#history").css("left", cur_x - 297); //250- ширина окна логов + 10 в резерв
+                            }  
+
+                            $.ajax({
+                                type: 'get',
+                                url: 'log.php',
+                                data: {
+                                    'idStudent': stud_id,
+                                    'idZapis': zap_id,
+                                    'ajaxTrue': "1"
+                                },
+                                success: function (st, event) {
+                                    if (st == "Access is denied!") {
+                                        //hideHistory();
+                                        alert("Извините, время вашей рабочей сессии истекло. Пожалуйста, закройте браузер и заново авторизуйтесь.");
+                                    }
+                                    else {
+                                        $("#log_text").html(st);
+                                        $("#log_text").find(".gLog").each(function () {
+                                            var c_g = $(this).html();
+                                            $(this).html(Decrypt(c_g));
+                                        });
+                                    }
+                                },
+                                error: function () {
+                                    alert("Не удалось просмотреть историю изменений!");
+                                }
+                            });
+                        });
                     },
                     error: function () {
                         alert("Не удалось отразить оценки!");
@@ -77,7 +141,8 @@
         $(this).parent().find(".fullText").hide();
         $(this).parent().find(".shortText").show();
         $(this).parent().animate({width: subjDivWidth}, 400);
-        $(this).parent().find(".CO").show();
+        $(this).parent().find(".COOpen").toggleClass("COOpen CO");
+        $(this).parent().find(".CODOpen").toggleClass("CODOpen COD");
         $(this).parent().css("cursor", "pointer");
         $(".available_grade").removeClass("selected");
     });
@@ -97,7 +162,7 @@
             $(this).addClass("selected");
         }
     });
-
+ 
 });
 
 $(function () {
@@ -147,10 +212,9 @@ $(function () {
                         alert("Ой, что-то пошло не так!");
                     }
                     else {
-                        alert("Успешно произведена замена записей: \n       Дисциплина: " + lessonTitle + "\n       Количество: " + countAbs);
+                        alert("Успешно произведена замена записей: \n       Дисциплина: " + lessonTitle + "\n       Количество: " + countAbs + "\n       Заменено на: " + replace);
                         window.location.reload();
                         $('body').append("<div class='modal'><img src='img/loading1.gif' class='loading_img'></div>");
-                        //$('body').addClass("loading");
                     }
                 },
                 error: function () {
@@ -208,6 +272,17 @@ $(function () {
     });
 
 });
+
+
+//Функция скрывает окно с логами при клике вне его
+$(function () {
+    $(document).mouseup(function (e) {
+        // if (!$("#history").is(e.target) && $("#history").has(e.target).length === 0) {
+            $("#history").hide();
+            $("img.triangle").hide();
+        //}                        
+    });
+});                       
 
 //функция сделать видимыми только где есть прогул
 function Available(grade) {

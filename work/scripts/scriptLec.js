@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     var dialog, form, edit_dialog, edit_form;
     var myStudentId = new Array();
     var myStudentZapis = new Array();

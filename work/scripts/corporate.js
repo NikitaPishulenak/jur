@@ -1,12 +1,12 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
     hideHistory();
     resize();
     path = window.location.pathname.slice(1);
     timeScroll = 2000;
+    $.getScript('scripts/csv.js', function () {});
     var countStudents = $("div.fio_student").length;
     (countStudents==0) ? $("div.export").hide() : "";
-
-
+    ($("div.grade").length<2) ? $("div.statistic").hide() : "";
 
     if ((path == "p.php") || (path == "z.php")) {
         $(".result_box").animate({scrollLeft: '10000px'}, timeScroll);
@@ -26,15 +26,15 @@
         $(".result_box_statistic").animate({scrollLeft: '10000px'}, timeScroll);
     }
 
-    //Экспорт в csv
-    $(".export").click(function () {
-
-        id_group = $("input#idGroup").val();
-        Lessons = $("input#idSubject").val();
-        PL = $("input#idPL").val();
-
-        location.href = 'exel.php?id_group=' + id_group + '&Lessons=' + Lessons + '&PL=' + PL;
-    });
+    //Экспорт в csv// Старый эксель
+   // $(".export").click(function () {
+        
+        
+        // id_group = $("input#idGroup").val();
+        // Lessons = $("input#idSubject").val();
+        // PL = $("input#idPL").val();
+        // location.href = 'exel.php?id_group=' + id_group + '&Lessons=' + Lessons + '&PL=' + PL;
+   // });
 
     //Дорисовать треугольники и крестики красные
     ShowLogTools();
@@ -45,10 +45,29 @@
         showTools($(this));
     });
 
+    $('div').delegate(".Oc", "mouseover", function (e) {
+        $(this).find("img.tr").show();
+    });
+
     $('div').delegate(".grade", "mouseout", function () {
         data_st = $(this).attr('data-idStudent');
         $('div [data-idStudent="' + data_st + '"]').removeClass("illumination");
         hideTools($(this));
+    });
+
+    $('div').delegate(".Oc", "mouseout", function () {
+        $(this).find("img.tr").hide();
+    });
+
+    //всплывающие подсказки
+    $('div').delegate(".average_small, .avg", "mouseover", function () {
+        $(this).attr('title', 'Средний балл');
+    });
+    $('div').delegate(".ans_small, .ans", "mouseover", function () {
+        $(this).attr('title', '% активности студента');
+    });
+    $('div').delegate(".abs", "mouseover", function () {
+        $(this).attr('title', 'Пропуски: Всего (Из них уважительных)');
     });
 
     if (is_touch_device()) {
@@ -76,7 +95,6 @@
         else {
             $("#history").css("left", Number($(this).offset().left - 280)); //250- ширина окна логов + 10 в резерв
         }
-
 
         $.ajax({
             type: 'get',
@@ -143,8 +161,6 @@ $(function () {
     $.datepicker.setDefaults($.datepicker.regional['ru']);
     $('.datepicker').mask("99.99.9999");
     $.datepicker.setDefaults({showAnim: 'show'});
-
-
 });
 
 //Горизонтальная прокрутка при кручении колесом
@@ -203,14 +219,14 @@ $(function (event) {
 });
 
 absenteeisms = new Array("Н", "Н1", "Н2", "Н3", "Н4", "Н5", "Н6", "Н7", "Н1.5", "Н2.5", "Н3.5", "Н4.5", "Н5.5", "Н6.5");
-absenteeisms_with_cause = new Array("Ну", "Нб.у", "Нб.о.");
+absenteeisms_with_cause = new Array("Ну", "Нн", "Нб.о");
 other_symbols = new Array("Отр");
 grades = new Array("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
 
 //массив с первой строчкой кнопок (при выставлении оценок для роли препод и зав каф)
 items_grade = [
     [//simple_lesson
-        "<b id='1' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b><span class='space'></span>",
+        "<b id='1' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр</b></b><span class='space'></span>",
 
         "<hr class='marg-line'>",
 
@@ -230,7 +246,7 @@ items_grade = [
         "<span id='14' class='tool absent' title='Пропуск занятия 6.5 часов.'><span>Н<sub>6.5</sub></span></span><span class='space'></span>"
     ],
     [//colloquium
-        "<b id='1' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр.</b></b><span class='space'></span>",
+        "<b id='1' class='tool absenteeism_closed' title='Занятие отработано.'><b>Отр</b></b><span class='space'></span>",
         "<b id='2' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b></span><span class='space'></span>",
 
         "<hr class='marg-line'>",
@@ -244,11 +260,11 @@ items_grade = [
         "<span id='9' class='tool' title='Пропуск занятия 7 часов.'><span>Н<sub>7</sub></span></span>"
     ],
     [//exam
-        "<b id='1' class='tool' title='Допуск к аттестации'><b>Доп.</b></b><span class='space'></span>",
+        "<b id='1' class='tool' title='Допуск к аттестации'><b>Доп</b></b><span class='space'></span>",
         "<b id='2' class='tool fail' title='Недопуск к аттестации.'><b>Недоп</b></b><span class='space'></span>",
         "<b id='3' class='tool' title='Пропуск занятия целиком.'><b>Н</b></b><span class='space'></span>",
-        "<b id='4' class='tool' title='Зачтено.'><b>Зач.</b></b><span class='space'></span></span><span class='space'></span>",
-        "<b id='5' class='tool' title='Не зачтено.'><b>Незач.</b></b><span class='space'></span>"
+        "<b id='4' class='tool' title='Зачтено.'><b>Зач</b></b><span class='space'></span></span><span class='space'></span>",
+        "<b id='5' class='tool' title='Не зачтено.'><b>Незач</b></b><span class='space'></span>"
     ]
 ];
 
@@ -370,16 +386,16 @@ function MatchEncrypt(val) {
             case 'Ну':
                 return '20';
                 break;
-            case 'Нб.у':
+            case 'Нн':
                 return '21';
                 break;
-            case 'Нб.о.':
+            case 'Нб.о':
                 return '22';
                 break;
-            case 'Зач.':
+            case 'Зач':
                 return '23';
                 break;
-            case 'Незач.':
+            case 'Незач':
                 return '24';
                 break;
             case 'Недоп':
@@ -388,10 +404,10 @@ function MatchEncrypt(val) {
             case 'Н':
                 return '26';
                 break;
-            case 'Отр.':
+            case 'Отр':
                 return '27';
                 break;
-            case 'Доп.':
+            case 'Доп':
                 return '28';
                 break;
 
@@ -451,16 +467,16 @@ function MatchDecrypt(val) {
                 return "Н<sub>у</sub>";
                 break;
             case '21':
-                return "Н<sub>б.у</sub>";
+                return "Н<sub>н</sub>";
                 break;
             case '22':
-                return "Н<sub>б.о.</sub>";
+                return "Н<sub>б.о</sub>";
                 break;
             case '23':
-                return "Зач.";
+                return "Зач";
                 break;
             case '24':
-                return "Незач.";
+                return "Незач";
                 break;
             case '25':
                 return "Недоп";
@@ -469,10 +485,10 @@ function MatchDecrypt(val) {
                 return "Н";
                 break;
             case '27':
-                return "Отр.";
+                return "Отр";
                 break;
             case '28':
-                return "Доп.";
+                return "Доп";
                 break;
 
             case '31':
@@ -559,6 +575,7 @@ $(function () {
         return false;
     });
 });
+
 $(function () {
     $('div.triangle-topright').dblclick(function (event) {
         event.stopPropagation();
@@ -610,18 +627,19 @@ function resize() {
     // $stat_div_wid = $("div.statistic").width() + 10;//ширина столбика статистики; 10-отступ справа
     $stat_div_wid = $("div.statistic").width();//ширина столбика статистики; 10-отступ справа
 
-    $result_div = $windows_wid - $fio_div_wid - $stat_div_wid - 45;//ширина блока с оценками
-    $left_div_stat = $windows_wid - $stat_div_wid - 25; //левая граница блока статистики
+    $result_div = $windows_wid - $fio_div_wid - $stat_div_wid - 80;//ширина блока с оценками
+    $left_div_stat = $windows_wid - $stat_div_wid - 60; //левая граница блока статистики
 
     $("div.result_box_statistic").css("left", $fio_div_wid);
     $("div.result_box_statistic").css("width", $result_div);
     $("div.result_box").css("left", $fio_div_wid);
     $("div.result_box").css("width", $result_div);
     $("div.statistic").css("left", $left_div_stat);
+    $("div#history").fadeOut(1000);
 }
 
 function smallText(object) {
-    if (object.text().length >= 10) {
+    if (object.text().length >= 7) {
         object.addClass("small-text");
     }
 }
@@ -644,39 +662,6 @@ function ShowLogTools() {
             }
         }
     });
-}
-
-//Функция вычисления ср балл для студентов для зав каф и препод
-function updateAvg(idStudent) {
-    var sum = 0, countGrade = 0, avg = 0;
-    $('div.grade[data-idStudent="' + idStudent + '"]').each(function () {
-        var gr = $(this).text().split("/");
-        for (var i = 0; i < gr.length; i++) {
-            if (Number(gr[i])) {
-                sum += Number(gr[i]);
-                countGrade++;
-            }
-        }
-    });
-    avg = (sum / countGrade).toFixed(1);
-    avg = (isNaN(avg)) ? "" : avg;
-    $('div.avg_small[data-idStudent="' + idStudent + '"]').html(avg);
-    updateAvgAvg();
-}
-
-function updateAvgAvg() {
-    var avg_sum = 0, avg_count = 0, avgResult = 0;
-    var count = $("div.avg_small").length;
-    for (var k = 0; k < count - 1; k++) {
-        var elem = $("div.avg_small:eq(" + k + ")").text();
-        if (elem != "") {
-            avg_sum += Number(elem);
-            avg_count++;
-        }
-    }
-    avgResult = (avg_sum / avg_count).toFixed(1);
-    avgResult = (isNaN(avgResult)) ? "" : avgResult;
-    $("div#avg_avrige").html(avgResult);
 }
 
 //Функция выделения красным цветом поля, где есть Н без причины
@@ -709,7 +694,7 @@ function isGrade(elem) {
 }
 
 //Функция вычисления ср балл для студентов для зав каф и препод
-function generatetAvg(idStudent) {
+function updateAvg(idStudent, dom_obj) {
     var sum = 0, countGrade = 0, avg = 0;
     $('div.grade[data-idStudent="' + idStudent + '"]').each(function () {
         var gr = $(this).text().split("/");
@@ -722,25 +707,28 @@ function generatetAvg(idStudent) {
     });
     avg = (sum / countGrade).toFixed(1);
     avg = (isNaN(avg)) ? "" : avg;
-    $('div.avg[data-idStudent="' + idStudent + '"]').html(avg);
-    generateAvgAvg();
+    var c_obj=$('div.'+dom_obj+'[data-idStudent="' + idStudent + '"]');
+    (avg < 4) ? c_obj.html(avg).addClass("fail") : c_obj.html(avg);
+    updateAvgAvg("avg_avrige");
 }
 
-function generateAvgAvg() {
+//функция вычисления ср балла группы
+function updateAvgAvg(dom_obj) {
     var avg_sum = 0, avg_count = 0, avgResult = 0;
     var count = $("div.avg_small").length;
     for (var k = 0; k < count - 1; k++) {
-        var elem = $("div.avg:eq(" + k + ")").text();
+        var elem = $("div.avg_small:eq(" + k + ")").text();
         if (elem != "") {
             avg_sum += Number(elem);
             avg_count++;
         }
     }
     avgResult = (avg_sum / avg_count).toFixed(1);
-    $("div#avg_avrige").html(avgResult);
+    avgResult = (isNaN(avgResult)) ? "" : avgResult;
+    $("div#"+dom_obj).html(avgResult);
 }
 
-function generateAns(idStudent) {
+function updateAns(idStudent, dom_obj) {
     var countAnswer = 0;
     $('div.grade[data-idStudent="' + idStudent + '"]').each(function () {
         var gr = $(this).text().split("/");
@@ -748,12 +736,13 @@ function generateAns(idStudent) {
             countAnswer++
         }
     });
-    var res = (100 * countAnswer / $('div.grade[data-idStudent="' + idStudent + '"]').length).toFixed(2);
-    res = (isNaN(res) || res == 0) ? "" : res += "%";
-    $('div.ans[data-idStudent="' + idStudent + '"]').html(res);
+    var res = (100 * countAnswer / $('div.grade[data-idStudent="' + idStudent + '"]').length).toFixed(0);
+    //res = (isNaN(res) || res == 0) ? "" : res += "%";
+    var c_obj=$('div.'+dom_obj+'[data-idStudent="' + idStudent + '"]');
+    (res < 40) ? c_obj.html(res).addClass("fail") : c_obj.html(res);
 }
 
-function generateAbs(idStudent) {
+function updateAbs(idStudent, dom_obj) {
     var countAbsenteesm = 0, countAbsRespect = 0;
     $('div.grade[data-idStudent="' + idStudent + '"]').each(function () {
         var gr = $(this).text().split("/");
@@ -768,7 +757,7 @@ function generateAbs(idStudent) {
     });
     var res = countAbsenteesm + "(" + countAbsRespect + ")";
     res = (countAbsenteesm == 0 && countAbsRespect == 0) ? "" : res;
-    $('div.abs[data-idStudent="' + idStudent + '"]').html(res);
+    $('div.'+dom_obj+'[data-idStudent="' + idStudent + '"]').html(res);
 }
 
 //функция преобразования записи к индексированному виду
@@ -780,7 +769,7 @@ function lowIndex(str) {
              var head=gr[i].substr(0,1);
              var index=gr[i].slice(1);
              gr[i]=head+"<sub>"+index+"</sub>";
-             console.log(gr[i]);
+             //console.log(gr[i]);
         }
     }
     res = gr.join('/');
@@ -790,11 +779,32 @@ function lowIndex(str) {
 //Функция возвращает 1 если в записи есть Ну или Нб.о
 function typeAbs(str){
     var gr = str.split("/");
-    var res="0";
+    var res=0;
     for (i = 0; i < gr.length; i++) {
-        if ((absenteeisms_with_cause[0].indexOf(gr[i]) != -1) || (absenteeisms_with_cause[2].indexOf(gr[i]) != -1)) {
-             res="1";
+        //if ((absenteeisms_with_cause[0].indexOf(gr[i]) != -1) || (absenteeisms_with_cause[2].indexOf(gr[i]) != -1)) { //проблема: не ищет "Н"
+        if ((absenteeisms_with_cause[0] == gr[i]) || (absenteeisms_with_cause[2] == gr[i])) {
+             res=1;
         }
     }
     return res;
 }
+
+// //Функция генерации экселя на клиенте
+// document.addEventListener('keydown', function (e) {
+//     if (e.keyCode == 81) {
+        
+//         // var csv="";//итоговая строка
+//         // var students_fio=[];//ФИО студентов
+//         // var countSt=$("div.fio_student").length;
+//         // for(var i=0; i<countSt; i++){
+//         //     students_fio[i]=$("div.fio_student:eq(+"i"+)").text();
+//         //     csv+=students_fio[i]+";";
+//         // }
+        
+//         // console.log(students_fio);
+//         // window.URL = window.URL || window.webkiURL;
+//         // var blob = new Blob(["\ufeff", csv]);
+//         // var blobURL = window.URL.createObjectURL(blob);
+//         // $("<a></a>").attr("href", blobURL).attr("download", "data.csv").text(".csv из клиента").insertAfter('.export');
+//     }
+// }, false);

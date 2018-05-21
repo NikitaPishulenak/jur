@@ -157,6 +157,11 @@ function SearchGiveData()
     LEFT JOIN lessons B ON B.id=A.id_lesson WHERE (A.course=".$_GET['kursSt']."
     AND A.id_faculty=".$_SESSION['SesVar']['Dekan'][2].") OR (A.course=".$_GET['kursSt']." AND A.id_faculty=".$fac[$_GET['gfnS']].") GROUP BY A.id_lesson ORDER BY B.name");
     */
+
+//    $start = microtime(true);
+//    $finish = microtime(true);
+//    $retVal.="<div style='clear:both'></div>\n".($finish - $start)." сек.";
+
     $res = mysqli_query($dbMain, "SELECT A.id_lesson, B.name, IF(CHAR_LENGTH(B.name)>70,CONCAT(LEFT(B.name, 67),'...'),B.name) FROM schedule A LEFT JOIN lessons B ON B.id=A.id_lesson WHERE A.course=".$_GET['kursSt']." AND A.id_faculty=".$_SESSION['SesVar']['Dekan'][2]." GROUP BY A.id_lesson ORDER BY B.name");
 
     $retVal="\n<input type='hidden' id='idStudent' value='".$_GET['idSt']."'>
@@ -164,18 +169,29 @@ function SearchGiveData()
 
     if (mysqli_num_rows($res)>=1) {
         $retVal.="\n<div class='DialogP'><div class='titleBox'><H2>Дисциплина</H2></div>\n";
-
+//      $ress = mysqli_query($dbMain, "SELECT COUNT(id) FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '3%' OR RatingO LIKE '__3%' OR RatingO LIKE '____3%' OR RatingO LIKE '4%' OR RatingO LIKE '__4%' OR RatingO LIKE '____4%' OR RatingO LIKE '26%' OR RatingO LIKE '__26%' OR RatingO LIKE '____26' OR RatingO LIKE '20%' OR RatingO LIKE '__20%' OR RatingO LIKE '____20' OR RatingO LIKE '21%' OR RatingO LIKE '__21%' OR RatingO LIKE '____21' OR RatingO LIKE '22%' OR RatingO LIKE '__22%' OR RatingO LIKE '____22')");
         while ($arr = mysqli_fetch_row($res)) {
-            $ress = mysqli_query($dbMain, "SELECT COUNT(id) FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '3%' OR RatingO LIKE '__3%' OR RatingO LIKE '____3%' OR RatingO LIKE '4%' OR RatingO LIKE '__4%' OR RatingO LIKE '____4%' OR RatingO LIKE '26%' OR RatingO LIKE '__26%' OR RatingO LIKE '____26' OR RatingO LIKE '21%' OR RatingO LIKE '__21%' OR RatingO LIKE '____21')");
-//            $ress = mysqli_query($dbMain, "SELECT COUNT(id) FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '3%' OR RatingO LIKE '__3%' OR RatingO LIKE '____3%' OR RatingO LIKE '4%' OR RatingO LIKE '__4%' OR RatingO LIKE '____4%' OR RatingO LIKE '26%' OR RatingO LIKE '__26%' OR RatingO LIKE '____26' OR RatingO LIKE '20%' OR RatingO LIKE '__20%' OR RatingO LIKE '____20' OR RatingO LIKE '21%' OR RatingO LIKE '__21%' OR RatingO LIKE '____21' OR RatingO LIKE '22%' OR RatingO LIKE '__22%' OR RatingO LIKE '____22')");
+
+            $ress = mysqli_query($dbMain, "SELECT COUNT(id) FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '3%' OR RatingO LIKE '__3%' OR RatingO LIKE '____3%' OR RatingO LIKE '4%' OR RatingO LIKE '__4%' OR RatingO LIKE '____4%' OR RatingO LIKE '26%' OR RatingO LIKE '__26%' OR RatingO LIKE '____26')");
             list($cntOc) = mysqli_fetch_row($ress);
-            $retVal.="<div class='DialogFakFak' data-idSubject='".$arr[0]."'>\n<span class='shortText'>".$arr[2]."</span>\n<span class='fullText'>".$arr[1]."</span>&nbsp;<span class='fullTextClose' title='Закрыть'>X</span>\n<div class='content_grade'></div>\n".($cntOc ? "<div class='CO' title='Количество пропусков: ".$cntOc."'>".$cntOc."</div>\n" : "")."\n</div>\n";
+            $ress = mysqli_query($dbMain, "SELECT COUNT(id) FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '20%' OR RatingO LIKE '__20%' OR RatingO LIKE '____20' OR RatingO LIKE '21%' OR RatingO LIKE '__21%' OR RatingO LIKE '____21' OR RatingO LIKE '22%' OR RatingO LIKE '__22%' OR RatingO LIKE '____22')");
+            list($cntOcD) = mysqli_fetch_row($ress);
+/*
+            $cntOc = 0; $cntOcD = 0;
+            $ress = mysqli_query($dbMain, "SELECT id FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '3%' OR RatingO LIKE '__3%' OR RatingO LIKE '____3%' OR RatingO LIKE '4%' OR RatingO LIKE '__4%' OR RatingO LIKE '____4%' OR RatingO LIKE '26%' OR RatingO LIKE '__26%' OR RatingO LIKE '____26')");
+            if(mysqli_num_rows($ress)>=1){ $cntOc = mysqli_num_rows($ress); }
+            $ress = mysqli_query($dbMain, "SELECT id FROM rating WHERE (idLessons=".$arr[0]." AND idStud=".$_GET['idSt']." AND del=0) AND (RatingO LIKE '20%' OR RatingO LIKE '__20%' OR RatingO LIKE '____20' OR RatingO LIKE '21%' OR RatingO LIKE '__21%' OR RatingO LIKE '____21' OR RatingO LIKE '22%' OR RatingO LIKE '__22%' OR RatingO LIKE '____22')");
+            if(mysqli_num_rows($ress)>=1){ $cntOcD = mysqli_num_rows($ress); }
+*/
+            $retVal.="<div class='DialogFakFak' data-idSubject='".$arr[0]."'>\n<span class='shortText'>".$arr[2]."</span>\n<span class='fullText'>".$arr[1]."</span>&nbsp;<span class='fullTextClose' title='Закрыть'>X</span>\n<div class='content_grade'></div>\n".($cntOc ? "<div class='CO' title='Пропуски: ".$cntOc."'>".$cntOc."</div>\n" : "").($cntOcD ? "<div class='COD' title='Пропуски (деканатские): ".$cntOcD."'>".$cntOcD."</div>\n" : "")."\n</div>\n";
+//            $retVal.="<div class='DialogFakFak' data-idSubject='".$arr[0]."'>\n<span class='shortText'>".$arr[2]."</span>\n<span class='fullText'>".$arr[1]."</span>&nbsp;<span class='fullTextClose' title='Закрыть'>X</span>\n<div class='content_grade'></div>\n".($cntOc ? "<div class='CO' title='Пропуски: ".$cntOc."'>".$cntOc."</div>\n" : "")."</div>\n";
         }
         unset($arr,$cntOc);
         mysqli_free_result($res);
         mysqli_free_result($ress);
 
     }
+
     $retVal.="</div>\n";
 
     echo HeaderFooterSearch($retVal, $_SESSION['SesVar']['Dekan'][0]." (".$_SESSION['SesVar']['Dekan'][1].")", $verC, $verS);
@@ -190,7 +206,7 @@ function GroupVP($idSu, $idSt){
 
     $resultS = mysqli_query($dbMain, "SELECT DATE_FORMAT(B.LDate,'%e.%m.%Y'), A.RatingO, A.PL, A.PKE, A.id, A.pStatus FROM rating A LEFT JOIN lesson B ON (B.id=A.idLesson) WHERE A.idStud=".$idSt." AND A.idLessons=".$idSu." AND A.del=0 ORDER BY A.PL,B.LDate");
     if(mysqli_num_rows($resultS)>=1){
-        $retVal="<div class='menuTools'><div id='selAll' class='sel_tool'>Выделить всё</div><div id='canselSelAll' class='sel_tool'>Отменить</div><div class='replaceAbs'>Заменить пропуски</div></div><div class='C'></div>";
+        $retVal="<div class='menuTools'><div class='popup-content' id='history'><span id='log_text'></span></div><div id='selAll' class='sel_tool'>Выделить всё</div><div id='canselSelAll' class='sel_tool'>Отменить</div><div class='replaceAbs'>Заменить пропуски</div></div><div class='C'></div>";
         $trueP=0; $trueL=0;
         while($arrSS = mysqli_fetch_row($resultS)){
 
@@ -692,7 +708,7 @@ function HeaderFooterSearch($content,$title,$vC='',$vS=''){
             <fieldset>
                 <div class='panel'>
                     <b id='1' class='tool' title='Пропуск по уважительной причине'><b>Н<sub>у</sub></b></b><span class='space'></span>
-                    <b id='3' class='tool' title='Пропуск без отработки занятия'><b>Н<sub>б.о.</sub></b></b><span class='space'></span>
+                    <b id='3' class='tool' title='Пропуск без отработки занятия'><b>Н<sub>б.о</sub></b></b><span class='space'></span>
                     <b id='2' class='tool' title='Пропуск по неуважительной причине'><b>Н<sub>н</sub></b></b>
                     <br><br>
 
@@ -706,6 +722,10 @@ function HeaderFooterSearch($content,$title,$vC='',$vS=''){
             <button id='updateAbs' class='button'>Заменить</button>
         </form>
     </div>
+
+    <!--<div class='popup-content' id='history'>
+       <span id='log_text'></span>
+    </div>-->
 
     </body>
     </html>
@@ -823,7 +843,7 @@ function StudentView($content,$contentO=''){
             <div class='panel'>
                     <b id='1' class='tool'  title='Пропуск по уважительной причине'><b>Н<sub>у</sub></b></b>
                     <span class='space'></span>
-                    <b id='3' class='tool'  title='Пропуск без отработки занятия'><b>Н<sub>б.о.</sub></b></b>
+                    <b id='3' class='tool'  title='Пропуск без отработки занятия'><b>Н<sub>б.о</sub></b></b>
                     <span class='space'></span>
                     <b id='2' class='tool'  title='Пропуск по неуважительной причине'><b>Н<sub>н</sub></b></b>
                 <br><br>
@@ -846,9 +866,9 @@ function StudentView($content,$contentO=''){
     </form>
 </div>
 
-<div class='popup-content' id='history'>
-    <span id='log_text'></span>
-</div>
+ <div class='popup-content' id='history'>
+     <span id='log_text'></span>
+    </div>
 
 <div class='container-list'>
     <div class='container'>
@@ -876,7 +896,7 @@ function StudentViewL($content,$contentO=''){
             <div class='panel'>
                 <b id='1' class='tool' title='Пропуск по уважительной причине'><b>Н<sub>у</sub></b></b>
                 <span class='space'></span>
-                <b id='3' class='tool' Пропуск без отработки занятия><b>Н<sub>б.о.</sub></b></b>
+                <b id='3' class='tool' Пропуск без отработки занятия><b>Н<sub>б.о</sub></b></b>
                 <span class='space'></span>
                 <b id='2' class='tool' title='Пропуск по неуважительной причине'><b>Н<sub>н</sub></b></b>
  
@@ -897,9 +917,9 @@ function StudentViewL($content,$contentO=''){
     </form>
 </div>
 
-<div class='popup-content' id='history'>
-    <span id='log_text'></span>
-</div>
+ <div class='popup-content' id='history'>
+       <span id='log_text'></span>
+    </div> 
 
 <div class='container-list'>
 

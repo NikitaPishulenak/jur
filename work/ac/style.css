@@ -1,30 +1,45 @@
-HTML {font-family: Arial; font-size:15px;}
+@import url("style_mobile.css");
+@import url("style_desktop.css");
 
+HTML {font-family: Arial;}
 HR { height:1px; border-width:0; color:#c4c4c4; background-color:#c4c4c4; }
-
+H2 {font-size:15px;}
 H3 {font-size:14px;}
-
-P {line-height:19px}
-
+P {line-height:13px;}
 A { color:#004c99; font-family: Verdana; font-size:13px;}
-A:visited {color:#003399;}
-A:hover {color:#00264c; text-decoration:none;}
+A:visited { color:#003399; }
+A:hover { color:#00264c; text-decoration:none;}
 A:focus{outline:none; }
 
-.Header {margin-top:40px;}
-.DialogP {margin-top:40px;}
+.Exit {position:absolute; top:40px; right:40px; padding:10px; width:250px; float:right; background-color:#fff; border:1px solid #c0c0c0; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; clear:both;}
+.Exit P {margin:0; margin-bottom:7px; }
+.Exit P A {font-size:10px;}
+.C {clear:both;}
+.DialogV {position: relative; margin:0 auto; width:400px; padding:15px; border:1px solid #c0c0c0; line-height:15px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
+.DialogFak {float:left; margin:15px; height:200px; width:360px; padding:8px; border:1px solid #c0c0c0; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
+.DialogFak P {margin:7px; margin-left:0;}
+.DialogFakFak {float:left; margin:10px; width:200px; padding:8px; border:1px solid #c0c0c0; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; color:#004c99; font-size:14px;  min-height:70px;}
+.DialogFakFak P {margin:6px; line-height:12px}
+.DialogFakFak A { font-size:12px;line-height:16px; display:block;}
+.DialogGr {position: relative; float:left; margin:3px; height:25px; width:120px; padding:5px; border:1px solid #c0c0c0; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px; display:table; }
+.DialogGr:hover { background-color:#dedede; }
+.DialogGr div {position: relative; margin:0 auto;}
+.DialogGr div a {position: relative; margin:0 auto;}
+.HRnext {clear:both; margin-bottom: 25px;}
 
-.DialogFakFak {color:#004c99; font-size:14px;}
+
 .DialogFakFak .shortText {text-decoration:underline;}
 .DialogFakFak:hover .shortText {text-decoration:none;}
-.DialogFakFak {cursor:pointer; float:left; position:relative; border:1px solid #c0c0c0; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
-.DialogFakFak .CO {position:absolute; color:#fff; text-align: center; background-color:#c10000;}
+.DialogFakFak {float:left; position:relative; border:1px solid #c0c0c0; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
+.DialogFakFak .CO, .DialogFakFak .COOpen {position:absolute; color:#fff; text-align: center; background-color:#c10000; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+.DialogFakFak .COD, .DialogFakFak .CODOpen  {position:absolute; color:#fff; text-align: center; background-color:#cc0195; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
 .DialogFakFak .fullTextClose { float:right; display:none; color:#fff; text-align: center; background-color:#c10000;}
+.DialogFakFak .fullText{margin-top: 20px;}
 
 .Not { color:#000; font-size:18px; }
 
 .titleO { color:#000;}
-.Oc { float:left; border:1px solid #c0c0c0; background-color:#e1e1e1; }
+.Oc { position: relative; float:left; border:1px solid #c0c0c0; background-color:#e1e1e1; opacity: 0.4; border: solid #fff 3px;}
 .Oc .DataO {padding-top:2px; color:#fff; text-align: center; background-color:#707070;  }
 .Oc .Otmetka { color:#000; text-align:center; word-wrap: break-word; font-weight:bold;}
 .Koll .DataO {background-color:#130076;}
@@ -33,71 +48,162 @@ A:focus{outline:none; }
 
 .content_grade{background-color: #ffffff; padding: 15px; padding-left:5px; cursor: default;}
 .content_grade, .fullText{display: none;}
-
 .small-text{font-size: 0.83em; font-weight:bold;}
-
-
-.Exit {position:absolute; top:40px; right:40px; background-color:#fff; border:1px solid #c0c0c0; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
-
 .Exit .Kvadrat {float:left; width:13px; height:13px; margin-right:5px; display:block;}
 .Exit .OO {background-color:#4e4e4e;}
 .Exit .OK {background-color:#130076;}
 .Exit .OE {background-color:#c10000;}
 .C {clear:both; height:3px;}
 
-/* Ђўв®аЁ§ жЁп ------------------------------------------------------------------------------------------*/
+
+.inLog {margin-top:4px; margin-bottom:6px; margin-left:10px; font-size:11px;}
+.oLog {}
+.gLog {font-weight:bold; font-size:15px; }
+.fLog {font-style:italic;}
+.DialogGr .Inostr {position:absolute; color:#fff; text-align: center; background-color:#909090; right:0; top:0; width:15px; height:15px; font-size:9px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+.support {margin-top:50px; margin-left:20px; font-size:12px; color:#808080;}
+
+/* ”®а¬  Ї®ЁбЄ  -------------------------------------------------------------------- */
+
+.SearchForm {margin-top:20px; margin-bottom:20px; font-size:12px; font-style:italic;}
+.SearchText {}
+.SearchWords {width:35%;}
+.StudentNaVibor {font-size:12px; margin-bottom:8px;}
+
+.nLesson{ position: relative; border: solid #e5e5e5 1px; border-bottom: none; left:0; text-align: center; background-color: #e5e5e5; font-size: 0.65em;}
+input[type=text] { border-radius: 3px; margin: 2px 2px 2px 2px; border:solid #c5c5c5 1px;}
+input[type=text]:hover { border-radius: 3px; margin: 2px 2px 2px 2px; border:solid #c5c5c5 1px; text-shadow: 0 1px 2px #c5c5c5;}
+.button, .attention { float: right; padding: .4em 1em; display: inline-block; position: relative; line-height: normal; cursor: pointer; vertical-align: middle; text-align: center; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; overflow: visible; font-family: Arial,Helvetica,sans-serif; font-size: 1em; text-decoration: none; color: #454545;  background-color: #f6f6f6; border:solid #c5c5c5 1px; border-radius: 3px;}
+.button { margin-right: 0.4em;}
+.button:hover, .attention:hover { float: right; color: #2b2b2b; background-color: #ededed; border: solid #cccccc 1px; border-radius: 3px;}
+.colloquium_theme { background-color: #d7e8ed;}
+.exam_theme { background-color: #ded09f;}
+input .edit_grade {background-color: #8c0000;}
+.title, .title_small {font-weight: 600; text-align: center; border: solid #000 1px; overflow: hidden; padding-bottom: 0.05em; padding-top: 0.05em;}
+.date_title, .info_title {clear: left; position: relative; padding-bottom: 0; padding-top: 0.2em; vertical-align: middle; font-weight: 400; border: solid #000 1px; text-align: center; font-size: 0.75em;}
+.date_title, .tool, .type_lesson, .add_grade, .pointer, .sel_tool, .replaceAbs, .fullTextClose, .DialogFakFak {cursor: pointer;}
+span.tool, b.tool {padding: 1px 4px 1px 4px; border: solid 1px; border-color: transparent;  border-radius: 3px; cursor: pointer;}
+span.absent { width: 30px; text-align: center; display: inline-block;}
+.tool:hover{ color: #0000ff; border-color: #cccccc;}
+.space {margin-right: 8px;}
+.add_grade {cursor: pointer; color: #454545; background-color: #f6f6f6; border: solid #c5c5c5 1px; border-radius: 3px;}
+.add_grade:disabled {color: #cccccc; font-weight: bolder; background-color: #ededed; border: solid #cccccc 1px; border-radius: 3px;}
+.simple_cursor {cursor: default;}
+.marg-line {margin-top: 10px; margin-bottom: 10px;}
+.fail {color: #890706; font-weight: bolder;}
+.absenteeism_closed {color: #254b72; font-weight: bolder;}
+.absenteeism_closed_cell {background-color: #BCF5A9;}
+.fail_grade{ border: solid #ff0000 1px;}
+#dateLast, div .hidden{  display: none;}
+.illumination{ box-shadow:  0 0 0.4em #000;}
+.popup {  width: auto; position:absolute;}
+.popup-content { height: auto; width: 270px; padding:4px; color: #000; background-color: #e5e5e5; border-radius:1px; box-shadow: 0 0 10px #000; position: absolute; z-index: 10; border: solid #585858 1px;}
+.header{ text-align: center;}
+.undef{ background-color: #FD2121;}
+.fio { float: left;}
+.box { width: 95%}
+.fio_student { border: solid #000 1px; border-top: none; overflow: hidden;}
+.fio_student strong {border-bottom:dashed #fe7d7d 1px;}
+.result_box, .result_box_statistic { border-left: none; white-space: nowrap; word-wrap: normal; overflow-x: auto; position: absolute; box-shadow: 8px 8px 10px 3px rgba(0, 0, 0, 0.2); border-top: none;}
+.result_box{ border: 1px solid #ccc; border-left: none; border-top: none;}
+.date_col { position: relative; display: inline-table; margin-bottom: 1px;}
+.date_col_stat, .date_col_stat_small { display: inline-table; border:none;}
+.grade { font-size: 1.01em; font-weight: 600; border-bottom: solid #000 1px; border-left: solid #000 1px; border-right: solid #000 1px; text-align: center; cursor: pointer; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
+
+.small-text{ font-size: 0.7em;}
+.triangle-topright { position: absolute; width: 0; height: 0; bottom:0; float: left; display: inline-table;}
+.close { position: absolute; top: 1px; right: 1px; width: 10px; height: 10px; float: right; display: inline-table;}
+.tr { position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; float: right; display: inline-table;}
+.triangle{position: absolute; right: 0; bottom: 0;}
+.Oc .tr { position: absolute; bottom: 0; right: 0; width: 10px; height: 10px; float: right; display: inline-table;}
+.tr:hover, .triangle:hover, .triangle-topright:hover {cursor: pointer;}
+.container{ white-space: nowrap; word-wrap: normal; float: left; width: auto; overflow: visible;}
+.statistic { position: absolute; border: none; cursor: default;}
+.result_div{ color: #000; background-color: #d3d3d3; font-size: 1.4em;}
+.result_div_small{ color: #000; background-color: #d3d3d3; font-weight: bolder;}
+.avg, .ans, .abs { border-bottom: solid #000 1px; text-align: center; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
+.average, .answer, .absenteeism { border-left: solid #000 1px; border-right: solid #000 1px; border-top: none; text-align: center; vertical-align: middle; float: left; display: inline-table;}
+.avg_small, .ans_small { border-bottom: solid #000 1px; text-align: center; vertical-align: middle; word-wrap: break-word; white-space: -moz-pre-wrap; white-space: pre-wrap; float: left; position: relative;}
+.average_small, .answer_small{ border-left: solid #000 1px; border-right: solid #000 1px; border-top: none; text-align: center; vertical-align: middle; float: left; display: inline-table;}
+.kursiv{ font-size: 9pt;}
+b#delGr{ font-size: 1.5em;}
+input#number_theme, input#edit_number_theme{ width: 30px;}
+div.number_theme{ padding-left: 5px; position: absolute; top: 15px; margin-left: 140px;}
+
+.export{ margin-top:30px; margin-left:10px; display:table;}
+.export img { border:0; vertical-align: middle; margin-right:10px;}
+.sh{ box-shadow: inset 0 0 10px 5px rgba(0,0,0,0.2); transition: 1.0s;}
+
+/*Деканат*/
+.available_grade {opacity: 1; cursor: pointer;}
+.selected{border: solid #ff0000 3px;}
+.menuTools{color:#000; margin-bottom:20px; display:table;}
+.sel_tool{float:left; margin: 0 10px 0 0; border-bottom:dashed #000 1px; }
+.replaceAbs{float:left; margin-left:20px; font-weight:bold; border-bottom:dashed #000 1px;}
+.sel_tool:hover, .replaceAbs:hover{border-bottom:0;}
+
+
+/* Авторизация ------------------------------------------------------------------------------------------*/
 
 .LogF {margin-top:10%; width:100%;}
 .LogForm {margin:0 auto; width:290px;}
 .LogFormMsg {height:30px;font-weight:bold;color:#a10000;font-size:11px;}
 .Login {font-style:italic;}
 .Password {font-style:italic;margin-top:5px;}
-.but {}
-
 
 @media only screen and (min-width: 700px){
-    .DialogFakFak {margin:10px; min-height:70px; width:180px; padding:8px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; }
+    .DialogFakFak {margin:10px; width:200px; padding:8px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px;}
     .DialogFakFak .fullText {font-size:16px;}
-    .DialogFakFak .CO {right:-7px; top:-7px; width:22px; height:16px; padding-top:3px; font-size:9px;  -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
-    .Exit {font-size:10px; padding:10px; width:180px;}
+    .DialogFakFak .CO {right:17px; top:-7px; width:22px; height:16px; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+    .DialogFakFak .COD {right:-7px; top:-7px; width:22px; height:16px; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
+    .DialogFakFak .COOpen {left:17px; top:-11px; width:22px; height:16px;}
+    .DialogFakFak .CODOpen {left:-8px; top:-11px; width:22px; height:16px;}
+    .Exit {font-size:10px; padding:10px; width:250px;}
     .titleO {font-size:18px; }
-    .Oc {margin:10px; height:65px; width:70px;}
+    .Oc { margin:7px; height:65px; width:70px;}
     .Oc .DataO {height:16px; font-size:10px; }
-    .Oc .Otmetka { padding:8px;}
+    .Oc .Otmetka {padding:8px; font-size:17px;}
     .Koll .Otmetka {font-size:17px;}
     .Exm .Otmetka {font-size:17px;}
     .DialogFakFak .fullTextClose {width:22px; height:16px; padding-top:3px; font-size:9px; -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px;}
     H2 {font-size:15px;}
 
-
 }
 
-@media only screen and (min-width: 401px) and (max-width: 699px) {
-    .DialogFakFak {margin:7px; min-height:60px; width:130px; padding:7px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; font-size:11px;}
-    .DialogFakFak .fullText {font-size:11px; line-height:0; font-size:15px;}
-    .DialogFakFak .shortText{font-size:11px;  line-height:0;}
-    .DialogFakFak .CO {right:-6px; top:-6px; width:14px; height:12px; padding-top:2px; font-size:8px;  -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
-    .Exit {font-size:8px; padding:4px; width:135px;}
+@media only screen and (min-width: 10px) and (max-width: 699px) {
+    .DialogFakFak {margin:7px; width:160px; padding:7px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; font-size:13px;}
+    .DialogFakFak .fullText {font-size:13px; line-height:0;}
+    .DialogFakFak .shortText{font-size:13px;  line-height:0;}
+    .DialogFakFak .CO, .DialogFakFak .COD, .DialogFakFak .COOpen, .DialogFakFak .CODOpen{top:-5px; width:14px; padding-top:0; height:12px; font-size:8px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+    .DialogFakFak .CO {right:10px;}
+    .DialogFakFak .COD {right:-6px;}
+    .DialogFakFak .COOpen {left:10px;}
+    .DialogFakFak .CODOpen {left:-7px;}
+    .Exit {font-size:8px; padding:4px; width:185px;}
     .titleO {font-size:17px; }
-    .Oc {margin:5px; height:45px; width:47px;}
+    .Oc {margin:4px; height:45px; width:47px;}
     .Oc .DataO {height:12px; font-size:8px; }
-    .Oc .Otmetka { padding:5px;}
+    .Oc .Otmetka { padding:5px; font-size:11px;}
     .Koll .Otmetka {font-size:11px;}
     .Exm .Otmetka {font-size:11px;}
     .DialogFakFak .fullTextClose {width:16px; height:13px; padding-top:2px; font-size:8px; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
     H2 {font-size:14px;}
     p {font-size: 14px;}
-
+    .SearchWords {width:70%;}
+    .title{font-size: 10px;}
 }
 
+
 @media only screen and (min-width: 10px) and (max-width: 400px) {
-    .DialogFakFak {margin:5px; min-height:60px; width:130px; padding:7px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; font-size:11px;}
-    .DialogFakFak .fullText {font-size:11px; line-height:0; font-size:13px;}
+    .DialogV {width:250px; padding:10px;}
+    .DialogFak {margin:10px; height:250px; width:150px; padding:5px;}
+    .DialogFak A {font-size:11px;}
+    .DialogFakFak {margin:5px; width:160px; padding:7px; -webkit-border-radius:8px; -moz-border-radius:8px; border-radius:8px; font-size:9px;}
+    .DialogFakFak .fullText {font-size:11px; line-height:0;}
     .DialogFakFak .shortText{font-size:11px;  line-height:0;}
-    .DialogFakFak .CO {right:-6px; top:-6px; width:14px; height:12px; padding-top:2px; font-size:8px;  -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
-    .Exit {font-size:8px; padding:4px; width:135px;}
+    .Exit {font-size:8px; padding:4px; width:155px; position: inherit; margin:10px;}
     .titleO {font-size:15px; }
-    .Oc {margin:4px; height:45px; width:42px;}
+    .Oc {margin:3px; height:45px; width:42px;}
     .Oc .DataO {height:11px; font-size:8px; }
     .Oc .Otmetka { padding:4px; font-size:10px;}
     .Koll .Otmetka {font-size:10px;}
@@ -105,6 +211,12 @@ A:focus{outline:none; }
     .DialogFakFak .fullTextClose {width:16px; height:13px; padding-top:2px; font-size:8px; -webkit-border-radius:4px; -moz-border-radius:4px; border-radius:4px;}
     H2 {font-size:13px;}
     p {font-size: 13px;}
-    .Exit {position: inherit}
-
+    .SearchWords {width:70%;}
 }
+
+/*a{ font-size: 0.8em}*/
+.DialogP {margin-top:40px;}
+/*.Header {margin-top:40px;}*/
+
+.modal{position: fixed; z-index: 100; top: 0; left: 0; width: 100%; height: 100%; background: rgba(220,220,220,0.6);}
+.loading_img {position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);}

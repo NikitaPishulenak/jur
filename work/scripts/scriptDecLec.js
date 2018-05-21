@@ -1,4 +1,4 @@
-﻿//Функция выделения серым цветом поля, где есть Н без причины
+//Функция выделения серым цветом поля, где есть Н без причины
 $(function () {
     $("div.grade").each(function () {
         if($(this).text()!=""){
@@ -29,7 +29,7 @@ $(function () {
 $(function () {
     $("div.abs").each(function () {
         var elem = $(this).attr('data-idStudent');
-        generateAbs(elem);
+        updateAbs(elem, "abs");
     });
 });
 
@@ -181,7 +181,7 @@ $(function () {
         $("button#close").attr('disabled', true);
         edit_dialog.dialog("close");
         ShowLogTools();
-        generateAbs(student_id);
+        updateAbs(student_id, "abs");
         illuminationAbs(elem);
     });
     $(".inp_cell:text").click(function () {

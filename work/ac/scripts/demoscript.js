@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
 
     var idStudent=$("input#idStudent").val();
     var idSubject="";
@@ -97,16 +97,16 @@ function MatchDecrypt(val) {
                 return "Н<sub>у</sub>";
                 break;
             case '21':
-                return "Н<sub>б.у</sub>";
+                return "Н<sub>н</sub>";
                 break;
             case '22':
-                return "Н<sub>б.о.</sub>";
+                return "Н<sub>б.о</sub>";
                 break;
             case '23':
-                return "Зач.";
+                return "Зач";
                 break;
             case '24':
-                return "Незач.";
+                return "Незач";
                 break;
             case '25':
                 return "Недоп";
@@ -115,10 +115,10 @@ function MatchDecrypt(val) {
                 return "Н";
                 break;
             case '27':
-                return "Отр.";
+                return "Отр";
                 break;
             case '28':
-                return "Доп.";
+                return "Доп";
                 break;
 
             case '31':

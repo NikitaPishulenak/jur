@@ -1,4 +1,4 @@
-﻿$(function () {
+$(function () {
     $("div.average").each(function () {
         var sum = 0, countGrade = 0;
         var elem = $(this).attr('data-idStudent');
@@ -425,7 +425,8 @@ $(function () {
             $("button#close").attr('disabled', true);
             edit_dialog.dialog("close");
             ShowLogTools(); //Дорисовать треугольники и крестики красные
-            updateAvg(student_id);
+            updateAvg(student_id, "avg_small");
+            updateAns(student_id, "ans_small");
         }
         else {
             alert("Для сохранения необходимо ввести хоть одну оценку!");
@@ -479,11 +480,19 @@ $(document).ready(function () {
             data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
             $("div .average_small:last").append("<div class='avg_small' data-idStudent='"+data_idS+"'></div>");
         }
+
         $("div .average_small:last").append("<div class='avg_small result_div_small' id='avg_avrige'></div>");
+
+        $("div.statistic").append("<div class='date_col_stat_small'><div class='title_small'>%</div><div class='answer_small'></div></div>");
+        for(var i=0; i<count; i++){
+            data_idS=$(".grade:eq("+i+")").attr('data-idStudent');
+            $("div .answer_small:last").append("<div class='ans_small' data-idStudent='"+data_idS+"'></div>");
+        }
 
         $("div.avg_small").each(function () {
             var elem = $(this).attr('data-idStudent');
-            updateAvg(elem);
+            updateAvg(elem, "avg_small");
+            updateAns(elem, "ans_small");
         });
     });
 
